@@ -1,0 +1,52 @@
+[
+  {
+    "path": "/",
+    "title": "Home",
+    "content": "--> Our Services Explore More Explore More Who We Are Supporting the Nation's Digital Treasury The ITMD is responsible for the strategic administration and management of the Local Area Network, Network Security, Official Web Portal, and Official Communications within the Treasury. Our dedicated team of professionals ensures seamless ICT solutions to empower national governance. Learn More About Us Top Management Meet Our Full Team"
+  },
+  {
+    "path": "/About",
+    "title": "About Us",
+    "content": "About Us Vision Digitalized treasury management system for the economic development of the country. Mission Coordinate and facilitate digitalized transformation of treasury management to assist decision making on designing, implementing, executing, monitoring and evaluating treasury functions. Core Responsibilities 01 Implement standard IT policy across Ministry of Finance departments. 02 Upskill staff in Information and Communication Technologies. 03 Design, develop, implement and maintain IT systems for efficient processes. 04 Liaise with stakeholders throughout national ICT project lifecycles. 05 Ensure strong cybersecurity and network integrity. 06 Provide up-to-date information through the treasury website. 07 Upgrade ICT infrastructure in a timely manner. 08 Deliver maintenance support for optimal ICT operations. 09 Provide ICT training opportunities for staff and interns. Official Documents Citizens Charter Service commitments and user rights document. Download PDF"
+  },
+  {
+    "path": "/Services",
+    "title": "Services",
+    "content": "Our Services Software Development Software development team involve in activities related to the process of creating, designing, deploying and supporting software. Read More Hardware Troubleshooting Hardware team involve in the process of identifying and resolving issues with the physical components of a computer system. Read More Network and Security Networking team involve in providing solutions as well as processes or rules and configurations relating to network use, accessibility, and overall threat protection. Read More Information Systems Browse and explore our comprehensive information systems and IT infrastructure. Access details about all our organizational systems, network configurations, and digital resources. Read More --> Internship Program ITMD recruits under graduates as Software Development Interns for one year period. It is an excellent opportunity to broaden their experience in software development with hands on experience in National level software development. Read More Internship Program ITMD recruits under graduates as Software Development Interns for one year period. It is an excellent opportunity to broaden their experience in software development with hands on experience in National level software development. Read More --> Knowledge Sharing Program Exchanging information between individuals, coworkers, and businesses. In a working environment, making organizational knowledge available to employees makes it possible for them to improve their performance. Read More Event Calendar Stay updated with our upcoming events, workshops, and internal activities. View our comprehensive monthly calendar to plan your schedules. Read More"
+  },
+  {
+    "path": "/OurTeam",
+    "title": "Team",
+    "content": "Top Management Administration Mr. J H S P Jayamaha Additional Director General - Administration and Finance Mr. Udesh I W Seneviratna Additional Director General - Policy and Development Our Team"
+  },
+  {
+    "path": "/Systems",
+    "title": "Systems",
+    "content": "Our Systems Government Salary Calculator The Government Salary Calculator App 2025, developed by the Information Technology Management Department (ITMD) of the Ministry of Finance, is a comprehensive tool designed to assist public sector employees in Sri Lanka. This app enables users to accurately calculate their revised salaries based on the latest government salary scales and circulars. Visit App Letter Management System A letter management system developed by the Information Technology Management Department (ITMD) of the Ministry of Finance is a comprehensive tool designed to streamline and optimize the process of creating, sending, receiving, and tracking correspondence within an organization. It encompasses both physical and electronic correspondence. Visit App"
+  },
+  {
+    "path": "/Actionplan",
+    "title": "Publications",
+    "content": "Action Plans Strategic initiatives and plans for organizational development --> View Document Performance Reports Comprehensive reports showcasing our achievements and progress --> View Report"
+  },
+  {
+    "path": "/Events",
+    "title": "Events",
+    "content": "Events Explore upcoming events and activities --> 0}\" @click=\"selectDay(day)\"> 0}\"> 0\"> 1\" class=\"more-events-count\"> + Events on {{ selectedDateObj.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }) }} &times; --> No events scheduled for this day. Event Time - Location Close Knowledge Sharing Program Friday Forum Field Visits Other Events"
+  },
+  {
+    "path": "/Officers",
+    "title": "RTI",
+    "content": "RTI Officers Right to Information Authority Officials --> Designated Officer Mr. J H S P Jayamaha Additional Director General - Administration and Finance +94 11 2484791 +94 77 2078023 jayamaha.jhsp@itmd.treasury.gov.lk Information Officer Mr. S M P U Senarath Director - Admin +94 11 2421219 senarath.smpu@itmd.treasury.gov.lk Right to Information Act RTI Act Right to Information Act Document Download Application Form RTI Application Form Download"
+  },
+  {
+    "path": "/Teldirec",
+    "title": "Contact Us",
+    "content": "Contact Us Get in touch with our team --> Follow Us --> Facebook LinkedIn YouTube WhatsApp Find Us Here Send us an Inquiry First Name Last Name Contact Number Email Address Message Send Message Contact Our Team Name Designation Contact Email Profile detail.status === 1 )\" :key=\"details.id\" >"
+  },
+  {
+    "path": "/Disclaimer",
+    "title": "Disclaimer",
+    "content": "Website Disclaimer To make our content accessible to a wider audience, this website has been translated from English using Google Translate . While we aim for accuracy, automated translations may not always capture the full meaning or nuances of the original text. Please note that these translations are provided \"as-is,\" and the Department of Information Technology Management (ITMD) assumes no responsibility for any misunderstandings or misinterpretations arising from these translations."
+  }
+]
