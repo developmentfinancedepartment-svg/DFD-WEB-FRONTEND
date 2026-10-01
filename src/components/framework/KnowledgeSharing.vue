@@ -201,20 +201,20 @@ export default {
 .section-title {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 90px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto 20px;
   border-radius: 999px;
   box-shadow: 0 3px 10px rgba(0, 187, 240, 0.2);
@@ -266,7 +266,7 @@ export default {
 .event-title {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 12px;
   letter-spacing: 0.5px;
 }
@@ -274,7 +274,7 @@ export default {
 .title-divider {
   width: 50px;
   height: 3px;
-  background: #00bbf0;
+  background: #008E9B;
   border-radius: 999px;
 }
 
@@ -350,7 +350,7 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  color: #00bbf0;
+  color: #008E9B;
   text-decoration: none;
   font-weight: 700;
   font-size: 0.95rem;
@@ -363,7 +363,7 @@ export default {
 .view-more-btn:hover {
   background: rgba(0, 187, 240, 0.1);
   gap: 18px;
-  color: #0095cc;
+  color: #00B4C5;
 }
 
 /* ── Resources Section ── */
@@ -386,7 +386,7 @@ export default {
 .modern-table thead th {
   background: #f8faff;
   border: none;
-  color: #032b5f;
+  color: #008E9B;
   font-weight: 700;
   padding: 18px;
   text-transform: uppercase;
@@ -402,13 +402,13 @@ export default {
 
 .date-cell {
   font-weight: 700;
-  color: #00bbf0;
+  color: #008E9B;
   white-space: nowrap;
 }
 
 .topic-cell {
   font-weight: 600;
-  color: #032b5f;
+  color: #008E9B;
   line-height: 1.5;
 }
 
@@ -417,7 +417,7 @@ export default {
   align-items: center;
   gap: 10px;
   color: white;
-  background: linear-gradient(135deg, #032b5f 0%, #053d80 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #053d80 100%);
   padding: 8px 18px;
   border-radius: 50px;
   text-decoration: none;
@@ -428,7 +428,7 @@ export default {
 }
 
 .download-link:hover {
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 187, 240, 0.3);
   color: white;

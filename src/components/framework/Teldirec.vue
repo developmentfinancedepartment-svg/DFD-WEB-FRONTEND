@@ -307,7 +307,7 @@ export default {
 
 /* Header Section */
 .header-section {
-  /* background: linear-gradient(135deg, #032b5f 0%, #0a4a8f 100%); */
+  /* background: linear-gradient(135deg, #008E9B 0%, #084D52 100%); */
   padding: 70px 20px;
   text-align: center;
   color: white;
@@ -322,19 +322,19 @@ export default {
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   letter-spacing: 1px;
   margin: 0 0 20px 0;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 100px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto 20px;
   border-radius: 2px;
 }
@@ -362,7 +362,7 @@ export default {
 .social-title {
   font-size: 2rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 50px;
@@ -395,7 +395,7 @@ export default {
 .social-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 20px 50px rgba(3, 43, 95, 0.12);
-  border-color: #00bbf0;
+  border-color: #008E9B;
 }
 
 .social-icon {
@@ -446,7 +446,7 @@ export default {
 
 .social-label {
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   font-size: 0.95rem;
 }
 
@@ -478,14 +478,14 @@ export default {
 .card-heading {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin: 0;
   padding: 25px 30px;
   border-bottom: 2px solid #e0e7f1;
 }
 
 .highlight-text {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .map-card {
@@ -511,7 +511,7 @@ export default {
 .form-label {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
@@ -529,7 +529,7 @@ export default {
 
 .form-input:focus {
   outline: none;
-  border-color: #00bbf0;
+  border-color: #008E9B;
   box-shadow: 0 0 0 3px rgba(0, 187, 240, 0.1);
   background-color: #f8fbff;
 }
@@ -541,7 +541,7 @@ export default {
 
 .submit-btn {
   padding: 14px 28px;
-  background: linear-gradient(135deg, #032b5f 0%, #0055a4 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #084D52 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -580,7 +580,7 @@ export default {
 .section-title-secondary {
   font-size: 2rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   letter-spacing: 1px;
   margin: 0 0 20px 0;
   text-align: center;
@@ -589,7 +589,7 @@ export default {
 .title-underline-secondary {
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto 50px;
   border-radius: 2px;
 }
@@ -616,7 +616,7 @@ export default {
   margin: 0;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   border-bottom: 2px solid #e0e7f1;
 }
 
@@ -640,7 +640,7 @@ export default {
   text-align: left;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }

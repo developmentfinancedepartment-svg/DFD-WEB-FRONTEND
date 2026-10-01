@@ -63,20 +63,20 @@ export default {
 .section-title {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 90px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto;
   border-radius: 999px;
 }
@@ -112,7 +112,7 @@ export default {
   position: absolute;
   width: 80px;
   height: 80px;
-  border: 4px solid #00bbf0;
+  border: 4px solid #008E9B;
   z-index: -1;
   border-radius: 15px;
 }
@@ -139,14 +139,14 @@ export default {
 .announcement-title {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 20px;
 }
 
 .title-divider {
   width: 50px;
   height: 3px;
-  background: #00bbf0;
+  background: #008E9B;
   margin: 0 auto 25px;
   border-radius: 999px;
 }

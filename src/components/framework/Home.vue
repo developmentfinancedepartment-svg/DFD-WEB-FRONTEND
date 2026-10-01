@@ -230,8 +230,8 @@ export default {
 <style scoped>
 /* Original Color Palette Refined */
 :root {
-  --primary-blue: #032b5f;
-  --accent-blue: #00bbf0;
+  --primary-blue: #008E9B;
+  --accent-blue: #008E9B;
   --glass-bg: rgba(255, 255, 255, 0.8);
   --glass-border: rgba(255, 255, 255, 0.3);
   --text-dark: #0c0c0c;
@@ -256,7 +256,7 @@ export default {
   width: 100%;
   line-height: 0;
   overflow: hidden;
-  background-color: #032b5f;
+  background-color: #008E9B;
 }
 
 .hero-banner {
@@ -271,11 +271,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(3, 43, 95, 0.4),
-    rgba(3, 43, 95, 0.2)
-  );
+  background: linear-gradient(135deg, #084D52 0%, #008E9B 100%);
   pointer-events: none;
 }
 
@@ -301,18 +297,18 @@ export default {
 .section-title {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   letter-spacing: -0.5px;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 60px;
   height: 4px;
-  background: #00bbf0;
+  background: #008E9B;
   margin: 12px auto 0;
   border-radius: 2px;
 }
@@ -360,14 +356,14 @@ export default {
   left: 0;
   width: 100%;
   height: 4px;
-  background: #00bbf0;
+  background: #008E9B;
   opacity: 0.8;
 }
 
 .service-card:hover .card-glass {
   transform: translateY(-8px);
   box-shadow: 0 25px 50px rgba(2, 16, 47, 0.1);
-  border-color: #00bbf0;
+  border-color: #008E9B;
 }
 
 .card-content {
@@ -390,7 +386,7 @@ export default {
 }
 
 .service-card:hover .icon-wrapper {
-  background: #00bbf0;
+  background: #008E9B;
 }
 
 .icon-wrapper img {
@@ -407,7 +403,7 @@ export default {
 .card-content h3 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 12px;
 }
 
@@ -424,7 +420,7 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: #00bbf0;
+  color: #008E9B;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.8rem;
@@ -434,12 +430,12 @@ export default {
 
 .read-more-btn:hover {
   gap: 12px;
-  color: #032b5f;
+  color: #008E9B;
 }
 
 /* About Section */
 .about-section {
-  background: #032b5f;
+  background: #008E9B;
   padding: 80px 0;
   color: white;
 }
@@ -468,13 +464,13 @@ export default {
   left: -10px;
   width: 80px;
   height: 80px;
-  border-top: 4px solid #00bbf0;
-  border-left: 4px solid #00bbf0;
+  border-top: 4px solid #008E9B;
+  border-left: 4px solid #008E9B;
   border-radius: 15px 0 0 0;
 }
 
 .sub-label {
-  color: #00bbf0;
+  color: #008E9B;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 2px;
@@ -491,7 +487,7 @@ export default {
 }
 
 .gold-text {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .about-text {
@@ -504,7 +500,7 @@ export default {
 .primary-btn {
   display: inline-block;
   padding: 14px 32px;
-  background: #00bbf0;
+  background: #008E9B;
   color: #fff;
   font-weight: 700;
   border-radius: 50px;
@@ -515,7 +511,7 @@ export default {
 
 .primary-btn:hover {
   background: white;
-  color: #032b5f;
+  color: #008E9B;
   transform: translateY(-2px);
 }
 
@@ -585,11 +581,11 @@ export default {
 }
 
 .social-links a:hover {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .member-info h5 {
-  color: #032b5f;
+  color: #008E9B;
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 5px;
@@ -608,8 +604,8 @@ export default {
 .outline-btn {
   display: inline-block;
   padding: 12px 30px;
-  border: 2px solid #00bbf0;
-  color: #00bbf0;
+  border: 2px solid #008E9B;
+  color: #008E9B;
   font-weight: 700;
   border-radius: 50px;
   text-decoration: none;
@@ -621,7 +617,7 @@ export default {
 }
 
 .outline-btn:hover {
-  background: #00bbf0;
+  background: #008E9B;
   color: white;
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 187, 240, 0.2);

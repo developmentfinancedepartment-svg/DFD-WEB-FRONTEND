@@ -85,20 +85,20 @@ export default {
 .section-title {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 90px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto;
   border-radius: 999px;
 }
@@ -126,7 +126,7 @@ export default {
 .download-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 25px 60px rgba(3, 43, 95, 0.1);
-  border-color: #00bbf0;
+  border-color: #008E9B;
 }
 
 .download-content {
@@ -139,7 +139,7 @@ export default {
   width: 65px;
   height: 65px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   color: #fff;
   display: flex;
   align-items: center;
@@ -151,7 +151,7 @@ export default {
 .doc-info h3 {
   margin: 0 0 5px;
   font-size: 1.25rem;
-  color: #032b5f;
+  color: #008E9B;
   font-weight: 700;
 }
 
@@ -163,7 +163,7 @@ export default {
 }
 
 .download-btn {
-  background: linear-gradient(135deg, #032b5f 0%, #0055a4 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #084D52 100%);
   color: #fff;
   padding: 12px 25px;
   border-radius: 999px;

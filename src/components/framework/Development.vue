@@ -105,18 +105,18 @@ export default {
 .section-title {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 16px;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 90px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto;
   border-radius: 999px;
 }
@@ -143,7 +143,7 @@ export default {
   left: 0;
   width: 100%;
   height: 5px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
 }
 
 /* ── Image Column ── */
@@ -165,7 +165,7 @@ export default {
 .service-name {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 20px;
   position: relative;
   padding-bottom: 14px;
@@ -178,7 +178,7 @@ export default {
   left: 0;
   width: 50px;
   height: 3px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   border-radius: 999px;
 }
 
@@ -194,7 +194,7 @@ export default {
 .sub-title {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 25px;
   padding-bottom: 10px;
   border-bottom: 2px solid rgba(0, 187, 240, 0.2);
@@ -220,7 +220,7 @@ export default {
 
 .system-link-card:hover {
   transform: translateY(-8px);
-  border-color: #00bbf0;
+  border-color: #008E9B;
   box-shadow: 0 20px 40px rgba(0, 187, 240, 0.12);
 }
 
@@ -250,7 +250,7 @@ export default {
 
 .system-info p {
   margin: 0;
-  color: #032b5f;
+  color: #008E9B;
   font-size: 0.9rem;
   font-weight: 600;
   line-height: 1.4;

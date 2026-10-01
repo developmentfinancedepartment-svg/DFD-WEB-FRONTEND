@@ -170,7 +170,7 @@ export default {
 .accessibility-btn {
   width: 52px;
   height: 52px;
-  /* background: #032b5f; */
+  /* background: #008E9B; */
   background: #005FCC;
   color: white;
   border: none;
@@ -186,7 +186,7 @@ export default {
 }
 
 .accessibility-btn:hover {
-  /* background: #00bbf0; */
+  /* background: #008E9B; */
   background: #003F8A;
   transform: scale(1.1) rotate(5deg);
 }
@@ -214,7 +214,7 @@ export default {
 }
 
 .menu-header {
-  background: linear-gradient(135deg, #032b5f 0%, #05459b 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #084D52 100%);
   color: white;
   padding: 18px 20px;
   display: flex;
@@ -273,7 +273,7 @@ export default {
   border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
-  color: #032b5f;
+  color: #008E9B;
   text-align: center;
   font-family: inherit;
 }
@@ -290,7 +290,7 @@ export default {
 }
 
 .option-item:hover {
-  border-color: #00bbf0;
+  border-color: #008E9B;
   background: #f0f8ff;
   transform: translateY(-2px);
 }
@@ -300,9 +300,9 @@ export default {
 }
 
 .option-item.active {
-  background: #00bbf0;
+  background: #008E9B;
   color: white;
-  border-color: #00bbf0;
+  border-color: #008E9B;
   box-shadow: 0 6px 14px rgba(0, 187, 240, 0.35);
 }
 
@@ -329,7 +329,7 @@ export default {
   left: 0;
   width: 100%;
   height: 3px;
-  background: #00bbf0;
+  background: #008E9B;
   box-shadow: 0 0 15px 2px rgba(0, 187, 240, 0.6);
   pointer-events: none;
   z-index: 10002;
@@ -339,7 +339,7 @@ export default {
 /* Scrollbar */
 .menu-content::-webkit-scrollbar { width: 5px; }
 .menu-content::-webkit-scrollbar-track { background: #f1f1f1; }
-.menu-content::-webkit-scrollbar-thumb { background: #032b5f; border-radius: 10px; }
+.menu-content::-webkit-scrollbar-thumb { background: #008E9B; border-radius: 10px; }
 
 /* ============================================
    TABLET (768px – 1023px)

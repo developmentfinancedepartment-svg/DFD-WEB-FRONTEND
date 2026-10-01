@@ -127,17 +127,17 @@
   font-size: 2rem;
   margin-bottom: 16px;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 90px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto;
   border-radius: 999px;
 }
@@ -188,21 +188,21 @@
   left: 0;
   width: 100%;
   height: 5px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
 }
 
 .service-card:hover .card-glass {
   transform: translateY(-10px);
   box-shadow: 0 35px 80px rgba(2, 16, 47, 0.12);
   background: linear-gradient(135deg, #fff 0%, #f0f8ff 100%);
-  border-color: #00bbf0;
+  border-color: #008E9B;
 }
 
 .icon-wrapper {
   width: 80px;
   height: 80px;
   margin: 0 auto 25px;
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -232,7 +232,7 @@
 .card-content h3 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 15px;
   line-height: 1.4;
 }
@@ -250,7 +250,7 @@
   align-items: center;
   align-self: center;
   gap: 8px;
-  color: #00bbf0;
+  color: #008E9B;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.85rem;
@@ -261,7 +261,7 @@
 
 .read-more-btn:hover {
   gap: 12px;
-  color: #0095cc;
+  color: #00B4C5;
 }
 
 /* Responsive Design */

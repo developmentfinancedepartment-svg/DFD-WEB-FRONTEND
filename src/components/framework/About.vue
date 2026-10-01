@@ -145,13 +145,13 @@
 .title-underline {
   width: 90px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto;
   border-radius: 999px;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 /* Mission & Vision Cards */
@@ -180,20 +180,20 @@
   left: 0;
   width: 100%;
   height: 5px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
 }
 
 .content-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 30px 80px rgba(2, 16, 47, 0.1);
-  border-color: #00bbf0;
+  border-color: #008E9B;
 }
 
 .card-icon {
   width: 60px;
   height: 60px;
   border-radius: 15px;
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   color: #fff;
   display: flex;
   align-items: center;
@@ -205,7 +205,7 @@
 .content-card h3 {
   font-size: 1.5rem;
   margin-bottom: 16px;
-  color: #032b5f;
+  color: #008E9B;
 }
 
 .content-card p {
@@ -236,7 +236,7 @@
   width: 50px;
   height: 50px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   color: #fff;
   display: flex;
   align-items: center;
@@ -247,7 +247,7 @@
 .responsibility-header h3 {
   font-size: 1.8rem;
   margin: 0;
-  color: #032b5f;
+  color: #008E9B;
 }
 
 .responsibility-list {
@@ -262,7 +262,7 @@
   padding: 20px;
   background: #fff;
   border-radius: 15px;
-  border-left: 5px solid #00bbf0;
+  border-left: 5px solid #008E9B;
   transition: all 0.3s ease;
 }
 
@@ -276,7 +276,7 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   color: #fff;
   display: flex;
   align-items: center;
@@ -305,14 +305,14 @@
 .section-title-secondary {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 15px;
 }
 
 .title-underline-secondary {
   width: 60px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto;
   border-radius: 999px;
 }
@@ -320,7 +320,7 @@
 /* Download Card */
 .download-card {
   background: linear-gradient(135deg, #eef6ff 0%, #e8f4ff 100%);
-  border: 2px solid #00bbf0;
+  border: 2px solid #008E9B;
   border-radius: 20px;
   padding: 35px;
   display: flex;
@@ -335,7 +335,7 @@
 .download-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 40px rgba(0, 187, 240, 0.15);
-  border-color: #0095cc;
+  border-color: #00B4C5;
 }
 
 .download-content {
@@ -348,7 +348,7 @@
   width: 70px;
   height: 70px;
   border-radius: 15px;
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   color: #fff;
   display: flex;
   align-items: center;
@@ -360,7 +360,7 @@
 .download-card h3 {
   margin: 0 0 8px;
   font-size: 1.3rem;
-  color: #032b5f;
+  color: #008E9B;
   font-weight: 700;
 }
 
@@ -371,7 +371,7 @@
 }
 
 .download-btn {
-  background: linear-gradient(135deg, #032b5f 0%, #0055a4 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #084D52 100%);
   color: #fff;
   padding: 14px 28px;
   border-radius: 999px;

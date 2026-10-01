@@ -126,14 +126,14 @@
 
 <style scoped>
 .footer-area {
-  background: #032b5f;
+  background: #008E9B;
   color: #fff;
 }
 
 .footer-top {
   padding: 80px 0 50px;
-  background-image: linear-gradient(to bottom, #032b5f 0%, #001a38 100%);
-  border-top: 5px solid #00bbf0;
+  background-image: linear-gradient(to bottom, #008E9B 0%, #001a38 100%);
+  border-top: 5px solid #008E9B;
 }
 
 .widget-title {
@@ -154,7 +154,7 @@
   bottom: 0;
   width: 40px;
   height: 3px;
-  background: #00bbf0;
+  background: #008E9B;
 }
 
 .contact-info-list {
@@ -172,7 +172,7 @@
 }
 
 .contact-info-list i {
-  color: #00bbf0;
+  color: #008E9B;
   font-size: 1.1rem;
   margin-top: 5px;
 }
@@ -194,7 +194,7 @@
 }
 
 .footer-links li a:hover {
-  color: #00bbf0;
+  color: #008E9B;
   padding-left: 5px;
 }
 
@@ -243,9 +243,9 @@
 }
 
 .social-link:hover {
-  background: #00bbf0;
+  background: #008E9B;
   color: #fff;
-  border-color: #00bbf0;
+  border-color: #008E9B;
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 187, 240, 0.4);
 }
@@ -281,7 +281,7 @@
 }
 
 .itmd-link {
-  color: #00bbf0;
+  color: #008E9B;
   text-decoration: none;
   font-weight: 500;
   transition: all 0.2s ease;

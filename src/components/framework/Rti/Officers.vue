@@ -156,7 +156,7 @@ export default {
 
 /* Header Section */
 .header-section {
-  /* background: linear-gradient(135deg, #032b5f 0%, #0a4a8f 100%); */
+  /* background: linear-gradient(135deg, #008E9B 0%, #084D52 100%); */
   padding: 70px 20px;
   padding-bottom: 0;
   text-align: center;
@@ -172,19 +172,19 @@ export default {
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   letter-spacing: 1px;
   margin: 0 0 20px 0;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 100px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto 20px;
   border-radius: 2px;
 }
@@ -223,7 +223,7 @@ export default {
 .officer-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 20px 50px rgba(3, 43, 95, 0.12);
-  border-color: #00bbf0;
+  border-color: #008E9B;
 }
 
 .card-header {
@@ -238,7 +238,7 @@ export default {
 .card-icon {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -252,7 +252,7 @@ export default {
 .card-title {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin: 0;
   line-height: 1.3;
 }
@@ -273,7 +273,7 @@ export default {
 .officer-name {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin: 0 0 8px 0;
   line-height: 1.3;
 }
@@ -298,7 +298,7 @@ export default {
   padding: 12px 15px;
   background: #f8fbff;
   border-radius: 10px;
-  border-left: 4px solid #00bbf0;
+  border-left: 4px solid #008E9B;
   transition: all 0.3s ease;
 }
 
@@ -308,14 +308,14 @@ export default {
 }
 
 .contact-item i {
-  color: #00bbf0;
+  color: #008E9B;
   font-size: 1.1rem;
   width: 20px;
   text-align: center;
 }
 
 .contact-icon {
-  color: #00bbf0;
+  color: #008E9B;
   font-size: 1.1rem;
   width: 20px;
   text-align: center;
@@ -346,7 +346,7 @@ export default {
 .section-title-secondary {
   font-size: 2rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   /* text-transform: uppercase; */
   letter-spacing: 1px;
   margin: 0 0 20px 0;
@@ -356,7 +356,7 @@ export default {
 .title-underline-secondary {
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto 50px;
   border-radius: 2px;
 }
@@ -364,7 +364,7 @@ export default {
 /* Download Card */
 .download-card {
   background: linear-gradient(135deg, #eef6ff 0%, #e8f4ff 100%);
-  border: 2px solid #00bbf0;
+  border: 2px solid #008E9B;
   border-radius: 20px;
   padding: 35px;
   display: flex;
@@ -383,7 +383,7 @@ export default {
 .download-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 40px rgba(0, 187, 240, 0.15);
-  border-color: #0095cc;
+  border-color: #00B4C5;
 }
 
 .download-content {
@@ -396,7 +396,7 @@ export default {
   width: 70px;
   height: 70px;
   border-radius: 15px;
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   color: #fff;
   display: flex;
   align-items: center;
@@ -408,7 +408,7 @@ export default {
 .download-card h3 {
   margin: 0 0 8px;
   font-size: 1.3rem;
-  color: #032b5f;
+  color: #008E9B;
   font-weight: 700;
 }
 
@@ -419,7 +419,7 @@ export default {
 }
 
 .download-btn {
-  background: linear-gradient(135deg, #032b5f 0%, #0055a4 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #084D52 100%);
   color: #fff;
   padding: 14px 28px;
   border-radius: 999px;

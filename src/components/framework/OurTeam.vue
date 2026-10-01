@@ -90,17 +90,17 @@
   font-size: 2rem;
   margin-bottom: 16px;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 90px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto;
   border-radius: 999px;
 }
@@ -168,11 +168,11 @@
 }
 
 .social-links a:hover {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .social-links span {
-  color: #00bbf0;
+  color: #008E9B;
   font-weight: 700;
   font-size: 0.95rem;
   text-transform: uppercase;
@@ -180,7 +180,7 @@
 }
 
 .member-info h5 {
-  color: #032b5f;
+  color: #008E9B;
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 5px;
@@ -215,8 +215,8 @@
 .outline-btn {
   display: inline-block;
   padding: 12px 30px;
-  border: 2px solid #032b5f;
-  color: #032b5f;
+  border: 2px solid #008E9B;
+  color: #008E9B;
   font-weight: 700;
   border-radius: 50px;
   transition: all 0.3s ease;
@@ -224,7 +224,7 @@
 }
 
 .outline-btn:hover {
-  background: #032b5f;
+  background: #008E9B;
   color: white;
 }
 

@@ -94,7 +94,7 @@ export default {
 }
 
 .ticker-label {
-  background: #00bbf0;
+  background: #008E9B;
   color: #fff;
   padding: 0 20px;
   height: 100%;
@@ -115,7 +115,7 @@ export default {
   position: absolute;
   right: -15px;
   top: 0;
-  border-top: 45px solid #00bbf0;
+  border-top: 45px solid #008E9B;
   border-right: 15px solid transparent;
 }
 
@@ -158,7 +158,7 @@ export default {
 
 .news-topic {
   font-weight: 700;
-  color: #00bbf0;
+  color: #008E9B;
   margin-right: 8px;
 }
 
@@ -169,7 +169,7 @@ export default {
 }
 
 .news-content.has-link:hover {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .news-separator {

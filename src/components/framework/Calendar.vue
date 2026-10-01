@@ -64,7 +64,7 @@
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 modern-modal" style="border-radius: 20px; overflow: hidden;">
           <div class="modal-header modern-modal-header border-bottom py-3">
-            <h5 class="modal-title font-weight-bold" style="font-size: 1.25rem; color: #032b5f;">Events on <span v-if="selectedDateObj" style="color: #00bbf0;">{{ selectedDateObj.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }) }}</span></h5>
+            <h5 class="modal-title font-weight-bold" style="font-size: 1.25rem; color: #008E9B;">Events on <span v-if="selectedDateObj" style="color: #008E9B;">{{ selectedDateObj.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }) }}</span></h5>
           </div>
           <div class="modal-body text-left p-4" style="max-height: 65vh; overflow-y: auto; background-color: #f8faff;">
             <div v-if="selectedEvents.length === 0" class="text-center text-muted p-5 animate-fade-in">
@@ -262,19 +262,19 @@ export default {
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   letter-spacing: 1px;
   margin: 0 0 20px 0;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 100px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto 20px;
   border-radius: 2px;
 }
@@ -310,7 +310,7 @@ export default {
   text-align: center;
   font-weight: 700;
   padding: 12px 8px;
-  color: #032b5f;
+  color: #008E9B;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -362,13 +362,13 @@ export default {
 }
 
 .today-number {
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   color: #fff !important;
   box-shadow: 0 4px 12px rgba(0, 187, 240, 0.3);
 }
 
 .event-number {
-  color: #00bbf0;
+  color: #008E9B;
   font-weight: 700;
 }
 
@@ -386,7 +386,7 @@ export default {
 
 .event-mini-label {
   font-size: 0.65rem;
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   color: #fff;
   padding: 2px 6px;
   border-radius: 4px;
@@ -400,7 +400,7 @@ export default {
 
 .more-events-count {
   font-size: 0.65rem;
-  color: #00bbf0;
+  color: #008E9B;
   font-weight: 700;
   text-align: center;
 }
@@ -412,7 +412,7 @@ export default {
   border-radius: 10px;
   border: 2px solid #e0e7f1;
   background: white;
-  color: #00bbf0;
+  color: #008E9B;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
   font-size: 1.1rem;
@@ -422,7 +422,7 @@ export default {
 }
 
 .btn-nav-calendar:hover {
-  border-color: #00bbf0;
+  border-color: #008E9B;
   background: #f0fbff;
   transform: scale(1.1);
 }
@@ -430,7 +430,7 @@ export default {
 .month-title {
   font-size: 1.4rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 0;
   letter-spacing: 0.5px;
 }
@@ -471,7 +471,7 @@ export default {
 .event-detail-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-  border-color: #00bbf0;
+  border-color: #008E9B;
 }
 
 .card-inner {
@@ -532,7 +532,7 @@ export default {
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #00bbf0;
+  color: #008E9B;
   background: rgba(0, 187, 240, 0.1);
   padding: 6px 14px;
   border-radius: 50px;
@@ -542,7 +542,7 @@ export default {
 .event-title {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 20px;
   padding-right: 60px;
   line-height: 1.2;
@@ -569,13 +569,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #00bbf0;
+  color: #008E9B;
   font-size: 1.1rem;
   transition: all 0.3s ease;
 }
 
 .meta-item:hover .meta-icon {
-  background: linear-gradient(135deg, #00bbf0 0%, #0095cc 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   color: white;
 }
 
@@ -594,7 +594,7 @@ export default {
 
 .meta-value {
   font-size: 0.9rem;
-  color: #032b5f;
+  color: #008E9B;
   font-weight: 600;
 }
 
@@ -602,7 +602,7 @@ export default {
   background: #f8fbff;
   border-radius: 10px;
   padding: 15px;
-  border-left: 4px solid #00bbf0;
+  border-left: 4px solid #008E9B;
   flex: 1;
 }
 

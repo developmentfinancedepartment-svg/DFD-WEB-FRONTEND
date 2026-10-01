@@ -191,18 +191,18 @@ export default {
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 16px;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 90px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto;
   border-radius: 999px;
 }
@@ -229,7 +229,7 @@ export default {
   left: 0;
   width: 100%;
   height: 5px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
 }
 
 /* ── Image Column ── */
@@ -264,7 +264,7 @@ export default {
 .sub-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 18px;
   padding-bottom: 10px;
   border-bottom: 2px solid rgba(0, 187, 240, 0.2);
@@ -288,7 +288,7 @@ export default {
   padding: 8px 20px;
   border-radius: 50px;
   border: 2px solid rgba(0, 187, 240, 0.3);
-  color: #032b5f;
+  color: #008E9B;
   font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
@@ -299,16 +299,16 @@ export default {
 
 .spec-tabs a:hover,
 .spec-tabs a.active {
-  background: linear-gradient(135deg, #00bbf0, #0095cc);
+  background: linear-gradient(135deg, #008E9B, #00B4C5);
   color: #fff;
-  border-color: #00bbf0;
+  border-color: #008E9B;
   box-shadow: 0 6px 18px rgba(0, 187, 240, 0.3);
 }
 
 .spec-type-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 16px;
 }
 
@@ -345,7 +345,7 @@ export default {
 
 .doc-card-link:hover {
   transform: translateY(-8px);
-  border-color: #00bbf0;
+  border-color: #008E9B;
   box-shadow: 0 20px 45px rgba(0, 187, 240, 0.12);
 }
 
@@ -399,7 +399,7 @@ export default {
 }
 
 .view-btn-advanced i {
-  color: #00bbf0;
+  color: #008E9B;
   font-size: 1.1rem;
 }
 
@@ -424,7 +424,7 @@ export default {
 
 .doc-name {
   font-size: 0.88rem;
-  color: #032b5f;
+  color: #008E9B;
   font-weight: 700;
   line-height: 1.4;
   word-break: break-word;
@@ -432,14 +432,14 @@ export default {
 
 .doc-action {
   font-size: 0.75rem;
-  color: #00bbf0;
+  color: #008E9B;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .doc-card-link:hover .doc-name {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 /* ── Help Desk Card ── */
@@ -447,7 +447,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 24px;
-  background: linear-gradient(135deg, #032b5f 0%, #053d80 100%);
+  background: linear-gradient(135deg, #008E9B 0%, #053d80 100%);
   border-radius: 18px;
   padding: 30px 32px;
   box-shadow: 0 16px 40px rgba(3, 43, 95, 0.2);
@@ -479,7 +479,7 @@ export default {
 
 .phone-icon {
   font-size: 2.8rem;
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .phone-number {

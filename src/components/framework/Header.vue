@@ -236,7 +236,7 @@ export default {
 }
 
 .top-bar {
-  background: #032b5f;
+  background: #008E9B;
   padding: 6px 2%;
   height: 38px;
   display: flex;
@@ -282,7 +282,7 @@ export default {
   transition: all 0.3s ease;
 }
 
-.social-icon:hover { color: #00bbf0; }
+.social-icon:hover { color: #008E9B; }
 
 .primary-nav {
   background: rgba(3, 43, 95, 0.95);
@@ -294,7 +294,7 @@ export default {
 
 .header-scrolled .primary-nav {
   padding: 8px 3%;
-  background: #032b5f;
+  background: #008E9B;
   box-shadow: 0 5px 20px rgba(0,0,0,0.2);
 }
 
@@ -362,7 +362,7 @@ export default {
   display: inline-block;
 }
 
-.nav-link:hover, .router-link-active { color: #00bbf0 !important;  }
+.nav-link:hover, .router-link-active { color: #008E9B !important;  }
 
 .nav-link:hover {
   font-size: 0.85rem;
@@ -390,7 +390,7 @@ export default {
 
 .dropdown-item:hover, .dropdown-item:focus, .dropdown-item.router-link-active {
   background: rgba(0, 187, 240, 0.1);
-  color: #00bbf0 !important;
+  color: #008E9B !important;
   transform: translateX(5px);
 }
 
@@ -407,7 +407,7 @@ export default {
 }
 
 .contact-btn {
-  background: #00bbf0;
+  background: #008E9B;
   color: white !important;
   font-weight: 700;
   padding: 8px 15px;
@@ -439,7 +439,7 @@ export default {
 
 @media (max-width: 1199px) {
   .navbar-collapse {
-    background: #032b5f;
+    background: #008E9B;
     position: absolute;
     top: 100%;
     left: 0;
@@ -479,7 +479,7 @@ export default {
 
 .search-input:focus {
   background: rgba(255, 255, 255, 0.2);
-  border-color: #00bbf0;
+  border-color: #008E9B;
   color: white;
   box-shadow: 0 0 0 0.2rem rgba(0, 187, 240, 0.25);
   width: 180px;
@@ -528,7 +528,7 @@ export default {
 }
 
 .result-title {
-  color: #032b5f;
+  color: #008E9B;
   font-weight: 600;
   font-size: 0.95rem;
   margin-bottom: 3px;

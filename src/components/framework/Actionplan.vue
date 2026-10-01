@@ -157,19 +157,19 @@ export default {
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   letter-spacing: 1px;
   margin-bottom: 20px;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 100px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto 20px;
   border-radius: 2px;
 }
@@ -306,7 +306,7 @@ export default {
 .report-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 8px;
   line-height: 1.3;
   text-align: center;
@@ -316,12 +316,12 @@ export default {
 
 .plan-card .card-link:hover .plan-title,
 .report-card .card-link:hover .report-title {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .plan-subtitle,
 .report-subtitle {
-  color: #00bbf0;
+  color: #008E9B;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -332,7 +332,7 @@ export default {
 
 .plan-card .card-link:hover .plan-subtitle,
 .report-card .card-link:hover .report-subtitle {
-  color: #0095cc;
+  color: #00B4C5;
 }
 
 /* Animations */

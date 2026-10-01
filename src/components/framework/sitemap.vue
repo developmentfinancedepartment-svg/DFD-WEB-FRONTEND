@@ -99,19 +99,19 @@ export default {
   font-size: 2rem;
   margin-bottom: 16px;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   padding-top: 100px;
 
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 90px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto;
   border-radius: 999px;
 }
@@ -128,7 +128,7 @@ export default {
 .block-header {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #032b5f;
+  color: #008E9B;
   border-bottom: 2px solid #f0f0f0;
   padding-bottom: 15px;
   margin-bottom: 20px;
@@ -142,7 +142,7 @@ export default {
   bottom: -2px;
   width: 50px;
   height: 2px;
-  background: #00bbf0;
+  background: #008E9B;
 }
 
 .sitemap-ul {
@@ -162,7 +162,7 @@ export default {
   font-weight: 900;
   position: absolute;
   left: 0;
-  color: #00bbf0;
+  color: #008E9B;
   font-size: 0.9rem;
 }
 
@@ -197,7 +197,7 @@ export default {
 }
 
 .nested-ul li a:hover {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 @media (max-width: 991px) {

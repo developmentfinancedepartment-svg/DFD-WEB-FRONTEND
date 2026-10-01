@@ -67,18 +67,18 @@ export default {
 .section-title {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #032b5f;
+  color: #008E9B;
   margin-bottom: 16px;
 }
 
 .highlight {
-  color: #00bbf0;
+  color: #008E9B;
 }
 
 .title-underline {
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto;
   border-radius: 999px;
 }
@@ -101,7 +101,7 @@ export default {
   left: 0;
   width: 100%;
   height: 6px;
-  background: linear-gradient(90deg, #00bbf0, #0095cc);
+  background: linear-gradient(90deg, #008E9B, #00B4C5);
 }
 
 .card-icon {
@@ -111,7 +111,7 @@ export default {
 
 .card-icon i {
   font-size: 3.5rem;
-  color: #00bbf0;
+  color: #008E9B;
   opacity: 0.8;
 }
 
@@ -128,7 +128,7 @@ export default {
 }
 
 .disclaimer-text strong {
-  color: #032b5f;
+  color: #008E9B;
 }
 
 /* Responsive */
