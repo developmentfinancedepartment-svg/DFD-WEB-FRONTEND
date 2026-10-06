@@ -36,13 +36,13 @@
         <!-- Brand Identity -->
         <router-link to="/" class="navbar-brand">
           <div class="brand-wrapper">
-            <img src="../../assets/sample.png" class="gov-logo" alt="Government Logo" />
+            <img src="../../assets/national-emblem.svg" class="gov-logo" alt="National Emblem" />
             <div class="brand-divider"></div>
-            <img src="" class="your-logo" alt="your Logo" />
+            <img src="../../assets/dfd-logo.png" class="dfd-logo" alt="DFD Logo" />
             <div class="brand-text d-none d-md-block">
               <div class="dept-name">
-                <span class="dept-small">Department of</span>
-                <span class="dept-main">Your Department Name</span>
+                <span class="dept-small">DEPARTMENT OF</span>
+                <span class="dept-main">Development Finance</span>
               </div>
             </div>
           </div>
@@ -258,6 +258,16 @@ export default {
   text-decoration: none;
   font-weight: 600;
 }
+.top-link:hover,
+.top-link:focus,
+.top-link:active,
+.top-link:visited {
+  color: #A5F3FC !important;
+  outline: none !important;
+  box-shadow: none !important;
+  text-decoration: none;
+}
+
 
 .separator {
   color: rgba(255, 255, 255, 0.2);
@@ -282,18 +292,18 @@ export default {
   transition: all 0.3s ease;
 }
 
-.social-icon:hover { color: #008E9B; }
+.social-icon:hover, .social-icon:focus { color: #A5F3FC; outline: none; }
 
 .primary-nav {
   background: rgba(3, 43, 95, 0.95);
   backdrop-filter: blur(10px);
-  padding: 12px 2%;
+  padding: 4px 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
 }
 
 .header-scrolled .primary-nav {
-  padding: 8px 3%;
+  padding: 4px 8px;
   background: #008E9B;
   box-shadow: 0 5px 20px rgba(0,0,0,0.2);
 }
@@ -301,30 +311,30 @@ export default {
 .brand-wrapper {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: flex-start;
+  gap: 1px;
+  flex-wrap: nowrap;
 }
 
 .gov-logo { 
   height: 60px; 
-  width: auto; 
+  width: auto;
+  margin-right: 10px; 
 }
-.itmd-logo { 
-  height: 55px; 
-  width: auto; 
-  animation: logoPulse 4s infinite ease-in-out 1s;
-}
-.brand-divider { width: 1px; height: 45px; background: rgba(255, 255, 255, 0.2); }
+
+.brand-divider { width: 2px; height: 50px; background: rgba(255, 255, 255, 0.2); margin: 0 2px; }
 
 .dept-name {
   font-family: 'Outfit', sans-serif;
   display: flex;
   flex-direction: column;
+  white-space: nowrap;
   line-height: 1.1;
   transition: all 0.3s ease;
 }
 
 .dept-small {
-  font-size: 0.85rem;
+  font-size: 1.05rem;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.8);
   text-transform: uppercase;
@@ -332,42 +342,65 @@ export default {
 }
 
 .dept-main {
-  font-size: 1.55rem;
+  font-size: 1.95rem;
   font-weight: 800;
   letter-spacing: 0.5px;
-  background: linear-gradient(to right, #ffffff, #a5f3ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 0 8px rgba(0, 187, 240, 0.3));
+  color: #ffffff;
+}
+
+.dfd-logo { 
+  height: 80px; 
+  width: auto;
+  margin: 0px -20px 0px -35px;
 }
 
 .dept-name:hover .dept-main {
-  filter: drop-shadow(0 0 15px rgba(0, 187, 240, 0.6));
+  filter: drop-shadow(0 0 15px rgba(0, 180, 197, 0.6));
 }
-
-@keyframes logoPulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(0,187,240,0)); }
-  50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(0,187,240,0.8)); }
-}
-
 .nav-link {
   color: white !important;
-  font-weight: 500;
+  font-weight: 700 !important; /* එකම font-weight එකක් තබන්න */
   font-size: 0.8rem;
   text-transform: uppercase;
   padding: 8px 10px !important;
   letter-spacing: 0.5px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-block;
+  position: relative;
 }
 
-.nav-link:hover, .router-link-active { color: #008E9B !important;  }
+/* Hover කළ විට සහ Active (Select) වූ විට පාට සහ font-weight */
+.nav-link:hover, 
+.nav-link.active,
+.router-link-active,
+.router-link-exact-active,
+.router-link-active .nav-link,
+.router-link-exact-active .nav-link { 
+  color: #ffffff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  font-weight: 700 !important; 
+}
 
+/* Active Highlight Indicator */
+.nav-link.active::after,
+.nav-link.router-link-active::after,
+.nav-link.router-link-exact-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 10%;
+  width: 80%;
+  height: 3px;
+  background-color: #00e5ff;
+  border-radius: 2px;
+}
+
+/* Hover effect එක පමණක් */
 .nav-link:hover {
   font-size: 0.85rem;
   transform: translateY(-4px) scale(1.1);
-  text-shadow: 0 4px 15px rgba(0, 187, 240, 0.3);
+  text-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
 }
 
 /* Dropdown Styles */
@@ -389,7 +422,7 @@ export default {
 }
 
 .dropdown-item:hover, .dropdown-item:focus, .dropdown-item.router-link-active {
-  background: rgba(0, 187, 240, 0.1);
+  background: rgba(0, 142, 155, 0.1);
   color: #008E9B !important;
   transform: translateX(5px);
 }
@@ -457,8 +490,8 @@ export default {
 @media (max-width: 767px) {
   .brand-text { display: none; }
   .gov-logo { height: 45px; }
-  .itmd-logo { height: 40px; }
-  .primary-nav { padding: 8px 3%; }
+  .dfd-logo { height: 60px; }
+  .primary-nav { padding: 4px 8px; }
   .brand-divider { height: 35px; }
   .translate-box { min-width: auto; }
 }
@@ -481,7 +514,7 @@ export default {
   background: rgba(255, 255, 255, 0.2);
   border-color: #008E9B;
   color: white;
-  box-shadow: 0 0 0 0.2rem rgba(0, 187, 240, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(0, 142, 155, 0.25);
   width: 180px;
 }
 
@@ -553,4 +586,6 @@ export default {
     border: 1px solid rgba(255,255,255,0.1);
   }
 }
+
+.brand-text { margin-left: 6px; }
 </style>

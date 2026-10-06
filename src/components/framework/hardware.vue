@@ -267,7 +267,7 @@ export default {
   color: #008E9B;
   margin-bottom: 18px;
   padding-bottom: 10px;
-  border-bottom: 2px solid rgba(0, 187, 240, 0.2);
+  border-bottom: 2px solid rgba(0, 142, 155, 0.2);
 }
 
 .spec-tabs {
@@ -287,7 +287,7 @@ export default {
   display: inline-block;
   padding: 8px 20px;
   border-radius: 50px;
-  border: 2px solid rgba(0, 187, 240, 0.3);
+  border: 2px solid rgba(0, 142, 155, 0.3);
   color: #008E9B;
   font-size: 0.88rem;
   font-weight: 600;
@@ -302,7 +302,7 @@ export default {
   background: linear-gradient(135deg, #008E9B, #00B4C5);
   color: #fff;
   border-color: #008E9B;
-  box-shadow: 0 6px 18px rgba(0, 187, 240, 0.3);
+  box-shadow: 0 6px 18px rgba(0, 142, 155, 0.3);
 }
 
 .spec-type-title {
@@ -346,7 +346,7 @@ export default {
 .doc-card-link:hover {
   transform: translateY(-8px);
   border-color: #008E9B;
-  box-shadow: 0 20px 45px rgba(0, 187, 240, 0.12);
+  box-shadow: 0 20px 45px rgba(0, 142, 155, 0.12);
 }
 
 .doc-icon-wrapper {
@@ -460,7 +460,7 @@ export default {
 
 .helpdesk-card .sub-title {
   color: #fff;
-  border-bottom-color: rgba(0, 187, 240, 0.3);
+  border-bottom-color: rgba(0, 142, 155, 0.3);
   margin-bottom: 12px;
 }
 

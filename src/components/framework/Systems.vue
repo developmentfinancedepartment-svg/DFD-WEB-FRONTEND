@@ -227,13 +227,13 @@
   border-radius: 50px;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 25px rgba(0, 187, 240, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 142, 155, 0.2);
   width: fit-content;
 }
 
 .visit-btn:hover {
   background: linear-gradient(135deg, #00B4C5 0%, #008E9B 100%);
-  box-shadow: 0 15px 35px rgba(0, 187, 240, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 142, 155, 0.3);
   transform: translateY(-3px);
   color: #ffffff !important;
 }

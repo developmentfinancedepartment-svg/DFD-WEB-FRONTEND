@@ -3,13 +3,26 @@
     <!-- Hero / Slider Section -->
     <div class="hero-section">
       <div class="hero-image-box">
-        <img
-          src="../../assets/hero_banner.jpg"
-          alt="your Banner"
-          class="hero-banner"
-        />
-        <!-- <img src="../../assets/gif/WhatsAppVideo2026-04-22at12.42.39PM-ezgif.com-video-to-gif-converter (1).gif" alt="Treasury Banner" class="hero-banner" /> -->
-        <div class="hero-overlay"></div>
+        <transition-group name="fade" tag="div" class="slide-container">
+          <img
+            v-for="(img, index) in heroImages"
+            :key="'slide-' + index"
+            :src="img"
+            v-show="currentSlide === index"
+            alt="Hero Banner"
+            class="hero-banner"
+          />
+        </transition-group>
+
+        <div class="slider-dots">
+          <span
+            v-for="(_, index) in heroImages"
+            :key="'dot-' + index"
+            class="dot"
+            :class="{ active: currentSlide === index }"
+            @click="goToSlide(index)"
+          ></span>
+        </div>
       </div>
       <div class="news-ticker-container animate-fade-down">
         <Newsline />
@@ -157,29 +170,32 @@ import adg1Img from "../../assets/profile.png";
 import adg2Img from "../../assets/profile.png";
 import eventImg from "../../assets/service.png";
 
+import hero1 from "@/assets/hero-banner.jpg";
+import hero2 from "@/assets/hero-banner-2.jpg";
+
 export default {
   name: "Home",
   data() {
     return {
+      heroImages: [hero1, hero2],
+      currentSlide: 0,
+      slideInterval: null,
       services: [
         {
           title: "Your Services",
-          description:
-            "services description",
+          description: "services description",
           image: swImg,
           link: "/development",
         },
         {
           title: "Your Services",
-          description:
-            "services description",
+          description: "services description",
           image: hwImg,
           link: "/hardware",
         },
         {
           title: "Your Services",
-          description:
-            "services description",
+          description: "services description",
           image: nwImg,
           link: "/network",
         },
@@ -187,8 +203,7 @@ export default {
       secondaryServices: [
         {
           title: "Your Services",
-          description:
-            "services description",
+          description: "services description",
           image: knowledgeImg,
           link: "/KnowledgeSharing",
         },
@@ -224,14 +239,44 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.startSlider();
+  },
+  beforeUnmount() {
+    this.stopSlider();
+  },
+  beforeDestroy() {
+    this.stopSlider(); // For Vue 2 compatibility
+  },
+  methods: {
+    startSlider() {
+      this.slideInterval = setInterval(() => {
+        this.nextSlide();
+      }, 5000);
+    },
+    stopSlider() {
+      if (this.slideInterval) {
+        clearInterval(this.slideInterval);
+        this.slideInterval = null;
+      }
+    },
+    nextSlide() {
+      this.currentSlide = (this.currentSlide + 1) % this.heroImages.length;
+    },
+    goToSlide(index) {
+      this.currentSlide = index;
+      this.stopSlider();
+      this.startSlider();
+    },
+  },
 };
 </script>
 
 <style scoped>
 /* Original Color Palette Refined */
 :root {
-  --primary-blue: #008E9B;
-  --accent-blue: #008E9B;
+  --primary-blue: #008e9b;
+  --accent-blue: #008e9b;
   --glass-bg: rgba(255, 255, 255, 0.8);
   --glass-border: rgba(255, 255, 255, 0.3);
   --text-dark: #0c0c0c;
@@ -242,44 +287,94 @@ export default {
   overflow-x: hidden;
   background-color: #f8faff;
   font-family: "Open Sans", sans-serif;
-  padding-top: 105px;
+  margin: 0;
+  padding: 0;
 }
 
 /* Hero Section */
 .hero-section {
   position: relative;
   width: 100%;
+  max-width: 100%;
+  margin-top: 65px !important;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
 }
 
 .hero-image-box {
   position: relative;
   width: 100%;
+  max-width: 100%;
+  height: calc(100vh - 65px);
+  margin: 0;
+  padding: 0;
   line-height: 0;
   overflow: hidden;
-  background-color: #008E9B;
+  background-color: #008e9b;
+}
+
+.slide-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .hero-banner {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.hero-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #084D52 0%, #008E9B 100%);
-  pointer-events: none;
+  height: calc(100vh - 65px);
+  object-fit: fill;
+  object-position: top center;
+  display: block;
+}
+
+/* Cross-fade transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.2s ease-in-out;
+}
+.fade-enter-from,
+.fade-leave-to,
+.fade-enter {
+  opacity: 0;
+}
+
+/* Slider Dots */
+.slider-dots {
+  position: absolute;
+  bottom: 60px; /* Above the news ticker */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  z-index: 20;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dot.active {
+  background-color: #008e9b;
+  transform: scale(1.2);
 }
 
 .news-ticker-container {
-  position: relative;
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  z-index: 10;
-  margin-top: -5px; /* Slight overlap to ensure no white line gap */
+  z-index: 30;
 }
 
 /* Section Common Styles */
@@ -297,18 +392,18 @@ export default {
 .section-title {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #008E9B;
+  color: #008e9b;
   letter-spacing: -0.5px;
 }
 
 .highlight {
-  color: #008E9B;
+  color: #008e9b;
 }
 
 .title-underline {
   width: 60px;
   height: 4px;
-  background: #008E9B;
+  background: #008e9b;
   margin: 12px auto 0;
   border-radius: 2px;
 }
@@ -356,14 +451,14 @@ export default {
   left: 0;
   width: 100%;
   height: 4px;
-  background: #008E9B;
+  background: #008e9b;
   opacity: 0.8;
 }
 
 .service-card:hover .card-glass {
   transform: translateY(-8px);
   box-shadow: 0 25px 50px rgba(2, 16, 47, 0.1);
-  border-color: #008E9B;
+  border-color: #008e9b;
 }
 
 .card-content {
@@ -386,7 +481,7 @@ export default {
 }
 
 .service-card:hover .icon-wrapper {
-  background: #008E9B;
+  background: #008e9b;
 }
 
 .icon-wrapper img {
@@ -403,7 +498,7 @@ export default {
 .card-content h3 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #008E9B;
+  color: #008e9b;
   margin-bottom: 12px;
 }
 
@@ -420,7 +515,7 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: #008E9B;
+  color: #008e9b;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.8rem;
@@ -430,12 +525,12 @@ export default {
 
 .read-more-btn:hover {
   gap: 12px;
-  color: #008E9B;
+  color: #008e9b;
 }
 
 /* About Section */
 .about-section {
-  background: #008E9B;
+  background: #008e9b;
   padding: 80px 0;
   color: white;
 }
@@ -464,13 +559,13 @@ export default {
   left: -10px;
   width: 80px;
   height: 80px;
-  border-top: 4px solid #008E9B;
-  border-left: 4px solid #008E9B;
+  border-top: 4px solid #008e9b;
+  border-left: 4px solid #008e9b;
   border-radius: 15px 0 0 0;
 }
 
 .sub-label {
-  color: #008E9B;
+  color: #008e9b;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 2px;
@@ -487,7 +582,7 @@ export default {
 }
 
 .gold-text {
-  color: #008E9B;
+  color: #008e9b;
 }
 
 .about-text {
@@ -500,18 +595,18 @@ export default {
 .primary-btn {
   display: inline-block;
   padding: 14px 32px;
-  background: #008E9B;
+  background: #008e9b;
   color: #fff;
   font-weight: 700;
   border-radius: 50px;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 20px rgba(0, 187, 240, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 142, 155, 0.2);
 }
 
 .primary-btn:hover {
   background: white;
-  color: #008E9B;
+  color: #008e9b;
   transform: translateY(-2px);
 }
 
@@ -581,11 +676,11 @@ export default {
 }
 
 .social-links a:hover {
-  color: #008E9B;
+  color: #008e9b;
 }
 
 .member-info h5 {
-  color: #008E9B;
+  color: #008e9b;
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 5px;
@@ -604,8 +699,8 @@ export default {
 .outline-btn {
   display: inline-block;
   padding: 12px 30px;
-  border: 2px solid #008E9B;
-  color: #008E9B;
+  border: 2px solid #008e9b;
+  color: #008e9b;
   font-weight: 700;
   border-radius: 50px;
   text-decoration: none;
@@ -617,10 +712,10 @@ export default {
 }
 
 .outline-btn:hover {
-  background: #008E9B;
+  background: #008e9b;
   color: white;
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 187, 240, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 142, 155, 0.2);
 }
 
 /* Response Fixes */

@@ -303,7 +303,7 @@ export default {
   background: #008E9B;
   color: white;
   border-color: #008E9B;
-  box-shadow: 0 6px 14px rgba(0, 187, 240, 0.35);
+  box-shadow: 0 6px 14px rgba(0, 142, 155, 0.35);
 }
 
 .reset-btn {
@@ -330,7 +330,7 @@ export default {
   width: 100%;
   height: 3px;
   background: #008E9B;
-  box-shadow: 0 0 15px 2px rgba(0, 187, 240, 0.6);
+  box-shadow: 0 0 15px 2px rgba(0, 142, 155, 0.6);
   pointer-events: none;
   z-index: 10002;
   transition: top 0.08s linear;

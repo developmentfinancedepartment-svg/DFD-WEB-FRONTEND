@@ -11,19 +11,19 @@
                 <li>
                   <i class="fas fa-map-marker-alt"></i>
                   <span>
-                    Your Address Line 1,<br />
-                    Your Address Line 2,<br />
-                    Your Address Line 3,<br />
-                    Your Address Line 4
+                    Room No. 140, 1st Floor,<br />
+                    Department of Development Finance,<br />
+                    Ministry of Finance, The Secretariat,<br />
+                    Colombo 01.
                   </span>
                 </li>
                 <li>
                   <i class="fas fa-phone-alt"></i>
-                  <span>Your Phone Number</span>
+                  <span><a href="tel:+94112484862" style="color: inherit; text-decoration: none;">+94 112 484 862</a></span>
                 </li>
                 <li>
                   <i class="fas fa-envelope"></i>
-                  <span>Your Email Address</span>
+                  <span><a href="mailto:dgdf@dfd.treasury.gov.lk" style="color: inherit; text-decoration: none;">dgdf@dfd.treasury.gov.lk</a></span>
                 </li>
               </ul>
               <div class="footer-socials">
@@ -96,16 +96,16 @@
     <!-- Bottom Footer -->
     <div class="footer-bottom">
       <div class="container">
-        <div class="row align-items-center justify-content-between">
-          <div class="col-lg-7 col-md-7 text-md-start text-center mb-3 mb-md-0">
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+          <div class="text-md-start text-center mb-3 mb-md-0">
             <p class="copyright-text">
-              © {{ currentYear }}. your Department Name
+              V4.0.0 © {{ currentYear }} - Development Finance Department. All Rights Reserved.
             </p>
             <p class="last-updated-text">
               Last updated : {{ lastUpdated }}
             </p>
           </div>
-          <div class="col-lg-5 col-md-5 text-md-end text-center">
+          <div class="text-md-end text-center">
             <p class="developer-text">
               Template by
               <a
@@ -247,7 +247,7 @@
   color: #fff;
   border-color: #008E9B;
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 187, 240, 0.4);
+  box-shadow: 0 8px 20px rgba(0, 142, 155, 0.4);
 }
 
 .social-link i {

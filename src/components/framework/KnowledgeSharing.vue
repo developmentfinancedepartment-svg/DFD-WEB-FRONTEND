@@ -217,7 +217,7 @@ export default {
   background: linear-gradient(90deg, #008E9B, #00B4C5);
   margin: 0 auto 20px;
   border-radius: 999px;
-  box-shadow: 0 3px 10px rgba(0, 187, 240, 0.2);
+  box-shadow: 0 3px 10px rgba(0, 142, 155, 0.2);
 }
 
 .program-subtitle {
@@ -357,11 +357,11 @@ export default {
   transition: all 0.3s ease;
   padding: 10px 20px;
   border-radius: 12px;
-  background: rgba(0, 187, 240, 0.05);
+  background: rgba(0, 142, 155, 0.05);
 }
 
 .view-more-btn:hover {
-  background: rgba(0, 187, 240, 0.1);
+  background: rgba(0, 142, 155, 0.1);
   gap: 18px;
   color: #00B4C5;
 }
@@ -430,7 +430,7 @@ export default {
 .download-link:hover {
   background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 187, 240, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 142, 155, 0.3);
   color: white;
 }
 

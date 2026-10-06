@@ -197,7 +197,7 @@ export default {
   color: #008E9B;
   margin-bottom: 25px;
   padding-bottom: 10px;
-  border-bottom: 2px solid rgba(0, 187, 240, 0.2);
+  border-bottom: 2px solid rgba(0, 142, 155, 0.2);
 }
 
 .systems-grid {
@@ -221,7 +221,7 @@ export default {
 .system-link-card:hover {
   transform: translateY(-8px);
   border-color: #008E9B;
-  box-shadow: 0 20px 40px rgba(0, 187, 240, 0.12);
+  box-shadow: 0 20px 40px rgba(0, 142, 155, 0.12);
 }
 
 .system-img {

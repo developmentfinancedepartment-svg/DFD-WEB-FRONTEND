@@ -530,7 +530,7 @@ export default {
 .form-input:focus {
   outline: none;
   border-color: #008E9B;
-  box-shadow: 0 0 0 3px rgba(0, 187, 240, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 142, 155, 0.1);
   background-color: #f8fbff;
 }
 

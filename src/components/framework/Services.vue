@@ -207,7 +207,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 12px 24px rgba(0, 187, 240, 0.2);
+  box-shadow: 0 12px 24px rgba(0, 142, 155, 0.2);
   overflow: hidden;
 }
 

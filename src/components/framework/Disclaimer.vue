@@ -90,7 +90,7 @@ export default {
   padding: 60px 50px;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(0, 187, 240, 0.1);
+  border: 1px solid rgba(0, 142, 155, 0.1);
   box-shadow: 0 25px 60px rgba(2, 16, 47, 0.05);
 }
 

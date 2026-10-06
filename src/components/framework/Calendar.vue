@@ -340,7 +340,7 @@ export default {
   background-color: #e8f0ff;
   transform: scale(1.02);
   z-index: 10;
-  box-shadow: inset 0 0 8px rgba(0, 187, 240, 0.1);
+  box-shadow: inset 0 0 8px rgba(0, 142, 155, 0.1);
 }
 
 .today-cell {
@@ -364,7 +364,7 @@ export default {
 .today-number {
   background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
   color: #fff !important;
-  box-shadow: 0 4px 12px rgba(0, 187, 240, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 142, 155, 0.3);
 }
 
 .event-number {
@@ -533,7 +533,7 @@ export default {
   font-weight: 700;
   text-transform: uppercase;
   color: #008E9B;
-  background: rgba(0, 187, 240, 0.1);
+  background: rgba(0, 142, 155, 0.1);
   padding: 6px 14px;
   border-radius: 50px;
   letter-spacing: 1px;

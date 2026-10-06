@@ -382,7 +382,7 @@ export default {
 
 .download-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 187, 240, 0.15);
+  box-shadow: 0 15px 40px rgba(0, 142, 155, 0.15);
   border-color: #00B4C5;
 }
 
