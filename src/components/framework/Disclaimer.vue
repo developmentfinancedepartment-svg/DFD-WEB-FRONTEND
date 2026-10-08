@@ -45,7 +45,7 @@ export default {
   background: #f7fbff;
   color: #102741;
   min-height: 80vh;
-  padding-top: 105px;
+  padding-top: 130px;
   overflow-x: hidden;
 }
 

@@ -8,86 +8,18 @@
           <div class="title-underline"></div>
         </div>
 
-        <!-- Primary Services Grid -->
+        <!-- Services Grid -->
         <div class="services-grid animate-fade-up">
-          <!-- Software Development -->
-          <div class="service-card">
+          <div class="service-card" v-for="(service, index) in services" :key="index">
             <div class="card-glass">
-              <div class="icon-wrapper">
-                <img src="../../assets/service.png" alt="Software Development" />
+              <div class="service-icon-box">
+                <i :class="service.icon"></i>
               </div>
               <div class="card-content">
-                <h3>Your Services</h3>
-                <p>services description</p>
-                <router-link to="/development" class="read-more-btn">
-                  Read More <i class="fas fa-chevron-right"></i>
-                </router-link>
-              </div>
-            </div>
-          </div>
-
-          <!-- Hardware Troubleshooting -->
-          <div class="service-card">
-            <div class="card-glass">
-              <div class="icon-wrapper">
-                <img src="../../assets/service.png" alt="Hardware Troubleshooting" />
-              </div>
-              <div class="card-content">
-                <h3>Your Services</h3>
-                <p>services description</p>
-                <router-link to="/hardware" class="read-more-btn">
-                  Read More <i class="fas fa-chevron-right"></i>
-                </router-link>
-              </div>
-            </div>
-          </div>
-
-          <!-- Network and Security -->
-          <div class="service-card">
-            <div class="card-glass">
-              <div class="icon-wrapper">
-                <img src="../../assets/service.png" alt="Network and Security" />
-              </div>
-              <div class="card-content">
-                <h3>Your Services</h3>
-                <p>services description</p>
-                <router-link to="/network" class="read-more-btn">
-                  Read More <i class="fas fa-chevron-right"></i>
-                </router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Secondary Services Grid -->
-        <div class="services-grid secondary-grid animate-fade-up">
-          <!-- Knowledge Sharing Program -->
-          <div class="service-card">
-            <div class="card-glass">
-              <div class="icon-wrapper">
-                <img src="../../assets/service.png" alt="Knowledge Sharing Program" />
-              </div>
-              <div class="card-content">
-                <h3>Your Services</h3>
-                <p>services</p>
-                <router-link to="/KnowledgeSharing" class="read-more-btn">
-                  Read More <i class="fas fa-chevron-right"></i>
-                </router-link>
-              </div>
-            </div>
-          </div>
-
-          <!-- Event Calendar -->
-          <div class="service-card">
-            <div class="card-glass">
-              <div class="icon-wrapper">
-                <img src="../../assets/service.png" alt="Event Calendar" />
-              </div>
-              <div class="card-content">
-                <h3>Event Calendar</h3>
-                <p>Stay updated with our upcoming events, workshops, and internal activities. View our comprehensive monthly calendar to plan your schedules.</p>
-                <router-link to="/Events" class="read-more-btn">
-                  Read More <i class="fas fa-chevron-right"></i>
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.description }}</p>
+                <router-link :to="service.link" class="read-more-btn">
+                  EXPLORE MORE <i class="fas fa-chevron-right"></i>
                 </router-link>
               </div>
             </div>
@@ -98,13 +30,68 @@
   </div>
 </template>
 
+<script setup>
+import { ref } from 'vue';
+
+const services = ref([
+  {
+    title: "Re-MSME Plus Loan Scheme",
+    description: "Financial assistance and concessionary loans up to Rs. 25M for Micro, Small, and Medium Enterprises.",
+    icon: "fas fa-store",
+    link: "/services/re-msme-plus"
+  },
+  {
+    title: "NPA Borrower Relief Scheme (NPL)",
+    description: "Concessionary support up to Rs. 15M to assist and revive non-performing asset borrowers.",
+    icon: "fas fa-life-ring",
+    link: "/services/npl-relief"
+  },
+  {
+    title: "Food Security Project (FSLRP)",
+    description: "Credit support up to Rs. 5M focused on agricultural food security and livelihood recovery.",
+    icon: "fas fa-seedling",
+    link: "/services/fslrp"
+  },
+  {
+    title: "Working Capital Loan Scheme",
+    description: "Short-term and operational liquidity loans up to Rs. 1.5M for ongoing business needs.",
+    icon: "fas fa-coins",
+    link: "/services/working-capital"
+  },
+  {
+    title: "SMELoC Credit Facility (ADB)",
+    description: "ADB-funded revolving credit line up to Rs. 50M empowering competitive SME enterprises.",
+    icon: "fas fa-chart-line",
+    link: "/services/smeloc-adb"
+  },
+  {
+    title: "Agribusiness Value Chain (AVC)",
+    description: "Financing up to Rs. 75M to integrate modern technologies and supply chains into agriculture.",
+    icon: "fas fa-tractor",
+    link: "/services/avc"
+  },
+  {
+    title: "Smallholder Dairy Development (SDP)",
+    description: "Targeted capital loan scheme up to Rs. 75M for dairy farming operations.",
+    icon: "fas fa-cow",
+    link: "/services/sdp"
+  },
+  {
+    title: "Rural Credit Scheme (NCRCS - Agriculture)",
+    description: "Comprehensive cultivation and agricultural loans up to Rs. 3M for rural farmers.",
+    icon: "fas fa-hand-holding-usd",
+    link: "/services/ncrcs"
+  }
+]);
+</script>
+
 <style scoped>
 .services-page {
   font-family: 'Open Sans', sans-serif;
   color: #102741;
   background: #f7fbff;
   overflow-x: hidden;
-  padding-top: 105px;
+  padding-top: 130px;
 }
 
 /* Services Section */
@@ -120,7 +107,7 @@
 /* Section Header */
 .section-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin: 10px 0 24px 0;
 }
 
 .section-title {
@@ -198,28 +185,32 @@
   border-color: #008E9B;
 }
 
-.icon-wrapper {
-  width: 80px;
-  height: 80px;
+.service-icon-box {
+  width: 54px;
+  height: 54px;
   margin: 0 auto 25px;
-  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
-  border-radius: 15px;
+  background: #008795;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 12px 24px rgba(0, 142, 155, 0.2);
-  overflow: hidden;
-}
-
-.icon-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  box-shadow: 0 8px 16px rgba(0, 135, 149, 0.2);
   transition: all 0.3s ease;
 }
 
-.service-card:hover .icon-wrapper img {
-  transform: scale(1.1);
+.service-icon-box i {
+  color: #ffffff;
+  font-size: 22px;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-icon-box {
+  transform: translateY(-5px);
+  background: #00a0b0;
+}
+
+.service-card:hover .service-icon-box i {
+  transform: scale(1.15);
 }
 
 .card-content {
@@ -303,11 +294,6 @@
     padding: 30px 25px;
   }
 
-  .icon-wrapper {
-    width: 70px;
-    height: 70px;
-  }
-
   .card-content h3 {
     font-size: 1.2rem;
   }
@@ -338,12 +324,6 @@
 
   .card-glass {
     padding: 25px 20px;
-  }
-
-  .icon-wrapper {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 15px;
   }
 
   .card-content h3 {

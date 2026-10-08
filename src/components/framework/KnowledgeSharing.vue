@@ -179,7 +179,7 @@ export default {
   font-family: 'Open Sans', 'Inter', sans-serif;
   background: linear-gradient(135deg, #f8faff 0%, #f0f5ff 50%, #e8eef5 100%);
   min-height: 100vh;
-  padding-top: 100px;
+  padding-top: 130px;
   color: #102741;
 }
 

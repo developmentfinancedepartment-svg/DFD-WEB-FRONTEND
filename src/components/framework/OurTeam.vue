@@ -68,7 +68,7 @@
   color: #102741;
   background: #f7fbff;
   overflow-x: hidden;
-  padding-top: 100px;
+  padding-top: 130px;
 }
 
 .team-section {
@@ -83,7 +83,7 @@
 /* Section Header */
 .section-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin: 10px 0 24px 0;
 }
 
 .section-title {
@@ -231,7 +231,7 @@
 /* Responsive */
 @media (max-width: 768px) {
   .ourteam-page {
-    padding-top: 80px;
+    padding-top: 90px;
   }
 
   .team-section {

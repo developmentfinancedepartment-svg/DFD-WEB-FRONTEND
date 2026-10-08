@@ -81,7 +81,7 @@ export default {
   font-family: 'Open Sans', 'Segoe UI', Tahoma, sans-serif;
   background-color: #fcfdfe;
   min-height: 100vh;
-  padding-top: 100px;
+  padding-top: 130px;
   color: #333;
 }
 
@@ -92,7 +92,7 @@ export default {
 /* Section Header */
 .section-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin: 10px 0 24px 0;
 }
 
 .section-title {
@@ -100,7 +100,7 @@ export default {
   margin-bottom: 16px;
   font-weight: 700;
   color: #008E9B;
-  padding-top: 100px;
+  padding-top: 130px;
 
 }
 

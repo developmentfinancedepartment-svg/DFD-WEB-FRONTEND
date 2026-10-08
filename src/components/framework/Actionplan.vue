@@ -137,7 +137,7 @@ export default {
   overflow-x: hidden;
   background: linear-gradient(135deg, #f8faff 0%, #f0f5ff 100%);
   font-family: 'Open Sans', sans-serif;
-  padding-top: 100px;
+  padding-top: 130px;
 }
 
 /* Common Container */
@@ -416,7 +416,7 @@ export default {
 
 @media (max-width: 480px) {
   .actionplan-page {
-    padding-top: 80px;
+    padding-top: 90px;
   }
 
   .container {

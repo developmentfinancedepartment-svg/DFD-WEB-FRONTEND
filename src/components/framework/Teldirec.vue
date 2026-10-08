@@ -58,8 +58,8 @@
               <div class="map-card">
                 <h3 class="card-heading">Find Us Here</h3>
                 <iframe
-                  src="https://www.google.com"
-                  style="border: 0; border-radius: 15px; display: block; width: 100%; height: 400px;"
+                  src="https://www.google.com/maps?q=Ministry+of+Finance,+Lotus+Rd,+Colombo&output=embed"
+                  style="border: 0; border-radius: 12px; display: block; width: 100%; height: 380px;"
                   allowfullscreen=""
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
@@ -302,7 +302,7 @@ export default {
   overflow-x: hidden;
   background: linear-gradient(135deg, #f8faff 0%, #f0f5ff 100%);
   min-height: 100vh;
-  padding-top: 100px;
+  padding-top: 130px;
 }
 
 /* Header Section */
@@ -731,7 +731,7 @@ export default {
   .header-section {
     padding: 70px 20px;
     margin-top: -50px;
-    padding-top: 100px;
+    padding-top: 90px;
   }
 
   .section-title {
@@ -786,7 +786,7 @@ export default {
   .header-section {
     padding: 60px 12px;
     margin-top: -50px;
-    padding-top: 100px;
+    padding-top: 90px;
   }
 
   .section-title {

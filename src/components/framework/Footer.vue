@@ -13,8 +13,10 @@
                   <span>
                     Room No. 140, 1st Floor,<br />
                     Department of Development Finance,<br />
-                    Ministry of Finance, The Secretariat,<br />
-                    Colombo 01.
+                    Ministry of Finance & Planning,<br />
+                    The Secretariat<br />
+                    Colombo 01,<br />
+                    Sri Lanka
                   </span>
                 </li>
                 <li>
@@ -51,12 +53,15 @@
             <div class="footer-widget">
               <h4 class="widget-title">Quick Links</h4>
               <ul class="footer-links">
-                <li><a href="https://www.presidentsoffice.gov.lk/" target="_blank">Presidential Secretariat</a></li>
-                <li><a href="https://www.pmoffice.gov.lk/" target="_blank">Prime Minister's Office</a></li>
-                <li><a href="https://www.treasury.gov.lk/" target="_blank">Ministry of Finance</a></li>
-                <li><a href="https://www.cbsl.gov.lk/" target="_blank">Central Bank of Sri Lanka</a></li>
-                <!-- <li><a href="https://mot.gov.lk/" target="_blank">Ministry of Technology</a></li> -->
-                <li><a href="https://cert.gov.lk/" target="_blank">SL CERT</a></li>
+                <li><a href="https://www.presidentsoffice.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Presidential Secretariat</a></li>
+                <li><a href="https://www.pmoffice.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Prime Minister's Office</a></li>
+                <li><a href="https://www.treasury.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Ministry of Finance</a></li>
+                <li><a href="https://www.cbsl.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Central Bank of Sri Lanka</a></li>
+                <li><a href="https://cert.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>SL CERT</a></li>
+                <li><a href="https://www.parliament.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Parliament of Sri Lanka</a></li>
+                <li><a href="https://pubad.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Public Administration</a></li>
+                <li><a href="https://www.portcitycolombo.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Colombo Port City Economic Commission</a></li>
+                <li><a href="https://investsrilanka.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Board of Investment of Sri Lanka</a></li>
               </ul>
             </div>
           </div>
@@ -81,11 +86,11 @@
             <div class="footer-widget">
               <h4 class="widget-title">Help</h4>
               <ul class="footer-links">
-                <li><router-link to="/sitemap">Sitemap</router-link></li>
-                <li><router-link to="/Disclaimer">Disclaimer</router-link></li>
+                <li><router-link to="/sitemap"><i class="fas fa-chevron-right fa-xs me-2"></i>Sitemap</router-link></li>
+                <li><router-link to="/Disclaimer"><i class="fas fa-chevron-right fa-xs me-2"></i>Disclaimer</router-link></li>
               </ul>
-              <div class="footer-seal mt-4">
-                <img src="../../assets/footerimg.jpeg" alt="Government Seal" class="img-fluid rounded shadow-sm" style="max-width: 120px;" />
+              <div class="footer-seal mt-2">
+                <img src="../../assets/footerimg.jpeg" alt="Government Seal" class="img-fluid rounded shadow-sm" style="max-width: 90px;" />
               </div>
             </div>
           </div>
@@ -131,7 +136,7 @@
 }
 
 .footer-top {
-  padding: 80px 0 50px;
+  padding: 25px 0 15px 0 !important;
   background-image: linear-gradient(to bottom, #008E9B 0%, #001a38 100%);
   border-top: 5px solid #008E9B;
 }
@@ -140,9 +145,9 @@
   color: #fff;
   font-size: 1.25rem;
   font-weight: 800;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   position: relative;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -180,10 +185,13 @@
 .footer-links {
   padding: 0;
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .footer-links li {
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .footer-links li a {
@@ -191,6 +199,9 @@
   text-decoration: none;
   font-size: 0.9rem;
   transition: all 0.3s;
+  padding: 2px 0;
+  line-height: 1.3;
+  display: inline-block;
 }
 
 .footer-links li a:hover {
@@ -201,7 +212,7 @@
 .map-container {
   border-radius: 15px;
   overflow: hidden;
-  height: 180px;
+  height: 130px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
@@ -255,28 +266,28 @@
 }
 
 .footer-bottom {
-  padding: 22px 0;
+  padding: 8px 0;
   background: #00132b;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .copyright-text {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.85);
   letter-spacing: 0.3px;
 }
 
 .last-updated-text {
   margin: 4px 0 0;
-  font-size: 0.78rem;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.2px;
 }
 
 .developer-text {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.75);
 }
 
@@ -306,7 +317,7 @@
     margin-bottom: 40px;
   }
   .footer-bottom {
-    padding: 18px 0;
+    padding: 8px 0;
   }
 }
 </style>

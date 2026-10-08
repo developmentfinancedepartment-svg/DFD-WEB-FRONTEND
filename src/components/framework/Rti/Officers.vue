@@ -151,7 +151,7 @@ export default {
   overflow-x: hidden;
   background: linear-gradient(135deg, #f8faff 0%, #f0f5ff 100%);
   min-height: 100vh;
-  padding-top: 100px;
+  padding-top: 130px;
 }
 
 /* Header Section */

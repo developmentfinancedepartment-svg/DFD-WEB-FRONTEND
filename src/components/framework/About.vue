@@ -14,14 +14,45 @@
               <i class="fas fa-eye"></i>
             </div>
             <h3>Vision</h3>
-            <p>Your Vision.</p>
+            <p>To become the key Government agency as facilitator for development financing.</p>
           </div>
           <div class="content-card">
             <div class="card-icon">
               <i class="fas fa-bullseye"></i>
             </div>
             <h3>Mission</h3>
-            <p>Your Mission.</p>
+            <p>Facilitate to formulate appropriate policies and strategies and mobilize financial resources for the development of MSMEs, financing primary sectors through necessary intervention with the relevant stakeholders.</p>
+          </div>
+        </div>
+
+        <div class="objectives-section">
+          <div class="objectives-header">
+            <div class="header-icon" style="background: linear-gradient(135deg, #008795 0%, #00e5ff 100%);">
+              <i class="fas fa-flag"></i>
+            </div>
+            <h3>Our Objectives</h3>
+          </div>
+          <div class="objectives-list">
+            <div class="objective-item">
+              <div class="check-icon"><i class="fas fa-check"></i></div>
+              <p>Mobilize the financial resources and removal of the market impediments for the development of MSMEs.</p>
+            </div>
+            <div class="objective-item">
+              <div class="check-icon"><i class="fas fa-check"></i></div>
+              <p>Strengthen institutional capacities for development of financial markets.</p>
+            </div>
+            <div class="objective-item">
+              <div class="check-icon"><i class="fas fa-check"></i></div>
+              <p>Enhance rural entrepreneurship especially for low income entrepreneurs.</p>
+            </div>
+            <div class="objective-item">
+              <div class="check-icon"><i class="fas fa-check"></i></div>
+              <p>Financing for primary sector in line with Government policy framework.</p>
+            </div>
+            <div class="objective-item">
+              <div class="check-icon"><i class="fas fa-check"></i></div>
+              <p>Implementation of relevant budget proposals of each year.</p>
+            </div>
           </div>
         </div>
 
@@ -35,67 +66,44 @@
           <div class="responsibility-list">
             <div class="responsibility-item">
               <span class="item-number">01</span>
-              <p>Your Responsibility.</p>
+              <p>Facilitate to formulate appropriate polices, strategies and programs for the development of MSMEs of the economy.</p>
             </div>
             <div class="responsibility-item">
               <span class="item-number">02</span>
-              <p>Your Responsibility.</p>
+              <p>Monitor and Review the market data to Identify key issues and provide solutions to the smooth growth of the MSMEs and micro finance sectors.</p>
             </div>
             <div class="responsibility-item">
               <span class="item-number">03</span>
-              <p>Your Responsibility.</p>
+              <p>Review Government Subsidy Schemes to ensure economic development and facilitate to formulate appropriate polices.</p>
             </div>
             <div class="responsibility-item">
               <span class="item-number">04</span>
-              <p>Your Responsibility.</p>
+              <p>Facilitate innovative policies, strategies and programs where ever necessary for micro finance sector.</p>
             </div>
             <div class="responsibility-item">
               <span class="item-number">05</span>
-              <p>Your Responsibility.</p>
+              <p>Facilitate in enacting legislations for banking, insurance, MSMEs and financial sector if the market review illustrates the need.</p>
             </div>
             <div class="responsibility-item">
               <span class="item-number">06</span>
-              <p>Your Responsibility.</p>
+              <p>Implement budget proposals and donor funded projects related to MSME sector, primary sector and other sectors coming under the purview of this department.</p>
             </div>
             <div class="responsibility-item">
               <span class="item-number">07</span>
-              <p>Your Responsibility.</p>
+              <p>Compile all data on MSME’s of Industrial, Agriculture and Service sectors and analyze to identify the impediments and policy interventions.</p>
             </div>
             <div class="responsibility-item">
               <span class="item-number">08</span>
-              <p>Your Responsibility.</p>
+              <p>Facilitate annual budget preparation process of the Government in respect of MSME sector, Banking sector and financial market and other sectors coming under the purview of this department.</p>
             </div>
             <div class="responsibility-item">
               <span class="item-number">09</span>
-              <p>Your Responsibility.</p>
+              <p>Oversee implementation of Government sponsored financial assistance schemes.</p>
             </div>
             <div class="responsibility-item">
               <span class="item-number">10</span>
-              <p>Your Responsibility.</p>
+              <p>Arranging local bank financing for development projects in MSME finance sectors in line with the Government policy.</p>
             </div>
-          </div>
-        </div>
-
-        <div class="documents-section">
-          <div class="section-header-small">
-            <h3 class="section-title-secondary">Example Official <span class="highlight">Documents</span></h3>
-            <div class="title-underline-secondary"></div>
-          </div>
-          
-          <div class="download-card">
-            <div class="download-content">
-              <div class="download-icon">
-                <i class="fas fa-file-pdf"></i>
-              </div>
-              <div>
-                <h3>Example Charter</h3>
-                <p>Example Charter Document</p>
-              </div>
-            </div>
-            <a href="" download class="download-btn">
-              <i class="fas fa-download"></i>
-              Download PDF
-            </a>
           </div>
         </div>
       </div>
@@ -109,7 +117,7 @@
   color: #102741;
   background: #f7fbff;
   overflow-x: hidden;
-  padding-top: 100px;
+  padding-top: 130px;
 }
 
 /* About Section */
@@ -133,7 +141,7 @@
 
 .section-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin: 10px 0 24px 0;
 }
 
 .section-title {
@@ -214,6 +222,74 @@
   font-size: 0.95rem;
 }
 
+/* Objectives Section */
+.objectives-section {
+  background: linear-gradient(135deg, #fff 0%, #f7fbff 100%);
+  border-radius: 25px;
+  padding: 50px;
+  box-shadow: 0 25px 70px rgba(2, 16, 47, 0.06);
+  margin-bottom: 50px;
+}
+
+.objectives-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid rgba(3, 43, 95, 0.08);
+}
+
+.objectives-header h3 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #008795;
+}
+
+.objectives-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.objective-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 25px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.objective-item:hover {
+  transform: translateX(5px);
+  background: #ffffff;
+  border-color: #00e5ff;
+  box-shadow: 0 15px 40px rgba(0, 135, 149, 0.1);
+}
+
+.check-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #008795 0%, #00e5ff 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.objective-item p {
+  margin: 0;
+  color: #4f647d;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
 /* Responsibility Section */
 .responsibility-section {
   background: linear-gradient(135deg, #fff 0%, #f7fbff 100%);
@@ -292,114 +368,11 @@
   font-size: 0.95rem;
 }
 
-/* Documents Section */
-.documents-section {
-  margin-top: 60px;
-}
-
-.section-header-small {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.section-title-secondary {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #008E9B;
-  margin-bottom: 15px;
-}
-
-.title-underline-secondary {
-  width: 60px;
-  height: 4px;
-  background: linear-gradient(90deg, #008E9B, #00B4C5);
-  margin: 0 auto;
-  border-radius: 999px;
-}
-
-/* Download Card */
-.download-card {
-  background: linear-gradient(135deg, #eef6ff 0%, #e8f4ff 100%);
-  border: 2px solid #008E9B;
-  border-radius: 20px;
-  padding: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.download-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 142, 155, 0.15);
-  border-color: #00B4C5;
-}
-
-.download-content {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-
-.download-icon {
-  width: 70px;
-  height: 70px;
-  border-radius: 15px;
-  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  flex-shrink: 0;
-}
-
-.download-card h3 {
-  margin: 0 0 8px;
-  font-size: 1.3rem;
-  color: #008E9B;
-  font-weight: 700;
-}
-
-.download-card p {
-  margin: 0;
-  color: #4f647d;
-  font-size: 0.9rem;
-}
-
-.download-btn {
-  background: linear-gradient(135deg, #008E9B 0%, #084D52 100%);
-  color: #fff;
-  padding: 14px 28px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  font-weight: 700;
-  white-space: nowrap;
-  transition: all 0.3s ease;
-}
-
-.download-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(3, 43, 95, 0.25);
-  color: #fff;
-}
-
 
 
 @media (max-width: 991px) {
   .content-grid {
     grid-template-columns: 1fr;
-  }
-
-  .download-card {
-    flex-direction: column;
-    align-items: flex-start;
   }
 
   .section-title {
@@ -428,12 +401,9 @@
     height: 180px;
   }
 
+  .objectives-section,
   .responsibility-section {
     padding: 30px;
-  }
-
-  .download-card {
-    padding: 25px;
   }
 
   .section-header {

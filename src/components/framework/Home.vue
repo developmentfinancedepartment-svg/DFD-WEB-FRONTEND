@@ -3,20 +3,37 @@
     <!-- Hero / Slider Section -->
     <div class="hero-section">
       <div class="hero-image-box">
-        <transition-group name="fade" tag="div" class="slide-container">
-          <img
-            v-for="(img, index) in heroImages"
-            :key="'slide-' + index"
-            :src="img"
-            v-show="currentSlide === index"
-            alt="Hero Banner"
-            class="hero-banner"
-          />
-        </transition-group>
+        <div class="slide-container">
+          <div class="slides-wrapper">
+            <div
+              v-for="(slide, index) in slides"
+              :key="'slide-layer-' + index"
+              class="slide-layer"
+              :class="{ active: currentSlide === index }"
+            >
+              <img
+                :src="slide.image"
+                alt="Hero Banner"
+                class="hero-banner"
+              />
+            </div>
+            <div class="hero-overlay">
+              <p class="hero-tagline">{{ slides[currentSlide].tagline }}</p>
+              <div class="hero-title">
+                <div class="title-line-1">From Rural Dreams to</div>
+                <div class="title-line-2">Financial Support</div>
+                <div class="title-line-3">for a Stronger Sri Lanka.</div>
+              </div>
+              <router-link :to="slides[currentSlide].link" class="hero-btn">
+                <i class="fas fa-file-invoice-dollar"></i> Read More &rarr;
+              </router-link>
+            </div>
+          </div>
+        </div>
 
         <div class="slider-dots">
           <span
-            v-for="(_, index) in heroImages"
+            v-for="(_, index) in slides"
             :key="'dot-' + index"
             class="dot"
             :class="{ active: currentSlide === index }"
@@ -47,28 +64,7 @@
           >
             <div class="card-glass">
               <div class="icon-wrapper">
-                <img :src="service.image" :alt="service.title" />
-              </div>
-              <div class="card-content">
-                <h3>{{ service.title }}</h3>
-                <p>{{ service.description }}</p>
-                <router-link :to="service.link" class="read-more-btn">
-                  Explore More <i class="fas fa-chevron-right"></i>
-                </router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="services-grid secondary-grid animate-fade-up">
-          <div
-            class="service-card"
-            v-for="(service, index) in secondaryServices"
-            :key="index"
-          >
-            <div class="card-glass">
-              <div class="icon-wrapper">
-                <img :src="service.image" :alt="service.title" />
+                <i :class="service.icon"></i>
               </div>
               <div class="card-content">
                 <h3>{{ service.title }}</h3>
@@ -99,13 +95,13 @@
           </div>
           <div class="col-lg-6">
             <div class="about-content">
-              <h2 class="about-title">
-                your department <span class="gold-text"></span>
-              </h2>
-              <p class="about-text">Your Department Responsibilities</p>
-              <router-link to="/About" class="primary-btn"
-                >Learn More About Us</router-link
-              >
+              <h2 class="about-title">We are DFD</h2>
+              <p class="about-text">
+                Empowering rural communities and driving sustainable economic development through accessible financial solutions, supporting small enterprises, and fostering inclusive growth across Sri Lanka.
+              </p>
+              <router-link to="/About" class="primary-btn">
+                Learn More About Us
+              </router-link>
             </div>
           </div>
         </div>
@@ -161,14 +157,8 @@
 </template>
 
 <script>
-import swImg from "../../assets/service.png";
-import hwImg from "../../assets/service.png";
-import nwImg from "../../assets/service.png";
-import knowledgeImg from "../../assets/service.png";
-
 import adg1Img from "../../assets/profile.png";
 import adg2Img from "../../assets/profile.png";
-import eventImg from "../../assets/service.png";
 
 import hero1 from "@/assets/hero-banner.jpg";
 import hero2 from "@/assets/hero-banner-2.jpg";
@@ -177,43 +167,71 @@ export default {
   name: "Home",
   data() {
     return {
-      heroImages: [hero1, hero2],
+      slides: [
+        {
+          image: hero1,
+          tagline: "🌱 EMPOWERING PEOPLE • GROWING COMMUNITIES",
+          title: "From Rural Dreams to <span style='color:#00e5ff'>Financial Support</span> for a Stronger Sri Lanka",
+          link: "/about"
+        },
+        {
+          image: hero2,
+          tagline: "🌱 EMPOWERING PEOPLE • GROWING COMMUNITIES",
+          title: "From Rural Dreams to <span style='color:#00e5ff'>Financial Support</span> for a Stronger Sri Lanka",
+          link: "/about"
+        }
+      ],
       currentSlide: 0,
       slideInterval: null,
       services: [
         {
-          title: "Your Services",
-          description: "services description",
-          image: swImg,
-          link: "/development",
+          title: "Re-MSME Plus Loan Scheme",
+          description: "Financial assistance and concessionary loans up to Rs. 25M for Micro, Small, and Medium Enterprises.",
+          icon: "fas fa-store",
+          link: "/services/re-msme-plus",
         },
         {
-          title: "Your Services",
-          description: "services description",
-          image: hwImg,
-          link: "/hardware",
+          title: "NPA Borrower Relief Scheme (NPL)",
+          description: "Concessionary support up to Rs. 15M to assist and revive non-performing asset borrowers.",
+          icon: "fas fa-life-ring",
+          link: "/services/npl-relief",
         },
         {
-          title: "Your Services",
-          description: "services description",
-          image: nwImg,
-          link: "/network",
-        },
-      ],
-      secondaryServices: [
-        {
-          title: "Your Services",
-          description: "services description",
-          image: knowledgeImg,
-          link: "/KnowledgeSharing",
+          title: "Food Security Project (FSLRP)",
+          description: "Credit support up to Rs. 5M focused on agricultural food security and livelihood recovery.",
+          icon: "fas fa-seedling",
+          link: "/services/fslrp",
         },
         {
-          title: "Event Calendar",
-          description:
-            "Stay updated with our upcoming events, workshops, and internal activities. View our comprehensive monthly calendar to plan your schedules.",
-          image: eventImg,
-          link: "/Calendar",
+          title: "Working Capital Loan Scheme",
+          description: "Short-term and operational liquidity loans up to Rs. 1.5M for ongoing business needs.",
+          icon: "fas fa-coins",
+          link: "/services/working-capital",
         },
+        {
+          title: "SMELoC Credit Facility (ADB)",
+          description: "ADB-funded revolving credit line up to Rs. 50M empowering competitive SME enterprises.",
+          icon: "fas fa-chart-line",
+          link: "/services/smeloc-adb",
+        },
+        {
+          title: "Agribusiness Value Chain (AVC)",
+          description: "Financing up to Rs. 75M to integrate modern technologies and supply chains into agriculture.",
+          icon: "fas fa-tractor",
+          link: "/services/avc",
+        },
+        {
+          title: "Smallholder Dairy Development (SDP)",
+          description: "Targeted capital loan scheme up to Rs. 75M for dairy farming operations.",
+          icon: "fas fa-cow",
+          link: "/services/sdp",
+        },
+        {
+          title: "Rural Credit Scheme (NCRCS - Agriculture)",
+          description: "Comprehensive cultivation and agricultural loans up to Rs. 3M for rural farmers.",
+          icon: "fas fa-hand-holding-usd",
+          link: "/services/ncrcs",
+        }
       ],
       management: [
         {
@@ -252,7 +270,7 @@ export default {
     startSlider() {
       this.slideInterval = setInterval(() => {
         this.nextSlide();
-      }, 5000);
+      }, 7500);
     },
     stopSlider() {
       if (this.slideInterval) {
@@ -261,7 +279,7 @@ export default {
       }
     },
     nextSlide() {
-      this.currentSlide = (this.currentSlide + 1) % this.heroImages.length;
+      this.currentSlide = (this.currentSlide + 1) % this.slides.length;
     },
     goToSlide(index) {
       this.currentSlide = index;
@@ -273,6 +291,8 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&display=swap');
+
 /* Original Color Palette Refined */
 :root {
   --primary-blue: #008e9b;
@@ -296,7 +316,7 @@ export default {
   position: relative;
   width: 100%;
   max-width: 100%;
-  margin-top: 65px !important;
+  margin-top: 0;
   margin-bottom: 0;
   margin-left: 0;
   margin-right: 0;
@@ -307,12 +327,12 @@ export default {
   position: relative;
   width: 100%;
   max-width: 100%;
-  height: calc(100vh - 65px);
+  height: clamp(520px, 48vw, 750px);
   margin: 0;
   padding: 0;
   line-height: 0;
   overflow: hidden;
-  background-color: #008e9b;
+  background-color: #022027;
 }
 
 .slide-container {
@@ -321,26 +341,135 @@ export default {
   height: 100%;
 }
 
+.slides-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #022027;
+}
+
+.slides-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(2, 36, 45, 0.78) 0%, rgba(2, 36, 45, 0.5) 40%, transparent 100%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.slide-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+  z-index: 1;
+}
+
+.slide-layer.active {
+  opacity: 1;
+  z-index: 2;
+}
+
 .hero-banner {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100vh - 65px);
-  object-fit: fill;
-  object-position: top center;
+  height: 100%;
+  object-fit: cover !important;
+  object-position: center bottom !important;
   display: block;
 }
 
-/* Cross-fade transition */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1.2s ease-in-out;
+.hero-overlay {
+  position: absolute;
+  top: 48%;
+  transform: translateY(-50%);
+  left: 5%;
+  max-width: 620px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
-.fade-enter-from,
-.fade-leave-to,
-.fade-enter {
-  opacity: 0;
+
+.hero-tagline {
+  color: #20c997;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin-bottom: 2rem;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.title-line-1 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  /* text-shadow: 2px 2px 4px rgba(238, 236, 236, 0.8); */
+}
+
+.title-line-2 {
+  font-size: 46px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #00e5ff;
+  /* text-shadow: 2px 2px 4px rgba(0,0,0,0.8); */
+}
+
+.title-line-3 {
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  /* text-shadow: 2px 2px 4px rgba(0,0,0,0.8); */
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 36px;
+  /* background: linear-gradient(135deg, #00c6ff, #0072ff); */
+  background: transparent;
+  border: 2px solid #00c6ff;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
+}
+
+.hero-btn i {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.hero-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 198, 255, 0.6);
+  color: #ffffff;
 }
 
 /* Slider Dots */
@@ -471,27 +600,28 @@ export default {
   width: 70px;
   height: 70px;
   margin: 0 auto 20px;
-  background: #f0f7ff;
+  background: #008795;
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 135, 149, 0.2);
 }
 
-.service-card:hover .icon-wrapper {
-  background: #008e9b;
-}
-
-.icon-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.icon-wrapper i {
+  color: white;
+  font-size: 30px;
   transition: all 0.3s ease;
 }
 
-.service-card:hover .icon-wrapper img {
+.service-card:hover .icon-wrapper {
+  transform: scale(1.05);
+  background: #00a0b0;
+}
+
+.service-card:hover .icon-wrapper i {
   transform: scale(1.1);
 }
 
@@ -577,6 +707,7 @@ export default {
 .about-title {
   font-size: 2.5rem;
   font-weight: 800;
+  color: #ffffff;
   margin-bottom: 25px;
   line-height: 1.2;
 }
@@ -595,19 +726,20 @@ export default {
 .primary-btn {
   display: inline-block;
   padding: 14px 32px;
-  background: #008e9b;
+  background: #00606b;
   color: #fff;
   font-weight: 700;
   border-radius: 50px;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 20px rgba(0, 142, 155, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 96, 107, 0.2);
 }
 
 .primary-btn:hover {
-  background: white;
-  color: #008e9b;
+  background: #004d56;
+  color: #fff;
   transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 96, 107, 0.3);
 }
 
 /* Management Section */

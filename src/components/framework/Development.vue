@@ -84,7 +84,7 @@ export default {
   background: #f7fbff;
   color: #102741;
   overflow-x: hidden;
-  padding-top: 105px;
+  padding-top: 130px;
 }
 
 .development-section {
@@ -99,7 +99,7 @@ export default {
 /* ── Section Header ── */
 .section-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin: 10px 0 24px 0;
 }
 
 .section-title {

@@ -1,7 +1,8 @@
 <template>
-  <header class="main-header" :class="{ 'header-scrolled': isScrolled }">
-    <!-- Top Bar: Social, Translate, Disclaimer -->
-    <div class="top-bar d-none d-lg-flex">
+  <div class="header-wrapper">
+    <header class="main-header" :class="{ 'navbar-scrolled': isScrolled || !isHomePage }">
+      <!-- Top Bar: Social, Translate, Disclaimer -->
+      <div class="top-bar d-none d-lg-flex">
       <div class="container-fluid d-flex justify-content-end align-items-center gap-4">
         <div class="top-right d-flex align-items-center gap-4">
           <div class="social-links">
@@ -38,7 +39,7 @@
           <div class="brand-wrapper">
             <img src="../../assets/national-emblem.svg" class="gov-logo" alt="National Emblem" />
             <div class="brand-divider"></div>
-            <img src="../../assets/dfd-logo.png" class="dfd-logo" alt="DFD Logo" />
+            <!-- <img src="../../assets/dfd-logo.png" class="dfd-logo" alt="DFD Logo" /> -->
             <div class="brand-text d-none d-md-block">
               <div class="dept-name">
                 <span class="dept-small">DEPARTMENT OF</span>
@@ -63,70 +64,80 @@
         </button>
 
         <!-- Nav Links -->
-        <div class="collapse navbar-collapse" :class="{ show: !isCollapsed }">
-          <ul class="navbar-nav ms-auto align-items-xl-center">
+        <div class="collapse navbar-collapse d-xl-flex justify-content-between" :class="{ show: !isCollapsed }">
+          <ul class="navbar-nav mx-auto align-items-xl-center">
             <li class="nav-item"><router-link to="/" class="nav-link" @click="closeNavbar">Home</router-link></li>
-            <li class="nav-item dropdown dropdown-hover">
-              <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                About us
-              </a>
-              <ul class="dropdown-menu shadow-lg" aria-labelledby="aboutDropdown">
-                <li><router-link to="/About" class="dropdown-item" @click="closeNavbar">About Us</router-link></li>
-                <li><router-link to="/OurTeam" class="dropdown-item" @click="closeNavbar">Team </router-link></li>
-              </ul>
-            </li>
+            <li class="nav-item"><router-link to="/About" class="nav-link" @click="closeNavbar">About Us</router-link></li>
             <li class="nav-item"><router-link to="/Services" class="nav-link" @click="closeNavbar">Services</router-link></li>
-            <li class="nav-item"><router-link to="/Systems" class="nav-link" @click="closeNavbar">Systems</router-link></li>
-            <li class="nav-item"><router-link to="/Actionplan" class="nav-link" @click="closeNavbar">Publications</router-link></li>
-            <li class="nav-item dropdown dropdown-hover">
-              <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Events
-              </a>
-              <ul class="dropdown-menu shadow-lg" aria-labelledby="eventsDropdown">
-                <li><router-link to="/Calendar" class="dropdown-item" @click="closeNavbar">Calendar</router-link></li>
-                <li><router-link to="/KnowledgeSharing" class="dropdown-item" @click="closeNavbar">Knowledge Sharing Program</router-link></li>
-              </ul>
-            </li>
-            <li class="nav-item"><router-link to="/Officers" class="nav-link" @click="closeNavbar">RTI</router-link></li>
-            <li class="nav-item"><router-link to="/Teldirec" class="contact-btn" @click="closeNavbar">Contact Us</router-link></li>
+            <li class="nav-item"><router-link to="/Publication" class="nav-link" @click="closeNavbar">Publications</router-link></li>
             
-            <!-- Search Bar -->
-            <!-- <li class="nav-item search-container-wrapper ms-xl-3 mt-3 mt-xl-0">
-              <div class="search-container position-relative w-100">
-                <input 
-                  type="text" 
-                  class="search-input form-control form-control-sm rounded-pill pe-4" 
-                  placeholder="Search..." 
-                  v-model="searchQuery"
-                  @focus="isSearchFocused = true"
-                  @blur="handleBlur"
-                />
-                <i class="fas fa-search search-icon"></i> -->
-                
-                <!-- Search Results Dropdown -->
-                <!-- <div v-if="isSearchFocused && searchQuery" class="search-results-dropdown shadow-lg rounded">
-                  <div v-if="searchResults.length > 0">
-                    <div 
-                      v-for="result in searchResults" 
-                      :key="result.path" 
-                      class="search-result-item" 
-                      @mousedown.prevent="goToPage(result.path)"
-                    >
-                      <div class="result-title">{{ result.title }}</div>
-                      <div class="result-desc text-muted small">{{ getSnippet(result.content, searchQuery) }}</div>
-                    </div>
-                  </div>
-                  <div v-else class="p-3 text-muted small text-center">
-                    No results found for "{{ searchQuery }}".
+            <!-- Events Dropdown -->
+            <li 
+              class="nav-item dropdown-events"
+              @mouseenter="openEvents"
+              @mouseleave="closeEvents"
+            >
+              <a 
+                href="#" 
+                class="nav-link" 
+                @click.prevent="toggleEvents"
+              >
+                Events 
+                <i class="fas fa-chevron-down ms-1 chevron-icon" :class="{ 'rotated': isEventsOpen }"></i>
+              </a>
+              <transition name="dropdown-fade">
+                <div class="events-dropdown-menu shadow-sm" v-show="isEventsOpen">
+                  <router-link to="/events/gallery" class="events-dropdown-item" @click="closeNavbarAndEvents">
+                    <i class="fas fa-images icon-box"></i> Gallery
+                  </router-link>
+                  <router-link to="/events/field-visits" class="events-dropdown-item" @click="closeNavbarAndEvents">
+                    <i class="fas fa-walking icon-box"></i> Field Visits
+                  </router-link>
+                </div>
+              </transition>
+            </li>
+            
+            <li class="nav-item"><router-link to="/Teldirec" class="nav-link" @click="closeNavbar">Contact</router-link></li>
+          </ul>
+          
+          <div class="search-container-wrapper mt-3 mt-xl-0">
+            <div class="search-container position-relative">
+              <input 
+                type="text" 
+                class="search-input custom-search-pill" 
+                placeholder="Search..." 
+                v-model="searchQuery"
+                @focus="isSearchFocused = true"
+                @blur="handleBlur"
+              />
+              <button class="search-btn-circle" @click="handleSearch">
+                <i class="fas fa-search"></i>
+              </button>
+              
+              <!-- Search Results Dropdown -->
+              <div v-if="isSearchFocused && searchQuery" class="search-results-dropdown shadow-lg rounded">
+                <div v-if="searchResults.length > 0">
+                  <div 
+                    v-for="result in searchResults" 
+                    :key="result.path" 
+                    class="search-result-item" 
+                    @mousedown.prevent="goToPage(result.path)"
+                  >
+                    <div class="result-title">{{ result.title }}</div>
+                    <div class="result-desc text-muted small">{{ getSnippet(result.content, searchQuery) }}</div>
                   </div>
                 </div>
+                <div v-else class="p-3 text-muted small text-center">
+                  No results found for "{{ searchQuery }}".
+                </div>
               </div>
-            </li> -->
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
   </header>
+  </div>
 </template>
 
 <script>
@@ -139,10 +150,15 @@ export default {
       isScrolled: false,
       searchQuery: '',
       isSearchFocused: false,
-      searchIndex: searchIndexData
+      searchIndex: searchIndexData,
+      isEventsOpen: false,
+      isMobile: false
     };
   },
   computed: {
+    isHomePage() {
+      return this.$route.path === '/';
+    },
     searchResults() {
       if (!this.searchQuery) return [];
       const query = this.searchQuery.toLowerCase();
@@ -153,7 +169,9 @@ export default {
     }
   },
   mounted() {
+    this.handleResize();
     window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleResize);
 
     // Dynamic Google Translate Injection for Vue SPA
     window.VueGoogleTranslateInit = () => {
@@ -179,10 +197,37 @@ export default {
   },
   unmounted() {
     window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('resize', this.handleResize);
   },
   methods: {
+    handleResize() {
+      this.isMobile = window.innerWidth < 1200;
+      if (!this.isMobile) this.isEventsOpen = false;
+    },
+    toggleEvents() {
+      if (this.isMobile) {
+        this.isEventsOpen = !this.isEventsOpen;
+      }
+    },
+    openEvents() {
+      if (!this.isMobile) {
+        this.isEventsOpen = true;
+      }
+    },
+    closeEvents() {
+      if (!this.isMobile) {
+        this.isEventsOpen = false;
+      }
+    },
+    closeNavbarAndEvents() {
+      this.closeNavbar();
+      this.isEventsOpen = false;
+    },
+    handleSearch() {
+      // Search logic placeholder
+    },
     handleScroll() {
-      this.isScrolled = window.scrollY > 50;
+      this.isScrolled = window.scrollY > 40;
     },
     toggleNavbar() {
       this.isCollapsed = !this.isCollapsed;
@@ -228,28 +273,25 @@ export default {
 
 <style scoped>
 .main-header {
-  position:fixed;
-  top: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  z-index: 1050;
+  z-index: 1000;
   transition: all 0.3s ease;
 }
 
 .top-bar {
-  background: #008E9B;
+  background: #008795;
   padding: 6px 2%;
   height: 38px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
-}
-
-.header-scrolled .top-bar {
-  height: 0;
-  padding: 0;
-  opacity: 0;
-  overflow: hidden;
+  position: relative;
+  z-index: 1001;
+  width: 100%;
 }
 
 .top-link {
@@ -295,17 +337,19 @@ export default {
 .social-icon:hover, .social-icon:focus { color: #A5F3FC; outline: none; }
 
 .primary-nav {
-  background: rgba(3, 43, 95, 0.95);
-  backdrop-filter: blur(10px);
+  background: transparent;
+  box-shadow: none !important;
+  border-bottom: none !important;
   padding: 4px 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+  transition: background-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
 }
 
-.header-scrolled .primary-nav {
+.navbar-scrolled .primary-nav {
   padding: 4px 8px;
-  background: #008E9B;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  background: #008e9b;
+  backdrop-filter: blur(10px);
+  box-shadow: none !important;
+  border-bottom: none !important;
 }
 
 .brand-wrapper {
@@ -336,15 +380,25 @@ export default {
 .dept-small {
   font-size: 1.05rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 2px;
+  transition: color 0.3s ease;
+}
+
+.navbar-scrolled .dept-small {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .dept-main {
   font-size: 1.95rem;
   font-weight: 800;
-  letter-spacing: 0.5px;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.navbar-scrolled .dept-main {
   color: #ffffff;
 }
 
@@ -357,29 +411,41 @@ export default {
 .dept-name:hover .dept-main {
   filter: drop-shadow(0 0 15px rgba(0, 180, 197, 0.6));
 }
+
 .nav-link {
-  color: white !important;
-  font-weight: 700 !important; /* එකම font-weight එකක් තබන්න */
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  padding: 8px 10px !important;
-  letter-spacing: 0.5px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #0c2a38 !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  padding: 8px 15px !important;
+  transition: all 0.3s ease;
   display: inline-block;
   position: relative;
+  opacity: 0.8;
 }
 
-/* Hover කළ විට සහ Active (Select) වූ විට පාට සහ font-weight */
-.nav-link:hover, 
+.navbar-scrolled .nav-link {
+  color: #ffffff !important;
+}
+
+.nav-link:hover { 
+  opacity: 1 !important;
+}
+
 .nav-link.active,
 .router-link-active,
 .router-link-exact-active,
 .router-link-active .nav-link,
 .router-link-exact-active .nav-link { 
-  color: #ffffff !important;
+  color: #007c91 !important;
   opacity: 1 !important;
-  visibility: visible !important;
-  font-weight: 700 !important; 
+}
+
+.navbar-scrolled .nav-link.active,
+.navbar-scrolled .router-link-active,
+.navbar-scrolled .router-link-exact-active,
+.navbar-scrolled .router-link-active .nav-link,
+.navbar-scrolled .router-link-exact-active .nav-link { 
+  color: #00e5ff !important;
 }
 
 /* Active Highlight Indicator */
@@ -389,21 +455,99 @@ export default {
   content: '';
   position: absolute;
   bottom: 0px;
-  left: 10%;
-  width: 80%;
-  height: 3px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #007c91;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-scrolled .nav-link.active::after,
+.navbar-scrolled .nav-link.router-link-active::after,
+.navbar-scrolled .nav-link.router-link-exact-active::after {
   background-color: #00e5ff;
-  border-radius: 2px;
 }
 
-/* Hover effect එක පමණක් */
-.nav-link:hover {
-  font-size: 0.85rem;
-  transform: translateY(-4px) scale(1.1);
-  text-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+/* Events Dropdown Styles */
+.dropdown-events {
+  position: relative;
 }
 
-/* Dropdown Styles */
+.chevron-icon {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.chevron-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.events-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border-radius: 10px;
+  min-width: 200px;
+  padding: 8px 0;
+  margin-top: 5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1199px) {
+  .events-dropdown-menu {
+    position: static;
+    box-shadow: none !important;
+    background: transparent;
+    padding-left: 15px;
+    margin-top: 0;
+  }
+  .events-dropdown-item {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .events-dropdown-item:hover, .events-dropdown-item.router-link-active {
+    background: rgba(255, 255, 255, 0.1);
+    color: #A5F3FC;
+  }
+  .icon-box {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.events-dropdown-item {
+  color: #0c2a38;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 12px 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.events-dropdown-item:hover, .events-dropdown-item.router-link-active {
+  background: #f0fbfc;
+  color: #008795;
+}
+
+.icon-box {
+  width: 24px;
+  text-align: center;
+  color: #008795;
+}
+
+.dropdown-fade-enter-active, .dropdown-fade-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.dropdown-fade-enter-from, .dropdown-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Old Dropdown Styles */
 .dropdown-hover .dropdown-menu {
   background: rgba(3, 43, 95, 0.95);
   backdrop-filter: blur(10px);
@@ -502,33 +646,67 @@ export default {
   align-items: center;
 }
 
-.search-input {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.custom-search-pill {
+  background: transparent;
+  border: 1.5px solid #0c2a38;
+  border-radius: 30px;
+  color: #0c2a38;
+  width: 180px;
+  padding: 6px 45px 6px 15px;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.navbar-scrolled .custom-search-pill {
+  border-color: rgba(255, 255, 255, 0.75);
   color: white;
-  width: 150px;
+}
+
+.custom-search-pill:focus {
+  background: rgba(12, 42, 56, 0.05);
+  border-color: #0c2a38;
+  outline: none;
+  width: 220px;
+}
+
+.navbar-scrolled .custom-search-pill:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
+}
+
+.custom-search-pill::placeholder {
+  color: rgba(12, 42, 56, 0.7);
+  transition: color 0.3s ease;
+}
+
+.navbar-scrolled .custom-search-pill::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-btn-circle {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.search-input:focus {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: #008E9B;
-  color: white;
-  box-shadow: 0 0 0 0.2rem rgba(0, 142, 155, 0.25);
-  width: 180px;
+.navbar-scrolled .search-btn-circle {
+  color: #ffffff;
 }
 
-.search-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.search-icon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.6);
-  pointer-events: none;
+.search-btn-circle:hover {
+  background-color: #00a896;
 }
 
 .search-results-dropdown {

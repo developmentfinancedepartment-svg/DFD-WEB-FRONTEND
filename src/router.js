@@ -12,6 +12,7 @@ import Actionplan from "./components/framework/Actionplan.vue";
 import Preport from "./components/framework/Preport.vue";
 import Inquiries from "./components/framework/Inquiries.vue";
 import Teldirec from "./components/framework/Teldirec.vue";
+import ServiceDetailView from "./views/ServiceDetailView.vue";
 import Officers from "./components/framework/Rti/Officers.vue";
 import Annualrep from "./components/framework/Rti/Annualrep.vue";
 // import Events from "./components/framework/Events.vue";
@@ -68,7 +69,12 @@ const routes = [
   {
     path: "/Services",
     name: "Services",
-    component:Services,
+    component: Services,
+  },
+  {
+    path: "/services/:id",
+    name: "ServiceDetail",
+    component: ServiceDetailView,
   },
   {
     path: "/OurTeam",
@@ -179,7 +185,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

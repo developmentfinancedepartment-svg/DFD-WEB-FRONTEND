@@ -56,7 +56,7 @@ export default defineConfig(({ mode }) => {
       }),
     ].filter(Boolean),
 
-    base: basePath,
+    base: '/dfd-web/',
 
     server: {
       port: basePort,
