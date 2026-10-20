@@ -13,6 +13,9 @@ import Preport from "./components/framework/Preport.vue";
 import Inquiries from "./components/framework/Inquiries.vue";
 import Teldirec from "./components/framework/Teldirec.vue";
 import ServiceDetailView from "./views/ServiceDetailView.vue";
+import GalleryView from "./views/GalleryView.vue";
+import FieldVisitsView from "./views/FieldVisitsView.vue";
+import PublicationsView from "./views/PublicationsView.vue";
 import Officers from "./components/framework/Rti/Officers.vue";
 import Annualrep from "./components/framework/Rti/Annualrep.vue";
 // import Events from "./components/framework/Events.vue";
@@ -75,6 +78,25 @@ const routes = [
     path: "/services/:id",
     name: "ServiceDetail",
     component: ServiceDetailView,
+  },
+  {
+    path: "/Services/:id",
+    redirect: to => `/services/${to.params.id}`,
+  },
+  {
+    path: "/events/gallery",
+    name: "gallery",
+    component: GalleryView,
+  },
+  {
+    path: "/events/field-visits",
+    name: "field-visits",
+    component: FieldVisitsView,
+  },
+  {
+    path: "/publications",
+    name: "publications",
+    component: PublicationsView,
   },
   {
     path: "/OurTeam",

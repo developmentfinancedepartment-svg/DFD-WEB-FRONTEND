@@ -1,11 +1,18 @@
 <template>
   <div class="service-detail-page">
-    <div v-if="service" class="service-container">
+    <div v-if="loading" class="container text-center py-5">
+      <div class="spinner-border text-teal mb-3" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <h5 class="text-muted">Loading scheme details...</h5>
+    </div>
+
+    <div v-else-if="service" class="service-container">
       <!-- Header Badge / Hero -->
       <div class="service-hero">
         <div class="container text-center">
           <div class="hero-icon-box">
-            <i :class="service.icon"></i>
+            <i :class="service.icon || 'fas fa-hand-holding-usd'"></i>
           </div>
           <h1 class="service-title">{{ service.title }}</h1>
           <p class="service-desc-lead">{{ service.description }}</p>
@@ -19,28 +26,28 @@
             <div class="metric-icon"><i class="fas fa-hand-holding-usd"></i></div>
             <div class="metric-info">
               <span class="metric-label">Max Loan Amount</span>
-              <span class="metric-value">{{ service.maxLoan }}</span>
+              <span class="metric-value">{{ service.maxAmount || service.maxLoan || 'N/A' }}</span>
             </div>
           </div>
           <div class="metric-card">
             <div class="metric-icon"><i class="fas fa-percentage"></i></div>
             <div class="metric-info">
               <span class="metric-label">Interest Rate</span>
-              <span class="metric-value">{{ service.interestRate }}</span>
+              <span class="metric-value">{{ service.interestRate || 'N/A' }}</span>
             </div>
           </div>
           <div class="metric-card">
             <div class="metric-icon"><i class="fas fa-calendar-alt"></i></div>
             <div class="metric-info">
               <span class="metric-label">Repayment Period</span>
-              <span class="metric-value">{{ service.repaymentPeriod }}</span>
+              <span class="metric-value">{{ service.repaymentPeriod || 'N/A' }}</span>
             </div>
           </div>
           <div class="metric-card">
             <div class="metric-icon"><i class="fas fa-hourglass-half"></i></div>
             <div class="metric-info">
               <span class="metric-label">Grace Period</span>
-              <span class="metric-value">{{ service.gracePeriod }}</span>
+              <span class="metric-value">{{ service.gracePeriod || 'N/A' }}</span>
             </div>
           </div>
         </div>
@@ -49,25 +56,26 @@
         <div class="details-section">
           <div class="detail-block">
             <h3><i class="fas fa-bullseye me-2 text-teal"></i> Scheme Purpose & Objective</h3>
-            <p>{{ service.objective }}</p>
+            <p>{{ service.purpose || service.objective || service.description || 'No specific objective provided.' }}</p>
           </div>
           
           <div class="detail-block">
             <h3><i class="fas fa-check-circle me-2 text-teal"></i> Eligibility</h3>
-            <p>Applicants must be registered entities or individuals operating within the specified sector. A valid business plan or proof of operational continuity is generally required by the participating financial institution. (Exact eligibility criteria depends on the respective bank's internal policies).</p>
+            <p>{{ service.eligibility || 'Applicants must be registered entities or individuals operating within the specified sector. A valid business plan or proof of operational continuity is generally required by the participating financial institution.' }}</p>
           </div>
 
           <div class="detail-block">
             <h3><i class="fas fa-university me-2 text-teal"></i> Participating Banks</h3>
-            <div class="banks-wrapper">
+            <div class="banks-wrapper" v-if="parsedBanks.length > 0">
               <span 
-                v-for="(bank, index) in service.participatingBanks" 
+                v-for="(bank, index) in parsedBanks" 
                 :key="index" 
                 class="bank-pill"
               >
                 {{ bank }}
               </span>
             </div>
+            <p v-else class="text-muted">No participating banks specified.</p>
           </div>
         </div>
 
@@ -91,13 +99,68 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import axios from 'axios';
+import BaseUrl from '../services/baseURL';
 import { servicesData } from '../data/servicesData';
 
 const route = useRoute();
-const service = computed(() => {
-  return servicesData.find(s => s.id === route.params.id);
+const service = ref(null);
+const loading = ref(true);
+
+const parsedBanks = computed(() => {
+  if (!service.value) return [];
+  const banks = service.value.participatingBanks;
+  if (!banks) return [];
+  if (Array.isArray(banks)) return banks;
+  if (typeof banks === 'string') {
+    return banks.split(',').map(b => b.trim()).filter(Boolean);
+  }
+  return [];
+});
+
+const fetchSchemeDetails = async () => {
+  loading.value = true;
+  const id = route.params.id;
+  const apiBase = BaseUrl.baseUrl || 'http://localhost:8096';
+
+  try {
+    // 1. Fetch from GET /api/v1/services/:id
+    const response = await axios.get(`${apiBase}/api/v1/services/${id}`);
+    if (response.data) {
+      service.value = response.data;
+      loading.value = false;
+      return;
+    }
+  } catch (error) {
+    console.warn(`Failed to fetch /api/v1/services/${id}, attempting fallback:`, error);
+  }
+
+  // Fallback 1: Try /api/schemes/public/:id or finding in /api/schemes/public
+  try {
+    const pubResponse = await axios.get(`${apiBase}/api/schemes/public`);
+    const found = (pubResponse.data || []).find(s => String(s.id) === String(id) || s.title?.toLowerCase() === String(id).toLowerCase());
+    if (found) {
+      service.value = found;
+      loading.value = false;
+      return;
+    }
+  } catch (err) {
+    console.warn('Fallback public list fetch failed:', err);
+  }
+
+  // Fallback 2: Check static servicesData
+  const staticMatch = (servicesData || []).find(s => String(s.id) === String(id));
+  if (staticMatch) {
+    service.value = staticMatch;
+  }
+
+  loading.value = false;
+};
+
+onMounted(() => {
+  fetchSchemeDetails();
 });
 </script>
 

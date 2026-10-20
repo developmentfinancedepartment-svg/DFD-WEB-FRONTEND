@@ -17,15 +17,16 @@
                 class="hero-banner"
               />
             </div>
+            <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent pointer-events-none z-[5] hero-gradient-overlay"></div>
             <div class="hero-overlay">
-              <p class="hero-tagline">{{ slides[currentSlide].tagline }}</p>
+              <p class="hero-tagline text-amber-400">{{ slides[currentSlide].tagline }}</p>
               <div class="hero-title">
-                <div class="title-line-1">From Rural Dreams to</div>
-                <div class="title-line-2">Financial Support</div>
-                <div class="title-line-3">for a Stronger Sri Lanka.</div>
+                <div class="title-line-1">To Strengthen</div> 
+                <div class="title-line-1">The Economy true</div>
+                <div class="title-line-2">Financial Assistance</div>
               </div>
               <router-link :to="slides[currentSlide].link" class="hero-btn">
-                <i class="fas fa-file-invoice-dollar"></i> Read More &rarr;
+                <i class="fas fa-file-invoice-dollar"></i> READ MORE &rarr;
               </router-link>
             </div>
           </div>
@@ -56,25 +57,47 @@
           <div class="title-underline"></div>
         </div>
 
-        <div class="services-grid animate-fade-up">
+        <!-- Loading State -->
+        <div v-if="isLoading" class="text-center py-5">
+          <div class="spinner-border text-teal mb-3" style="color: #008e9b;" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="text-muted">Loading financing schemes...</p>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="error" class="text-center py-4">
+          <p class="text-danger mb-3">{{ error }}</p>
+          <button @click="fetchServices" class="outline-btn btn-sm">
+            <i class="fas fa-redo me-1"></i> Retry
+          </button>
+        </div>
+
+        <!-- Services Grid -->
+        <div v-else-if="services.length > 0" class="services-grid animate-fade-up">
           <div
             class="service-card"
-            v-for="(service, index) in services"
-            :key="index"
+            v-for="service in services"
+            :key="service.id"
           >
             <div class="card-glass">
               <div class="icon-wrapper">
-                <i :class="service.icon"></i>
+                <i :class="service.icon || 'fas fa-hand-holding-usd'"></i>
               </div>
               <div class="card-content">
                 <h3>{{ service.title }}</h3>
-                <p>{{ service.description }}</p>
-                <router-link :to="service.link" class="read-more-btn">
+                <p>{{ service.description || service.short_description || service.summary }}</p>
+                <router-link :to="getSchemeLink(service)" class="read-more-btn">
                   Explore More <i class="fas fa-chevron-right"></i>
                 </router-link>
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- Empty State -->
+        <div v-else class="text-center py-4">
+          <p class="text-muted">No financing schemes available at the moment.</p>
         </div>
       </div>
     </section>
@@ -156,142 +179,135 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import axios from "axios";
+import BaseUrl from "../../services/baseURL";
+import Newsline from "./Newsline.vue";
+
 import adg1Img from "../../assets/profile.png";
 import adg2Img from "../../assets/profile.png";
 
 import hero1 from "@/assets/hero-banner.jpg";
 import hero2 from "@/assets/hero-banner-2.jpg";
 
-export default {
-  name: "Home",
-  data() {
-    return {
-      slides: [
-        {
-          image: hero1,
-          tagline: "🌱 EMPOWERING PEOPLE • GROWING COMMUNITIES",
-          title: "From Rural Dreams to <span style='color:#00e5ff'>Financial Support</span> for a Stronger Sri Lanka",
-          link: "/about"
-        },
-        {
-          image: hero2,
-          tagline: "🌱 EMPOWERING PEOPLE • GROWING COMMUNITIES",
-          title: "From Rural Dreams to <span style='color:#00e5ff'>Financial Support</span> for a Stronger Sri Lanka",
-          link: "/about"
-        }
-      ],
-      currentSlide: 0,
-      slideInterval: null,
-      services: [
-        {
-          title: "Re-MSME Plus Loan Scheme",
-          description: "Financial assistance and concessionary loans up to Rs. 25M for Micro, Small, and Medium Enterprises.",
-          icon: "fas fa-store",
-          link: "/services/re-msme-plus",
-        },
-        {
-          title: "NPA Borrower Relief Scheme (NPL)",
-          description: "Concessionary support up to Rs. 15M to assist and revive non-performing asset borrowers.",
-          icon: "fas fa-life-ring",
-          link: "/services/npl-relief",
-        },
-        {
-          title: "Food Security Project (FSLRP)",
-          description: "Credit support up to Rs. 5M focused on agricultural food security and livelihood recovery.",
-          icon: "fas fa-seedling",
-          link: "/services/fslrp",
-        },
-        {
-          title: "Working Capital Loan Scheme",
-          description: "Short-term and operational liquidity loans up to Rs. 1.5M for ongoing business needs.",
-          icon: "fas fa-coins",
-          link: "/services/working-capital",
-        },
-        {
-          title: "SMELoC Credit Facility (ADB)",
-          description: "ADB-funded revolving credit line up to Rs. 50M empowering competitive SME enterprises.",
-          icon: "fas fa-chart-line",
-          link: "/services/smeloc-adb",
-        },
-        {
-          title: "Agribusiness Value Chain (AVC)",
-          description: "Financing up to Rs. 75M to integrate modern technologies and supply chains into agriculture.",
-          icon: "fas fa-tractor",
-          link: "/services/avc",
-        },
-        {
-          title: "Smallholder Dairy Development (SDP)",
-          description: "Targeted capital loan scheme up to Rs. 75M for dairy farming operations.",
-          icon: "fas fa-cow",
-          link: "/services/sdp",
-        },
-        {
-          title: "Rural Credit Scheme (NCRCS - Agriculture)",
-          description: "Comprehensive cultivation and agricultural loans up to Rs. 3M for rural farmers.",
-          icon: "fas fa-hand-holding-usd",
-          link: "/services/ncrcs",
-        }
-      ],
-      management: [
-        {
-          name: "Mr. Joen Doe",
-          role: "His Role",
-          image: adg1Img,
-        },
-        {
-          name: "Mr. Jane Doe",
-          role: "Her Role",
-          image: adg2Img,
-          socials: [
-            {
-              icon: "fab fa-facebook-f",
-              link: "https://www.facebook.com",
-            },
-            {
-              icon: "fab fa-linkedin-in",
-              link: "https://www.linkedin.com",
-            },
-          ],
-        },
-      ],
-    };
+// Hero slider state
+const slides = ref([
+  {
+    image: hero1,
+    tagline: "EMPOWERING PEOPLE",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    link: "/about"
   },
-  mounted() {
-    this.startSlider();
-  },
-  beforeUnmount() {
-    this.stopSlider();
-  },
-  beforeDestroy() {
-    this.stopSlider(); // For Vue 2 compatibility
-  },
-  methods: {
-    startSlider() {
-      this.slideInterval = setInterval(() => {
-        this.nextSlide();
-      }, 7500);
-    },
-    stopSlider() {
-      if (this.slideInterval) {
-        clearInterval(this.slideInterval);
-        this.slideInterval = null;
-      }
-    },
-    nextSlide() {
-      this.currentSlide = (this.currentSlide + 1) % this.slides.length;
-    },
-    goToSlide(index) {
-      this.currentSlide = index;
-      this.stopSlider();
-      this.startSlider();
-    },
-  },
+  {
+    image: hero2,
+    tagline: "EMPOWERING PEOPLE",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    link: "/about"
+  }
+]);
+
+const currentSlide = ref(0);
+let slideInterval = null;
+
+const startSlider = () => {
+  slideInterval = setInterval(() => {
+    nextSlide();
+  }, 7500);
 };
+
+const stopSlider = () => {
+  if (slideInterval) {
+    clearInterval(slideInterval);
+    slideInterval = null;
+  }
+};
+
+const nextSlide = () => {
+  currentSlide.value = (currentSlide.value + 1) % slides.value.length;
+};
+
+const goToSlide = (index) => {
+  currentSlide.value = index;
+  stopSlider();
+  startSlider();
+};
+
+// Services dynamic state & API fetch
+const services = ref([]);
+const isLoading = ref(true);
+const error = ref(null);
+
+const slugMap = {
+  "Re-MSME Plus Loan Scheme": "/services/re-msme-plus",
+  "NPA Borrower Relief Scheme": "/services/npl-relief",
+  "Food Security Project": "/services/fslrp",
+  "Working Capital Loan Scheme": "/services/working-capital",
+  "SMELoC Credit Facility": "/services/smeloc-adb",
+  "Agribusiness Value Chain": "/services/avc",
+  "Smallholder Dairy Development": "/services/sdp",
+  "Rural Credit Scheme": "/services/ncrcs",
+  "Rooftop Solar Finance": "/services/solar-finance"
+};
+
+const getSchemeLink = (service) => {
+  if (service.link) return service.link;
+  if (service.id) return `/services/${service.id}`;
+  if (service.title && slugMap[service.title]) return slugMap[service.title];
+  return `/services/${service.id || ''}`;
+};
+
+const fetchServices = async () => {
+  isLoading.value = true;
+  error.value = null;
+  try {
+    const apiBase = BaseUrl.baseUrl || 'http://localhost:8096';
+    const response = await axios.get(`${apiBase}/api/schemes/public`);
+    services.value = Array.isArray(response.data) ? response.data : [];
+  } catch (err) {
+    console.error('Failed to fetch active schemes:', err);
+    error.value = err.message || 'Failed to load loan schemes. Please try again.';
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+// Management data
+const management = [
+  {
+    name: "Mr. Joen Doe",
+    role: "His Role",
+    image: adg1Img,
+  },
+  {
+    name: "Mr. Jane Doe",
+    role: "Her Role",
+    image: adg2Img,
+    socials: [
+      {
+        icon: "fab fa-facebook-f",
+        link: "https://www.facebook.com",
+      },
+      {
+        icon: "fab fa-linkedin-in",
+        link: "https://www.linkedin.com",
+      },
+    ],
+  },
+];
+
+onMounted(() => {
+  startSlider();
+  fetchServices();
+});
+
+onBeforeUnmount(() => {
+  stopSlider();
+});
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 /* Original Color Palette Refined */
 :root {
@@ -355,10 +371,23 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;
+  width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(2, 36, 45, 0.78) 0%, rgba(2, 36, 45, 0.5) 40%, transparent 100%);
+  /* background: linear-gradient(to right, rgba(27, 27, 27, 0.85) 0%, rgba(0, 0, 0, 0.4) 100%, transparent 75%); */
   z-index: 5;
+  pointer-events: none;
+}
+
+.hero-gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(27, 25, 25, 0.85) 0%, rgba(0, 0, 0, 0.40) 100%, transparent 75%);
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -402,13 +431,13 @@ export default {
 }
 
 .hero-tagline {
-  color: #20c997;
+  color: #f59e0b;
   font-weight: 700;
-  letter-spacing: 1px;
-  font-size: 1rem;
+  letter-spacing: 1.2px;
+  font-size: 1.6rem;
   margin-bottom: 1rem;
   text-transform: uppercase;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .hero-title {
@@ -421,45 +450,37 @@ export default {
 }
 
 .title-line-1 {
-  font-size: 36px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
   color: #ffffff;
-  /* text-shadow: 2px 2px 4px rgba(238, 236, 236, 0.8); */
 }
 
 .title-line-2 {
-  font-size: 46px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #00e5ff;
-  /* text-shadow: 2px 2px 4px rgba(0,0,0,0.8); */
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-style: italic !important;
+  font-weight: 600;
+  font-size: 50px;
+  color: #00e5ff !important;
+  text-shadow: 0 0 25px rgba(0, 229, 255, 0.45);
+  margin-top: 2px;
 }
 
-.title-line-3 {
-  font-size: 27px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #ffffff;
-  /* text-shadow: 2px 2px 4px rgba(0,0,0,0.8); */
-}
-
-.hero-btn {
-  display: inline-flex;
+.hero-btn {  display: inline-flex;
   align-items: center;
   padding: 12px 36px;
-  /* background: linear-gradient(135deg, #00c6ff, #0072ff); */
-  background: transparent;
-  border: 2px solid #00c6ff;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  border: 2px solid #00e5ff;
   color: #ffffff;
   font-weight: 700;
   font-size: 1rem;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
   border-radius: 50px;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
-}
+  box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);}
 
 .hero-btn i {
   margin-right: 10px;
@@ -878,6 +899,14 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .title-line-1 {
+    font-size: 24px;
+    font-weight: 500;
+  }
+  .title-line-2 {
+    font-size: 34px;
+  
+    font-style: italic;}
   .services-grid {
     grid-template-columns: 1fr;
   }

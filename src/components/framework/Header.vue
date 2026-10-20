@@ -3,31 +3,40 @@
     <header class="main-header" :class="{ 'navbar-scrolled': isScrolled || !isHomePage }">
       <!-- Top Bar: Social, Translate, Disclaimer -->
       <div class="top-bar d-none d-lg-flex">
-      <div class="container-fluid d-flex justify-content-end align-items-center gap-4">
-        <div class="top-right d-flex align-items-center gap-4">
-          <div class="social-links">
-            <a href="https://www.youtube.com" target="_blank" class="social-icon" title="YouTube">
-              <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://www.linkedin.com" target="_blank" class="social-icon" title="LinkedIn">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="https://www.facebook.com" target="_blank" class="social-icon" title="Facebook">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://www.whatsapp.com" target="_blank" class="social-icon" title="WhatsApp">
-              <i class="fab fa-whatsapp"></i>
-            </a>
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <!-- Date & Time (Far Left) -->
+        <div class="datetime-display d-flex align-items-center">
+          <i class="far fa-calendar-alt accent-cyan me-2"></i> {{ currentDate }}
+          <span class="separator mx-2">|</span>
+          <i class="far fa-clock accent-cyan me-2"></i> {{ currentTime }}
+        </div>
+
+        <div class="d-flex align-items-center gap-4">
+          <div class="top-right d-flex align-items-center gap-4">
+            <div class="social-links">
+              <a href="https://www.youtube.com" target="_blank" class="social-icon" title="YouTube">
+                <i class="fab fa-youtube"></i>
+              </a>
+              <a href="https://www.linkedin.com" target="_blank" class="social-icon" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="https://www.facebook.com" target="_blank" class="social-icon" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="tel:1819" class="hotline-link" title="Government Hotline 1819">
+                <i class="fas fa-phone-alt"></i>
+                <span class="hotline-number">1819</span>
+              </a>
+            </div>
+          </div>
+          <div class="top-left d-flex align-items-center">
+            <div id="google_translate_element" class="translate-box me-3"></div>
+            <span class="separator d-none d-md-inline">|</span>
+            <router-link to="/Disclaimer" class="top-link ms-2">Disclaimer</router-link>
+            <span class="separator">|</span>
+            <!-- <a href="mailto:info@itmd.gov.lk" class="top-link"><i class="fas fa-envelope me-1"></i> info@itmd.gov.lk</a> -->
           </div>
         </div>
-        <div class="top-left d-flex align-items-center">
-          <div id="google_translate_element" class="translate-box me-3"></div>
-          <span class="separator d-none d-md-inline">|</span>
-          <router-link to="/Disclaimer" class="top-link ms-2">Disclaimer</router-link>
-          <span class="separator">|</span>
-          <!-- <a href="mailto:info@itmd.gov.lk" class="top-link"><i class="fas fa-envelope me-1"></i> info@itmd.gov.lk</a> -->
-        </div>
-        
       </div>
     </div>
 
@@ -69,7 +78,7 @@
             <li class="nav-item"><router-link to="/" class="nav-link" @click="closeNavbar">Home</router-link></li>
             <li class="nav-item"><router-link to="/About" class="nav-link" @click="closeNavbar">About Us</router-link></li>
             <li class="nav-item"><router-link to="/Services" class="nav-link" @click="closeNavbar">Services</router-link></li>
-            <li class="nav-item"><router-link to="/Publication" class="nav-link" @click="closeNavbar">Publications</router-link></li>
+            <li class="nav-item"><router-link to="/publications" class="nav-link" @click="closeNavbar">Publications</router-link></li>
             
             <!-- Events Dropdown -->
             <li 
@@ -82,7 +91,7 @@
                 class="nav-link" 
                 @click.prevent="toggleEvents"
               >
-                Events 
+                {{ eventsLabel }} 
                 <i class="fas fa-chevron-down ms-1 chevron-icon" :class="{ 'rotated': isEventsOpen }"></i>
               </a>
               <transition name="dropdown-fade">
@@ -152,10 +161,18 @@ export default {
       isSearchFocused: false,
       searchIndex: searchIndexData,
       isEventsOpen: false,
-      isMobile: false
+      isMobile: false,
+      currentDate: '',
+      currentTime: '',
+      timer: null
     };
   },
   computed: {
+    eventsLabel() {
+      if (this.$route.path === '/events/gallery') return 'Gallery';
+      if (this.$route.path === '/events/field-visits') return 'Field Visits';
+      return 'Events';
+    },
     isHomePage() {
       return this.$route.path === '/';
     },
@@ -169,6 +186,9 @@ export default {
     }
   },
   mounted() {
+    this.updateDateTime();
+    this.timer = setInterval(this.updateDateTime, 1000);
+
     this.handleResize();
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('resize', this.handleResize);
@@ -196,10 +216,31 @@ export default {
     }
   },
   unmounted() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
     window.removeEventListener('scroll', this.handleScroll);
     window.removeEventListener('resize', this.handleResize);
   },
   methods: {
+    updateDateTime() {
+      const now = new Date();
+      const dayName = now.toLocaleDateString('en-US', { weekday: 'short' });
+      const dayNum = String(now.getDate()).padStart(2, '0');
+      const monthName = now.toLocaleDateString('en-US', { month: 'short' });
+      const year = now.getFullYear();
+      this.currentDate = `${dayName}, ${dayNum} ${monthName} ${year}`;
+      
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      const hoursStr = String(hours).padStart(2, '0');
+      
+      this.currentTime = `${hoursStr}:${minutes}:${seconds} ${ampm}`;
+    },
     handleResize() {
       this.isMobile = window.innerWidth < 1200;
       if (!this.isMobile) this.isEventsOpen = false;
@@ -311,6 +352,16 @@ export default {
 }
 
 
+.datetime-display {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.accent-cyan {
+  color: #A5F3FC;
+}
+
 .separator {
   color: rgba(255, 255, 255, 0.2);
   margin: 0 5px;
@@ -324,7 +375,8 @@ export default {
 
 .social-links {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
 }
 
 .social-icon {
@@ -335,6 +387,42 @@ export default {
 }
 
 .social-icon:hover, .social-icon:focus { color: #A5F3FC; outline: none; }
+
+.hotline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(165, 243, 252, 0.3);
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.hotline-link i {
+  color: #A5F3FC;
+  font-size: 0.8rem;
+  transition: transform 0.25s ease;
+}
+
+.hotline-link:hover,
+.hotline-link:focus {
+  color: #A5F3FC;
+  background: rgba(165, 243, 252, 0.2);
+  border-color: rgba(165, 243, 252, 0.6);
+  text-decoration: none;
+  box-shadow: 0 0 10px rgba(165, 243, 252, 0.25);
+}
+
+.hotline-link:hover i {
+  transform: scale(1.15);
+}
 
 .primary-nav {
   background: transparent;
@@ -648,13 +736,19 @@ export default {
 
 .custom-search-pill {
   background: transparent;
-  border: 1.5px solid #0c2a38;
+  border: 1.7px solid #0c2a38;
   border-radius: 30px;
   color: #0c2a38;
   width: 180px;
   padding: 6px 45px 6px 15px;
   transition: all 0.3s ease;
   font-size: 14px;
+}
+
+.custom-search-pill:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 135, 149, 0.08);
+  border-color: #008795;
 }
 
 .navbar-scrolled .custom-search-pill {
