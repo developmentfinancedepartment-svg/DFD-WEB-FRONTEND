@@ -130,52 +130,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Management Section -->
-    <section class="management-section">
-      <div class="container">
-        <div class="section-header animate-fade-down">
-          <h2 class="section-title">
-            Top <span class="highlight">Management</span>
-          </h2>
-          <div class="title-underline"></div>
-        </div>
-
-        <div class="management-grid animate-fade-up">
-          <div
-            class="management-card"
-            v-for="(member, index) in management"
-            :key="index"
-          >
-            <div class="profile-frame">
-              <img :src="member.image" :alt="member.name" class="profile-img" />
-              <div class="profile-overlay">
-                <div class="social-links" v-if="member.socials">
-                  <a
-                    v-for="social in member.socials"
-                    :key="social.icon"
-                    :href="social.link"
-                    target="_blank"
-                  >
-                    <i :class="social.icon"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="member-info">
-              <h5>{{ member.name }}</h5>
-              <p>{{ member.role }}</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="cta-container">
-          <router-link to="/Teldirec#contactteam" class="outline-btn">
-            Meet Our Team <i class="fas fa-chevron-right ms-2"></i>
-          </router-link>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
 
@@ -185,8 +139,6 @@ import axios from "axios";
 import BaseUrl from "../../services/baseURL";
 import Newsline from "./Newsline.vue";
 
-import adg1Img from "../../assets/profile.png";
-import adg2Img from "../../assets/profile.png";
 
 import hero1 from "@/assets/hero-banner.jpg";
 import hero2 from "@/assets/hero-banner-2.jpg";
@@ -272,29 +224,6 @@ const fetchServices = async () => {
   }
 };
 
-// Management data
-const management = [
-  {
-    name: "Mr. Joen Doe",
-    role: "His Role",
-    image: adg1Img,
-  },
-  {
-    name: "Mr. Jane Doe",
-    role: "Her Role",
-    image: adg2Img,
-    socials: [
-      {
-        icon: "fab fa-facebook-f",
-        link: "https://www.facebook.com",
-      },
-      {
-        icon: "fab fa-linkedin-in",
-        link: "https://www.linkedin.com",
-      },
-    ],
-  },
-];
 
 onMounted(() => {
   startSlider();

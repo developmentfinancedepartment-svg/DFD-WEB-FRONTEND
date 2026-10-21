@@ -144,7 +144,7 @@
     <!-- ================================================================= -->
     <!-- 5. "CORE RESPONSIBILITIES" SECTION                                -->
     <!-- ================================================================= -->
-    <section class="max-w-6xl mx-auto px-4 mt-10 mb-20">
+    <section class="max-w-6xl mx-auto px-4 mt-10 mb-12 pb-4">
       <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm">
         <!-- Section Title -->
         <div class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-6">
