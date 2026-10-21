@@ -130,6 +130,59 @@
         </div>
       </div>
     </section>
+
+    <!-- ================================================================= -->
+    <!-- PARTICIPATING FINANCIAL INSTITUTIONS (PFIs) SECTION               -->
+    <!-- ================================================================= -->
+    <section class="bg-slate-100/70 py-16 px-4 border-t border-b border-slate-200/80">
+      <div class="max-w-6xl mx-auto">
+        <!-- Section Header -->
+        <div class="text-center mb-8">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-[#008795] text-xs font-semibold uppercase tracking-wider mb-2">
+            <i class="fas fa-landmark text-xs"></i>
+            <span>Banking Network</span>
+          </span>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 tracking-tight text-center">
+            Participating Financial Institutions (PFIs)
+          </h2>
+          <p class="text-slate-500 text-xs md:text-sm max-w-2xl mx-auto text-center mt-2 font-normal leading-relaxed">
+            Concessionary credit lines and interest subsidy schemes are disbursed through accredited state, private commercial, and specialized licensed banks.
+          </p>
+        </div>
+
+        <!-- Responsive Grid of Institution Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto mt-10">
+          <div
+            v-for="bank in partnerBanks"
+            :key="bank.acronym"
+            class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex flex-col items-center justify-center text-center h-28 hover:shadow-md hover:border-[#008795]/50 transition-all duration-200 group cursor-pointer"
+          >
+            <!-- Elegant Bank Icon Badge -->
+            <div class="w-10 h-10 rounded-xl bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-2 group-hover:scale-105 transition-transform">
+              <i :class="bank.icon"></i>
+            </div>
+            <!-- Institution Name / Acronym -->
+            <span class="text-xs font-bold text-slate-700 group-hover:text-[#008795] transition-colors line-clamp-1">
+              {{ bank.acronym }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Footer Note & Call-to-Action -->
+        <div class="text-center mt-8 pt-4">
+          <p class="text-xs text-slate-500">
+            Registered applicants can submit required documentation directly to any accredited branch.
+          </p>
+          <router-link
+            to="/contact"
+            class="text-xs font-semibold text-[#008795] hover:underline cursor-pointer mt-2 inline-block transition-colors"
+          >
+            View All Accredited Branches &amp; Focal Points &rarr;
+          </router-link>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 
@@ -224,6 +277,23 @@ const fetchServices = async () => {
   }
 };
 
+
+
+// Participating Partner Financial Institutions (PFIs)
+const partnerBanks = [
+  { name: "Bank of Ceylon", acronym: "BOC", icon: "fas fa-landmark" },
+  { name: "People's Bank", acronym: "People's Bank", icon: "fas fa-university" },
+  { name: "Commercial Bank of Ceylon", acronym: "Commercial Bank", icon: "fas fa-building" },
+  { name: "Hatton National Bank", acronym: "HNB", icon: "fas fa-landmark" },
+  { name: "Sampath Bank", acronym: "Sampath Bank", icon: "fas fa-university" },
+  { name: "DFCC Bank", acronym: "DFCC Bank", icon: "fas fa-building" },
+  { name: "National Development Bank", acronym: "NDB", icon: "fas fa-landmark" },
+  { name: "Seylan Bank", acronym: "Seylan Bank", icon: "fas fa-university" },
+  { name: "Regional Development Bank", acronym: "RDB", icon: "fas fa-landmark" },
+  { name: "Sanasa Development Bank", acronym: "SDB bank", icon: "fas fa-university" },
+  { name: "Citizens Development Business", acronym: "CDB", icon: "fas fa-building" },
+  { name: "Nations Trust Bank", acronym: "NTB", icon: "fas fa-landmark" },
+];
 
 onMounted(() => {
   startSlider();
@@ -865,4 +935,316 @@ onBeforeUnmount(() => {
     text-align: center;
   }
 }
+
+/* ========================================================================= */
+/* PARTICIPATING FINANCIAL INSTITUTIONS (PFIs) UTILITIES                     */
+/* ========================================================================= */
+
+.bg-slate-100\/70 {
+  background-color: rgba(241, 245, 249, 0.7) !important;
+}
+
+.py-16 {
+  padding-top: 4rem !important;
+  padding-bottom: 4rem !important;
+}
+
+.px-4 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+.border-t {
+  border-top-width: 1px !important;
+  border-top-style: solid !important;
+}
+
+.border-b {
+  border-bottom-width: 1px !important;
+  border-bottom-style: solid !important;
+}
+
+.border-slate-200\/80 {
+  border-color: rgba(226, 232, 240, 0.8) !important;
+}
+
+.max-w-6xl {
+  max-width: 72rem !important;
+}
+
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.mb-8 {
+  margin-bottom: 2rem !important;
+}
+
+.inline-flex {
+  display: inline-flex !important;
+}
+
+.items-center {
+  align-items: center !important;
+}
+
+.gap-2 {
+  gap: 0.5rem !important;
+}
+
+.px-3 {
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+}
+
+.py-1 {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
+
+.rounded-full {
+  border-radius: 9999px !important;
+}
+
+.bg-teal-50 {
+  background-color: #f0fdfa !important;
+}
+
+.border {
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+
+.border-teal-200 {
+  border-color: #99f6e4 !important;
+}
+
+.text-\[\#008795\] {
+  color: #008795 !important;
+}
+
+.text-xs {
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
+.font-semibold {
+  font-weight: 600 !important;
+}
+
+.uppercase {
+  text-transform: uppercase !important;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em !important;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+
+.text-2xl {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+}
+
+@media (min-width: 768px) {
+  .md\:text-3xl {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+  .md\:text-sm {
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+  }
+}
+
+.font-extrabold {
+  font-weight: 800 !important;
+}
+
+.text-slate-800 {
+  color: #1e293b !important;
+}
+
+.tracking-tight {
+  letter-spacing: -0.025em !important;
+}
+
+.text-slate-500 {
+  color: #64748b !important;
+}
+
+.max-w-2xl {
+  max-width: 42rem !important;
+}
+
+.mt-2 {
+  margin-top: 0.5rem !important;
+}
+
+.font-normal {
+  font-weight: 400 !important;
+}
+
+.leading-relaxed {
+  line-height: 1.625 !important;
+}
+
+.grid {
+  display: grid !important;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  }
+}
+
+.gap-4 {
+  gap: 1rem !important;
+}
+
+.mt-10 {
+  margin-top: 2.5rem !important;
+}
+
+.bg-white {
+  background-color: #ffffff !important;
+}
+
+.rounded-2xl {
+  border-radius: 1rem !important;
+}
+
+.p-5 {
+  padding: 1.25rem !important;
+}
+
+.shadow-xs {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.flex {
+  display: flex !important;
+}
+
+.flex-col {
+  flex-direction: column !important;
+}
+
+.justify-center {
+  justify-content: center !important;
+}
+
+.h-28 {
+  height: 7rem !important;
+}
+
+.hover\:shadow-md:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.hover\:border-\[\#008795\]\/50:hover {
+  border-color: rgba(0, 135, 149, 0.5) !important;
+}
+
+.transition-all {
+  transition-property: all !important;
+}
+
+.duration-200 {
+  transition-duration: 200ms !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.w-10 {
+  width: 2.5rem !important;
+}
+
+.h-10 {
+  height: 2.5rem !important;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem !important;
+}
+
+.text-lg {
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+}
+
+.group:hover .group-hover\:scale-105 {
+  transform: scale(1.05) !important;
+}
+
+.transition-transform {
+  transition-property: transform !important;
+}
+
+.text-slate-700 {
+  color: #334155 !important;
+}
+
+.font-bold {
+  font-weight: 700 !important;
+}
+
+.group:hover .group-hover\:text-\[\#008795\] {
+  color: #008795 !important;
+}
+
+.transition-colors {
+  transition-property: color, background-color, border-color !important;
+}
+
+.line-clamp-1 {
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 1 !important;
+}
+
+.mt-8 {
+  margin-top: 2rem !important;
+}
+
+.pt-4 {
+  padding-top: 1rem !important;
+}
+
+.hover\:underline:hover {
+  text-decoration: underline !important;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+
 </style>
