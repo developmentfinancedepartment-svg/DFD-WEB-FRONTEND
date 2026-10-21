@@ -1,109 +1,172 @@
 <template>
-  <div class="about-page">
+  <div class="about-page bg-slate-50 min-h-screen">
+    <!-- ================================================================= -->
+    <!-- 1. TOP HERO BANNER                                                -->
+    <!-- ================================================================= -->
+    <header class="hero-header text-center px-4">
+      <div class="hero-container">
+        <h1 class="hero-title">
+          About Development Finance
+        </h1>
+        <p class="hero-subtitle">
+          Facilitating appropriate policies, strategies, and financial resources for the sustainable development of MSMEs and primary sectors.
+        </p>
+      </div>
+    </header>
 
-    <section class="about-section">
-      <div class="container">
-        <div class="section-header animate-fade-down">
-          <h2 class="section-title">About <span class="highlight">Us</span> </h2>
-          <div class="title-underline"></div>
+    <!-- ================================================================= -->
+    <!-- 2. VISION & MISSION FLOATING CARDS (-mt-16 OVERLAP)               -->
+    <!-- ================================================================= -->
+    <section class="max-w-6xl mx-auto px-4 mt-8 mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+      <!-- Vision Card -->
+      <div class="bg-[#006d77] text-white p-8 rounded-3xl shadow-lg border border-teal-600/30 flex flex-col justify-between hover:shadow-xl transition duration-200">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-white text-[#006d77] flex items-center justify-center text-xl mb-4 shadow-sm">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h2 class="text-2xl font-bold tracking-tight text-white mb-3">
+            Vision
+          </h2>
+          <p class="text-sm text-teal-50/90 leading-relaxed font-light">
+            To become the key Government agency as facilitator for development financing.
+          </p>
+        </div>
+      </div>
+
+      <!-- Mission Card -->
+      <div class="bg-[#006d77] text-white p-8 rounded-3xl shadow-lg border border-teal-600/30 flex flex-col justify-between hover:shadow-xl transition duration-200">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-white text-[#006d77] flex items-center justify-center text-xl mb-4 shadow-sm">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h2 class="text-2xl font-bold tracking-tight text-white mb-3">
+            Mission
+          </h2>
+          <p class="text-sm text-teal-50/90 leading-relaxed font-light">
+            Facilitate to formulate appropriate policies and strategies and mobilize financial resources for the development of MSMEs, financing primary sectors through necessary intervention with the relevant stakeholders.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 3. KEY STATISTICS BAR                                             -->
+    <!-- ================================================================= -->
+    <section class="max-w-6xl mx-auto px-4 mt-10">
+      <div class="bg-[#e2e8f0]/60 rounded-3xl p-8 border border-slate-200/80 shadow-sm grid grid-cols-2 lg:grid-cols-4 gap-6 text-center divide-y lg:divide-y-0 lg:divide-x divide-slate-100">
+        <!-- Stat 1 -->
+        <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
+          <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
+            <i class="fas fa-hand-holding-usd"></i>
+          </div>
+          <div class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">
+            8+
+          </div>
+          <div class="text-[11px] font-bold tracking-wider text-slate-400 mt-1 uppercase">
+            Official Loan Schemes
+          </div>
         </div>
 
-        <div class="content-grid animate-fade-up">
-          <div class="content-card">
-            <div class="card-icon">
-              <i class="fas fa-eye"></i>
-            </div>
-            <h3>Vision</h3>
-            <p>To become the key Government agency as facilitator for development financing.</p>
+        <!-- Stat 2 -->
+        <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
+          <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
+            <i class="fas fa-landmark"></i>
           </div>
-          <div class="content-card">
-            <div class="card-icon">
-              <i class="fas fa-bullseye"></i>
-            </div>
-            <h3>Mission</h3>
-            <p>Facilitate to formulate appropriate policies and strategies and mobilize financial resources for the development of MSMEs, financing primary sectors through necessary intervention with the relevant stakeholders.</p>
+          <div class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">
+            14+
+          </div>
+          <div class="text-[11px] font-bold tracking-wider text-slate-400 mt-1 uppercase">
+            Participating Financial Institutions
           </div>
         </div>
 
-        <div class="objectives-section">
-          <div class="objectives-header">
-            <div class="header-icon" style="background: linear-gradient(135deg, #008795 0%, #00e5ff 100%);">
-              <i class="fas fa-flag"></i>
-            </div>
-            <h3>Our Objectives</h3>
+        <!-- Stat 3 -->
+        <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
+          <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
+            <i class="fas fa-shield-alt"></i>
           </div>
-          <div class="objectives-list">
-            <div class="objective-item">
-              <div class="check-icon"><i class="fas fa-check"></i></div>
-              <p>Mobilize the financial resources and removal of the market impediments for the development of MSMEs.</p>
-            </div>
-            <div class="objective-item">
-              <div class="check-icon"><i class="fas fa-check"></i></div>
-              <p>Strengthen institutional capacities for development of financial markets.</p>
-            </div>
-            <div class="objective-item">
-              <div class="check-icon"><i class="fas fa-check"></i></div>
-              <p>Enhance rural entrepreneurship especially for low income entrepreneurs.</p>
-            </div>
-            <div class="objective-item">
-              <div class="check-icon"><i class="fas fa-check"></i></div>
-              <p>Financing for primary sector in line with Government policy framework.</p>
-            </div>
-            <div class="objective-item">
-              <div class="check-icon"><i class="fas fa-check"></i></div>
-              <p>Implementation of relevant budget proposals of each year.</p>
-            </div>
+          <div class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">
+            100%
+          </div>
+          <div class="text-[11px] font-bold tracking-wider text-slate-400 mt-1 uppercase">
+            Treasury Supervised
           </div>
         </div>
 
-        <div class="responsibility-section">
-          <div class="responsibility-header">
-            <div class="header-icon">
-              <i class="fas fa-check-circle"></i>
-            </div>
-            <h3>Core Responsibilities</h3>
+        <!-- Stat 4 -->
+        <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
+          <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
+            <i class="fas fa-seedling"></i>
           </div>
-          <div class="responsibility-list">
-            <div class="responsibility-item">
-              <span class="item-number">01</span>
-              <p>Facilitate to formulate appropriate polices, strategies and programs for the development of MSMEs of the economy.</p>
+          <div class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">
+            MSME &amp; Agri
+          </div>
+          <div class="text-[11px] font-bold tracking-wider text-slate-400 mt-1 uppercase">
+            Priority Focus Sectors
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 4. "OUR OBJECTIVES" SECTION                                       -->
+    <!-- ================================================================= -->
+    <section class="max-w-6xl mx-auto px-4 mt-10">
+      <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm">
+        <!-- Section Title -->
+        <div class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-teal-50 text-[#008795] flex items-center justify-center text-lg flex-shrink-0">
+            <i class="fas fa-flag"></i>
+          </div>
+          <span>Our Objectives</span>
+        </div>
+
+        <!-- Objectives 3-Column Responsive Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div
+            v-for="(objective, index) in objectives"
+            :key="index"
+            class="bg-slate-50/80 rounded-2xl p-5 border border-slate-100 flex items-start gap-3.5 hover:bg-white hover:shadow-md hover:border-teal-200 transition duration-200"
+          >
+            <!-- Solid Teal Number Badge -->
+            <div class="w-8 h-8 rounded-full bg-[#008795] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+              {{ index + 1 }}
             </div>
-            <div class="responsibility-item">
-              <span class="item-number">02</span>
-              <p>Monitor and Review the market data to Identify key issues and provide solutions to the smooth growth of the MSMEs and micro finance sectors.</p>
-            </div>
-            <div class="responsibility-item">
-              <span class="item-number">03</span>
-              <p>Review Government Subsidy Schemes to ensure economic development and facilitate to formulate appropriate polices.</p>
-            </div>
-            <div class="responsibility-item">
-              <span class="item-number">04</span>
-              <p>Facilitate innovative policies, strategies and programs where ever necessary for micro finance sector.</p>
-            </div>
-            <div class="responsibility-item">
-              <span class="item-number">05</span>
-              <p>Facilitate in enacting legislations for banking, insurance, MSMEs and financial sector if the market review illustrates the need.</p>
-            </div>
-            <div class="responsibility-item">
-              <span class="item-number">06</span>
-              <p>Implement budget proposals and donor funded projects related to MSME sector, primary sector and other sectors coming under the purview of this department.</p>
-            </div>
-            <div class="responsibility-item">
-              <span class="item-number">07</span>
-              <p>Compile all data on MSME’s of Industrial, Agriculture and Service sectors and analyze to identify the impediments and policy interventions.</p>
-            </div>
-            <div class="responsibility-item">
-              <span class="item-number">08</span>
-              <p>Facilitate annual budget preparation process of the Government in respect of MSME sector, Banking sector and financial market and other sectors coming under the purview of this department.</p>
-            </div>
-            <div class="responsibility-item">
-              <span class="item-number">09</span>
-              <p>Oversee implementation of Government sponsored financial assistance schemes.</p>
-            </div>
-            <div class="responsibility-item">
-              <span class="item-number">10</span>
-              <p>Arranging local bank financing for development projects in MSME finance sectors in line with the Government policy.</p>
-            </div>
+            <!-- Objective Description -->
+            <p class="text-xs text-slate-800 font-medium leading-relaxed mb-0">
+              {{ objective }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 5. "CORE RESPONSIBILITIES" SECTION                                -->
+    <!-- ================================================================= -->
+    <section class="max-w-6xl mx-auto px-4 mt-10 mb-20">
+      <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm">
+        <!-- Section Title -->
+        <div class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-teal-50 text-[#008795] flex items-center justify-center text-lg flex-shrink-0">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <span>Core Responsibilities</span>
+        </div>
+
+        <!-- Responsibilities 2-Column Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div
+            v-for="(responsibility, index) in responsibilities"
+            :key="index"
+            class="bg-slate-50/80 rounded-2xl p-5 border border-slate-100 flex items-start gap-4 hover:bg-white hover:shadow-md hover:border-teal-200 transition duration-200"
+          >
+            <!-- Checkmark Icon -->
+            <i class="fas fa-check-double text-[#008795] text-sm mt-1 flex-shrink-0"></i>
+            <!-- Responsibility Description -->
+            <p class="text-xs text-slate-800 font-medium leading-relaxed mb-0">
+              {{ responsibility }}
+            </p>
           </div>
         </div>
       </div>
@@ -111,303 +174,515 @@
   </div>
 </template>
 
+<script setup>
+const objectives = [
+  "Mobilize the financial resources and removal of the market impediments for the development of MSMEs.",
+  "Strengthen institutional capacities for development of financial markets.",
+  "Enhance rural entrepreneurship especially for low income entrepreneurs.",
+  "Financing for primary sector in line with Government policy framework.",
+  "Implementation of relevant budget proposals of each year.",
+];
+
+const responsibilities = [
+  "Facilitate to formulate appropriate polices, strategies and programs for the development of MSMEs of the economy.",
+  "Monitor and Review the market data to Identify key issues and provide solutions to the smooth growth of the MSMEs and micro finance sectors.",
+  "Review Government Subsidy Schemes to ensure economic development and facilitate to formulate appropriate polices.",
+  "Facilitate innovative policies, strategies and programs where ever necessary for micro finance sector.",
+  "Facilitate in enacting legislations for banking, insurance, MSMEs and financial sector if the market review illustrates the need.",
+  "Implement budget proposals and donor funded projects related to MSME sector, primary sector and other sectors coming under the purview of this department.",
+  "Compile all data on MSME’s of Industrial, Agriculture and Service sectors and analyze to identify the impediments and policy interventions.",
+  "Facilitate annual budget preparation process of the Government in respect of MSME sector, Banking sector and financial market and other sectors coming under the purview of this department.",
+  "Oversee implementation of Government sponsored financial assistance schemes.",
+  "Arranging local bank financing for development projects in MSME finance sectors in line with the Government policy.",
+];
+</script>
+
 <style scoped>
+/* ========================================================================= */
+/* PAGE WRAPPER & TOP NAVBAR OFFSET                                         */
+/* ========================================================================= */
 .about-page {
-  font-family: ''Open Sans'', sans-serif;
-  color: #102741;
-  background: #f7fbff;
-  overflow-x: hidden;
-  padding-top: 130px;
+  font-family: "Open Sans", "Inter", sans-serif;
+  padding-top: 96px;
+  min-height: 100vh;
+  background-color: #f8fafc;
 }
 
-/* About Section */
-.about-section {
-  padding: 80px 20px;
+@media (max-width: 991.98px) {
+  .about-page {
+    padding-top: 76px;
+  }
 }
 
-.services-section {
-  padding: 80px 20px;
-  background: #fff;
+/* ========================================================================= */
+/* UTILITY CLASS IMPLEMENTATIONS (Guarantees modern styled UI)               */
+/* ========================================================================= */
+
+/* Backgrounds & Colors */
+.bg-\[\#005f73\] {
+  background-color: #005f73 !important;
 }
 
-.management-section {
-  padding: 80px 20px;
+.bg-\[\#006d77\] {
+  background-color: #006d77 !important;
 }
 
-.container {
-  max-width: 1140px;
+.bg-\[\#008795\] {
+  background-color: #008795 !important;
+}
+
+.bg-teal-50 {
+  background-color: #f0fdfa !important;
+}
+
+.bg-white {
+  background-color: #ffffff !important;
+}
+
+.bg-slate-50 {
+  background-color: #f8fafc !important;
+}
+
+.bg-slate-50\/80 {
+  background-color: rgba(248, 250, 252, 0.8) !important;
+}
+
+.bg-\[\#e2e8f0\]\/60 {
+  background-color: rgba(226, 232, 240, 0.6) !important;
+}
+
+.hover\:bg-white:hover {
+  background-color: #ffffff !important;
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+.text-teal-100 {
+  color: #ccfbf1 !important;
+}
+
+.text-teal-50\/90 {
+  color: rgba(240, 253, 250, 0.9) !important;
+}
+
+.text-\[\#006d77\] {
+  color: #006d77 !important;
+}
+
+.text-\[\#008795\] {
+  color: #008795 !important;
+}
+
+.text-slate-800 {
+  color: #1e293b !important;
+}
+
+.text-slate-600 {
+  color: #475569 !important;
+}
+
+.text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+/* Borders & Shadows */
+.border {
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+
+.border-slate-100 {
+  border-color: #f1f5f9 !important;
+}
+
+.border-slate-200\/80 {
+  border-color: rgba(226, 232, 240, 0.8) !important;
+}
+
+.border-teal-600\/30 {
+  border-color: rgba(13, 148, 136, 0.3) !important;
+}
+
+.hover\:border-teal-200:hover {
+  border-color: #99f6e4 !important;
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem !important;
+}
+
+.rounded-2xl {
+  border-radius: 1rem !important;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem !important;
+}
+
+.rounded-full {
+  border-radius: 9999px !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.hover\:shadow-md:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.hover\:shadow-xl:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Dividing Lines */
+.divide-y > * + * {
+  border-top-width: 1px !important;
+  border-top-style: solid !important;
+  border-color: #f1f5f9 !important;
+}
+
+@media (min-width: 1024px) {
+  .lg\:divide-y-0 > * + * {
+    border-top-width: 0 !important;
+  }
+
+  .lg\:divide-x > * + * {
+    border-left-width: 1px !important;
+    border-left-style: solid !important;
+    border-color: #f1f5f9 !important;
+  }
+}
+
+/* Dimensions & Widths */
+.max-w-2xl {
+  max-width: 42rem !important;
+}
+
+.max-w-6xl {
+  max-width: 72rem !important;
+}
+
+.w-full {
+  width: 100% !important;
+}
+
+.w-12 {
+  width: 3rem !important;
+}
+
+.h-12 {
+  height: 3rem !important;
+}
+
+.w-10 {
+  width: 2.5rem !important;
+}
+
+.h-10 {
+  height: 2.5rem !important;
+}
+
+.w-8 {
+  width: 2rem !important;
+}
+
+.h-8 {
+  height: 2rem !important;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0 !important;
+}
+
+/* Grid & Flexbox */
+.grid {
+  display: grid !important;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+.flex {
+  display: flex !important;
+}
+
+.flex-col {
+  flex-direction: column !important;
+}
+
+.items-center {
+  align-items: center !important;
+}
+
+.items-start {
+  align-items: flex-start !important;
+}
+
+.justify-center {
+  justify-content: center !important;
+}
+
+.justify-between {
+  justify-content: space-between !important;
+}
+
+/* Gaps & Margins & Paddings */
+.gap-3 {
+  gap: 0.75rem !important;
+}
+
+.gap-3\.5 {
+  gap: 0.875rem !important;
+}
+
+.gap-4 {
+  gap: 1rem !important;
+}
+
+.gap-5 {
+  gap: 1.25rem !important;
+}
+
+.gap-6 {
+  gap: 1.5rem !important;
+}
+
+.pt-16 {
+  padding-top: 4rem !important;
+}
+
+.pb-28 {
+  padding-bottom: 7rem !important;
+}
+
+.-mt-16 {
+  margin-top: -4rem !important;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+.mt-3 {
+  margin-top: 0.75rem !important;
+}
+
+.mt-10 {
+  margin-top: 2.5rem !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem !important;
+}
+
+.mb-4 {
+  margin-bottom: 1rem !important;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem !important;
+}
+
+.mb-20 {
+  margin-bottom: 5rem !important;
+}
+
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.p-3 {
+  padding: 0.75rem !important;
+}
+
+.p-5 {
+  padding: 1.25rem !important;
+}
+
+.p-8 {
+  padding: 2rem !important;
+}
+
+.px-4 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+/* Typography */
+.text-xs {
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
+.text-\[11px\] {
+  font-size: 11px !important;
+  line-height: 14px !important;
+}
+
+.text-sm {
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+}
+
+.text-base {
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+}
+
+.text-lg {
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+}
+
+.text-xl {
+  font-size: 1.25rem !important;
+  line-height: 1.75rem !important;
+}
+
+.text-2xl {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+}
+
+.text-4xl {
+  font-size: 2.25rem !important;
+  line-height: 2.5rem !important;
+}
+
+@media (min-width: 768px) {
+  .md\:text-5xl {
+    font-size: 3rem !important;
+    line-height: 1 !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:text-3xl {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+}
+
+.font-light {
+  font-weight: 300 !important;
+}
+
+.font-normal {
+  font-weight: 400 !important;
+}
+
+.font-medium {
+  font-weight: 500 !important;
+}
+
+.font-bold {
+  font-weight: 700 !important;
+}
+
+.font-extrabold {
+  font-weight: 800 !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.uppercase {
+  text-transform: uppercase !important;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em !important;
+}
+
+.tracking-tight {
+  letter-spacing: -0.025em !important;
+}
+
+.leading-relaxed {
+  line-height: 1.625 !important;
+}
+
+/* Transitions */
+.transition {
+  transition-property: all !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.duration-200 {
+  transition-duration: 200ms !important;
+}
+
+.relative {
+  position: relative !important;
+}
+
+.z-10 {
+  z-index: 10 !important;
+}
+
+.hero-header {
+  background: linear-gradient(135deg, #004d5a 0%, #008795 100%);
+  padding: 4rem 1rem;
+  border-bottom: 5px solid #00e5ff;
+}
+
+.hero-container {
+  max-width: 800px;
   margin: 0 auto;
 }
 
-.section-header {
-  text-align: center;
-  margin: 10px 0 24px 0;
-}
-
-.section-title {
-  font-size: 2rem;
-  margin-bottom: 16px;
-  font-weight: 700;
-}
-
-.title-underline {
-  width: 90px;
-  height: 4px;
-  background: linear-gradient(90deg, #008E9B, #00B4C5);
-  margin: 0 auto;
-  border-radius: 999px;
-}
-
-.highlight {
-  color: #008E9B;
-}
-
-/* Mission & Vision Cards */
-.content-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 30px;
-  margin-bottom: 60px;
-}
-
-.content-card {
-  background: linear-gradient(135deg, #fff 0%, #f7fbff 100%);
-  border: 2px solid rgba(3, 43, 95, 0.08);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 20px 60px rgba(2, 16, 47, 0.06);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.content-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: linear-gradient(90deg, #008E9B, #00B4C5);
-}
-
-.content-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 30px 80px rgba(2, 16, 47, 0.1);
-  border-color: #008E9B;
-}
-
-.card-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 15px;
-  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
-  margin-bottom: 20px;
-}
-
-.content-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 16px;
-  color: #008E9B;
-}
-
-.content-card p {
-  line-height: 1.8;
-  color: #4f647d;
-  font-size: 0.95rem;
-}
-
-/* Objectives Section */
-.objectives-section {
-  background: linear-gradient(135deg, #fff 0%, #f7fbff 100%);
-  border-radius: 25px;
-  padding: 50px;
-  box-shadow: 0 25px 70px rgba(2, 16, 47, 0.06);
-  margin-bottom: 50px;
-}
-
-.objectives-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 35px;
-  padding-bottom: 25px;
-  border-bottom: 2px solid rgba(3, 43, 95, 0.08);
-}
-
-.objectives-header h3 {
-  font-size: 1.8rem;
-  margin: 0;
-  color: #008795;
-}
-
-.objectives-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.objective-item {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 20px 25px;
-  background: #f8f9fa;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  border: 1px solid transparent;
-}
-
-.objective-item:hover {
-  transform: translateX(5px);
-  background: #ffffff;
-  border-color: #00e5ff;
-  box-shadow: 0 15px 40px rgba(0, 135, 149, 0.1);
-}
-
-.check-icon {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #008795 0%, #00e5ff 100%);
+.hero-title {
   color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  flex-shrink: 0;
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
 }
 
-.objective-item p {
-  margin: 0;
-  color: #4f647d;
-  line-height: 1.6;
-  font-size: 1rem;
-}
-
-/* Responsibility Section */
-.responsibility-section {
-  background: linear-gradient(135deg, #fff 0%, #f7fbff 100%);
-  border-radius: 25px;
-  padding: 50px;
-  box-shadow: 0 25px 70px rgba(2, 16, 47, 0.06);
-  margin-bottom: 50px;
-}
-
-.responsibility-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 35px;
-  padding-bottom: 25px;
-  border-bottom: 2px solid rgba(3, 43, 95, 0.08);
-}
-
-.header-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-}
-
-.responsibility-header h3 {
-  font-size: 1.8rem;
-  margin: 0;
-  color: #008E9B;
-}
-
-.responsibility-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-}
-
-.responsibility-item {
-  display: flex;
-  gap: 20px;
-  padding: 20px;
-  background: #fff;
-  border-radius: 15px;
-  border-left: 5px solid #008E9B;
-  transition: all 0.3s ease;
-}
-
-.responsibility-item:hover {
-  transform: translateX(5px);
-  box-shadow: 0 15px 40px rgba(0, 142, 155, 0.1);
-}
-
-.item-number {
-  flex-shrink: 0;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #008E9B 0%, #00B4C5 100%);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.5);
   font-size: 1.1rem;
-}
-
-.responsibility-item p {
-  margin: 0;
-  color: #4f647d;
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
   line-height: 1.6;
-  font-size: 0.95rem;
-}
-
-
-
-@media (max-width: 991px) {
-  .content-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .responsibility-list {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .about-hero {
-    padding: 40px 16px;
-    min-height: 280px;
-  }
-
-  .about-section,
-  .services-section,
-  .management-section {
-    padding: 60px 16px;
-  }
-
-  .profile-frame {
-    width: 150px;
-    height: 180px;
-  }
-
-  .objectives-section,
-  .responsibility-section {
-    padding: 30px;
-  }
-
-  .section-header {
-    margin-bottom: 40px;
-  }
 }
 </style>
