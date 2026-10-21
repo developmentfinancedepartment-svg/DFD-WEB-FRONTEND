@@ -106,7 +106,7 @@
               </transition>
             </li>
             
-            <li class="nav-item"><router-link to="/Teldirec" class="nav-link" @click="closeNavbar">Contact</router-link></li>
+            <li class="nav-item"><router-link to="/Contact" class="nav-link" @click="closeNavbar">Contact</router-link></li>
           </ul>
           
           <div class="search-container-wrapper mt-3 mt-xl-0">

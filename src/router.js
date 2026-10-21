@@ -16,6 +16,7 @@ import ServiceDetailView from "./views/ServiceDetailView.vue";
 import GalleryView from "./views/GalleryView.vue";
 import FieldVisitsView from "./views/FieldVisitsView.vue";
 import PublicationsView from "./views/PublicationsView.vue";
+import ContactView from "./views/ContactView.vue";
 import Officers from "./components/framework/Rti/Officers.vue";
 import Annualrep from "./components/framework/Rti/Annualrep.vue";
 // import Events from "./components/framework/Events.vue";
@@ -132,6 +133,15 @@ const routes = [
     path: "/Teldirec",
     name: "Teldirec",
     component:Teldirec,
+  },
+  {
+    path: "/contact",
+    name: "contact",
+    component: ContactView,
+  },
+  {
+    path: "/Contact",
+    redirect: "/contact",
   },
   {
     path: "/Officers",
