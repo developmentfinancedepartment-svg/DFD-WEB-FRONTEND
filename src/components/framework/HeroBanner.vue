@@ -9,20 +9,20 @@
             class="slide-layer"
             :class="{ active: currentSlide === index }"
           >
-            <img
-              :src="slide.image"
-              alt="Hero Banner"
-              class="hero-banner"
-            />
+            <img :src="slide.image" alt="Hero Banner" class="hero-banner" />
           </div>
 
           <!-- Left-to-right dark gradient overlay: high text readability on left, fading into transparency on right -->
-          <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent pointer-events-none z-[5] hero-gradient-overlay"></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent pointer-events-none z-[5] hero-gradient-overlay"
+          ></div>
 
           <div class="hero-overlay">
-            <p class="hero-tagline text-amber-400">{{ slides[currentSlide].tagline }}</p>
+            <p class="hero-tagline text-amber-400">
+              {{ slides[currentSlide].tagline }}
+            </p>
             <div class="hero-title">
-              <div class="title-line-1">To Strengthen</div> 
+              <div class="title-line-1">To Strengthen</div>
               <div class="title-line-1">The Economy true</div>
               <div class="title-line-2">Financial Assistance</div>
             </div>
@@ -56,14 +56,14 @@ const slides = ref([
     image: hero1,
     tagline: "EMPOWERING PEOPLE",
     title: "To Strengthen the Economy true Financial Assistance",
-    link: "/about"
+    link: "/about",
   },
   {
     image: hero2,
     tagline: "EMPOWERING PEOPLE",
     title: "To Strengthen the Economy true Financial Assistance",
-    link: "/about"
-  }
+    link: "/about",
+  },
 ]);
 
 const currentSlide = ref(0);
@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
 
 .hero-section {
   position: relative;
@@ -134,13 +134,18 @@ onBeforeUnmount(() => {
 }
 
 .slides-wrapper::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.40) 45%, transparent 75%);
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.4) 45%,
+    transparent 75%
+  );
   z-index: 5;
   pointer-events: none;
 }
@@ -153,7 +158,12 @@ onBeforeUnmount(() => {
   bottom: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.40) 45%, transparent 75%);
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.4) 45%,
+    transparent 75%
+  );
   z-index: 5;
   pointer-events: none;
 }
@@ -210,7 +220,7 @@ onBeforeUnmount(() => {
 .hero-title {
   display: flex;
   flex-direction: column;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   margin-bottom: 2rem;
   text-align: left;
   line-height: 1.2;
@@ -224,7 +234,7 @@ onBeforeUnmount(() => {
 }
 
 .title-line-2 {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-style: italic !important;
   font-weight: 600;
   font-size: 50px;

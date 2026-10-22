@@ -194,8 +194,11 @@ import BaseUrl from "../../services/baseURL";
 import Newsline from "./Newsline.vue";
 
 
-import hero1 from "@/assets/hero-banner.jpg";
-import hero2 from "@/assets/hero-banner-2.jpg";
+import hero1 from "@/assets/hero-banners-2.jpg";
+import hero2 from "@/assets/hero-banners-1.jpg";
+import hero3 from "@/assets/hero-banners-3.jpg";
+import hero4 from "@/assets/hero-banners-4.jpg";
+import hero5 from "@/assets/hero-banners-5.jpg";
 
 // Hero slider state
 const slides = ref([
@@ -207,6 +210,24 @@ const slides = ref([
   },
   {
     image: hero2,
+    tagline: "EMPOWERING PEOPLE",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    link: "/about"
+  },
+  {
+    image: hero3,
+    tagline: "EMPOWERING PEOPLE",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    link: "/about"
+  },
+  {
+    image: hero4,
+    tagline: "EMPOWERING PEOPLE",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    link: "/about"
+  },
+  {
+    image: hero5,
     tagline: "EMPOWERING PEOPLE",
     title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
     link: "/about"
@@ -436,6 +457,7 @@ onBeforeUnmount(() => {
   letter-spacing: 1.2px;
   font-size: 1.6rem;
   margin-bottom: 1rem;
+  margin-top: 3rem;
   text-transform: uppercase;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
 }
@@ -473,6 +495,7 @@ onBeforeUnmount(() => {
   backdrop-filter: blur(4px);
   border: 2px solid #00e5ff;
   color: #ffffff;
+  margin-top: 2rem;
   font-weight: 700;
   font-size: 1rem;
   letter-spacing: 0.5px;
