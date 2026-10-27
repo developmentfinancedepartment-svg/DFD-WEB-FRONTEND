@@ -89,8 +89,12 @@
                 <li><router-link to="/sitemap"><i class="fas fa-chevron-right fa-xs me-2"></i>Sitemap</router-link></li>
                 <li><router-link to="/Disclaimer"><i class="fas fa-chevron-right fa-xs me-2"></i>Disclaimer</router-link></li>
               </ul>
-              <div class="footer-seal mt-2">
-                <img src="../../assets/footerimg.jpeg" alt="Government Seal" class="img-fluid rounded shadow-sm" style="max-width: 90px;" />
+              <div class="footer-helpline-wrapper mt-3 rounded-2xl overflow-hidden shadow-md border border-teal-500/30">
+                <img
+                  src="../../assets/footerimg.jpeg"
+                  alt="1904 Government Information Center Helpline"
+                  class="footer-helpline-img w-full max-w-[220px] h-auto object-contain hover:scale-105 transition-transform duration-300"
+                />
               </div>
             </div>
           </div>
@@ -319,6 +323,32 @@
   .footer-bottom {
     padding: 8px 0;
   }
+}
+
+/* 1904 Helpline Banner */
+.footer-helpline-wrapper {
+  margin-top: 1rem;
+  border-radius: 1rem; /* rounded-2xl */
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(20, 184, 166, 0.3); /* border-teal-500/30 */
+  background: rgba(255, 255, 255, 0.05);
+  display: block;
+  max-width: 220px;
+}
+
+.footer-helpline-img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.footer-helpline-wrapper:hover .footer-helpline-img,
+.footer-helpline-img:hover {
+  transform: scale(1.05);
 }
 </style>
 
