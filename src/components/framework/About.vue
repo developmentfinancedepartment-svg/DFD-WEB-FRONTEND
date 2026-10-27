@@ -52,9 +52,9 @@
     <!-- ================================================================= -->
     <!-- 3. KEY STATISTICS BAR                                             -->
     <!-- ================================================================= -->
-    <section class="max-w-6xl mx-auto px-4 mt-10">
+   <!-- <section class="max-w-6xl mx-auto px-4 mt-10">
       <div class="bg-[#e2e8f0]/60 rounded-3xl p-8 border border-slate-200/80 shadow-sm grid grid-cols-2 lg:grid-cols-4 gap-6 text-center divide-y lg:divide-y-0 lg:divide-x divide-slate-100">
-        <!-- Stat 1 -->
+        
         <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
           <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
             <i class="fas fa-hand-holding-usd"></i>
@@ -67,7 +67,7 @@
           </div>
         </div>
 
-        <!-- Stat 2 -->
+       
         <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
           <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
             <i class="fas fa-landmark"></i>
@@ -80,7 +80,7 @@
           </div>
         </div>
 
-        <!-- Stat 3 -->
+       
         <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
           <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
             <i class="fas fa-shield-alt"></i>
@@ -93,7 +93,7 @@
           </div>
         </div>
 
-        <!-- Stat 4 -->
+        
         <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
           <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
             <i class="fas fa-seedling"></i>
@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-    </section>
+     </section> -->
 
     <!-- ================================================================= -->
     <!-- 4. "OUR OBJECTIVES" SECTION                                       -->
@@ -133,7 +133,7 @@
               {{ index + 1 }}
             </div>
             <!-- Objective Description -->
-            <p class="text-xs text-slate-800 font-medium leading-relaxed mb-0">
+            <p class="text-sm text-slate-800 font-medium leading-relaxed mb-0">
               {{ objective }}
             </p>
           </div>
@@ -164,7 +164,7 @@
             <!-- Checkmark Icon -->
             <i class="fas fa-check-double text-[#008795] text-sm mt-1 flex-shrink-0"></i>
             <!-- Responsibility Description -->
-            <p class="text-xs text-slate-800 font-medium leading-relaxed mb-0">
+            <p class="text-sm text-slate-800 font-medium leading-relaxed mb-0">
               {{ responsibility }}
             </p>
           </div>

@@ -102,6 +102,35 @@
       </div>
     </section>
 
+    <!-- ================================================================= -->
+    <!-- IMPACT STATISTICS COUNTER BAR SECTION                             -->
+    <!-- ================================================================= -->
+    <section ref="statsSectionRef" class="max-w-6xl mx-auto px-4 py-8">
+      <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
+        <div
+          v-for="(stat, index) in impactMetrics"
+          :key="stat.id"
+          class="flex flex-col items-center justify-center pt-4 md:pt-0 first:pt-0"
+          :class="index === 4 ? 'col-span-2 md:col-span-1' : ''"
+        >
+          <!-- Circular Top Badge -->
+          <div class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-2 shadow-2xs mx-auto">
+            <i :class="stat.icon"></i>
+          </div>
+
+          <!-- Value Typography -->
+          <div class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">
+            {{ stat.prefix }}{{ stat.current.toLocaleString() }}{{ stat.suffix }}
+          </div>
+
+          <!-- Label Typography -->
+          <div class="text-[11px] font-bold tracking-wider text-slate-400 uppercase mt-1">
+            {{ stat.label }}
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- About Section -->
     <section class="about-section animate-fade-up">
       <div class="container glass-panel">
@@ -193,8 +222,12 @@ import BaseUrl from "../../services/baseURL";
 import Newsline from "./Newsline.vue";
 
 
-import hero1 from "@/assets/hero-banner.jpg";
-import hero2 from "@/assets/hero-banner-2.jpg";
+import hero1 from "@/assets/hero-banners-2.jpg";
+import hero2 from "@/assets/hero-banners-1.jpg";
+import hero3 from "@/assets/hero-banners-3.jpg";
+import hero4 from "@/assets/hero-banners-4.jpg";
+import hero5 from "@/assets/hero-banners-5.jpg";
+
 
 // Hero slider state
 const slides = ref([
@@ -295,13 +328,129 @@ const partnerBanks = [
   { name: "Nations Trust Bank", acronym: "NTB", icon: "fas fa-landmark" },
 ];
 
+
+// Impact Metric Counters State & Animation
+const statsSectionRef = ref(null);
+
+const impactMetrics = ref([
+  {
+    id: "farmers",
+    label: "Registered Farmers",
+    icon: "fas fa-users",
+    target: 25400,
+    current: 1,
+    prefix: "",
+    suffix: "+"
+  },
+  {
+    id: "loans",
+    label: "Loans Granted / Taken",
+    icon: "fas fa-hand-holding-usd",
+    target: 18250,
+    current: 1,
+    prefix: "",
+    suffix: "+"
+  },
+  {
+    id: "banks",
+    label: "Partner Banks",
+    icon: "fas fa-landmark",
+    target: 14,
+    current: 1,
+    prefix: "",
+    suffix: "+"
+  },
+  {
+    id: "schemes",
+    label: "Active Loan Schemes",
+    icon: "fas fa-file-invoice-dollar",
+    target: 8,
+    current: 1,
+    prefix: "",
+    suffix: "+"
+  },
+  {
+    id: "funds",
+    label: "Total Funds Disbursed",
+    icon: "fas fa-coins",
+    target: 4850,
+    current: 1,
+    prefix: "Rs. ",
+    suffix: "M+"
+  }
+]);
+
+let statsObserver = null;
+let animationFrameId = null;
+let hasAnimatedStats = false;
+
+const startCountUpAnimation = () => {
+  if (hasAnimatedStats) return;
+  hasAnimatedStats = true;
+
+  const duration = 2000;
+  let startTime = null;
+
+  const animate = (currentTime) => {
+    if (!startTime) startTime = currentTime;
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    // Smooth ease-out cubic timing: 1 - (1 - progress)^3
+    const easeOut = 1 - Math.pow(1 - progress, 3);
+
+    impactMetrics.value.forEach((stat) => {
+      stat.current = Math.floor(1 + (stat.target - 1) * easeOut);
+    });
+
+    if (progress < 1) {
+      animationFrameId = requestAnimationFrame(animate);
+    } else {
+      impactMetrics.value.forEach((stat) => {
+        stat.current = stat.target;
+      });
+    }
+  };
+
+  animationFrameId = requestAnimationFrame(animate);
+};
+
 onMounted(() => {
   startSlider();
   fetchServices();
+
+  if (statsSectionRef.value && typeof IntersectionObserver !== "undefined") {
+    statsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startCountUpAnimation();
+            if (statsObserver) {
+              statsObserver.disconnect();
+              statsObserver = null;
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.15
+      }
+    );
+    statsObserver.observe(statsSectionRef.value);
+  } else {
+    startCountUpAnimation();
+  }
 });
 
 onBeforeUnmount(() => {
   stopSlider();
+  if (statsObserver) {
+    statsObserver.disconnect();
+    statsObserver = null;
+  }
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
 });
 </script>
 
@@ -1245,6 +1394,99 @@ onBeforeUnmount(() => {
 
 .inline-block {
   display: inline-block !important;
+}
+
+
+/* ========================================================================= */
+/* IMPACT METRIC COUNTERS BAR UTILITIES                                      */
+/* ========================================================================= */
+
+.py-8 {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem !important;
+}
+
+.p-8 {
+  padding: 2rem !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.gap-6 {
+  gap: 1.5rem !important;
+}
+
+.w-12 {
+  width: 3rem !important;
+}
+
+.h-12 {
+  height: 3rem !important;
+}
+
+.shadow-2xs {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
+}
+
+.text-\[11px\] {
+  font-size: 11px !important;
+  line-height: 1rem !important;
+}
+
+.text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2 !important;
+}
+
+.divide-y > :not([hidden]) ~ :not([hidden]) {
+  border-top-width: 1px !important;
+  border-top-style: solid !important;
+}
+
+.divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #f1f5f9 !important;
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+  .md\:col-span-1 {
+    grid-column: span 1 / span 1 !important;
+  }
+  .md\:pt-0 {
+    padding-top: 0 !important;
+  }
+  .md\:divide-y-0 > :not([hidden]) ~ :not([hidden]) {
+    border-top-width: 0 !important;
+  }
+  .md\:divide-x > :not([hidden]) ~ :not([hidden]) {
+    border-left-width: 1px !important;
+    border-left-style: solid !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+  .lg\:text-3xl {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
 }
 
 </style>

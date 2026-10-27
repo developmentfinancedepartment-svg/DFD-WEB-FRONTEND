@@ -14,7 +14,7 @@
         <div class="row align-items-center">
           <!-- Search Bar -->
           <div class="col-lg-5 mb-3 mb-lg-0">
-            <div class="search-box position-relative">
+            <!-- <div class="search-box position-relative">
               <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
               <input 
                 type="text" 
@@ -22,7 +22,7 @@
                 placeholder="Search publications by keyword..." 
                 v-model="searchQuery"
               >
-            </div>
+            </div> -->
           </div>
           
           <!-- Year Filters (Dynamically generated) -->
