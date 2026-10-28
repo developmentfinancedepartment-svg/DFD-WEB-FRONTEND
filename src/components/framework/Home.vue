@@ -42,8 +42,45 @@
           ></span>
         </div>
       </div>
+      <!-- Dynamic Latest News Ticker Banner -->
       <div class="news-ticker-container animate-fade-down">
-        <Newsline />
+        <div class="news-ticker-bar">
+          <!-- Teal "LATEST NEWS" Badge -->
+          <div class="ticker-label">
+            <i class="fas fa-bullhorn text-xs"></i>
+            <span>LATEST NEWS</span>
+          </div>
+
+          <!-- Ticker Track Container -->
+          <div class="ticker-content">
+            <!-- Loading Indicator -->
+            <div v-if="isLoading" class="ticker-fallback">
+              <span class="spinner-border spinner-border-sm me-2 text-teal" style="width: 14px; height: 14px; color: #00e5ff;" role="status"></span>
+              <span>Loading latest updates...</span>
+            </div>
+
+            <!-- Fallback when no records are found -->
+            <div v-else-if="!newsList || newsList.length === 0" class="ticker-fallback">
+              <span>No recent news announcements available at this time.</span>
+            </div>
+
+            <!-- Marquee Ticker Track -->
+            <div v-else class="ticker-track">
+              <div
+                v-for="(item, index) in newsList"
+                :key="item.id || index"
+                class="ticker-item"
+              >
+                <!-- Small teal dot bullet -->
+                <span class="inline-block w-2 h-2 rounded-full bg-teal-400 mr-2"></span>
+                <span class="ticker-text">
+                  {{ item.headlineTitle || item.title || item.headline }}
+                </span>
+                <span class="news-separator">|</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -87,7 +124,7 @@
         </div>
 
         <!-- Loading State -->
-        <div v-if="isLoading" class="text-center py-5">
+        <div v-if="isServicesLoading" class="text-center py-5">
           <div class="spinner-border text-teal mb-3" style="color: #008e9b;" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
@@ -185,7 +222,7 @@
           <div
             v-for="bank in partnerBanks"
             :key="bank.name"
-            class="bg-white rounded-2xl border border-slate-200/80 shadow-xs flex flex-col items-center justify-between p-3 hover:shadow-md hover:border-[#008795]/60 transition-all group overflow-hidden"
+            class="bg-ashb rounded-2xl border border-slate-200/80 shadow-xs flex flex-col items-center justify-between p-3 hover:shadow-md hover:border-[#008795]/60 transition-all group overflow-hidden"
             style="height: 110px; max-height: 110px;"
           >
             <!-- Bank Logo Image Container -->
@@ -237,7 +274,6 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import axios from "axios";
 import BaseUrl from "../../services/baseURL";
-import Newsline from "./Newsline.vue";
 
 import bocLogo from '@/assets/banks/boc.png';
 import cdbLogo from '@/assets/banks/cdb.png';
@@ -315,7 +351,7 @@ const goToSlide = (index) => {
 
 // Services dynamic state & API fetch
 const services = ref([]);
-const isLoading = ref(true);
+const isServicesLoading = ref(true);
 const error = ref(null);
 
 const slugMap = {
@@ -338,7 +374,7 @@ const getSchemeLink = (service) => {
 };
 
 const fetchServices = async () => {
-  isLoading.value = true;
+  isServicesLoading.value = true;
   error.value = null;
   try {
     const apiBase = BaseUrl.baseUrl || 'http://localhost:8096';
@@ -347,6 +383,72 @@ const fetchServices = async () => {
   } catch (err) {
     console.error('Failed to fetch active schemes:', err);
     error.value = err.message || 'Failed to load loan schemes. Please try again.';
+  } finally {
+    isServicesLoading.value = false;
+  }
+};
+
+// Dynamic Latest News Ticker State & Fetching (Connected with News Ticker Headlines CMS API)
+const newsList = ref([]);
+const isLoading = ref(true);
+
+const fetchLatestNews = async () => {
+  isLoading.value = true;
+  try {
+    const apiBase = BaseUrl.baseUrl || 'http://localhost:8096';
+    let res = null;
+
+    // Identified News Ticker Headlines endpoints (CMS public broadcast & active ticker endpoints)
+    const endpoints = [
+      `${apiBase}/api/news/public`,
+      `${apiBase}/api/v1/ticker-headlines`,
+      `${apiBase}/api/v1/news-ticker`,
+      `${apiBase}/api/news`,
+      `${apiBase}/api/public/latestnews`,
+      'http://localhost:8080/api/v1/ticker-headlines',
+      'http://localhost:8080/api/v1/news'
+    ];
+
+    for (const url of endpoints) {
+      try {
+        const response = await axios.get(url);
+        if (response && response.data) {
+          res = response;
+          break;
+        }
+      } catch {
+        // Fallback to next endpoint
+      }
+    }
+
+    const payload = res?.data;
+    let rawItems = [];
+    if (Array.isArray(payload)) {
+      rawItems = payload;
+    } else if (payload && Array.isArray(payload.data)) {
+      rawItems = payload.data; // Wrapped in { data: [...] }
+    } else if (payload && Array.isArray(payload.content)) {
+      rawItems = payload.content; // Wrapped in { content: [...] } (Spring Page)
+    } else if (payload && Array.isArray(payload.items)) {
+      rawItems = payload.items;
+    }
+
+    // Filter to only include records where status/tickerStatus === 'ACTIVE' or active === true
+    newsList.value = rawItems.filter((item) => {
+      if (item.tickerStatus !== undefined) {
+        return String(item.tickerStatus).toUpperCase() === 'ACTIVE';
+      }
+      if (item.status !== undefined) {
+        return String(item.status).toUpperCase() === 'ACTIVE';
+      }
+      if (item.active !== undefined) {
+        return Boolean(item.active);
+      }
+      return true;
+    });
+  } catch (err) {
+    console.error('Failed to fetch active news ticker headlines:', err);
+    newsList.value = [];
   } finally {
     isLoading.value = false;
   }
@@ -520,6 +622,7 @@ const startCountUpAnimation = () => {
 onMounted(() => {
   startSlider();
   fetchServices();
+  fetchLatestNews();
 
   if (statsSectionRef.value && typeof IntersectionObserver !== "undefined") {
     statsObserver = new IntersectionObserver(
@@ -1394,6 +1497,10 @@ onBeforeUnmount(() => {
   background-color: #dbe1e3 !important;
 }
 
+.bg-ashb {
+  background-color: #eef0f1 !important;
+}
+
 .rounded-2xl {
   border-radius: 1rem !important;
 }
@@ -1596,6 +1703,129 @@ onBeforeUnmount(() => {
   .lg\:text-3xl {
     font-size: 1.875rem !important;
     line-height: 2.25rem !important;
+  }
+}
+
+
+/* Latest News Ticker Bar */
+.news-ticker-bar {
+  display: flex;
+  background: rgba(3, 43, 95, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  height: 45px;
+  align-items: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.ticker-label {
+  background: #008795;
+  color: #fff;
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.ticker-label::after {
+  content: '';
+  position: absolute;
+  right: -15px;
+  top: 0;
+  border-top: 45px solid #008795;
+  border-right: 15px solid transparent;
+}
+
+.ticker-content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.ticker-fallback {
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  font-style: italic;
+  padding-left: 20px;
+}
+
+.ticker-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: ticker-scroll 75s linear infinite;
+  padding-left: 100%;
+  will-change: transform;
+}
+
+.ticker-track:hover,
+.news-ticker-bar:hover .ticker-track {
+  animation-play-state: paused !important;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.ticker-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
+}
+
+.ticker-text:hover {
+  color: #00e5ff;
+}
+
+.news-separator {
+  margin-left: 16px;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 300;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@media (max-width: 768px) {
+  .ticker-label span {
+    display: none;
+  }
+  .ticker-label {
+    padding: 0 14px;
   }
 }
 
