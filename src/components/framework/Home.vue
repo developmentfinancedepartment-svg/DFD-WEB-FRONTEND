@@ -139,7 +139,7 @@
             <div class="about-image-wrapper">
               <img
                 src="../../assets/team_image.png"
-                alt="About ITMD"
+                alt="About DFD"
                 class="about-image"
               />
               <div class="accent-border"></div>
@@ -171,12 +171,13 @@
             <i class="fas fa-landmark text-xs"></i>
             <span>Banking Network</span>
           </span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 tracking-tight text-center">
-            Participating Financial Institutions (PFIs)
+          <h2 class="section-title">
+            Working Banks
           </h2>
-          <p class="text-slate-500 text-xs md:text-sm max-w-2xl mx-auto text-center mt-2 font-normal leading-relaxed">
+          <div class="title-underline"></div>
+          <!-- <p class="text-slate-500 text-xs md:text-sm max-w-2xl mx-auto text-center mt-2 font-normal leading-relaxed">
             Concessionary credit lines and interest subsidy schemes are disbursed through accredited state, private commercial, and specialized licensed banks.
-          </p>
+          </p> -->
         </div>
 
         <!-- Responsive Grid of Institution Cards -->
@@ -793,7 +794,8 @@ onBeforeUnmount(() => {
 
 .section-title {
   font-size: 2.2rem;
-  font-weight: 800;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 750;
   color: #008e9b;
   letter-spacing: -0.5px;
 }
