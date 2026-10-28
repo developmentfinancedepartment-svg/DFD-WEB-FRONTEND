@@ -171,29 +171,45 @@
             <i class="fas fa-landmark text-xs"></i>
             <span>Banking Network</span>
           </span>
-          <h2 class="section-title">
+          <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 tracking-tight text-center">
             Participating Financial Institutions (PFIs)
           </h2>
-          <div class="title-underline"></div>
-          <!-- <p class="text-slate-500 text-xs md:text-sm max-w-2xl mx-auto text-center mt-2 font-normal leading-relaxed">
+          <p class="text-slate-500 text-xs md:text-sm max-w-2xl mx-auto text-center mt-2 font-normal leading-relaxed">
             Concessionary credit lines and interest subsidy schemes are disbursed through accredited state, private commercial, and specialized licensed banks.
-          </p> -->
+          </p>
         </div>
 
         <!-- Responsive Grid of Institution Cards -->
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto mt-10">
           <div
             v-for="bank in partnerBanks"
-            :key="bank.acronym"
-            class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex flex-col items-center justify-center text-center h-28 hover:shadow-md hover:border-[#008795]/50 transition-all duration-200 group cursor-pointer"
+            :key="bank.name"
+            class="bg-white rounded-2xl border border-slate-200/80 shadow-xs flex flex-col items-center justify-between p-3 hover:shadow-md hover:border-[#008795]/60 transition-all group overflow-hidden"
+            style="height: 110px; max-height: 110px;"
           >
-            <!-- Elegant Bank Icon Badge -->
-            <div class="w-10 h-10 rounded-xl bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-2 group-hover:scale-105 transition-transform">
-              <i :class="bank.icon"></i>
+            <!-- Bank Logo Image Container -->
+            <div
+              class="w-full flex items-center justify-center overflow-hidden"
+              style="height: 50px; max-height: 50px;"
+            >
+              <img
+                v-if="!bank.hasError"
+                :src="bank.logo"
+                :alt="bank.name"
+                class="transition-transform duration-300 group-hover:scale-105"
+                style="max-height: 42px; max-width: 95px; width: auto; height: auto; object-fit: contain; display: block;"
+                @error="bank.hasError = true"
+              />
+              <div
+                v-else
+                class="w-10 h-10 rounded-xl bg-teal-50 text-[#008795] flex items-center justify-center font-black text-xs border border-teal-100 group-hover:bg-[#008795] group-hover:text-white transition-colors"
+              >
+                {{ bank.shortCode }}
+              </div>
             </div>
-            <!-- Institution Name / Acronym -->
-            <span class="text-xs font-bold text-slate-700 group-hover:text-[#008795] transition-colors line-clamp-1">
-              {{ bank.acronym }}
+            <!-- Institution Name -->
+            <span class="text-[11px] font-bold text-slate-700 tracking-tight group-hover:text-[#008795] transition-colors truncate w-full text-center">
+              {{ bank.name }}
             </span>
           </div>
         </div>
@@ -221,6 +237,18 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import axios from "axios";
 import BaseUrl from "../../services/baseURL";
 import Newsline from "./Newsline.vue";
+
+import bocLogo from '@/assets/banks/boc.png';
+import cdbLogo from '@/assets/banks/cdb.png';
+import commercialLogo from '@/assets/banks/commercial.png';
+import dfccLogo from '@/assets/banks/dfcc.png';
+import hnbLogo from '@/assets/banks/hnb.png';
+import ndbLogo from '@/assets/banks/ndb.png';
+import ntbLogo from '@/assets/banks/ntb.png';
+import peoplesLogo from '@/assets/banks/peoples.png';
+import sampathLogo from '@/assets/banks/sampath.png';
+import sdbLogo from '@/assets/banks/sdb.png';
+import seylanLogo from '@/assets/banks/seylan.png';
 
 
 import hero1 from "@/assets/hero-banners-2.jpg";
@@ -326,20 +354,81 @@ const fetchServices = async () => {
 
 
 // Participating Partner Financial Institutions (PFIs)
-const partnerBanks = [
-  { name: "Bank of Ceylon", acronym: "BOC", icon: "fas fa-landmark" },
-  { name: "People's Bank", acronym: "People's Bank", icon: "fas fa-university" },
-  { name: "Commercial Bank of Ceylon", acronym: "Commercial Bank", icon: "fas fa-building" },
-  { name: "Hatton National Bank", acronym: "HNB", icon: "fas fa-landmark" },
-  { name: "Sampath Bank", acronym: "Sampath Bank", icon: "fas fa-university" },
-  { name: "DFCC Bank", acronym: "DFCC Bank", icon: "fas fa-building" },
-  { name: "National Development Bank", acronym: "NDB", icon: "fas fa-landmark" },
-  { name: "Seylan Bank", acronym: "Seylan Bank", icon: "fas fa-university" },
-  { name: "Regional Development Bank", acronym: "RDB", icon: "fas fa-landmark" },
-  { name: "Sanasa Development Bank", acronym: "SDB bank", icon: "fas fa-university" },
-  { name: "Citizens Development Business", acronym: "CDB", icon: "fas fa-building" },
-  { name: "Nations Trust Bank", acronym: "NTB", icon: "fas fa-landmark" },
-];
+const partnerBanks = ref([
+  {
+    name: 'BOC',
+    shortCode: 'BOC',
+    logo: bocLogo,
+    hasError: false
+  },
+  {
+    name: "People's Bank",
+    shortCode: 'PB',
+    logo: peoplesLogo,
+    hasError: false
+  },
+  {
+    name: 'Commercial Bank',
+    shortCode: 'COMB',
+    logo: commercialLogo,
+    hasError: false
+  },
+  {
+    name: 'HNB',
+    shortCode: 'HNB',
+    logo: hnbLogo,
+    hasError: false
+  },
+  {
+    name: 'Sampath Bank',
+    shortCode: 'SAMP',
+    logo: sampathLogo,
+    hasError: false
+  },
+  {
+    name: 'DFCC Bank',
+    shortCode: 'DFCC',
+    logo: dfccLogo,
+    hasError: false
+  },
+  {
+    name: 'NDB',
+    shortCode: 'NDB',
+    logo: ndbLogo,
+    hasError: false
+  },
+  {
+    name: 'Seylan Bank',
+    shortCode: 'SEY',
+    logo: seylanLogo,
+    hasError: false
+  },
+  {
+    name: 'RDB',
+    shortCode: 'RDB',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/86/Regional_Development_Bank_Logo.png',
+    hasError: false
+  },
+  {
+    name: 'SDB bank',
+    shortCode: 'SDB',
+    logo: sdbLogo,
+    hasError: false
+  },
+  {
+    name: 'CDB',
+    shortCode: 'CDB',
+    logo: cdbLogo,
+    hasError: false
+  },
+  {
+    name: 'NTB',
+    shortCode: 'NTB',
+    logo: ntbLogo,
+    hasError: false
+  }
+]);
+const banks = partnerBanks;
 
 
 // Impact Metric Counters State & Animation

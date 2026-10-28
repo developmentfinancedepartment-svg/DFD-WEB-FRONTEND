@@ -183,16 +183,20 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto mt-10">
           <div
             v-for="bank in partnerBanks"
-            :key="bank.acronym"
-            class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex flex-col items-center justify-center text-center h-28 hover:shadow-md hover:border-[#008795]/50 transition-all duration-200 group cursor-pointer"
+            :key="bank.name"
+            class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col items-center justify-center text-center h-28 hover:shadow-md hover:border-[#008795]/60 transition-all group"
           >
-            <!-- Elegant Bank Icon Badge -->
-            <div class="w-10 h-10 rounded-xl bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-2 group-hover:scale-105 transition-transform">
-              <i :class="bank.icon"></i>
+            <!-- Bank Logo Image Container -->
+            <div class="h-12 w-full flex items-center justify-center mb-2 px-2">
+              <img
+                :src="bank.logo"
+                :alt="bank.name"
+                class="max-h-10 max-w-[100px] object-contain transition-all duration-300 filter grayscale group-hover:grayscale-0 group-hover:scale-105"
+              />
             </div>
-            <!-- Institution Name / Acronym -->
+            <!-- Institution Name -->
             <span class="text-xs font-bold text-slate-700 group-hover:text-[#008795] transition-colors line-clamp-1">
-              {{ bank.acronym }}
+              {{ bank.name }}
             </span>
           </div>
         </div>
@@ -314,18 +318,18 @@ const fetchServices = async () => {
 
 // Participating Partner Financial Institutions (PFIs)
 const partnerBanks = [
-  { name: "Bank of Ceylon", acronym: "BOC", icon: "fas fa-landmark" },
-  { name: "People's Bank", acronym: "People's Bank", icon: "fas fa-university" },
-  { name: "Commercial Bank of Ceylon", acronym: "Commercial Bank", icon: "fas fa-building" },
-  { name: "Hatton National Bank", acronym: "HNB", icon: "fas fa-landmark" },
-  { name: "Sampath Bank", acronym: "Sampath Bank", icon: "fas fa-university" },
-  { name: "DFCC Bank", acronym: "DFCC Bank", icon: "fas fa-building" },
-  { name: "National Development Bank", acronym: "NDB", icon: "fas fa-landmark" },
-  { name: "Seylan Bank", acronym: "Seylan Bank", icon: "fas fa-university" },
-  { name: "Regional Development Bank", acronym: "RDB", icon: "fas fa-landmark" },
-  { name: "Sanasa Development Bank", acronym: "SDB bank", icon: "fas fa-university" },
-  { name: "Citizens Development Business", acronym: "CDB", icon: "fas fa-building" },
-  { name: "Nations Trust Bank", acronym: "NTB", icon: "fas fa-landmark" },
+  { name: 'BOC', logo: '/assets/banks/boc.png' },
+  { name: "People's Bank", logo: '/assets/banks/peoples.png' },
+  { name: 'Commercial Bank', logo: '/assets/banks/commercial.png' },
+  { name: 'HNB', logo: '/assets/banks/hnb.png' },
+  { name: 'Sampath Bank', logo: '/assets/banks/sampath.png' },
+  { name: 'DFCC Bank', logo: '/assets/banks/dfcc.png' },
+  { name: 'NDB', logo: '/assets/banks/ndb.png' },
+  { name: 'Seylan Bank', logo: '/assets/banks/seylan.png' },
+  { name: 'RDB', logo: '/assets/banks/rdb.png' },
+  { name: 'SDB bank', logo: '/assets/banks/sdb.png' },
+  { name: 'CDB', logo: '/assets/banks/cdb.png' },
+  { name: 'NTB', logo: '/assets/banks/ntb.png' },
 ];
 
 
@@ -1316,8 +1320,52 @@ onBeforeUnmount(() => {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
 }
 
-.hover\:border-\[\#008795\]\/50:hover {
-  border-color: rgba(0, 135, 149, 0.5) !important;
+.hover\:border-\[\#008795\]\/50:hover,
+.hover\:border-\[\#008795\]\/60:hover {
+  border-color: rgba(0, 135, 149, 0.6) !important;
+}
+
+.p-4 {
+  padding: 1rem !important;
+}
+
+.w-full {
+  width: 100% !important;
+}
+
+.px-2 {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+.max-h-10 {
+  max-height: 2.5rem !important;
+}
+
+.max-w-\[100px\] {
+  max-width: 100px !important;
+}
+
+.object-contain {
+  object-fit: contain !important;
+}
+
+.duration-300 {
+  transition-duration: 300ms !important;
+}
+
+.filter {
+  filter: var(--tw-filter, none);
+}
+
+.grayscale {
+  filter: grayscale(100%) !important;
+  -webkit-filter: grayscale(100%) !important;
+}
+
+.group:hover .group-hover\:grayscale-0 {
+  filter: grayscale(0%) !important;
+  -webkit-filter: grayscale(0%) !important;
 }
 
 .transition-all {
