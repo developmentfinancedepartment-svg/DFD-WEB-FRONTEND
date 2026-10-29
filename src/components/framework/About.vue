@@ -263,6 +263,10 @@ const responsibilities = [
   color: #ccfbf1 !important;
 }
 
+.bg-ash {
+  background-color: #f3f5f6 !important;
+}
+
 .text-teal-50\/90 {
   color: rgba(240, 253, 250, 0.9) !important;
 }
