@@ -9,33 +9,72 @@
     </section>
 
     <!-- Filter Header -->
-    <section class="filter-section py-4 bg-light shadow-sm mb-5">
-      <div class="container">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-12 text-center">
-            <div class="d-flex flex-wrap justify-content-center gap-2">
-              <span class="d-flex align-items-center me-3 text-muted fw-bold"><i class="fas fa-filter me-2"></i> Category:</span>
-              <button 
-                class="btn rounded-pill filter-pill" 
-                :class="{ 'btn-teal text-white': selectedCategory === 'All Schemes', 'btn-outline-teal': selectedCategory !== 'All Schemes' }"
-                @click="selectedCategory = 'All Schemes'"
-              >All Schemes</button>
-              <button 
-                class="btn rounded-pill filter-pill" 
-                :class="{ 'btn-teal text-white': selectedCategory === 'MSME Revitalization', 'btn-outline-teal': selectedCategory !== 'MSME Revitalization' }"
-                @click="selectedCategory = 'MSME Revitalization'"
-              >MSME Revitalization</button>
-              <button 
-                class="btn rounded-pill filter-pill" 
-                :class="{ 'btn-teal text-white': selectedCategory === 'Agriculture & Livestock', 'btn-outline-teal': selectedCategory !== 'Agriculture & Livestock' }"
-                @click="selectedCategory = 'Agriculture & Livestock'"
-              >Agriculture & Livestock</button>
-              <button 
-                class="btn rounded-pill filter-pill" 
-                :class="{ 'btn-teal text-white': selectedCategory === 'Green Energy', 'btn-outline-teal': selectedCategory !== 'Green Energy' }"
-                @click="selectedCategory = 'Green Energy'"
-              >Green Energy</button>
-            </div>
+    <section class="filter-section py-3 bg-light shadow-sm mb-5">
+      <div class="container d-flex justify-content-center justify-content-md-end align-items-center">
+        <!-- Category Filter Custom Dropdown -->
+        <div class="filter-dropdown-area">
+          <div class="filter-label">
+            <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
+            </svg>
+            <span>Category:</span>
+          </div>
+
+          <div ref="categoryDropdownRef" class="custom-dropdown">
+            <!-- Trigger Button -->
+            <button
+              type="button"
+              class="dropdown-btn border border-[#008795]/40 text-slate-700 text-xs font-semibold py-2 px-4 rounded-full shadow-xs hover:border-[#008795] cursor-pointer"
+              :class="{ 'dropdown-btn-open': isCategoryDropdownOpen }"
+              @click="toggleCategoryDropdown"
+            >
+              <span>{{ selectedCategoryLabel }}</span>
+              <svg
+                class="chevron-icon text-[#008795]"
+                :class="{ 'rotate-180': isCategoryDropdownOpen }"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <!-- Floating Menu -->
+            <transition name="dropdown-anim">
+              <div
+                v-if="isCategoryDropdownOpen"
+                class="dropdown-menu-list absolute right-0 mt-2 min-w-[230px] bg-white border border-slate-100 rounded-2xl shadow-xl p-1.5 z-50 overflow-hidden"
+              >
+                <button
+                  v-for="cat in categoryOptions"
+                  :key="cat.value"
+                  type="button"
+                  class="dropdown-item"
+                  :class="{ 'item-selected bg-teal-50/80 text-[#008795]': selectedCategory === cat.value }"
+                  @click="selectCategory(cat.value)"
+                >
+                  <span class="item-label-group">
+                    <span
+                      v-if="selectedCategory === cat.value"
+                      class="active-dot bg-[#008795]"
+                    ></span>
+                    <span>{{ cat.label }}</span>
+                  </span>
+                  <svg
+                    v-if="selectedCategory === cat.value"
+                    class="check-icon text-[#008795]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </button>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
@@ -95,13 +134,42 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
 import BaseUrl from '../../services/baseURL';
 
-const selectedCategory = ref('All Schemes');
+const selectedCategory = ref('ALL');
+const isCategoryDropdownOpen = ref(false);
+const categoryDropdownRef = ref(null);
 const services = ref([]);
 const loading = ref(false);
+
+const categoryOptions = [
+  { label: 'All Schemes', value: 'ALL' },
+  { label: 'MSME Revitalization', value: 'MSME Revitalization' },
+  { label: 'Agriculture & Livestock', value: 'Agriculture & Livestock' },
+  { label: 'Green Energy', value: 'Green Energy' }
+];
+
+const selectedCategoryLabel = computed(() => {
+  const match = categoryOptions.find(opt => opt.value === selectedCategory.value);
+  return match ? match.label : 'All Schemes';
+});
+
+const toggleCategoryDropdown = () => {
+  isCategoryDropdownOpen.value = !isCategoryDropdownOpen.value;
+};
+
+const selectCategory = (val) => {
+  selectedCategory.value = val;
+  isCategoryDropdownOpen.value = false;
+};
+
+const handleClickOutside = (event) => {
+  if (categoryDropdownRef.value && !categoryDropdownRef.value.contains(event.target)) {
+    isCategoryDropdownOpen.value = false;
+  }
+};
 
 const getSchemeLink = (service) => {
   return `/services/${service.id}`;
@@ -121,11 +189,20 @@ const fetchActiveSchemes = async () => {
 };
 
 const filteredServices = computed(() => {
-  if (selectedCategory.value === 'All Schemes') return services.value;
+  if (selectedCategory.value === 'ALL' || selectedCategory.value === 'All Schemes' || !selectedCategory.value) {
+    return services.value;
+  }
   return services.value.filter(s => s.category === selectedCategory.value);
 });
 
-onMounted(fetchActiveSchemes);
+onMounted(() => {
+  fetchActiveSchemes();
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
 </script>
 
 <style scoped>
@@ -193,6 +270,147 @@ onMounted(fetchActiveSchemes);
   font-weight: 600;
   padding: 0.5rem 1.5rem;
   transition: all 0.3s ease;
+}
+
+/* Custom Dropdown Filter Matching PublicationsView */
+.filter-dropdown-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filter-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #475569;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+.filter-icon {
+  width: 14px;
+  height: 14px;
+  color: #008795;
+}
+
+.custom-dropdown {
+  position: relative;
+  min-width: 180px;
+}
+
+.dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 135, 149, 0.4);
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  min-width: 180px;
+}
+
+.dropdown-btn:hover,
+.dropdown-btn-open {
+  border-color: #008795;
+  box-shadow: 0 0 0 3px rgba(0, 135, 149, 0.12);
+}
+
+.chevron-icon {
+  width: 14px;
+  height: 14px;
+  color: #008795;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu-list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  min-width: 230px;
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 1rem;
+  box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.12);
+  padding: 0.375rem;
+  z-index: 50;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.dropdown-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.85rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.item-selected {
+  background-color: rgba(240, 253, 250, 0.8) !important;
+  color: #008795 !important;
+  font-weight: 600;
+}
+
+.item-label-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.active-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #008795;
+  flex-shrink: 0;
+}
+
+.check-icon {
+  width: 14px;
+  height: 14px;
+  color: #008795;
+  flex-shrink: 0;
+}
+
+/* Animations */
+.dropdown-anim-enter-active,
+.dropdown-anim-leave-active {
+  transition: all 0.15s ease-out;
+}
+.dropdown-anim-enter-from,
+.dropdown-anim-leave-to {
+  opacity: 0;
+  transform: translateY(-4px) scale(0.97);
 }
 
 /* Services Section */
