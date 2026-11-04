@@ -77,6 +77,7 @@
           <ul class="navbar-nav mx-auto align-items-xl-center">
             <li class="nav-item"><router-link to="/" class="nav-link" @click="closeNavbar">Home</router-link></li>
             <li class="nav-item"><router-link to="/About" class="nav-link" @click="closeNavbar">About Us</router-link></li>
+            <li class="nav-item"><router-link to="/team" class="nav-link" @click="closeNavbar">Our Team</router-link></li>
             <li class="nav-item"><router-link to="/Services" class="nav-link" @click="closeNavbar">Services</router-link></li>
             <li class="nav-item"><router-link to="/publications" class="nav-link" @click="closeNavbar">Publications</router-link></li>
             

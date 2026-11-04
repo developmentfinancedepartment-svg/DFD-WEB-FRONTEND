@@ -17,6 +17,7 @@ import GalleryView from "./views/GalleryView.vue";
 import FieldVisitsView from "./views/FieldVisitsView.vue";
 import PublicationsView from "./views/PublicationsView.vue";
 import ContactView from "./views/ContactView.vue";
+import OurTeamView from "./views/OurTeamView.vue";
 import Officers from "./components/framework/Rti/Officers.vue";
 import Annualrep from "./components/framework/Rti/Annualrep.vue";
 // import Events from "./components/framework/Events.vue";
@@ -100,9 +101,13 @@ const routes = [
     component: PublicationsView,
   },
   {
-    path: "/OurTeam",
+    path: "/team",
     name: "OurTeam",
-    component:OurTeam,
+    component: OurTeamView,
+  },
+  {
+    path: "/OurTeam",
+    redirect: "/team",
   },
   {
     path: "/Network",
