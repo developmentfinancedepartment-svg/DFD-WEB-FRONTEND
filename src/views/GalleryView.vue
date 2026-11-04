@@ -11,16 +11,73 @@
     <!-- Main Content Section -->
     <section class="gallery-content">
       <div class="container">
-        <!-- Filter Pills -->
-        <div class="filter-pills">
-          <button 
-            v-for="category in categories" 
-            :key="category" 
-            @click="activeCategory = category"
-            :class="['filter-pill', { active: activeCategory === category }]"
-          >
-            {{ category }}
-          </button>
+        <!-- Category Filter Custom Dropdown -->
+        <div class="gallery-filter-wrapper flex justify-end items-center mb-6 d-flex justify-content-center justify-content-md-end align-items-center">
+          <div class="filter-dropdown-area">
+            <div class="filter-label">
+              <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
+              </svg>
+              <span>Category:</span>
+            </div>
+
+            <div ref="categoryDropdownRef" class="custom-dropdown">
+              <!-- Trigger Button -->
+              <button
+                type="button"
+                class="dropdown-btn bg-white border border-[#008795]/40 text-slate-700 text-xs font-semibold py-2 px-4 rounded-full shadow-xs hover:border-[#008795] cursor-pointer"
+                :class="{ 'dropdown-btn-open': isCategoryDropdownOpen }"
+                @click="toggleCategoryDropdown"
+              >
+                <span>{{ selectedCategoryLabel }}</span>
+                <svg
+                  class="chevron-icon text-[#008795]"
+                  :class="{ 'rotate-180': isCategoryDropdownOpen }"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <!-- Dropdown Menu -->
+              <transition name="dropdown-anim">
+                <div
+                  v-if="isCategoryDropdownOpen"
+                  class="dropdown-menu-list absolute right-0 mt-2 min-w-[200px] bg-white border border-slate-100 rounded-2xl shadow-xl p-1.5 z-50 overflow-hidden"
+                >
+                  <button
+                    v-for="cat in categoryOptions"
+                    :key="cat.value"
+                    type="button"
+                    class="dropdown-item"
+                    :class="{ 'item-selected bg-teal-50/80 text-[#008795]': activeCategory === cat.value }"
+                    @click="selectCategory(cat.value)"
+                  >
+                    <span class="item-label-group">
+                      <span
+                        v-if="activeCategory === cat.value"
+                        class="active-dot bg-[#008795]"
+                      ></span>
+                      <span>{{ cat.label }}</span>
+                    </span>
+                    <svg
+                      v-if="activeCategory === cat.value"
+                      class="check-icon text-[#008795]"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </button>
+                </div>
+              </transition>
+            </div>
+          </div>
         </div>
 
         <!-- Loading State -->
@@ -37,6 +94,7 @@
             <i class="fas fa-images fa-3x text-muted opacity-50"></i>
           </div>
           <h4 class="text-muted">No photographs found for this category.</h4>
+          <button class="btn btn-teal text-white mt-3 px-4" @click="selectCategory('ALL')">Show All Photos</button>
         </div>
 
         <!-- 3-Column Grid -->
@@ -126,11 +184,39 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
 import BaseUrl from '@/services/baseURL';
 
-const categories = ['All', 'Workshops', 'Field Visits', 'Institutional'];
-const activeCategory = ref('All');
+const categoryOptions = [
+  { label: 'All Photos', value: 'ALL' },
+  { label: 'Workshops', value: 'Workshops' },
+  { label: 'Field Visits', value: 'Field Visits' },
+  { label: 'Institutional', value: 'Institutional' }
+];
+
+const activeCategory = ref('ALL');
+const isCategoryDropdownOpen = ref(false);
+const categoryDropdownRef = ref(null);
 const galleryItems = ref([]);
 const loading = ref(false);
 const activeItem = ref(null);
+
+const selectedCategoryLabel = computed(() => {
+  const match = categoryOptions.find(opt => opt.value === activeCategory.value);
+  return match ? match.label : 'All Photos';
+});
+
+const toggleCategoryDropdown = () => {
+  isCategoryDropdownOpen.value = !isCategoryDropdownOpen.value;
+};
+
+const selectCategory = (category) => {
+  activeCategory.value = category;
+  isCategoryDropdownOpen.value = false;
+};
+
+const handleClickOutside = (event) => {
+  if (categoryDropdownRef.value && !categoryDropdownRef.value.contains(event.target)) {
+    isCategoryDropdownOpen.value = false;
+  }
+};
 
 // Fallback initial items if backend is offline
 const fallbackItems = [
@@ -181,7 +267,7 @@ const fetchGallery = async () => {
 };
 
 const filteredGallery = computed(() => {
-  if (activeCategory.value === 'All') {
+  if (activeCategory.value === 'ALL' || activeCategory.value === 'All' || activeCategory.value === 'All Photos' || !activeCategory.value) {
     return galleryItems.value;
   }
   return galleryItems.value.filter(item => item.category === activeCategory.value);
@@ -206,10 +292,12 @@ const handleKeyDown = (e) => {
 onMounted(() => {
   fetchGallery();
   window.addEventListener('keydown', handleKeyDown);
+  document.addEventListener('click', handleClickOutside);
 });
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeyDown);
+  document.removeEventListener('click', handleClickOutside);
   document.body.style.overflow = '';
 });
 </script>
@@ -252,6 +340,18 @@ onUnmounted(() => {
   color: #008795;
 }
 
+.btn-teal {
+  background-color: #008795;
+  border-color: #008795;
+  color: white;
+}
+
+.btn-teal:hover {
+  background-color: #006b77;
+  border-color: #006b77;
+  color: white;
+}
+
 /* Gallery Content */
 .gallery-content {
   padding: 50px 20px;
@@ -262,37 +362,158 @@ onUnmounted(() => {
   margin: 0 auto;
 }
 
-/* Filter Pills */
-.filter-pills {
+/* Custom Dropdown Filter Matching Project's Teal UI Standard */
+.gallery-filter-wrapper {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 40px;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-.filter-pill {
-  background: white;
-  border: 1px solid #cbd5e1;
+@media (max-width: 767px) {
+  .gallery-filter-wrapper {
+    justify-content: center;
+  }
+}
+
+.filter-dropdown-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filter-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
   color: #475569;
-  padding: 8px 20px;
-  border-radius: 99px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
+  user-select: none;
 }
 
-.filter-pill:hover {
-  border-color: #008795;
+.filter-icon {
+  width: 14px;
+  height: 14px;
   color: #008795;
 }
 
-.filter-pill.active {
-  background: #008795;
-  color: white;
+.custom-dropdown {
+  position: relative;
+  min-width: 180px;
+}
+
+.dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 135, 149, 0.4);
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  min-width: 180px;
+}
+
+.dropdown-btn:hover,
+.dropdown-btn-open {
   border-color: #008795;
-  box-shadow: 0 4px 15px rgba(0, 135, 149, 0.3);
+  box-shadow: 0 0 0 3px rgba(0, 135, 149, 0.12);
+}
+
+.chevron-icon {
+  width: 14px;
+  height: 14px;
+  color: #008795;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu-list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  min-width: 200px;
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 1rem;
+  box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.12);
+  padding: 0.375rem;
+  z-index: 50;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.dropdown-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.85rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.item-selected {
+  background-color: rgba(240, 253, 250, 0.8) !important;
+  color: #008795 !important;
+  font-weight: 600;
+}
+
+.item-label-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.active-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #008795;
+  flex-shrink: 0;
+}
+
+.check-icon {
+  width: 14px;
+  height: 14px;
+  color: #008795;
+  flex-shrink: 0;
+}
+
+/* Animations */
+.dropdown-anim-enter-active,
+.dropdown-anim-leave-active {
+  transition: all 0.15s ease-out;
+}
+.dropdown-anim-enter-from,
+.dropdown-anim-leave-to {
+  opacity: 0;
+  transform: translateY(-4px) scale(0.97);
 }
 
 /* 3-Column Grid */
@@ -535,13 +756,6 @@ onUnmounted(() => {
   }
   .gallery-grid {
     grid-template-columns: 1fr;
-  }
-  .filter-pills {
-    gap: 10px;
-  }
-  .filter-pill {
-    padding: 6px 16px;
-    font-size: 0.85rem;
   }
 }
 </style>
