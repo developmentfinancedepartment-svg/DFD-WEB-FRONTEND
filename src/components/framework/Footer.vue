@@ -40,9 +40,9 @@
                   <a href="https://www.facebook.com" target="_blank" class="social-link" title="Facebook">
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a href="https://www.whatsapp.com" target="_blank" class="social-link" title="WhatsApp">
+                  <!-- <a href="https://www.whatsapp.com" target="_blank" class="social-link" title="WhatsApp">
                     <i class="fab fa-whatsapp"></i>
-                  </a>
+                  </a> -->
                 </div>
               </div>
             </div>

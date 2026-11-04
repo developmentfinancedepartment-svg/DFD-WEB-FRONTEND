@@ -1,85 +1,88 @@
 <template>
   <div class="gallery-page">
     <!-- Top Hero Header -->
-    <div class="gallery-hero">
+    <section class="gallery-hero py-12 md:py-14 text-center">
       <div class="container text-center">
         <h1 class="hero-title">Official Gallery</h1>
-        <p class="hero-subtitle">Explore highlights from our institutional programs, field visits, and capacity-building workshops.</p>
+        <p class="hero-subtitle mb-3 leading-relaxed">Explore highlights from our institutional programs, field visits, and capacity-building workshops.</p>
       </div>
-    </div>
+    </section>
+
+    <!-- Filter Header -->
+    <section class="filter-section py-4 bg-white border-b border-slate-200/80 shadow-2xs">
+      <div class="container flex justify-end items-center d-flex justify-content-center justify-content-md-end align-items-center">
+        <!-- Category Filter Custom Dropdown -->
+        <div class="filter-dropdown-area">
+          <div class="filter-label">
+            <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
+            </svg>
+            <span>Category:</span>
+          </div>
+
+          <div ref="categoryDropdownRef" class="custom-dropdown">
+            <!-- Trigger Button -->
+            <button
+              type="button"
+              class="dropdown-btn bg-white border border-[#008795]/40 text-slate-700 text-xs font-semibold py-2 px-4 rounded-full shadow-xs hover:border-[#008795] cursor-pointer"
+              :class="{ 'dropdown-btn-open': isCategoryDropdownOpen }"
+              @click="toggleCategoryDropdown"
+            >
+              <span>{{ selectedCategoryLabel }}</span>
+              <svg
+                class="chevron-icon text-[#008795]"
+                :class="{ 'rotate-180': isCategoryDropdownOpen }"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <transition name="dropdown-anim">
+              <div
+                v-if="isCategoryDropdownOpen"
+                class="dropdown-menu-list absolute right-0 mt-2 min-w-[200px] bg-white border border-slate-100 rounded-2xl shadow-xl p-1.5 z-50 overflow-hidden"
+              >
+                <button
+                  v-for="cat in categoryOptions"
+                  :key="cat.value"
+                  type="button"
+                  class="dropdown-item"
+                  :class="{ 'item-selected bg-teal-50/80 text-[#008795]': activeCategory === cat.value }"
+                  @click="selectCategory(cat.value)"
+                >
+                  <span class="item-label-group">
+                    <span
+                      v-if="activeCategory === cat.value"
+                      class="active-dot bg-[#008795]"
+                    ></span>
+                    <span>{{ cat.label }}</span>
+                  </span>
+                  <svg
+                    v-if="activeCategory === cat.value"
+                    class="check-icon text-[#008795]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </button>
+              </div>
+            </transition>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Main Content Section -->
     <section class="gallery-content">
       <div class="container">
-        <!-- Category Filter Custom Dropdown -->
-        <div class="gallery-filter-wrapper flex justify-end items-center mb-6 d-flex justify-content-center justify-content-md-end align-items-center">
-          <div class="filter-dropdown-area">
-            <div class="filter-label">
-              <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
-              </svg>
-              <span>Category:</span>
-            </div>
-
-            <div ref="categoryDropdownRef" class="custom-dropdown">
-              <!-- Trigger Button -->
-              <button
-                type="button"
-                class="dropdown-btn bg-white border border-[#008795]/40 text-slate-700 text-xs font-semibold py-2 px-4 rounded-full shadow-xs hover:border-[#008795] cursor-pointer"
-                :class="{ 'dropdown-btn-open': isCategoryDropdownOpen }"
-                @click="toggleCategoryDropdown"
-              >
-                <span>{{ selectedCategoryLabel }}</span>
-                <svg
-                  class="chevron-icon text-[#008795]"
-                  :class="{ 'rotate-180': isCategoryDropdownOpen }"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-
-              <!-- Dropdown Menu -->
-              <transition name="dropdown-anim">
-                <div
-                  v-if="isCategoryDropdownOpen"
-                  class="dropdown-menu-list absolute right-0 mt-2 min-w-[200px] bg-white border border-slate-100 rounded-2xl shadow-xl p-1.5 z-50 overflow-hidden"
-                >
-                  <button
-                    v-for="cat in categoryOptions"
-                    :key="cat.value"
-                    type="button"
-                    class="dropdown-item"
-                    :class="{ 'item-selected bg-teal-50/80 text-[#008795]': activeCategory === cat.value }"
-                    @click="selectCategory(cat.value)"
-                  >
-                    <span class="item-label-group">
-                      <span
-                        v-if="activeCategory === cat.value"
-                        class="active-dot bg-[#008795]"
-                      ></span>
-                      <span>{{ cat.label }}</span>
-                    </span>
-                    <svg
-                      v-if="activeCategory === cat.value"
-                      class="check-icon text-[#008795]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </button>
-                </div>
-              </transition>
-            </div>
-          </div>
-        </div>
-
         <!-- Loading State -->
         <div v-if="loading" class="text-center py-5">
           <div class="spinner-border text-teal mb-3" role="status">
@@ -304,6 +307,8 @@ onUnmounted(() => {
 
 <style scoped>
 .gallery-page {
+  /* Push down due to fixed header */
+  padding-top: 100px;
   font-family: 'Open Sans', sans-serif;
   background: #f7fbff;
   padding-bottom: 80px;
@@ -313,12 +318,18 @@ onUnmounted(() => {
 /* Top Hero Header */
 .gallery-hero {
   background: linear-gradient(135deg, #004d5a 0%, #008795 100%);
-  padding: 130px 20px 70px 20px;
+  padding: 3rem 1rem;
   color: white;
   margin-top: 0 !important;
   border-top: none !important;
   position: relative;
   border-bottom: 5px solid #00e5ff;
+}
+
+@media (min-width: 768px) {
+  .gallery-hero {
+    padding: 3.5rem 1rem;
+  }
 }
 
 .hero-title {
@@ -352,28 +363,19 @@ onUnmounted(() => {
   color: white;
 }
 
-/* Gallery Content */
-.gallery-content {
-  padding: 50px 20px;
+/* Filter Bar */
+.filter-section {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
 }
 
-.container {
-  max-width: 1140px;
-  margin: 0 auto;
+.shadow-2xs {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
 }
 
-/* Custom Dropdown Filter Matching Project's Teal UI Standard */
-.gallery-filter-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-@media (max-width: 767px) {
-  .gallery-filter-wrapper {
-    justify-content: center;
-  }
+.border-slate-200\/80 {
+  border-color: rgba(226, 232, 240, 0.8) !important;
 }
 
 .filter-dropdown-area {
@@ -514,6 +516,16 @@ onUnmounted(() => {
 .dropdown-anim-leave-to {
   opacity: 0;
   transform: translateY(-4px) scale(0.97);
+}
+
+/* Gallery Content */
+.gallery-content {
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
 }
 
 /* 3-Column Grid */
@@ -748,9 +760,6 @@ onUnmounted(() => {
 }
 
 @media (max-width: 767px) {
-  .gallery-hero {
-    padding: 100px 15px 50px 15px;
-  }
   .hero-title {
     font-size: 2.2rem;
   }

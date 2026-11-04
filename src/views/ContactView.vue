@@ -44,7 +44,7 @@
           
             <a
               href="tel:1819"
-              class="text-xl font-bold text-[#008795] hover:opacity-80 transition"
+              class="text-4xl font-bold text-[#008795] hover:opacity-80 transition"
             >
               1819
             </a>
@@ -176,7 +176,7 @@
                 <i class="fab fa-youtube"></i>
               </a>
               <!-- WhatsApp -->
-              <a
+              <!-- <a
                 href="https://whatsapp.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -185,7 +185,7 @@
                 title="WhatsApp"
               >
                 <i class="fab fa-whatsapp"></i>
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
