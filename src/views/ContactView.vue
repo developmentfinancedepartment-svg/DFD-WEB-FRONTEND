@@ -297,7 +297,12 @@
               </div>
 
               <!-- Scheme Category Dropdown -->
-              <div class="relative" ref="dropdownRef">
+              <div
+                class="relative"
+                ref="dropdownRef"
+                @mouseenter="isCategoryOpen = true"
+                @mouseleave="isCategoryOpen = false"
+              >
                 <label class="block text-xs font-bold text-slate-700 mb-1">Scheme / Category</label>
                 <button
                   type="button"
@@ -319,7 +324,7 @@
                 <transition name="dropdown-fade">
                   <div
                     v-if="isCategoryOpen"
-                    class="absolute z-50 left-0 right-0 mt-2 bg-white rounded-2xl border border-slate-200/80 shadow-[0_10px_25px_rgba(0,0,0,0.08)] overflow-hidden"
+                    class="absolute z-50 left-0 right-0 mt-1 bg-white rounded-2xl border border-slate-200/80 shadow-[0_10px_25px_rgba(0,0,0,0.08)] overflow-hidden"
                   >
                     <!-- List Header Placeholder -->
                     <div class="py-3 px-5 text-xs text-slate-400 font-semibold bg-slate-50/50 border-b border-slate-100 select-none">

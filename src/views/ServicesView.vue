@@ -20,7 +20,12 @@
             <span>Category:</span>
           </div>
 
-          <div ref="categoryDropdownRef" class="custom-dropdown">
+          <div
+            ref="categoryDropdownRef"
+            class="custom-dropdown"
+            @mouseenter="isCategoryDropdownOpen = true"
+            @mouseleave="isCategoryDropdownOpen = false"
+          >
             <!-- Trigger Button -->
             <button
               type="button"
@@ -45,7 +50,7 @@
             <transition name="dropdown-anim">
               <div
                 v-if="isCategoryDropdownOpen"
-                class="dropdown-menu-list absolute right-0 mt-2 min-w-[230px] bg-white border border-slate-100 rounded-2xl shadow-xl p-1.5 z-50 overflow-hidden"
+                class="dropdown-menu-list absolute right-0 mt-1 min-w-[230px] bg-white border border-slate-100 rounded-2xl shadow-xl p-1.5 z-50 overflow-hidden"
               >
                 <button
                   v-for="cat in categoryOptions"
@@ -341,7 +346,7 @@ onUnmounted(() => {
   position: absolute;
   right: 0;
   top: 100%;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   min-width: 230px;
   background-color: #ffffff;
   border: 1px solid #f1f5f9;

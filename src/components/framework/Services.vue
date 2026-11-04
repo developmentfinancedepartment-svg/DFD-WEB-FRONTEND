@@ -4,23 +4,37 @@
     <section class="hero-header">
       <div class="container text-center">
         <h1 class="hero-title">Development Financing Schemes</h1>
-        <p class="hero-subtitle">Empowering growth through specialized ministry credit lines and concessionary financial support.</p>
+        <p class="hero-subtitle">
+          Empowering growth through specialized ministry credit lines and
+          concessionary financial support.
+        </p>
       </div>
     </section>
 
     <!-- Filter Header -->
     <section class="filter-section py-3 bg-light shadow-sm mb-5">
-      <div class="container d-flex justify-content-center justify-content-md-end align-items-center">
+      <div
+        class="container d-flex justify-content-center justify-content-md-end align-items-center"
+      >
         <!-- Category Filter Custom Dropdown -->
         <div class="filter-dropdown-area">
           <div class="filter-label">
             <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
+              <path
+                fill-rule="evenodd"
+                d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+                clip-rule="evenodd"
+              />
             </svg>
             <span>Category:</span>
           </div>
 
-          <div ref="categoryDropdownRef" class="custom-dropdown">
+          <div
+            ref="categoryDropdownRef"
+            class="custom-dropdown"
+            @mouseenter="isCategoryDropdownOpen = true"
+            @mouseleave="isCategoryDropdownOpen = false"
+          >
             <!-- Trigger Button -->
             <button
               type="button"
@@ -37,7 +51,11 @@
                 stroke="currentColor"
                 stroke-width="2.5"
               >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
 
@@ -45,14 +63,17 @@
             <transition name="dropdown-anim">
               <div
                 v-if="isCategoryDropdownOpen"
-                class="dropdown-menu-list absolute right-0 mt-2 min-w-[230px] bg-white border border-slate-100 rounded-2xl shadow-xl p-1.5 z-50 overflow-hidden"
+                class="dropdown-menu-list absolute right-0 mt-1 min-w-[230px] bg-white border border-slate-100 rounded-2xl shadow-xl p-1.5 z-50 overflow-hidden"
               >
                 <button
                   v-for="cat in categoryOptions"
                   :key="cat.value"
                   type="button"
                   class="dropdown-item"
-                  :class="{ 'item-selected bg-teal-50/80 text-[#008795]': selectedCategory === cat.value }"
+                  :class="{
+                    'item-selected bg-teal-50/80 text-[#008795]':
+                      selectedCategory === cat.value,
+                  }"
                   @click="selectCategory(cat.value)"
                 >
                   <span class="item-label-group">
@@ -70,7 +91,11 @@
                     stroke="currentColor"
                     stroke-width="2.5"
                   >
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </button>
               </div>
@@ -92,35 +117,51 @@
         </div>
 
         <!-- Services Grid -->
-        <div class="services-grid animate-fade-up" v-else-if="filteredServices.length > 0">
-          <div class="service-card" v-for="service in filteredServices" :key="service.id || service.title">
+        <div
+          class="services-grid animate-fade-up"
+          v-else-if="filteredServices.length > 0"
+        >
+          <div
+            class="service-card"
+            v-for="service in filteredServices"
+            :key="service.id || service.title"
+          >
             <div class="card-glass d-flex flex-column h-100">
               <div class="service-icon-box mx-auto mb-3">
                 <i :class="service.icon || 'fas fa-hand-holding-usd'"></i>
               </div>
               <div class="card-content d-flex flex-column flex-grow-1">
                 <h3 class="text-center">{{ service.title }}</h3>
-                
+
                 <!-- Highlights Pills -->
                 <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
-                  <span class="badge bg-teal-light text-teal rounded-pill py-1 px-2">
-                    <i class="fas fa-money-bill-wave me-1"></i> {{ service.maxAmount }}
+                  <span
+                    class="badge bg-teal-light text-teal rounded-pill py-1 px-2"
+                  >
+                    <i class="fas fa-money-bill-wave me-1"></i>
+                    {{ service.maxAmount }}
                   </span>
-                  <span class="badge bg-teal-light text-teal rounded-pill py-1 px-2">
-                    <i class="fas fa-percent me-1"></i> {{ service.interestRate }}
+                  <span
+                    class="badge bg-teal-light text-teal rounded-pill py-1 px-2"
+                  >
+                    <i class="fas fa-percent me-1"></i>
+                    {{ service.interestRate }}
                   </span>
                 </div>
-                
+
                 <p class="text-center flex-grow-1">{{ service.description }}</p>
-                
-                <router-link :to="getSchemeLink(service)" class="btn btn-outline-teal rounded-pill mt-auto fw-bold w-100">
+
+                <router-link
+                  :to="getSchemeLink(service)"
+                  class="btn btn-outline-teal rounded-pill mt-auto fw-bold w-100"
+                >
                   View Scheme Details &rarr;
                 </router-link>
               </div>
             </div>
           </div>
         </div>
-        
+
         <!-- No Results -->
         <div class="text-center py-5" v-else>
           <div class="mb-4">
@@ -134,26 +175,28 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import axios from 'axios';
-import BaseUrl from '../../services/baseURL';
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import axios from "axios";
+import BaseUrl from "../../services/baseURL";
 
-const selectedCategory = ref('ALL');
+const selectedCategory = ref("ALL");
 const isCategoryDropdownOpen = ref(false);
 const categoryDropdownRef = ref(null);
 const services = ref([]);
 const loading = ref(false);
 
 const categoryOptions = [
-  { label: 'All Schemes', value: 'ALL' },
-  { label: 'MSME Revitalization', value: 'MSME Revitalization' },
-  { label: 'Agriculture & Livestock', value: 'Agriculture & Livestock' },
-  { label: 'Green Energy', value: 'Green Energy' }
+  { label: "All Schemes", value: "ALL" },
+  { label: "MSME Revitalization", value: "MSME Revitalization" },
+  { label: "Agriculture & Livestock", value: "Agriculture & Livestock" },
+  { label: "Green Energy", value: "Green Energy" },
 ];
 
 const selectedCategoryLabel = computed(() => {
-  const match = categoryOptions.find(opt => opt.value === selectedCategory.value);
-  return match ? match.label : 'All Schemes';
+  const match = categoryOptions.find(
+    (opt) => opt.value === selectedCategory.value,
+  );
+  return match ? match.label : "All Schemes";
 });
 
 const toggleCategoryDropdown = () => {
@@ -166,7 +209,10 @@ const selectCategory = (val) => {
 };
 
 const handleClickOutside = (event) => {
-  if (categoryDropdownRef.value && !categoryDropdownRef.value.contains(event.target)) {
+  if (
+    categoryDropdownRef.value &&
+    !categoryDropdownRef.value.contains(event.target)
+  ) {
     isCategoryDropdownOpen.value = false;
   }
 };
@@ -178,36 +224,40 @@ const getSchemeLink = (service) => {
 const fetchActiveSchemes = async () => {
   loading.value = true;
   try {
-    const apiBase = BaseUrl.baseUrl || 'http://localhost:8096';
+    const apiBase = BaseUrl.baseUrl || "http://localhost:8096";
     const response = await axios.get(`${apiBase}/api/schemes/public`);
     services.value = Array.isArray(response.data) ? response.data : [];
   } catch (error) {
-    console.error('Failed to fetch active schemes:', error);
+    console.error("Failed to fetch active schemes:", error);
   } finally {
     loading.value = false;
   }
 };
 
 const filteredServices = computed(() => {
-  if (selectedCategory.value === 'ALL' || selectedCategory.value === 'All Schemes' || !selectedCategory.value) {
+  if (
+    selectedCategory.value === "ALL" ||
+    selectedCategory.value === "All Schemes" ||
+    !selectedCategory.value
+  ) {
     return services.value;
   }
-  return services.value.filter(s => s.category === selectedCategory.value);
+  return services.value.filter((s) => s.category === selectedCategory.value);
 });
 
 onMounted(() => {
   fetchActiveSchemes();
-  document.addEventListener('click', handleClickOutside);
+  document.addEventListener("click", handleClickOutside);
 });
 
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside);
+  document.removeEventListener("click", handleClickOutside);
 });
 </script>
 
 <style scoped>
 .services-page {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   color: #102741;
   background: #f8f9fa;
   min-height: 100vh;
@@ -341,6 +391,7 @@ onUnmounted(() => {
   position: absolute;
   right: 0;
   top: 100%;
+  margin-top: 0.25rem;
   margin-top: 0.5rem;
   min-width: 230px;
   background-color: #ffffff;

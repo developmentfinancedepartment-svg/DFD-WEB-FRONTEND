@@ -24,7 +24,12 @@
             <span>FILTER YEAR:</span>
           </div>
 
-          <div ref="dropdownRef" class="custom-dropdown">
+          <div
+            ref="dropdownRef"
+            class="custom-dropdown"
+            @mouseenter="isOpen = true"
+            @mouseleave="isOpen = false"
+          >
             <button
               type="button"
               class="dropdown-btn"
@@ -457,7 +462,7 @@ onBeforeUnmount(() => {
   position: absolute;
   right: 0;
   top: 100%;
-  margin-top: 0.4rem;
+  margin-top: 0.25rem;
   width: 100%;
   min-width: 150px;
   background-color: #ffffff;

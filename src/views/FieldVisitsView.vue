@@ -20,7 +20,12 @@
             <span>District:</span>
           </div>
 
-          <div ref="districtDropdownRef" class="custom-dropdown">
+          <div
+            ref="districtDropdownRef"
+            class="custom-dropdown"
+            @mouseenter="isDistrictDropdownOpen = true"
+            @mouseleave="isDistrictDropdownOpen = false"
+          >
             <!-- Trigger Button -->
             <button
               type="button"
@@ -691,7 +696,7 @@ onUnmounted(() => {
   position: absolute;
   right: 0;
   top: 100%;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   min-width: 190px;
   background-color: #ffffff;
   border: 1px solid #f1f5f9;
