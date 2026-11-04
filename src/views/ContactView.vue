@@ -253,7 +253,7 @@
                     type="text"
                     placeholder="First name"
                     required
-                    class="bg-white rounded-xl border border-slate-300 px-4 py-3.5 text-xs focus:ring-1 focus:ring-[#008795] w-full text-slate-800 placeholder-slate-400 shadow-2xs transition"
+                    class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3.5 text-xs w-full text-slate-800 placeholder-slate-400 shadow-2xs transition-all duration-200"
                   />
                 </div>
                 <div>
@@ -264,7 +264,7 @@
                     type="text"
                     placeholder="Last name"
                     required
-                    class="bg-white rounded-xl border border-slate-300 px-4 py-3.5 text-xs focus:ring-1 focus:ring-[#008795] w-full text-slate-800 placeholder-slate-400 shadow-2xs transition"
+                    class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3.5 text-xs w-full text-slate-800 placeholder-slate-400 shadow-2xs transition-all duration-200"
                   />
                 </div>
               </div>
@@ -280,7 +280,7 @@
                     placeholder="07XXXXXXXX"
                     required
                     @input="formatPhoneNumber"
-                    class="bg-white rounded-xl border border-slate-300 px-4 py-3.5 text-xs focus:ring-1 focus:ring-[#008795] w-full text-slate-800 placeholder-slate-400 shadow-2xs transition"
+                    class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3.5 text-xs w-full text-slate-800 placeholder-slate-400 shadow-2xs transition-all duration-200"
                   />
                 </div>
                 <div>
@@ -291,7 +291,7 @@
                     type="email"
                     placeholder="name@example.com"
                     required
-                    class="bg-white rounded-xl border border-slate-300 px-4 py-3.5 text-xs focus:ring-1 focus:ring-[#008795] w-full text-slate-800 placeholder-slate-400 shadow-2xs transition"
+                    class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3.5 text-xs w-full text-slate-800 placeholder-slate-400 shadow-2xs transition-all duration-200"
                   />
                 </div>
               </div>
@@ -302,8 +302,8 @@
                 <button
                   type="button"
                   @click="toggleCategoryDropdown"
-                  class="bg-white rounded-xl border border-slate-300 px-4 py-3 text-xs flex justify-between items-center text-slate-800 shadow-2xs hover:border-[#008795] transition cursor-pointer w-full text-left"
-                  :class="{ 'border-[#008795] ring-1 ring-[#008795]': isCategoryOpen }"
+                  class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3 text-xs flex justify-between items-center text-slate-800 shadow-2xs cursor-pointer w-full text-left transition-all duration-200"
+                  :class="{ 'border-[#008795] ring-2 ring-[#008795]/20': isCategoryOpen }"
                 >
                   <span :class="form.category ? 'text-slate-800 font-medium flex items-center gap-2.5 truncate' : 'text-slate-400 truncate'">
                     <i v-if="selectedCategoryIcon" :class="[selectedCategoryIcon, 'text-[#008795] text-xs flex-shrink-0']"></i>
@@ -354,7 +354,7 @@
                   rows="6"
                   placeholder="How can we help you?"
                   required
-                  class="bg-white rounded-xl border border-slate-300 px-4 py-3 text-xs focus:ring-1 focus:ring-[#008795] w-full text-slate-800 placeholder-slate-400 shadow-2xs transition resize-y flex-1 min-h-[160px]"
+                  class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3 text-xs w-full text-slate-800 placeholder-slate-400 shadow-2xs resize-y flex-1 min-h-[160px] transition-all duration-200"
                 ></textarea>
               </div>
 
@@ -363,7 +363,7 @@
                 <button
                   type="submit"
                   :disabled="isSubmitting"
-                  class="bg-[#008795] hover:bg-[#007380] text-white rounded-xl py-3.5 font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 w-full transition shadow-sm disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+                  class="bg-[#008795] hover:bg-[#007380] text-white rounded-2xl py-3.5 font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 w-full transition shadow-sm disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
                 >
                   <i
                     v-if="isSubmitting"
@@ -1070,15 +1070,39 @@ const handleSubmitInquiry = async () => {
   transition-duration: 150ms !important;
 }
 
+.transition-all {
+  transition-property: all !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.duration-200 {
+  transition-duration: 200ms !important;
+}
+
 .hover\:opacity-90:hover {
   opacity: 0.9 !important;
 }
 
 .focus\:ring-1:focus,
-.focus\:ring-\[\#008795\]:focus {
+.focus\:ring-2:focus,
+.focus\:ring-\[\#008795\]:focus,
+.focus\:ring-\[\#008795\]\/20:focus {
   outline: none !important;
   border-color: #008795 !important;
   box-shadow: 0 0 0 2px rgba(0, 135, 149, 0.2) !important;
+}
+
+.ring-2 {
+  box-shadow: 0 0 0 2px rgba(0, 135, 149, 0.2) !important;
+}
+
+.focus\:border-\[\#008795\]:focus {
+  border-color: #008795 !important;
+}
+
+.focus\:outline-none:focus {
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
 }
 
 input, select, textarea {
