@@ -1,20 +1,10 @@
 <template>
   <div class="team-page">
     <!-- Hero Header Banner -->
-    <section class="team-hero">
+    <section class="hero-header">
       <div class="container text-center">
-        <div class="hero-badge-wrap">
-          <span class="hero-badge">
-            <svg class="hero-badge-icon" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-            </svg>
-            <span>Official Directory</span>
-          </span>
-        </div>
         <h1 class="hero-title">Our Leadership &amp; Key Officials</h1>
-        <p class="hero-subtitle">
-          Department of Development Finance — Ministry of Finance, Economic Stabilization and National Policies
-        </p>
+        <p class="hero-subtitle">Department of Development Finance — Ministry of Finance, Economic Stabilization and National Policies</p>
       </div>
     </section>
 
@@ -156,43 +146,22 @@
             <div class="spotlight-grid grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <!-- Left Column: lg:col-span-7 -->
               <div class="spotlight-col-left lg:col-span-7">
-                <!-- Squircle Avatar Frame -->
-                <div class="spotlight-avatar-box">
-                  <div class="spotlight-avatar-squircle">
-                    <img
-                      v-if="directorGeneral.photo && !directorGeneral.photoError"
-                      :src="directorGeneral.photo"
-                      :alt="directorGeneral.name"
-                      class="spotlight-photo-img"
-                      @error="directorGeneral.photoError = true"
-                    />
-                    <div v-else class="spotlight-monogram">
-                      <span class="spotlight-initials">{{ getInitials(directorGeneral.name) }}</span>
-                      <span class="spotlight-crest-label">DFD HEAD</span>
-                    </div>
-                  </div>
-                  <span class="spotlight-role-pill">Director General</span>
+                <div class="spotlight-title-group">
+                  <span class="spotlight-eyebrow">HEAD OF DEPARTMENT</span>
+                  <h2 class="spotlight-name">{{ directorGeneral.name }}</h2>
+                  <p class="spotlight-designation">{{ directorGeneral.designation }}</p>
                 </div>
 
-                <!-- Profile Details -->
-                <div class="spotlight-details">
-                  <div class="spotlight-title-group">
-                    <span class="spotlight-eyebrow">HEAD OF DEPARTMENT</span>
-                    <h2 class="spotlight-name">{{ directorGeneral.name }}</h2>
-                    <p class="spotlight-designation">{{ directorGeneral.designation }}</p>
-                  </div>
+                <p class="spotlight-mandate">
+                  Leading the Department of Development Finance in coordinating national concessionary credit schemes,
+                  interest subsidy mechanisms, and financial inclusion frameworks across Sri Lanka.
+                </p>
 
-                  <p class="spotlight-mandate">
-                    Leading the Department of Development Finance in coordinating national concessionary credit schemes,
-                    interest subsidy mechanisms, and financial inclusion frameworks across Sri Lanka.
-                  </p>
-
-                  <div class="spotlight-location" v-if="directorGeneral.room">
-                    <svg class="loc-icon" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                    </svg>
-                    <span>{{ directorGeneral.room }}</span>
-                  </div>
+                <div class="spotlight-location" v-if="directorGeneral.room">
+                  <svg class="loc-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                  </svg>
+                  <span>{{ directorGeneral.room }}</span>
                 </div>
               </div>
 
@@ -1139,11 +1108,11 @@ onUnmounted(() => {
    BASE PAGE LAYOUT
    ========================================================================== */
 .team-page {
+  font-family: 'Open Sans', sans-serif;
+  color: #102741;
+  background: #f8f9fa;
   min-height: 100vh;
-  background-color: #f8fafc;
-  color: #1e293b;
-  font-family: inherit;
-  padding-bottom: 5rem;
+  padding-top: 100px;
 }
 
 .container {
@@ -1155,78 +1124,106 @@ onUnmounted(() => {
   box-sizing: border-box;
 }
 
-/* ==========================================================================
-   HERO BANNER
-   ========================================================================== */
-.team-hero {
-  background: linear-gradient(135deg, #005a63 0%, #008795 50%, #006f7b 100%);
-  color: #ffffff;
-  padding: 3.5rem 1rem 3.5rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.team-hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(circle at 20% 150%, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-.hero-badge-wrap {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 0.85rem;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 14px;
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #e6fffa;
-  backdrop-filter: blur(4px);
-}
-
-.hero-badge-icon {
-  width: 14px;
-  height: 14px;
-  color: #5eead4;
+.hero-header {
+  background: linear-gradient(135deg, #004d5a 0%, #008795 100%);
+  padding: 4rem 0;
+  border-bottom: 5px solid #00e5ff;
 }
 
 .hero-title {
-  font-size: 2.25rem;
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  margin: 0 0 0.75rem;
+  color: white;
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.text-teal {
+  color: #007c91;
+}
+
+.bg-teal-light {
+  background-color: rgba(0, 124, 145, 0.1);
+}
+
+.btn-teal {
+  background-color: #007c91;
+  border-color: #007c91;
+}
+
+.btn-teal:hover {
+  background-color: #006071;
+  border-color: #006071;
+}
+
+.btn-outline-teal {
+  color: #007c91;
+  border-color: #007c91;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-teal:hover {
+  background-color: #007c91;
+  color: white;
+}
+
+.filter-pill {
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   HERO BANNER (MATCHING DEVELOPMENT FINANCING SCHEMES HEADER)
+   ========================================================================== */
+.team-hero {
+  background-color: #006f7b;
   color: #ffffff;
-  line-height: 1.2;
+  padding-top: 6rem; /* pt-24 (96px) */
+  padding-bottom: 2.5rem; /* pb-10 (40px) */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: relative;
+}
+
+.hero-title {
+  font-size: 1.875rem; /* text-3xl */
+  line-height: 2.25rem;
+  font-weight: 700; /* font-bold */
+  letter-spacing: -0.025em; /* tracking-tight */
+  color: #ffffff;
+  margin: 0 0 0.625rem; /* mb-2.5 */
 }
 
 @media (min-width: 768px) {
   .hero-title {
-    font-size: 2.75rem;
+    font-size: 2.25rem; /* md:text-4xl */
+    line-height: 2.5rem;
   }
 }
 
 .hero-subtitle {
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.9);
-  max-width: 780px;
+  font-size: 0.75rem; /* text-xs */
+  line-height: 1.625; /* leading-relaxed */
+  font-weight: 400; /* font-normal */
+  color: rgba(204, 251, 241, 0.9); /* text-teal-100/90 */
+  max-width: 800px;
   margin: 0 auto;
-  line-height: 1.6;
+}
+
+@media (min-width: 640px) {
+  .hero-subtitle {
+    font-size: 0.875rem; /* sm:text-sm */
+  }
 }
 
 /* ==========================================================================
@@ -1551,83 +1548,7 @@ onUnmounted(() => {
 
 .spotlight-col-left {
   display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-}
-
-@media (max-width: 640px) {
-  .spotlight-col-left {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-}
-
-.spotlight-avatar-box {
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.65rem;
-  flex-shrink: 0;
-}
-
-.spotlight-avatar-squircle {
-  width: 92px;
-  height: 92px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #004d5a 0%, #008795 100%);
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 22px rgba(0, 135, 149, 0.25);
-  border: 3px solid #ffffff;
-  overflow: hidden;
-}
-
-.spotlight-photo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 24px;
-}
-
-.spotlight-monogram {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.spotlight-initials {
-  font-size: 1.85rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-}
-
-.spotlight-crest-label {
-  font-size: 0.6rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: #5eead4;
-  text-transform: uppercase;
-}
-
-.spotlight-role-pill {
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 3px 10px;
-  background-color: #e6fffa;
-  color: #008795;
-  border-radius: 9999px;
-}
-
-.spotlight-details {
-  flex: 1 1 auto;
 }
 
 .spotlight-title-group {
