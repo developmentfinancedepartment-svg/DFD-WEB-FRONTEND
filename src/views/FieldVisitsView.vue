@@ -8,55 +8,81 @@
       </div>
     </section>
 
-    <!-- Metrics Bar -->
-    <section class="metrics-bar py-4 shadow-sm bg-white border-bottom">
-      <div class="container">
-        <div class="row text-center g-4">
-          <div class="col-md-4">
-            <div class="metric-item">
-              <h2 class="display-6 fw-bold text-teal mb-0">{{ kpiStats.totalCount }}</h2>
-              <p class="text-muted text-uppercase mb-0 tracking-widest small">Total Inspections</p>
-            </div>
+    <!-- Filter Header -->
+    <section class="filter-section py-3 bg-light shadow-sm mb-5">
+      <div class="container d-flex justify-content-center justify-content-md-end align-items-center">
+        <!-- Region Filter Custom Dropdown -->
+        <div class="filter-dropdown-area">
+          <div class="filter-label">
+            <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
+            </svg>
+            <span>Region:</span>
           </div>
-          <div class="col-md-4">
-            <div class="metric-item border-md-start border-md-end">
-              <h2 class="display-6 fw-bold text-teal mb-0">{{ kpiStats.distinctProvincesCount }}</h2>
-              <p class="text-muted text-uppercase mb-0 tracking-widest small">Provinces Covered</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="metric-item">
-              <h2 class="display-6 fw-bold text-teal mb-0">{{ kpiStats.beneficiariesEngaged }}</h2>
-              <p class="text-muted text-uppercase mb-0 tracking-widest small">Beneficiaries Engaged</p>
-            </div>
+
+          <div ref="regionDropdownRef" class="custom-dropdown">
+            <!-- Trigger Button -->
+            <button
+              type="button"
+              class="dropdown-btn bg-white border border-[#008795]/40 text-slate-700 text-xs font-semibold py-2 px-4 rounded-full shadow-xs hover:border-[#008795] cursor-pointer"
+              :class="{ 'dropdown-btn-open': isRegionDropdownOpen }"
+              @click="toggleRegionDropdown"
+            >
+              <span>{{ selectedRegionLabel }}</span>
+              <svg
+                class="chevron-icon text-[#008795]"
+                :class="{ 'rotate-180': isRegionDropdownOpen }"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <!-- Floating Menu -->
+            <transition name="dropdown-anim">
+              <div
+                v-if="isRegionDropdownOpen"
+                class="dropdown-menu-list absolute right-0 mt-2 min-w-[190px] bg-white border border-slate-100 rounded-2xl shadow-xl p-1.5 z-50 overflow-hidden"
+              >
+                <button
+                  v-for="region in regionOptions"
+                  :key="region.value"
+                  type="button"
+                  class="dropdown-item"
+                  :class="{ 'item-selected bg-teal-50/80 text-[#008795]': selectedRegion === region.value }"
+                  @click="selectRegion(region.value)"
+                >
+                  <span class="item-label-group">
+                    <span
+                      v-if="selectedRegion === region.value"
+                      class="active-dot bg-[#008795]"
+                    ></span>
+                    <span>{{ region.label }}</span>
+                  </span>
+                  <svg
+                    v-if="selectedRegion === region.value"
+                    class="check-icon text-[#008795]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </button>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Content Section -->
-    <section class="content-section py-5 bg-light">
+    <section class="content-section pb-5">
       <div class="container">
-        <!-- Province / Region Filter -->
-        <div class="row mb-5">
-          <div class="col-12 text-center">
-            <div class="d-flex flex-wrap justify-content-center gap-2">
-              <span class="d-flex align-items-center me-3 text-muted fw-bold">
-                <i class="fas fa-filter me-2"></i> Region:
-              </span>
-              <button 
-                v-for="region in regions" 
-                :key="region"
-                class="btn rounded-pill filter-pill" 
-                :class="{ 'btn-teal text-white': selectedRegion === region, 'btn-outline-teal': selectedRegion !== region }"
-                @click="selectedRegion = region"
-              >
-                {{ region }}
-              </button>
-            </div>
-          </div>
-        </div>
-
         <!-- Loading State -->
         <div v-if="loading" class="text-center py-5">
           <div class="spinner-border text-teal mb-3" role="status">
@@ -106,7 +132,7 @@
             <i class="fas fa-map-marked-alt fa-3x text-muted opacity-50"></i>
           </div>
           <h4 class="text-muted">No field visits recorded for this region.</h4>
-          <button class="btn btn-teal text-white mt-3 px-4" @click="selectedRegion = 'All'">Show All Regions</button>
+          <button class="btn btn-teal text-white mt-3 px-4" @click="selectRegion('All Regions')">Show All Regions</button>
         </div>
       </div>
     </section>
@@ -114,20 +140,43 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
 import BaseUrl from '@/services/baseURL';
 
-const regions = ['All', 'Central', 'North Western', 'Eastern', 'Southern'];
-const selectedRegion = ref('All');
+const regionOptions = [
+  { label: 'All Regions', value: 'All Regions' },
+  { label: 'Central', value: 'Central' },
+  { label: 'North Western', value: 'North Western' },
+  { label: 'Eastern', value: 'Eastern' },
+  { label: 'Southern', value: 'Southern' }
+];
+
+const selectedRegion = ref('All Regions');
+const isRegionDropdownOpen = ref(false);
+const regionDropdownRef = ref(null);
 const visits = ref([]);
 const loading = ref(false);
 
-const kpiStats = ref({
-  totalCount: 0,
-  distinctProvincesCount: 0,
-  beneficiariesEngaged: '8,500+'
+const selectedRegionLabel = computed(() => {
+  const match = regionOptions.find(opt => opt.value === selectedRegion.value);
+  return match ? match.label : 'All Regions';
 });
+
+const toggleRegionDropdown = () => {
+  isRegionDropdownOpen.value = !isRegionDropdownOpen.value;
+};
+
+const selectRegion = (region) => {
+  selectedRegion.value = region;
+  isRegionDropdownOpen.value = false;
+};
+
+const handleClickOutside = (event) => {
+  if (regionDropdownRef.value && !regionDropdownRef.value.contains(event.target)) {
+    isRegionDropdownOpen.value = false;
+  }
+};
 
 const fallbackVisits = [
   {
@@ -188,33 +237,19 @@ const fetchFieldVisits = async () => {
       } else {
         visits.value = fallbackVisits;
       }
-
-      kpiStats.value.totalCount = response.data.totalCount ?? visits.value.length;
-      kpiStats.value.distinctProvincesCount = response.data.distinctProvincesCount ?? new Set(visits.value.map(v => v.region || v.province)).size;
-      kpiStats.value.beneficiariesEngaged = response.data.beneficiariesEngaged || '8,500+';
     } else {
       visits.value = fallbackVisits;
-      kpiStats.value = {
-        totalCount: fallbackVisits.length,
-        distinctProvincesCount: new Set(fallbackVisits.map(v => v.region)).size,
-        beneficiariesEngaged: '8,500+'
-      };
     }
   } catch (error) {
     console.warn('Failed to load field visits from backend, using fallback data:', error);
     visits.value = fallbackVisits;
-    kpiStats.value = {
-      totalCount: fallbackVisits.length,
-      distinctProvincesCount: 4,
-      beneficiariesEngaged: '8,500+'
-    };
   } finally {
     loading.value = false;
   }
 };
 
 const filteredVisits = computed(() => {
-  if (selectedRegion.value === 'All') {
+  if (selectedRegion.value === 'All' || selectedRegion.value === 'All Regions' || !selectedRegion.value) {
     return visits.value;
   }
   return visits.value.filter(v => (v.region || v.province) === selectedRegion.value);
@@ -222,6 +257,11 @@ const filteredVisits = computed(() => {
 
 onMounted(() => {
   fetchFieldVisits();
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
 });
 </script>
 
@@ -278,26 +318,6 @@ onMounted(() => {
   border-color: #006071;
 }
 
-.btn-outline-teal {
-  color: #007c91;
-  border-color: #007c91;
-}
-
-.btn-outline-teal:hover {
-  background-color: #007c91;
-  color: white;
-}
-
-.filter-pill {
-  font-weight: 600;
-  padding: 0.5rem 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.tracking-widest {
-  letter-spacing: 2px;
-}
-
 .visit-card {
   border-radius: 12px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -318,12 +338,144 @@ onMounted(() => {
   border-left: 3px solid #007c91;
 }
 
-@media (min-width: 768px) {
-  .border-md-start {
-    border-left: 1px solid #dee2e6 !important;
-  }
-  .border-md-end {
-    border-right: 1px solid #dee2e6 !important;
-  }
+/* Custom Dropdown Filter Matching Standardized Teal Filter Selector */
+.filter-dropdown-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filter-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #475569;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+.filter-icon {
+  width: 14px;
+  height: 14px;
+  color: #008795;
+}
+
+.custom-dropdown {
+  position: relative;
+  min-width: 180px;
+}
+
+.dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 135, 149, 0.4);
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  min-width: 180px;
+}
+
+.dropdown-btn:hover,
+.dropdown-btn-open {
+  border-color: #008795;
+  box-shadow: 0 0 0 3px rgba(0, 135, 149, 0.12);
+}
+
+.chevron-icon {
+  width: 14px;
+  height: 14px;
+  color: #008795;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu-list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  min-width: 190px;
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 1rem;
+  box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.12);
+  padding: 0.375rem;
+  z-index: 50;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.dropdown-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.85rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.item-selected {
+  background-color: rgba(240, 253, 250, 0.8) !important;
+  color: #008795 !important;
+  font-weight: 600;
+}
+
+.item-label-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.active-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #008795;
+  flex-shrink: 0;
+}
+
+.check-icon {
+  width: 14px;
+  height: 14px;
+  color: #008795;
+  flex-shrink: 0;
+}
+
+/* Animations */
+.dropdown-anim-enter-active,
+.dropdown-anim-leave-active {
+  transition: all 0.15s ease-out;
+}
+.dropdown-anim-enter-from,
+.dropdown-anim-leave-to {
+  opacity: 0;
+  transform: translateY(-4px) scale(0.97);
 }
 </style>

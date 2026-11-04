@@ -22,7 +22,7 @@
               <p class="hero-tagline text-amber-400">{{ slides[currentSlide].tagline }}</p>
               <div class="hero-title">
                 <div class="title-line-1">To Strengthen</div> 
-                <div class="title-line-1">The Economy throw</div>
+                <div class="title-line-1">The Economy though</div>
                 <div class="title-line-2">Financial Assistance</div>
               </div>
               <router-link :to="slides[currentSlide].link" class="hero-btn">
