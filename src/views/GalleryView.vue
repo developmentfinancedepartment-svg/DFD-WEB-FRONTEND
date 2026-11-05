@@ -1,12 +1,12 @@
 <template>
   <div class="gallery-page">
     <!-- Top Hero Header -->
-    <section class="gallery-hero py-12 md:py-14 text-center">
+    <header class="hero-header text-center px-4">
       <div class="container text-center">
-        <h1 class="hero-title">Official Gallery</h1>
+        <h1 class="hero-title">Gallery</h1>
         <p class="hero-subtitle mb-3 leading-relaxed">Explore highlights from our institutional programs, field visits, and capacity-building workshops.</p>
       </div>
-    </section>
+    </header>
 
     <!-- Filter Header -->
     <section class="filter-section py-4 bg-white border-b border-slate-200/80 shadow-2xs">
@@ -338,7 +338,7 @@ onUnmounted(() => {
 }
 
 .hero-title {
-  font-size: 2.8rem;
+  font-size: 2.3rem;
   font-weight: 600;
   margin-bottom: 15px;
   letter-spacing: 0.5px;
@@ -528,9 +528,32 @@ onUnmounted(() => {
   padding: 40px 20px;
 }
 
+.hero-header {
+  background: linear-gradient(135deg, #004d5a 0%, #008795 100%);
+  padding: 3.3rem 1rem;
+  border-bottom: 5px solid #00e5ff;
+}
+
 .container {
   max-width: 1140px;
   margin: 0 auto;
+}
+
+.hero-title {
+  color: #ffffff;
+  font-size: 2.3rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1rem;
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 /* 3-Column Grid */

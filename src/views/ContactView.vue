@@ -5,11 +5,10 @@
     <!-- ================================================================= -->
     <header class="hero-header text-center px-4">
       <div class="hero-container">
-        <h1 class="hero-title">
-          Contact Us
-        </h1>
+        <h1 class="hero-title">Contact Us</h1>
         <p class="hero-subtitle">
-          Get in touch with the Department of Development Finance for inquiries, support, and institutional guidance.
+          Get in touch with the Department of Development Finance for inquiries,
+          support, and institutional guidance.
         </p>
       </div>
     </header>
@@ -17,15 +16,26 @@
     <!-- ================================================================= -->
     <!-- 2. FOUR KEY CONTACT CARDS (-mt-16 NEGATIVE MARGIN OVERLAP)        -->
     <!-- ================================================================= -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-10">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+    <section
+      class="max-w-6xl mx-auto px-4 sm:px-8 lg:px-4 -mt-16 relative z-10"
+    >
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto"
+      >
         <!-- Card 1: Office Address -->
-        <div class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition">
-          <div class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3">
+        <div
+          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition"
+        >
+          <div
+            class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3"
+          >
             <i class="fas fa-map-marker-alt"></i>
           </div>
           <div class="flex flex-col items-center">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Office Address</span>
+            <span
+              class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1"
+              >Office Address</span
+            >
             <p class="text-sm text-slate-700 font-bold leading-relaxed">
               Room No. 140, Ministry of Finance, The Secretariat, Colombo 01
             </p>
@@ -33,61 +43,88 @@
         </div>
 
         <!-- Card 2: National Hotline -->
-        <div class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition">
+        <div
+          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition"
+        >
           <div class="flex flex-col items-center">
-            <div class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3">
+            <div
+              class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3"
+            >
               <i class="fas fa-headset"></i>
             </div>
             <div class="flex flex-col items-center">
-              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">National Hotline</span>
-          </div>
-          
+              <span
+                class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1"
+                >National Hotline</span
+              >
+            </div>
+
             <a
               href="tel:1819"
               class="text-4xl font-bold text-[#008795] hover:opacity-80 transition"
             >
               1819
             </a>
-            <span class="text-[11px] text-slate-400 mt-0.5">Toll-free Government Hotline</span>
+            <span class="text-[11px] text-slate-400 mt-0.5"
+              >Toll-free Government Hotline</span
+            >
           </div>
         </div>
 
         <!-- Card 3: Telephone -->
-        <div class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition">
+        <div
+          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition"
+        >
           <div class="flex flex-col items-center">
-            <div class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3">
-            <i class="fas fa-phone-alt"></i>
-          </div>
-          <div class="flex flex-col items-center">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Telephone</span>
-          </div>
-          
+            <div
+              class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3"
+            >
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="flex flex-col items-center">
+              <span
+                class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1"
+                >Telephone</span
+              >
+            </div>
+
             <a
               href="tel:+94112484862"
               class="text-md font-bold text-slate-800 hover:text-[#008795] transition"
             >
               +94 112 484 862
             </a>
-            <span class="text-[11px] text-slate-400 mt-0.5">Secretariat General Line</span>
+            <span class="text-[11px] text-slate-400 mt-0.5"
+              >Secretariat General Line</span
+            >
           </div>
         </div>
 
         <!-- Card 4: Official Email -->
-        <div class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition">
+        <div
+          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition"
+        >
           <div class="flex flex-col items-center">
-            <div class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3">
-            <i class="fas fa-envelope"></i>
-          </div>
-          <div class="flex flex-col items-center">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Official Email</span>
-          </div>
+            <div
+              class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3"
+            >
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="flex flex-col items-center">
+              <span
+                class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1"
+                >Official Email</span
+              >
+            </div>
             <a
               href="mailto:dgdf@dfd.treasury.gov.lk"
               class="text-sm font-bold text-slate-800 hover:text-[#008795] transition break-all"
             >
               dgdf@dfd.treasury.gov.lk
             </a>
-            <span class="text-[11px] text-slate-400 mt-0.5">Director General's Office</span>
+            <span class="text-[11px] text-slate-400 mt-0.5"
+              >Director General's Office</span
+            >
           </div>
         </div>
       </div>
@@ -97,18 +134,27 @@
     <!-- 3. TWO-COLUMN LAYOUT (DESKTOP lg:grid-cols-12)                    -->
     <!-- ================================================================= -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 pb-16">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+      <div
+        class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto"
+      >
         <!-- ------------------------------------------------------------- -->
         <!-- LEFT COLUMN (lg:col-span-6 space-y-5)                         -->
         <!-- ------------------------------------------------------------- -->
         <div class="lg:col-span-6 space-y-5">
           <!-- Google Map Container -->
-          <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm">
+          <div
+            class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm"
+          >
             <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Location Map</span>
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-slate-700"
+                >Location Map</span
+              >
               <span class="text-xs text-slate-400">Colombo 01</span>
             </div>
-            <div class="h-72 w-full rounded-xl border border-slate-100 overflow-hidden">
+            <div
+              class="h-72 w-full rounded-xl border border-slate-100 overflow-hidden"
+            >
               <iframe
                 title="Ministry of Finance Sri Lanka Location"
                 src="https://www.google.com/maps?q=Ministry+of+Finance,+Lotus+Rd,+Colombo&output=embed"
@@ -121,12 +167,18 @@
           </div>
 
           <!-- Office Operating Hours Card -->
-          <div class="bg-[#e2e8f0]/60 rounded-2xl p-5 border border-slate-200 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-teal-50 text-[#008795] text-xl flex items-center justify-center flex-shrink-0 border border-teal-100">
+          <div
+            class="bg-[#e2e8f0]/60 rounded-2xl p-5 border border-slate-200 flex items-center gap-4"
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-teal-50 text-[#008795] text-xl flex items-center justify-center flex-shrink-0 border border-teal-100"
+            >
               <i class="fas fa-clock"></i>
             </div>
             <div>
-              <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-0.5">
+              <h4
+                class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-0.5"
+              >
                 Operating Hours
               </h4>
               <p class="text-xs text-slate-700 font-semibold mb-0">
@@ -139,8 +191,13 @@
           </div>
 
           <!-- Follow Us Card -->
-          <div class="bg-[#e2e8f0]/60 rounded-2xl p-4 border border-slate-200 flex items-center justify-between px-6">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Follow Us</span>
+          <div
+            class="bg-[#e2e8f0]/60 rounded-2xl p-4 border border-slate-200 flex items-center justify-between px-6"
+          >
+            <span
+              class="text-xs font-bold uppercase tracking-wider text-slate-700"
+              >Follow Us</span
+            >
             <div class="flex items-center gap-3">
               <!-- Facebook -->
               <a
@@ -194,15 +251,17 @@
         <!-- RIGHT COLUMN (lg:col-span-6: INQUIRY FORM)                    -->
         <!-- ------------------------------------------------------------- -->
         <div class="lg:col-span-6 flex flex-col">
-          <div class="bg-[#e2e8f0]/60 rounded-2xl p-7 md:p-8 border border-slate-200/80 shadow-sm flex flex-col justify-between h-full max-w-lg mx-auto w-full">
-            
+          <div
+            class="bg-[#e2e8f0]/60 rounded-2xl p-7 md:p-8 border border-slate-200/80 shadow-sm flex flex-col justify-between h-full max-w-lg mx-auto w-full"
+          >
             <!-- Centered Header -->
             <div class="text-center mb-6">
               <h2 class="text-2xl font-bold text-slate-800 tracking-tight">
                 Send us an Inquiry
               </h2>
               <p class="text-xs text-slate-500 mt-1 mb-0">
-                Fill out the form below and our team will get back to you promptly.
+                Fill out the form below and our team will get back to you
+                promptly.
               </p>
             </div>
 
@@ -227,7 +286,11 @@
               ></i>
               <div class="flex-1 leading-relaxed">
                 <span class="font-bold block mb-0.5">
-                  {{ submissionStatus.isError ? "Submission Issue" : "Inquiry Submitted" }}
+                  {{
+                    submissionStatus.isError
+                      ? "Submission Issue"
+                      : "Inquiry Submitted"
+                  }}
                 </span>
                 {{ submissionStatus.message }}
               </div>
@@ -241,12 +304,16 @@
               </button>
             </div>
 
-            <form @submit.prevent="handleSubmitInquiry" class="flex-1 flex flex-col justify-between space-y-4">
-              
+            <form
+              @submit.prevent="handleSubmitInquiry"
+              class="flex-1 flex flex-col justify-between space-y-4"
+            >
               <!-- First & Last Name -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1">First Name</label>
+                  <label class="block text-xs font-bold text-slate-700 mb-1"
+                    >First Name</label
+                  >
                   <input
                     id="firstName"
                     v-model.trim="form.firstName"
@@ -257,7 +324,9 @@
                   />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1">Last Name</label>
+                  <label class="block text-xs font-bold text-slate-700 mb-1"
+                    >Last Name</label
+                  >
                   <input
                     id="lastName"
                     v-model.trim="form.lastName"
@@ -272,7 +341,9 @@
               <!-- Phone & Email -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number</label>
+                  <label class="block text-xs font-bold text-slate-700 mb-1"
+                    >Phone Number</label
+                  >
                   <input
                     id="phone"
                     v-model="form.phone"
@@ -284,7 +355,9 @@
                   />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
+                  <label class="block text-xs font-bold text-slate-700 mb-1"
+                    >Email Address</label
+                  >
                   <input
                     id="email"
                     v-model.trim="form.email"
@@ -303,16 +376,34 @@
                 @mouseenter="isCategoryOpen = true"
                 @mouseleave="isCategoryOpen = false"
               >
-                <label class="block text-xs font-bold text-slate-700 mb-1">Scheme / Category</label>
+                <label class="block text-xs font-bold text-slate-700 mb-1"
+                  >Scheme / Category</label
+                >
                 <button
                   type="button"
                   @click="toggleCategoryDropdown"
                   class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3 text-xs flex justify-between items-center text-slate-800 shadow-2xs cursor-pointer w-full text-left transition-all duration-200"
-                  :class="{ 'border-[#008795] ring-2 ring-[#008795]/20': isCategoryOpen }"
+                  :class="{
+                    'border-[#008795] ring-2 ring-[#008795]/20': isCategoryOpen,
+                  }"
                 >
-                  <span :class="form.category ? 'text-slate-800 font-medium flex items-center gap-2.5 truncate' : 'text-slate-400 truncate'">
-                    <i v-if="selectedCategoryIcon" :class="[selectedCategoryIcon, 'text-[#008795] text-xs flex-shrink-0']"></i>
-                    <span>{{ form.category || "Select Scheme / Category" }}</span>
+                  <span
+                    :class="
+                      form.category
+                        ? 'text-slate-800 font-medium flex items-center gap-2.5 truncate'
+                        : 'text-slate-400 truncate'
+                    "
+                  >
+                    <i
+                      v-if="selectedCategoryIcon"
+                      :class="[
+                        selectedCategoryIcon,
+                        'text-[#008795] text-xs flex-shrink-0',
+                      ]"
+                    ></i>
+                    <span>{{
+                      form.category || "Select Scheme / Category"
+                    }}</span>
                   </span>
                   <i
                     class="fas fa-chevron-down text-slate-400 transition-transform duration-200 text-xs ml-2 flex-shrink-0"
@@ -327,7 +418,9 @@
                     class="absolute z-50 left-0 right-0 mt-1 bg-white rounded-2xl border border-slate-200/80 shadow-[0_10px_25px_rgba(0,0,0,0.08)] overflow-hidden"
                   >
                     <!-- List Header Placeholder -->
-                    <div class="py-3 px-5 text-xs text-slate-400 font-semibold bg-slate-50/50 border-b border-slate-100 select-none">
+                    <div
+                      class="py-3 px-5 text-xs text-slate-400 font-semibold bg-slate-50/50 border-b border-slate-100 select-none"
+                    >
                       Select Inquiry Category
                     </div>
 
@@ -339,11 +432,22 @@
                         type="button"
                         @click="selectCategory(cat.value)"
                         class="w-full py-3 px-5 text-xs text-slate-700 flex items-center gap-3 border-b border-slate-100/70 transition-colors duration-150 group border-l-4 border-l-transparent hover:border-l-[#008795] hover:text-[#008795] hover:bg-[#f0f9fa] cursor-pointer text-left"
-                        :class="{ 'bg-[#f0f9fa] text-[#008795] border-l-[#008795] font-semibold': form.category === cat.value }"
+                        :class="{
+                          'bg-[#f0f9fa] text-[#008795] border-l-[#008795] font-semibold':
+                            form.category === cat.value,
+                        }"
                       >
-                        <i :class="[cat.icon, 'text-slate-400 group-hover:text-[#008795] transition-colors w-4 text-center flex-shrink-0']"></i>
+                        <i
+                          :class="[
+                            cat.icon,
+                            'text-slate-400 group-hover:text-[#008795] transition-colors w-4 text-center flex-shrink-0',
+                          ]"
+                        ></i>
                         <span class="flex-1">{{ cat.label }}</span>
-                        <i v-if="form.category === cat.value" class="fas fa-check text-[#008795] text-xs ml-auto"></i>
+                        <i
+                          v-if="form.category === cat.value"
+                          class="fas fa-check text-[#008795] text-xs ml-auto"
+                        ></i>
                       </button>
                     </div>
                   </div>
@@ -352,7 +456,9 @@
 
               <!-- Message Textarea -->
               <div class="flex-1 flex flex-col">
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Message</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1"
+                  >Message</label
+                >
                 <textarea
                   id="message"
                   v-model="form.message"
@@ -375,10 +481,11 @@
                     class="fas fa-spinner fa-spin text-sm"
                   ></i>
                   <i v-else class="fas fa-paper-plane text-xs"></i>
-                  <span>{{ isSubmitting ? "Submitting Inquiry..." : "Submit Inquiry" }}</span>
+                  <span>{{
+                    isSubmitting ? "Submitting Inquiry..." : "Submit Inquiry"
+                  }}</span>
                 </button>
               </div>
-
             </form>
           </div>
         </div>
@@ -397,14 +504,46 @@ const isCategoryOpen = ref(false);
 const dropdownRef = ref(null);
 
 const categories = [
-  { value: "MSME Development & Credit Line Facilities", label: "MSME Development & Credit Line Facilities", icon: "fas fa-landmark" },
-  { value: "Enterprise Sri Lanka Schemes", label: "Enterprise Sri Lanka Schemes", icon: "fas fa-building" },
-  { value: "Agriculture, Livestock & Agro-Processing", label: "Agriculture, Livestock & Agro-Processing", icon: "fas fa-seedling" },
-  { value: "Green Energy & Solar Rooftop Loan Scheme", label: "Green Energy & Solar Rooftop Loan Scheme", icon: "fas fa-solar-panel" },
-  { value: "Interest Subsidy & Credit Guarantee", label: "Interest Subsidy & Credit Guarantee", icon: "fas fa-percentage" },
-  { value: "Youth & Women Entrepreneurship Support", label: "Youth & Women Entrepreneurship Support", icon: "fas fa-users" },
-  { value: "General Secretariat Inquiries", label: "General Secretariat Inquiries & Policy Clarifications", icon: "fas fa-file-alt" },
-  { value: "Other Inquiries", label: "Other Inquiries", icon: "fas fa-question-circle" },
+  {
+    value: "MSME Development & Credit Line Facilities",
+    label: "MSME Development & Credit Line Facilities",
+    icon: "fas fa-landmark",
+  },
+  {
+    value: "Enterprise Sri Lanka Schemes",
+    label: "Enterprise Sri Lanka Schemes",
+    icon: "fas fa-building",
+  },
+  {
+    value: "Agriculture, Livestock & Agro-Processing",
+    label: "Agriculture, Livestock & Agro-Processing",
+    icon: "fas fa-seedling",
+  },
+  {
+    value: "Green Energy & Solar Rooftop Loan Scheme",
+    label: "Green Energy & Solar Rooftop Loan Scheme",
+    icon: "fas fa-solar-panel",
+  },
+  {
+    value: "Interest Subsidy & Credit Guarantee",
+    label: "Interest Subsidy & Credit Guarantee",
+    icon: "fas fa-percentage",
+  },
+  {
+    value: "Youth & Women Entrepreneurship Support",
+    label: "Youth & Women Entrepreneurship Support",
+    icon: "fas fa-users",
+  },
+  {
+    value: "General Secretariat Inquiries",
+    label: "General Secretariat Inquiries & Policy Clarifications",
+    icon: "fas fa-file-alt",
+  },
+  {
+    value: "Other Inquiries",
+    label: "Other Inquiries",
+    icon: "fas fa-question-circle",
+  },
 ];
 
 const selectedCategoryIcon = computed(() => {
@@ -456,7 +595,8 @@ const formatPhoneNumber = () => {
 const handleSubmitInquiry = async () => {
   if (!form.category) {
     submissionStatus.isError = true;
-    submissionStatus.message = "Please select a Scheme / Category before submitting.";
+    submissionStatus.message =
+      "Please select a Scheme / Category before submitting.";
     isCategoryOpen.value = true;
     return;
   }
@@ -743,11 +883,13 @@ const handleSubmitInquiry = async () => {
 }
 
 .shadow-sm {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05),
+    0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
 }
 
 .hover\:shadow-md:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Dimensions & Layout */
@@ -1110,13 +1252,15 @@ const handleSubmitInquiry = async () => {
   outline-offset: 2px !important;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
   outline: none;
 }
 
 .hero-header {
   background: linear-gradient(135deg, #004d5a 0%, #008795 100%);
-  padding: 4rem 1rem;
+  padding: 4.95rem 1rem;
   border-bottom: 5px solid #00e5ff;
 }
 
@@ -1127,7 +1271,7 @@ input, select, textarea {
 
 .hero-title {
   color: #ffffff;
-  font-size: 2.8rem;
+  font-size: 2.3rem;
   font-weight: 600;
   margin-bottom: 15px;
   letter-spacing: 0.5px;
@@ -1135,7 +1279,7 @@ input, select, textarea {
 
 .hero-subtitle {
   color: rgba(255, 255, 255, 0.5);
-  font-size: 1.1rem;
+  font-size: 1rem;
   opacity: 0.9;
   max-width: 800px;
   margin: 0 auto;

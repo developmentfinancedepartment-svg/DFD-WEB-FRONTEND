@@ -1112,27 +1112,23 @@ onUnmounted(() => {
   color: #102741;
   background: #f8f9fa;
   min-height: 100vh;
-  padding-top: 100px;
+  padding-top: 96px;
 }
 
-.container {
-  width: 100%;
-  max-width: 1240px;
+.container { 
+  max-width: 1200px;
   margin: 0 auto;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  box-sizing: border-box;
 }
 
 .hero-header {
   background: linear-gradient(135deg, #004d5a 0%, #008795 100%);
-  padding: 4rem 0;
+  padding: 3.95rem 1rem;
   border-bottom: 5px solid #00e5ff;
 }
 
 .hero-title {
   color: white;
-  font-size: 2.8rem;
+  font-size: 2.3rem;
   font-weight: 600;
   margin-bottom: 15px;
   letter-spacing: 0.5px;
@@ -1140,7 +1136,7 @@ onUnmounted(() => {
 
 .hero-subtitle {
   color: rgba(255, 255, 255, 0.5);
-  font-size: 1.1rem;
+  font-size: 1rem;
   opacity: 0.9;
   max-width: 800px;
   margin: 0 auto;
@@ -1180,50 +1176,6 @@ onUnmounted(() => {
   font-weight: 600;
   padding: 0.5rem 1.5rem;
   transition: all 0.3s ease;
-}
-
-/* ==========================================================================
-   HERO BANNER (MATCHING DEVELOPMENT FINANCING SCHEMES HEADER)
-   ========================================================================== */
-.team-hero {
-  background-color: #006f7b;
-  color: #ffffff;
-  padding-top: 6rem; /* pt-24 (96px) */
-  padding-bottom: 2.5rem; /* pb-10 (40px) */
-  padding-left: 1rem;
-  padding-right: 1rem;
-  position: relative;
-}
-
-.hero-title {
-  font-size: 1.875rem; /* text-3xl */
-  line-height: 2.25rem;
-  font-weight: 700; /* font-bold */
-  letter-spacing: -0.025em; /* tracking-tight */
-  color: #ffffff;
-  margin: 0 0 0.625rem; /* mb-2.5 */
-}
-
-@media (min-width: 768px) {
-  .hero-title {
-    font-size: 2.25rem; /* md:text-4xl */
-    line-height: 2.5rem;
-  }
-}
-
-.hero-subtitle {
-  font-size: 0.75rem; /* text-xs */
-  line-height: 1.625; /* leading-relaxed */
-  font-weight: 400; /* font-normal */
-  color: rgba(204, 251, 241, 0.9); /* text-teal-100/90 */
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-@media (min-width: 640px) {
-  .hero-subtitle {
-    font-size: 0.875rem; /* sm:text-sm */
-  }
 }
 
 /* ==========================================================================

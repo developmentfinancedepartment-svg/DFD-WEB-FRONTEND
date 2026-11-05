@@ -589,22 +589,23 @@ onUnmounted(() => {
 
 .hero-header {
   background: linear-gradient(135deg, #004d5a 0%, #008795 100%);
-  padding: 3.5rem 1rem;
+  padding: 3.8rem 1rem;
   border-bottom: 5px solid #00e5ff;
 }
 
 .hero-title {
   color: #ffffff;
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  letter-spacing: -0.02em;
+  font-size: 2.3rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
 }
 
 .hero-subtitle {
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 1.05rem;
-  max-width: 760px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1rem;
+  opacity: 0.9;
+  max-width: 800px;
   margin: 0 auto;
   line-height: 1.6;
 }

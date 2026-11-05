@@ -326,13 +326,13 @@ onBeforeUnmount(() => {
 
 .hero-header {
   background: linear-gradient(135deg, #004d5a 0%, #008795 100%);
-  padding: 4rem 0;
+  padding: 3rem 1rem;
   border-bottom: 5px solid #00e5ff;
 }
 
 .hero-title {
   color: white;
-  font-size: 2.8rem;
+  font-size: 2.3rem;
   font-weight: 600;
   margin-bottom: 15px;
   letter-spacing: 0.5px;
@@ -340,7 +340,7 @@ onBeforeUnmount(() => {
 
 .hero-subtitle {
   color: rgba(255, 255, 255, 0.5);
-  font-size: 1.1rem;
+  font-size: 1rem;
   opacity: 0.9;
   max-width: 800px;
   margin: 0 auto;

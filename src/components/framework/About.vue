@@ -6,7 +6,7 @@
     <header class="hero-header text-center px-4">
       <div class="hero-container">
         <h1 class="hero-title">
-          About Development Finance
+          About Us
         </h1>
         <p class="hero-subtitle">
           Facilitating appropriate policies, strategies, and financial resources for the sustainable development of MSMEs and primary sectors.
@@ -664,7 +664,7 @@ const responsibilities = [
 
 .hero-header {
   background: linear-gradient(135deg, #004d5a 0%, #008795 100%);
-  padding: 4rem 1rem;
+  padding: 3.15rem 1rem;
   border-bottom: 5px solid #00e5ff;
 }
 
@@ -675,7 +675,7 @@ const responsibilities = [
 
 .hero-title {
   color: #ffffff;
-  font-size: 2.8rem;
+  font-size: 2.3rem;
   font-weight: 600;
   margin-bottom: 15px;
   letter-spacing: 0.5px;
@@ -683,7 +683,7 @@ const responsibilities = [
 
 .hero-subtitle {
   color: rgba(255, 255, 255, 0.5);
-  font-size: 1.1rem;
+  font-size: 1rem;
   opacity: 0.9;
   max-width: 800px;
   margin: 0 auto;
