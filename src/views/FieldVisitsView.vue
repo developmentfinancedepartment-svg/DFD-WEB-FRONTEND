@@ -89,9 +89,21 @@
     <section class="content-section">
       <div class="container">
         <!-- Loading State -->
-        <div v-if="loading" class="fv-loading-box">
+        <div v-if="isLoading" class="fv-loading-box">
           <div class="fv-spinner" role="status"></div>
           <h5 class="fv-loading-text">Loading field visits...</h5>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="errorMessage" class="fv-error-box">
+          <div class="fv-empty-icon-wrap">
+            <svg class="fv-empty-icon text-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h4 class="fv-empty-title">{{ errorMessage }}</h4>
+          <p class="fv-empty-desc">Failed to connect to the backend API. Please try again.</p>
+          <button class="fv-empty-btn" @click="fetchFieldVisits">Retry</button>
         </div>
 
         <!-- Visits Grid -->
@@ -106,7 +118,7 @@
               <!-- Top Cover Image Box (200px) -->
               <div class="fv-cover-wrap">
                 <img
-                  :src="resolveImageUrl(getCoverImage(visit))"
+                  :src="resolveImageUrl(visit.coverImageUrl || (visit.images && visit.images[0]))"
                   :alt="visit.title"
                   class="fv-cover-img"
                   @error="handleImgError($event, visit.title)"
@@ -301,14 +313,35 @@ const districtOptions = [
   { label: 'Kandy', value: 'Kandy' },
   { label: 'Colombo', value: 'Colombo' },
   { label: 'Anuradhapura', value: 'Anuradhapura' },
-  { label: 'Matara', value: 'Matara' }
+  { label: 'Matara', value: 'Matara' },
+  { label: 'Gampaha', value: 'Gampaha' },
+  { label: 'Kalutara', value: 'Kalutara' },
+  { label: 'Matale', value: 'Matale' },
+  { label: 'Nuwara Eliya', value: 'Nuwara Eliya' },
+  { label: 'Jaffna', value: 'Jaffna' },
+  { label: 'Kilinochchi', value: 'Kilinochchi' },
+  { label: 'Mannar', value: 'Mannar' },
+  { label: 'Vavuniya', value: 'Vavuniya' },
+  { label: 'Mullaitivu', value: 'Mullaitivu' },
+  { label: 'Ampara', value: 'Ampara' },
+  { label: 'Trincomalee', value: 'Trincomalee' },
+  { label: 'Polonnaruwa', value: 'Polonnaruwa' },
+  { label: 'Badulla', value: 'Badulla' },
+  { label: 'Monaragala', value: 'Monaragala' },
+  { label: 'Ratnapura', value: 'Ratnapura' },
+  { label: 'Kegalle', value: 'Kegalle' },
+  { label: 'Puttalam', value: 'Puttalam' },
+  { label: 'Hambantota', value: 'Hambantota' }
 ];
 
 const selectedDistrict = ref('ALL');
 const isDistrictDropdownOpen = ref(false);
 const districtDropdownRef = ref(null);
-const visits = ref([]);
-const loading = ref(false);
+
+// Reactive States as explicitly requested
+const fieldVisits = ref([]);
+const isLoading = ref(false);
+const errorMessage = ref('');
 
 // Modal state
 const activeVisit = ref(null);
@@ -383,66 +416,26 @@ const handleImgError = (event, fallbackTitle = 'Inspection') => {
 };
 
 /**
- * Verified fallback field visit records
+ * Helper to parse images from JSON string, comma-separated string, or array
  */
-const fallbackVisits = [
-  {
-    id: 1,
-    title: 'Dairy Farming Cooperative Inspection',
-    district: 'Kandy',
-    region: 'Central',
-    schemeType: 'SME Loan',
-    description: 'Site visit to Kandy evaluating the structural improvements made to dairy storage facilities using recently disbursed SME loan funds.',
-    coverImage: 'gal/11.JPG',
-    images: [
-      'gal/11.JPG',
-      'gal/12.JPG',
-      'gal/13.JPG'
-    ]
-  },
-  {
-    id: 2,
-    title: 'Women Entrepreneurs Handloom Project',
-    district: 'Batticaloa',
-    region: 'Eastern',
-    schemeType: 'Microfinance',
-    description: 'Monitoring the utilization of micro-credit grants by a women\'s cooperative in Batticaloa specializing in traditional handloom exports.',
-    coverImage: 'gal/14.JPG',
-    images: [
-      'gal/14.JPG',
-      'gal/15.JPG',
-      'gal/16.jpg'
-    ]
-  },
-  {
-    id: 3,
-    title: 'Fisheries Equipment Upgrade Review',
-    district: 'Galle',
-    region: 'Southern',
-    schemeType: 'Commercial Agriculture',
-    description: 'Evaluating a commercial agriculture loan utilized by a fishing fleet in Galle to upgrade navigation and deep-sea fishing equipment.',
-    coverImage: 'gal/17.jpg',
-    images: [
-      'gal/17.jpg',
-      'gal/18.JPG',
-      'gal/19.JPG'
-    ]
-  },
-  {
-    id: 4,
-    title: 'Organic Fertilizer Plant Assessment',
-    district: 'Kurunegala',
-    region: 'North Western',
-    schemeType: 'Green Finance',
-    description: 'Routine progress check at a new organic fertilizer manufacturing plant in Kurunegala supported under the national Green Finance initiative.',
-    coverImage: 'gal/3.jpg',
-    images: [
-      'gal/3.jpg',
-      'gal/4.jpg',
-      'gal/5.jpg'
-    ]
+const parseImages = (rawImages) => {
+  if (Array.isArray(rawImages)) {
+    return rawImages.filter(Boolean);
   }
-];
+  if (typeof rawImages === 'string' && rawImages.trim()) {
+    try {
+      const parsed = JSON.parse(rawImages);
+      if (Array.isArray(parsed)) {
+        return parsed.filter(Boolean);
+      }
+    } catch (e) {
+      const split = rawImages.split(',').map(s => s.trim()).filter(Boolean);
+      if (split.length > 0) return split;
+    }
+    return [rawImages.trim()];
+  }
+  return [];
+};
 
 /**
  * Safely resolves image URLs considering Vite base path, backend uploads, and inline SVGs
@@ -467,25 +460,18 @@ const resolveImageUrl = (path) => {
   return `${cleanBase}${cleanPath}`;
 };
 
-const getCoverImage = (visit) => {
-  if (!visit) return '';
-  if (visit.coverImage) return visit.coverImage;
-  if (visit.imageUrl) return visit.imageUrl;
-  if (Array.isArray(visit.images) && visit.images.length > 0) return visit.images[0];
-  return 'gal/11.JPG';
-};
-
-const getVisitImages = (visit) => {
-  if (!visit) return [];
-  if (Array.isArray(visit.images) && visit.images.length > 0) return visit.images;
-  if (visit.coverImage) return [visit.coverImage];
-  if (visit.imageUrl) return [visit.imageUrl];
-  return ['gal/11.JPG', 'gal/12.JPG'];
-};
-
 const modalImagesList = computed(() => {
   if (!activeVisit.value) return [];
-  return getVisitImages(activeVisit.value);
+  if (Array.isArray(activeVisit.value.images) && activeVisit.value.images.length > 0) {
+    return activeVisit.value.images;
+  }
+  if (activeVisit.value.coverImageUrl) {
+    return [activeVisit.value.coverImageUrl];
+  }
+  if (activeVisit.value.coverImage) {
+    return [activeVisit.value.coverImage];
+  }
+  return [];
 });
 
 const currentModalImage = computed(() => {
@@ -526,42 +512,58 @@ const handleKeyDown = (e) => {
   }
 };
 
+// Fetch Logic from GET /api/v1/field-visits
 const fetchFieldVisits = async () => {
-  loading.value = true;
+  isLoading.value = true;
+  errorMessage.value = '';
   try {
-    const apiBase = BaseUrl.baseUrl || 'http://localhost:8096';
+    const apiBase = (BaseUrl.baseUrl || 'http://localhost:8096').replace(/\/$/, '');
     const response = await axios.get(`${apiBase}/api/v1/field-visits`);
-    if (response.data) {
-      const dataItems = Array.isArray(response.data.visits)
-        ? response.data.visits
-        : Array.isArray(response.data)
-        ? response.data
-        : fallbackVisits;
-
-      visits.value = dataItems.map(item => ({
-        ...item,
-        district: item.district || item.districtName || item.region || item.province,
-        coverImage: item.coverImage || item.imageUrl || (Array.isArray(item.images) ? item.images[0] : null),
-        images: Array.isArray(item.images) && item.images.length > 0
-          ? item.images
-          : (item.coverImage ? [item.coverImage] : (item.imageUrl ? [item.imageUrl] : []))
-      }));
-    } else {
-      visits.value = fallbackVisits;
+    
+    let rawList = [];
+    if (response.data && Array.isArray(response.data.visits)) {
+      rawList = response.data.visits;
+    } else if (Array.isArray(response.data)) {
+      rawList = response.data;
+    } else if (response.data && Array.isArray(response.data.data)) {
+      rawList = response.data.data;
     }
+
+    fieldVisits.value = rawList.map(item => {
+      const parsedImages = parseImages(item.images);
+      const cover = item.coverImageUrl || item.coverImage || item.imageUrl || (parsedImages.length > 0 ? parsedImages[0] : '');
+      const actualImages = parsedImages.length > 0 ? parsedImages : (cover ? [cover] : []);
+
+      return {
+        ...item,
+        id: item.id,
+        title: item.title || '',
+        district: item.district || item.region || '',
+        schemeType: item.schemeType || item.scheme || item.category || '',
+        description: item.description || item.overview || '',
+        coverImageUrl: cover,
+        coverImage: cover,
+        images: actualImages
+      };
+    });
   } catch (error) {
-    console.warn('Failed to load field visits from backend, using fallback data:', error);
-    visits.value = fallbackVisits;
+    console.error('Failed to load field visits from API:', error);
+    errorMessage.value = 'Failed to load field visits from the server.';
+    fieldVisits.value = [];
   } finally {
-    loading.value = false;
+    isLoading.value = false;
   }
 };
 
+// Dynamic Filtering by selectedDistrict
 const filteredVisits = computed(() => {
-  if (selectedDistrict.value === 'ALL' || selectedDistrict.value === 'All Districts' || !selectedDistrict.value) {
-    return visits.value;
+  if (!selectedDistrict.value || selectedDistrict.value === 'ALL' || selectedDistrict.value === 'All Districts') {
+    return fieldVisits.value;
   }
-  return visits.value.filter(v => v.district === selectedDistrict.value);
+  return fieldVisits.value.filter(v => {
+    const d = (v.district || v.region || '').toLowerCase();
+    return d === selectedDistrict.value.toLowerCase();
+  });
 });
 
 onMounted(() => {
@@ -1189,10 +1191,11 @@ onUnmounted(() => {
 }
 
 /* ==========================================================================
-   LOADING & EMPTY STATES
+   LOADING, ERROR & EMPTY STATES
    ========================================================================== */
 .fv-loading-box,
-.fv-empty-box {
+.fv-empty-box,
+.fv-error-box {
   text-align: center;
   padding: 4rem 1rem;
 }
