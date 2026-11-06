@@ -153,8 +153,7 @@
                 </div>
 
                 <p class="spotlight-mandate">
-                  Leading the Department of Development Finance in coordinating national concessionary credit schemes,
-                  interest subsidy mechanisms, and financial inclusion frameworks across Sri Lanka.
+                  {{ directorGeneral.description || 'Leading the Department of Development Finance in coordinating national concessionary credit schemes, interest subsidy mechanisms, and financial inclusion frameworks across Sri Lanka.' }}
                 </p>
 
                 <div class="spotlight-location" v-if="directorGeneral.room">
@@ -401,28 +400,8 @@ const handleClickOutside = (event) => {
 
 /**
  * LEVEL 0: Top Executive Spotlight for Director General
- * Mr. P.M.K. Hettiarachchi
  */
-const directorGeneral = ref({
-  id: 'dg-hettiarachchi',
-  name: 'Mr. P.M.K. Hettiarachchi',
-  designation: 'Director General of Development Finance',
-  division: 'Executive Directorate',
-  room: 'Room 140, 1st Floor, The Secretariat, Lotus Road, Colombo 01',
-  photo: null,
-  photoError: false,
-  contacts: {
-    office: '+94 11 248 4511',
-    ext: '1400',
-    fax: '+94 11 248 4512',
-    residence: '+94 11 287 1420',
-    mobile: '+94 71 845 2100'
-  },
-  emails: [
-    'dgdf@dfd.treasury.gov.lk',
-    'hettiarachchi.pmk@treasury.gov.lk'
-  ]
-});
+const directorGeneral = ref(null);
 
 /**
  * Strict Hierarchical Division & Plain Role Structure
@@ -506,390 +485,42 @@ const hierarchyStructure = [
   }
 ];
 
-/**
- * Comprehensive DFD Official Dataset
- * Strictly mapped to Divisions and Subsections
- */
-const fallbackOfficials = [
-  // -------------------------------------------------------------------------
-  // DIVISION 1: FINANCIAL SOLUTION DIVISION
-  // -------------------------------------------------------------------------
-  // Subsection: Additional Director General (ADG)
-  {
-    id: 1,
-    name: 'Mr. H.M.A.S. Herath',
-    designation: 'Additional Director General (Financial Solutions)',
-    division: 'Financial Solution',
-    subsectionKey: 'adg',
-    room: 'Room 145, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4520',
-      ext: '1410',
-      fax: '+94 11 248 4521',
-      mobile: '+94 71 234 5670'
-    },
-    emails: [
-      'adg.fs@dfd.treasury.gov.lk',
-      'herath.adg@treasury.gov.lk'
-    ]
-  },
+const officials = ref([]);
 
-  // Subsection: Directors
-  {
-    id: 2,
-    name: 'Mr. K.A.D.S. Nanayakkara',
-    designation: 'Director - Financial Solutions Division',
-    division: 'Financial Solution',
-    subsectionKey: 'directors',
-    room: 'Room 150, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4530',
-      ext: '1420',
-      fax: '+94 11 248 4531',
-      residence: '+94 11 276 3412',
-      mobile: '+94 77 345 6789'
-    },
-    emails: [
-      'director.fs@dfd.treasury.gov.lk',
-      'nanayakkara.kads@dfd.treasury.gov.lk'
-    ]
-  },
-
-  // Subsection: Deputy Directors
-  {
-    id: 3,
-    name: 'Mrs. M.P.N. Jayawardena',
-    designation: 'Deputy Director - Concessionary Credit & SME Schemes',
-    division: 'Financial Solution',
-    subsectionKey: 'deputy_directors',
-    room: 'Room 152, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4534',
-      ext: '1422',
-      residence: '+94 11 289 0123',
-      mobile: '+94 71 456 7890'
-    },
-    emails: [
-      'sme.financing@dfd.treasury.gov.lk',
-      'jayawardena.mpn@dfd.treasury.gov.lk'
-    ]
-  },
-
-  // Subsection: Assistant Directors & Officers
-  {
-    id: 4,
-    name: 'Mr. R.M.C.K. Ratnayake',
-    designation: 'Assistant Director - Subsidy & Credit Guarantee',
-    division: 'Financial Solution',
-    subsectionKey: 'assistant_directors_officers',
-    room: 'Room 153, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4538',
-      ext: '1425',
-      mobile: '+94 70 234 5678'
-    },
-    emails: [
-      'guarantee.fs@dfd.treasury.gov.lk'
-    ]
-  },
-  {
-    id: 5,
-    name: 'Mr. W.A.D. Silva',
-    designation: 'Assistant Director - Green & Sustainable Finance',
-    division: 'Financial Solution',
-    subsectionKey: 'assistant_directors_officers',
-    room: 'Room 155, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4542',
-      ext: '1429',
-      fax: '+94 11 248 4543',
-      mobile: '+94 71 901 2345'
-    },
-    emails: [
-      'greenfinance@dfd.treasury.gov.lk'
-    ]
-  },
-  {
-    id: 6,
-    name: 'Ms. S.H.T. Perera',
-    designation: 'Development Finance Officer - PFI Network Coordination',
-    division: 'Financial Solution',
-    subsectionKey: 'assistant_directors_officers',
-    room: 'Room 154, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4540',
-      ext: '1428',
-      mobile: '+94 77 890 1234'
-    },
-    emails: [
-      'pfi.support@dfd.treasury.gov.lk'
-    ]
-  },
-
-  // -------------------------------------------------------------------------
-  // DIVISION 2: MARKET ACCESS & DEVELOPMENT DIVISION
-  // -------------------------------------------------------------------------
-  // Subsection: Additional Director General (ADG)
-  {
-    id: 7,
-    name: 'Mrs. C.K. Wickramatunga',
-    designation: 'Additional Director General (Market Access & Development)',
-    division: 'Market Access & Development',
-    subsectionKey: 'adg',
-    room: 'Room 148, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4545',
-      ext: '1430',
-      fax: '+94 11 248 4546',
-      mobile: '+94 71 345 6780'
-    },
-    emails: [
-      'adg.mad@dfd.treasury.gov.lk',
-      'wickramatunga.ck@treasury.gov.lk'
-    ]
-  },
-
-  // Subsection: Directors
-  {
-    id: 8,
-    name: 'Mr. D.L.P. Bandara',
-    designation: 'Director - Market Access & Value Chain Development',
-    division: 'Market Access & Development',
-    subsectionKey: 'directors',
-    room: 'Room 160, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4550',
-      ext: '1440',
-      fax: '+94 11 248 4551',
-      residence: '+94 11 254 7890',
-      mobile: '+94 77 123 4567'
-    },
-    emails: [
-      'director.mad@dfd.treasury.gov.lk',
-      'bandara.dlp@dfd.treasury.gov.lk'
-    ]
-  },
-
-  // Subsection: Deputy Directors
-  {
-    id: 9,
-    name: 'Mrs. T.K. Wickramasinghe',
-    designation: 'Deputy Director - Commercial Agriculture Promotion & Markets',
-    division: 'Market Access & Development',
-    subsectionKey: 'deputy_directors',
-    room: 'Room 162, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4554',
-      ext: '1442',
-      residence: '+94 11 232 4567',
-      mobile: '+94 71 567 8901'
-    },
-    emails: [
-      'valuechains@dfd.treasury.gov.lk'
-    ]
-  },
-  {
-    id: 10,
-    name: 'Mr. H.M.S.B. Herath',
-    designation: 'Deputy Director - Entrepreneurship Outreach & MSME Clusters',
-    division: 'Market Access & Development',
-    subsectionKey: 'deputy_directors',
-    room: 'Room 163, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4558',
-      ext: '1445',
-      mobile: '+94 76 678 9012'
-    },
-    emails: [
-      'outreach.mad@dfd.treasury.gov.lk',
-      'herath.hmsb@dfd.treasury.gov.lk'
-    ]
-  },
-  {
-    id: 11,
-    name: 'Ms. K.G.N. Fernando',
-    designation: 'Deputy Director - Progress Monitoring & Field Verification',
-    division: 'Market Access & Development',
-    subsectionKey: 'deputy_directors',
-    room: 'Room 164, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4562',
-      ext: '1448',
-      mobile: '+94 77 234 5678'
-    },
-    emails: [
-      'monitoring@dfd.treasury.gov.lk'
-    ]
-  },
-
-  // -------------------------------------------------------------------------
-  // DIVISION 3: ADMIN AND ACCOUNTS DIVISION
-  // -------------------------------------------------------------------------
-  // Subsection: Additional Director General (ADG)
-  {
-    id: 12,
-    name: 'Mr. G.W.R. Fernando',
-    designation: 'Additional Director General (Administration & Finance)',
-    division: 'Admin and Accounts',
-    subsectionKey: 'adg',
-    room: 'Room 149, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4565',
-      ext: '1450',
-      fax: '+94 11 248 4566',
-      mobile: '+94 71 456 7891'
-    },
-    emails: [
-      'adg.admin@dfd.treasury.gov.lk',
-      'fernando.gwr@treasury.gov.lk'
-    ]
-  },
-
-  // Subsection: Directors (Admin & Finance)
-  {
-    id: 13,
-    name: 'Mrs. K.M.A.S. Wijeratne',
-    designation: 'Director - Administration & Human Resources',
-    division: 'Admin and Accounts',
-    subsectionKey: 'directors_admin_finance',
-    room: 'Room 170, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4570',
-      ext: '1460',
-      fax: '+94 11 248 4571',
-      residence: '+94 11 267 8901',
-      mobile: '+94 71 234 5678'
-    },
-    emails: [
-      'director.admin@dfd.treasury.gov.lk',
-      'wijeratne.kmas@dfd.treasury.gov.lk'
-    ]
-  },
-  {
-    id: 14,
-    name: 'Mr. A.H.M. Nizam',
-    designation: 'Director (Finance) / Chief Accountant - Treasury Accounts',
-    division: 'Admin and Accounts',
-    subsectionKey: 'directors_admin_finance',
-    room: 'Room 172, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4574',
-      ext: '1462',
-      fax: '+94 11 248 4575',
-      mobile: '+94 77 456 7890'
-    },
-    emails: [
-      'accounts@dfd.treasury.gov.lk',
-      'nizam.ahm@dfd.treasury.gov.lk'
-    ]
-  },
-
-  // Subsection: Deputy Directors
-  {
-    id: 15,
-    name: 'Mr. P.G.D. Karunaratne',
-    designation: 'Deputy Director - Logistics, Fleet & Procurement',
-    division: 'Admin and Accounts',
-    subsectionKey: 'deputy_directors',
-    room: 'Room 173, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4578',
-      ext: '1465',
-      mobile: '+94 78 567 8901'
-    },
-    emails: [
-      'procurement@dfd.treasury.gov.lk'
-    ]
-  },
-  {
-    id: 16,
-    name: 'Mr. E.A.N. Senarath',
-    designation: 'Deputy Director - Scheme Disbursements & Financial Audits',
-    division: 'Admin and Accounts',
-    subsectionKey: 'deputy_directors',
-    room: 'Room 175, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4584',
-      ext: '1469',
-      mobile: '+94 77 789 0123'
-    },
-    emails: [
-      'disbursements@dfd.treasury.gov.lk'
-    ]
-  },
-
-  // Subsection: CMSO & Development Officers
-  {
-    id: 17,
-    name: 'Ms. I.U. Dissanayake',
-    designation: 'Chief Management Service Officer (CMSO) - Operations',
-    division: 'Admin and Accounts',
-    subsectionKey: 'cmso_development_officers',
-    room: 'Room 174, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4582',
-      ext: '1468',
-      mobile: '+94 71 678 9012'
-    },
-    emails: [
-      'admin.support@dfd.treasury.gov.lk'
-    ]
-  },
-  {
-    id: 18,
-    name: 'Mr. B.M.C. Weerasinghe',
-    designation: 'Development Officer - General Administration & Records',
-    division: 'Admin and Accounts',
-    subsectionKey: 'cmso_development_officers',
-    room: 'Room 176, 1st Floor',
-    photo: null,
-    photoError: false,
-    contacts: {
-      office: '+94 11 248 4586',
-      ext: '1470',
-      mobile: '+94 70 890 1234'
-    },
-    emails: [
-      'records.admin@dfd.treasury.gov.lk'
-    ]
+const mapHierarchyToSubsectionKey = (hierarchyLevel, division) => {
+  const level = (hierarchyLevel || '').toUpperCase();
+  if (level === 'ADG') return 'adg';
+  if (level === 'DIRECTOR') {
+    return division === 'Admin and Accounts' ? 'directors_admin_finance' : 'directors';
   }
-];
+  if (level === 'DEPUTY_DIRECTOR') return 'deputy_directors';
+  if (level === 'ASSISTANT_DIRECTOR') {
+    return division === 'Admin and Accounts' ? 'cmso_development_officers' : 'assistant_directors_officers';
+  }
+  return 'assistant_directors_officers';
+};
 
-const officials = ref(fallbackOfficials);
+const mapOfficial = (item) => {
+  return {
+    id: item.id,
+    name: item.name,
+    designation: item.designation,
+    division: item.division,
+    hierarchyLevel: item.hierarchyLevel,
+    subsectionKey: mapHierarchyToSubsectionKey(item.hierarchyLevel, item.division),
+    room: item.room,
+    description: item.description,
+    displayOrder: item.displayOrder,
+    contacts: {
+      office: item.officePhone,
+      ext: item.extension,
+      mobile: item.mobilePhone,
+      residence: item.resPhone,
+      fax: item.fax
+    },
+    emails: [item.primaryEmail, item.secondaryEmail].filter(e => typeof e === 'string' && e.trim().length > 0)
+  };
+};
 
 /**
  * Normalizes phone string for tel: URI
@@ -992,6 +623,7 @@ const getInitials = (name) => {
  * Determines whether to display the Level 0 Spotlight Card
  */
 const showSpotlight = computed(() => {
+  if (!directorGeneral.value) return false;
   const matchesDivision = selectedDivision.value === 'ALL' || selectedDivision.value === 'Executive Directorate';
   if (!matchesDivision) return false;
 
@@ -1074,20 +706,29 @@ const totalResultsCount = computed(() => {
 });
 
 /**
- * API Fetching with Fallback Dataset
+ * Dynamic API Fetching from Spring Boot Backend
  */
 const fetchOfficials = async () => {
   loading.value = true;
   try {
-    const res = await axios.get(`${BaseUrl}/team`);
-    if (res.data && Array.isArray(res.data.officials) && res.data.officials.length > 0) {
-      officials.value = res.data.officials.map(o => ({
-        ...o,
-        photoError: false
-      }));
+    const apiBase = BaseUrl.baseUrl || 'http://localhost:8096';
+    const res = await axios.get(`${apiBase}/api/v1/team-members`);
+    const allMembers = Array.isArray(res.data) ? res.data : (res.data?.members || []);
+
+    if (allMembers.length > 0) {
+      // Find Head of Department
+      const head = allMembers.find(m => m.hierarchyLevel === 'HEAD') ||
+                   allMembers.find(m => m.division === 'Executive Directorate');
+      if (head) {
+        directorGeneral.value = mapOfficial(head);
+      }
+
+      // Group directory members (all except the Head of Department)
+      const directoryMembers = allMembers.filter(m => m.id !== head?.id);
+      officials.value = directoryMembers.map(mapOfficial);
     }
   } catch (err) {
-    officials.value = fallbackOfficials;
+    console.error('Failed to load team members from API:', err);
   } finally {
     loading.value = false;
   }
