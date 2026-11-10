@@ -180,7 +180,7 @@
         </div>
 
         <!-- Responsive Grid of Institution Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-5 max-w-6xl mx-auto mt-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto mt-10">
           <div
             v-for="bank in partnerBanks"
             :key="bank.name"
@@ -318,22 +318,22 @@ const fetchServices = async () => {
 
 // Participating Partner Financial Institutions (PFIs)
 const partnerBanks = [
-  { name: 'BOC', logo: '/assets/banks/boc.png' },
-  { name: "People's Bank", logo: '/assets/banks/peoples.png' },
-  { name: 'Commercial Bank', logo: '/assets/banks/commercial.png' },
-  { name: 'HNB', logo: '/assets/banks/hnb.png' },
-  { name: 'Sampath Bank', logo: '/assets/banks/sampath.png' },
-  { name: 'DFCC Bank', logo: '/assets/banks/dfcc.png' },
-  { name: 'NDB', logo: '/assets/banks/ndb.png' },
-  { name: 'Seylan Bank', logo: '/assets/banks/seylan.png' },
-  { name: 'RDB', logo: '/assets/banks/rdb.png' },
-  { name: 'SDB bank', logo: '/assets/banks/sdb.png' },
-  { name: 'NTB', logo: '/assets/banks/ntb.png' },
-  { name: 'Pan Asia Bank', logo: '/assets/banks/panasia.png' },
+  { name: 'Amana Bank', logo: '/assets/banks/amana.png' },
+  { name: 'Bank of Ceylon', logo: '/assets/banks/boc.png' },
   { name: 'Cargills Bank', logo: '/assets/banks/cargills.png' },
-  { name: 'Union Bank', logo: '/assets/banks/union.png' },
-  { name: 'SMIB', logo: '/assets/banks/smib.png' },
-  { name: 'Amana Bank', label: 'Amana Bank', fullName: 'Amana Bank PLC', logo: '/assets/banks/amana.png' },
+  { name: 'Commercial Bank of Ceylon', logo: '/assets/banks/commercial.png' },
+  { name: 'DFCC Bank', logo: '/assets/banks/dfcc.png' },
+  { name: 'Hatton National Bank', logo: '/assets/banks/hnb.png' },
+  { name: 'National Development Bank', logo: '/assets/banks/ndb.png' },
+  { name: 'Nations Trust Bank', logo: '/assets/banks/ntb.png' },
+  { name: 'Pan Asia Banking Corporation', logo: '/assets/banks/panasia.png' },
+  { name: "People's Bank", logo: '/assets/banks/peoples.png' },
+  { name: 'Regional Development Bank', logo: '/assets/banks/rdb.png' },
+  { name: 'Sampath Bank', logo: '/assets/banks/sampath.png' },
+  { name: 'Sanasa Development Bank', logo: '/assets/banks/sdb.png' },
+  { name: 'Seylan Bank', logo: '/assets/banks/seylan.png' },
+  { name: 'State Mortgage & Investment Bank', logo: '/assets/banks/smib.png' },
+  { name: 'Union Bank of Colombo', logo: '/assets/banks/union.png' },
 ];
 const workingBanks = partnerBanks;
 

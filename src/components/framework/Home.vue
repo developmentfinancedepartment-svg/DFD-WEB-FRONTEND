@@ -218,12 +218,13 @@
         </div>
 
         <!-- Responsive Grid of Institution Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-5 max-w-6xl mx-auto mt-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto mt-10">
           <div
             v-for="bank in partnerBanks"
             :key="bank.name"
             class="bg-ashb rounded-2xl border border-slate-200/80 shadow-xs flex flex-col items-center justify-between p-3 hover:shadow-md hover:border-[#008795]/60 transition-all group overflow-hidden"
             style="height: 110px; max-height: 110px;"
+            :title="bank.name"
           >
             <!-- Bank Logo Image Container -->
             <div
@@ -246,8 +247,8 @@
               </div>
             </div>
             <!-- Institution Name -->
-            <span class="text-[11px] font-bold text-slate-700 tracking-tight group-hover:text-[#008795] transition-colors truncate w-full text-center">
-              {{ bank.label || bank.name }}
+            <span class="text-xs font-bold text-slate-700 tracking-tight group-hover:text-[#008795] transition-colors truncate w-full text-center">
+              {{ bank.name }}
             </span>
           </div>
         </div>
@@ -468,78 +469,18 @@ const fetchLatestNews = async () => {
 
 
 
-// Participating Partner Financial Institutions (PFIs)
+// Participating Partner Financial Institutions (PFIs) / Working Banks
 const partnerBanks = ref([
   {
-    name: 'BOC',
+    name: 'Amana Bank',
+    shortCode: 'AMANA',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Amana_Bank_Logo.png/640px-Amana_Bank_Logo.png',
+    hasError: false
+  },
+  {
+    name: 'Bank of Ceylon',
     shortCode: 'BOC',
     logo: bocLogo,
-    hasError: false
-  },
-  {
-    name: "People's Bank",
-    shortCode: 'PB',
-    logo: peoplesLogo,
-    hasError: false
-  },
-  {
-    name: 'Commercial Bank',
-    shortCode: 'COMB',
-    logo: commercialLogo,
-    hasError: false
-  },
-  {
-    name: 'HNB',
-    shortCode: 'HNB',
-    logo: hnbLogo,
-    hasError: false
-  },
-  {
-    name: 'Sampath Bank',
-    shortCode: 'SAMP',
-    logo: sampathLogo,
-    hasError: false
-  },
-  {
-    name: 'DFCC Bank',
-    shortCode: 'DFCC',
-    logo: dfccLogo,
-    hasError: false
-  },
-  {
-    name: 'NDB',
-    shortCode: 'NDB',
-    logo: ndbLogo,
-    hasError: false
-  },
-  {
-    name: 'Seylan Bank',
-    shortCode: 'SEY',
-    logo: seylanLogo,
-    hasError: false
-  },
-  {
-    name: 'RDB',
-    shortCode: 'RDB',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/86/Regional_Development_Bank_Logo.png',
-    hasError: false
-  },
-  {
-    name: 'SDB bank',
-    shortCode: 'SDB',
-    logo: sdbLogo,
-    hasError: false
-  },
-  {
-    name: 'NTB',
-    shortCode: 'NTB',
-    logo: ntbLogo,
-    hasError: false
-  },
-  {
-    name: 'Pan Asia Bank',
-    shortCode: 'PABC',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/PAN_ASIA_BANK_LOGO_-_The_Truly_Sri_Lankan_ank.jpg/640px-PAN_ASIA_BANK_LOGO_-_The_Truly_Sri_Lankan_ank.jpg',
     hasError: false
   },
   {
@@ -549,25 +490,81 @@ const partnerBanks = ref([
     hasError: false
   },
   {
-    name: 'Union Bank',
-    shortCode: 'UBC',
-    logo: 'https://upload.wikimedia.org/wikipedia/en/7/73/Union_Bank_of_Colombo_logo.png',
+    name: 'Commercial Bank of Ceylon',
+    shortCode: 'COMB',
+    logo: commercialLogo,
     hasError: false
   },
   {
-    name: 'SMIB',
-    label: 'SMIB',
-    fullName: 'State Mortgage & Investment Bank',
+    name: 'DFCC Bank',
+    shortCode: 'DFCC',
+    logo: dfccLogo,
+    hasError: false
+  },
+  {
+    name: 'Hatton National Bank',
+    shortCode: 'HNB',
+    logo: hnbLogo,
+    hasError: false
+  },
+  {
+    name: 'National Development Bank',
+    shortCode: 'NDB',
+    logo: ndbLogo,
+    hasError: false
+  },
+  {
+    name: 'Nations Trust Bank',
+    shortCode: 'NTB',
+    logo: ntbLogo,
+    hasError: false
+  },
+  {
+    name: 'Pan Asia Banking Corporation',
+    shortCode: 'PABC',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/PAN_ASIA_BANK_LOGO_-_The_Truly_Sri_Lankan_ank.jpg/640px-PAN_ASIA_BANK_LOGO_-_The_Truly_Sri_Lankan_ank.jpg',
+    hasError: false
+  },
+  {
+    name: "People's Bank",
+    shortCode: 'PB',
+    logo: peoplesLogo,
+    hasError: false
+  },
+  {
+    name: 'Regional Development Bank',
+    shortCode: 'RDB',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/86/Regional_Development_Bank_Logo.png',
+    hasError: false
+  },
+  {
+    name: 'Sampath Bank',
+    shortCode: 'SAMP',
+    logo: sampathLogo,
+    hasError: false
+  },
+  {
+    name: 'Sanasa Development Bank',
+    shortCode: 'SDB',
+    logo: sdbLogo,
+    hasError: false
+  },
+  {
+    name: 'Seylan Bank',
+    shortCode: 'SEY',
+    logo: seylanLogo,
+    hasError: false
+  },
+  {
+    name: 'State Mortgage & Investment Bank',
     shortCode: 'SMIB',
     logo: 'https://www.smib.lk/website/assets/images/logo.png',
     hasError: false
   },
   {
-    name: 'Amana Bank',
-    label: 'Amana Bank',
-    fullName: 'Amana Bank PLC',
-    shortCode: 'AMANA',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Amana_Bank_Logo.png/640px-Amana_Bank_Logo.png',
+    name: 'Union Bank of Colombo',
+    shortCode: 'UBC',
+    logo: 'https://upload.wikimedia.org/wikipedia/en/7/73/Union_Bank_of_Colombo_logo.png',
     hasError: false
   }
 ]);
