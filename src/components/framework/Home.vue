@@ -218,7 +218,7 @@
         </div>
 
         <!-- Responsive Grid of Institution Cards -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto mt-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-5 max-w-6xl mx-auto mt-10">
           <div
             v-for="bank in partnerBanks"
             :key="bank.name"
@@ -247,7 +247,7 @@
             </div>
             <!-- Institution Name -->
             <span class="text-[11px] font-bold text-slate-700 tracking-tight group-hover:text-[#008795] transition-colors truncate w-full text-center">
-              {{ bank.name }}
+              {{ bank.label || bank.name }}
             </span>
           </div>
         </div>
@@ -556,11 +556,22 @@ const partnerBanks = ref([
   },
   {
     name: 'SMIB',
+    label: 'SMIB',
+    fullName: 'State Mortgage & Investment Bank',
     shortCode: 'SMIB',
     logo: 'https://www.smib.lk/website/assets/images/logo.png',
     hasError: false
+  },
+  {
+    name: 'Amana Bank',
+    label: 'Amana Bank',
+    fullName: 'Amana Bank PLC',
+    shortCode: 'AMANA',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Amana_Bank_Logo.png/640px-Amana_Bank_Logo.png',
+    hasError: false
   }
 ]);
+const workingBanks = partnerBanks;
 const banks = partnerBanks;
 
 

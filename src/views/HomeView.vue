@@ -180,7 +180,7 @@
         </div>
 
         <!-- Responsive Grid of Institution Cards -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto mt-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-5 max-w-6xl mx-auto mt-10">
           <div
             v-for="bank in partnerBanks"
             :key="bank.name"
@@ -333,7 +333,9 @@ const partnerBanks = [
   { name: 'Cargills Bank', logo: '/assets/banks/cargills.png' },
   { name: 'Union Bank', logo: '/assets/banks/union.png' },
   { name: 'SMIB', logo: '/assets/banks/smib.png' },
+  { name: 'Amana Bank', label: 'Amana Bank', fullName: 'Amana Bank PLC', logo: '/assets/banks/amana.png' },
 ];
+const workingBanks = partnerBanks;
 
 
 // Impact Metric Counters State & Animation
