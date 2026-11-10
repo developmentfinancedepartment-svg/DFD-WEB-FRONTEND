@@ -1,7 +1,7 @@
 <template>
-  <div class="accessibility-wrapper" :class="{ 'menu-open': isOpen }">
+  <div class="accessibility-wrapper fixed right-6 bottom-8 z-40" :class="{ 'menu-open': isOpen }">
     <!-- Floating Button -->
-    <button class="accessibility-btn" @click="toggleMenu" aria-label="Accessibility Options">
+    <button class="accessibility-btn rounded-2xl" @click="toggleMenu" aria-label="Accessibility Options">
       <i class="fas fa-wheelchair"></i>
     </button>
 
@@ -162,9 +162,9 @@ export default {
    ============================================ */
 .accessibility-wrapper {
   position: fixed;
-  right: 20px;
-  top: 18%;
-  z-index: 10001;
+  right: 1.5rem; /* right-6 */
+  bottom: 2rem;  /* bottom-8 */
+  z-index: 40;
 }
 
 .accessibility-btn {
@@ -174,7 +174,7 @@ export default {
   background: #005FCC;
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 1rem; /* rounded-2xl */
   font-size: 26px;
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
@@ -191,11 +191,11 @@ export default {
   transform: scale(1.1) rotate(5deg);
 }
 
-/* Desktop: menu appears to the LEFT of the button */
+/* Desktop: menu appears to the LEFT of the button and extends UPWARDS */
 .accessibility-menu {
   position: absolute;
   right: 62px;
-  top: 0;
+  bottom: 0;
   width: 320px;
   background: white;
   border-radius: 20px;
@@ -348,15 +348,17 @@ export default {
    ============================================ */
 @media (max-width: 1023px) {
   .accessibility-wrapper {
-    right: 16px;
+    position: fixed;
+    right: 1.5rem;
     top: auto;
-    bottom: 24px;
+    bottom: 2rem;
+    z-index: 40;
   }
 
   .accessibility-menu {
-    right: 0;
+    right: 62px;
     top: auto;
-    bottom: 62px;
+    bottom: 0;
     width: 300px;
     max-height: 80vh;
   }
@@ -374,16 +376,18 @@ export default {
    ============================================ */
 @media (max-width: 767px) {
   .accessibility-wrapper {
-    right: 0;
-    left: 0;
-    bottom: 0;
+    position: fixed;
+    right: 1.5rem;
+    left: auto;
+    bottom: 2rem;
     top: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    padding: 0 14px 14px;
-    pointer-events: none; /* let clicks through except on children */
+    padding: 0;
+    pointer-events: auto;
     background: transparent;
+    z-index: 40;
   }
 
   /* Re-enable pointer events on the actual interactive children */
@@ -395,8 +399,8 @@ export default {
   .accessibility-btn {
     width: 50px;
     height: 50px;
-    font-size: 22px;
-    border-radius: 50%;
+    font-size: 24px;
+    border-radius: 1rem; /* rounded-2xl */
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
   }
 

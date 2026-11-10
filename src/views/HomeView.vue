@@ -180,7 +180,7 @@
         </div>
 
         <!-- Responsive Grid of Institution Cards -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto mt-10">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto mt-10">
           <div
             v-for="bank in partnerBanks"
             :key="bank.name"
@@ -328,8 +328,11 @@ const partnerBanks = [
   { name: 'Seylan Bank', logo: '/assets/banks/seylan.png' },
   { name: 'RDB', logo: '/assets/banks/rdb.png' },
   { name: 'SDB bank', logo: '/assets/banks/sdb.png' },
-  { name: 'CDB', logo: '/assets/banks/cdb.png' },
   { name: 'NTB', logo: '/assets/banks/ntb.png' },
+  { name: 'Pan Asia Bank', logo: '/assets/banks/panasia.png' },
+  { name: 'Cargills Bank', logo: '/assets/banks/cargills.png' },
+  { name: 'Union Bank', logo: '/assets/banks/union.png' },
+  { name: 'SMIB', logo: '/assets/banks/smib.png' },
 ];
 
 

@@ -86,9 +86,13 @@ const routes = [
     redirect: to => `/services/${to.params.id}`,
   },
   {
-    path: "/events/gallery",
+    path: "/gallery",
     name: "gallery",
     component: GalleryView,
+  },
+  {
+    path: "/events/gallery",
+    redirect: "/gallery",
   },
   {
     path: "/events/field-visits",
@@ -149,9 +153,17 @@ const routes = [
     redirect: "/contact",
   },
   {
+    path: "/rti",
+    name: "RTI",
+    component: Officers,
+  },
+  {
+    path: "/RTI",
+    redirect: "/rti",
+  },
+  {
     path: "/Officers",
-    name: "Officers",
-    component:Officers,
+    redirect: "/rti",
   },
   {
     path: "/Annualrep",

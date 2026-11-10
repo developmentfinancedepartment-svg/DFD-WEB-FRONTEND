@@ -218,7 +218,7 @@
         </div>
 
         <!-- Responsive Grid of Institution Cards -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto mt-10">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto mt-10">
           <div
             v-for="bank in partnerBanks"
             :key="bank.name"
@@ -276,7 +276,6 @@ import axios from "axios";
 import BaseUrl from "../../services/baseURL";
 
 import bocLogo from '@/assets/banks/boc.png';
-import cdbLogo from '@/assets/banks/cdb.png';
 import commercialLogo from '@/assets/banks/commercial.png';
 import dfccLogo from '@/assets/banks/dfcc.png';
 import hnbLogo from '@/assets/banks/hnb.png';
@@ -286,8 +285,6 @@ import peoplesLogo from '@/assets/banks/peoples.png';
 import sampathLogo from '@/assets/banks/sampath.png';
 import sdbLogo from '@/assets/banks/sdb.png';
 import seylanLogo from '@/assets/banks/seylan.png';
-
-
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
@@ -534,15 +531,33 @@ const partnerBanks = ref([
     hasError: false
   },
   {
-    name: 'CDB',
-    shortCode: 'CDB',
-    logo: cdbLogo,
-    hasError: false
-  },
-  {
     name: 'NTB',
     shortCode: 'NTB',
     logo: ntbLogo,
+    hasError: false
+  },
+  {
+    name: 'Pan Asia Bank',
+    shortCode: 'PABC',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/PAN_ASIA_BANK_LOGO_-_The_Truly_Sri_Lankan_ank.jpg/640px-PAN_ASIA_BANK_LOGO_-_The_Truly_Sri_Lankan_ank.jpg',
+    hasError: false
+  },
+  {
+    name: 'Cargills Bank',
+    shortCode: 'CBNK',
+    logo: 'https://upload.wikimedia.org/wikipedia/en/1/11/Cargills-bank-logo.png',
+    hasError: false
+  },
+  {
+    name: 'Union Bank',
+    shortCode: 'UBC',
+    logo: 'https://upload.wikimedia.org/wikipedia/en/7/73/Union_Bank_of_Colombo_logo.png',
+    hasError: false
+  },
+  {
+    name: 'SMIB',
+    shortCode: 'SMIB',
+    logo: 'https://www.smib.lk/website/assets/images/logo.png',
     hasError: false
   }
 ]);

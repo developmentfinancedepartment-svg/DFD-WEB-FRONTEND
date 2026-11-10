@@ -10,7 +10,7 @@
     <!-- Persistent Floating 1819 Hotline Widget -->
     <a
       href="tel:1819"
-      class="hotline-floating-widget fixed right-3 top-52 sm:top-56 z-50 bg-gradient-to-r from-[#005f73] to-[#008795] text-white shadow-lg border border-white/20 rounded-full py-2.5 px-4"
+      class="hotline-floating-widget fixed right-3 sm:right-6 top-52 sm:top-56 z-50 bg-gradient-to-r from-[#005f73] to-[#008795] text-white shadow-xl px-5 py-3 rounded-full border-2 border-white/90 flex items-center gap-3 cursor-pointer"
       title="Call 1819 Hotline"
       aria-label="Call 1819 Hotline"
     >
@@ -20,14 +20,19 @@
       ></span>
 
       <!-- Headset icon within a circular translucent badge with pulse -->
-      <span class="hotline-icon-badge animate-pulse">
-        <i class="fas fa-headset"></i>
+      <span
+        class="hotline-icon-badge w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center animate-pulse"
+      >
+        <i class="fas fa-headset text-lg"></i>
       </span>
 
       <!-- Hotline Text & Number Stack -->
-      <div class="hotline-text-stack">
-        <span class="hotline-label text-[9px] uppercase text-teal-200">HOTLINE</span>
-        <span class="hotline-number text-base font-extrabold text-white">1819</span>
+      <div class="hotline-text-stack flex flex-col leading-tight select-none">
+        <span
+          class="hotline-label text-[11px] font-extrabold tracking-wider uppercase text-teal-200"
+          >HOTLINE</span
+        >
+        <span class="hotline-number text-2xl font-black text-white">1819</span>
       </div>
     </a>
   </div>
@@ -102,9 +107,9 @@ export default {
 /* Scroll to Top Button Styles */
 .scroll-to-top-btn {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  z-index: 999;
+  bottom: 96px;
+  right: 24px;
+  z-index: 39;
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -142,31 +147,32 @@ export default {
 .hotline-floating-widget {
   position: fixed !important;
   right: 0.75rem !important; /* right-3 */
-  top: 13rem !important; /* top-52 (positioned safely below the blue accessibility button) */
+  top: 13rem !important; /* top-52 (below navbar on upper right) */
   z-index: 50 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 0.625rem;
+  gap: 0.75rem;
   background: linear-gradient(to right, #005f73, #008795) !important;
   color: #ffffff !important;
   text-decoration: none !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 95, 115, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
   border-radius: 9999px !important;
-  padding: 0.625rem 1rem !important;
+  padding: 0.75rem 1.25rem !important; /* px-5 py-3 */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
 @media (min-width: 640px) {
   .hotline-floating-widget {
+    right: 1.5rem !important; /* sm:right-6 */
     top: 14rem !important; /* sm:top-56 */
   }
 }
 
 .hotline-floating-widget:hover {
   transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 16px 30px -4px rgba(0, 95, 115, 0.5), 0 10px 12px -5px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 25px 35px -5px rgba(0, 95, 115, 0.6), 0 10px 12px -5px rgba(0, 0, 0, 0.3) !important;
   color: #ffffff !important;
 }
 
@@ -182,7 +188,7 @@ export default {
 
 @keyframes hotline-ping {
   75%, 100% {
-    transform: scale(1.3);
+    transform: scale(1.25);
     opacity: 0;
   }
 }
@@ -192,12 +198,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 2.5rem; /* w-10 = 40px */
+  height: 2.5rem; /* h-10 = 40px */
   border-radius: 9999px;
   background-color: rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  font-size: 14px;
+  font-size: 1.125rem; /* text-lg = 18px */
+  flex-shrink: 0;
   animation: hotline-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
@@ -207,8 +214,8 @@ export default {
     transform: scale(1);
   }
   50% {
-    opacity: 0.65;
-    transform: scale(0.92);
+    opacity: 0.75;
+    transform: scale(0.94);
   }
 }
 
@@ -221,17 +228,18 @@ export default {
 }
 
 .hotline-label {
-  font-size: 9px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-weight: 800;
   color: #99f6e4; /* text-teal-200 */
 }
 
 .hotline-number {
-  font-size: 1rem; /* text-base */
-  font-weight: 800; /* font-extrabold */
+  font-size: 1.5rem; /* text-2xl = 24px */
+  font-weight: 900; /* font-black */
   color: #ffffff;
   letter-spacing: 0.04em;
+  line-height: 1;
 }
 </style>

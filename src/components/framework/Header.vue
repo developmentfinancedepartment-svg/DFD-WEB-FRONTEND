@@ -72,58 +72,90 @@
           </div>
         </button>
 
-        <!-- Nav Links -->
+                <!-- Nav Links -->
         <div class="collapse navbar-collapse d-xl-flex justify-content-between" :class="{ show: !isCollapsed }">
           <ul class="navbar-nav mx-auto align-items-xl-center">
-            <li class="nav-item"><router-link to="/" class="nav-link" @click="closeNavbar">Home</router-link></li>
-            <li class="nav-item"><router-link to="/About" class="nav-link" @click="closeNavbar">About Us</router-link></li>
-            <li class="nav-item"><router-link to="/team" class="nav-link" @click="closeNavbar">Our Team</router-link></li>
-            <li class="nav-item"><router-link to="/Services" class="nav-link" @click="closeNavbar">Services</router-link></li>
-            <li class="nav-item"><router-link to="/publications" class="nav-link" @click="closeNavbar">Publications</router-link></li>
-            
-            <!-- Events Dropdown -->
-            <li 
-              class="nav-item dropdown-events"
-              @mouseenter="openEvents"
-              @mouseleave="closeEvents"
-            >
-              <a 
-                href="#" 
-                class="nav-link" 
-                @click.prevent="toggleEvents"
-              >
-                {{ eventsLabel }} 
-                <i class="fas fa-chevron-down ms-1 chevron-icon" :class="{ 'rotated': isEventsOpen }"></i>
-              </a>
-              <transition name="dropdown-fade">
-                <div class="events-dropdown-menu shadow-sm" v-show="isEventsOpen">
-                  <router-link to="/events/gallery" class="events-dropdown-item" @click="closeNavbarAndEvents">
-                    <i class="fas fa-images icon-box"></i> Gallery
-                  </router-link>
-                  <router-link to="/events/field-visits" class="events-dropdown-item" @click="closeNavbarAndEvents">
-                    <i class="fas fa-walking icon-box"></i> Field Visits
-                  </router-link>
-                </div>
-              </transition>
+            <li class="nav-item">
+              <router-link
+                to="/"
+                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
+                exact-active-class="!text-[#00c5d6] !font-bold"
+                active-class="!text-[#00c5d6] !font-bold"
+                @click="closeNavbar"
+              >Home</router-link>
             </li>
-            
-            <li class="nav-item"><router-link to="/Contact" class="nav-link" @click="closeNavbar">Contact</router-link></li>
+            <li class="nav-item">
+              <router-link
+                to="/About"
+                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
+                active-class="!text-[#00c5d6] !font-bold"
+                @click="closeNavbar"
+              >About Us</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/team"
+                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
+                active-class="!text-[#00c5d6] !font-bold"
+                @click="closeNavbar"
+              >Our Team</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/Services"
+                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
+                active-class="!text-[#00c5d6] !font-bold"
+                @click="closeNavbar"
+              >Services</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/publications"
+                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
+                active-class="!text-[#00c5d6] !font-bold"
+                @click="closeNavbar"
+              >Publications</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/gallery"
+                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
+                active-class="!text-[#00c5d6] !font-bold"
+                @click="closeNavbar"
+              >Gallery</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/rti"
+                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
+                active-class="!text-[#00c5d6] !font-bold"
+                @click="closeNavbar"
+              >RTI</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/Contact"
+                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
+                active-class="!text-[#00c5d6] !font-bold"
+                @click="closeNavbar"
+              >Contact</router-link>
+            </li>
           </ul>
           
           <div class="search-container-wrapper mt-3 mt-xl-0">
             <div class="search-container position-relative">
               <input 
                 type="text" 
-                class="search-input custom-search-pill" 
+                class="search-input custom-search-pill text-white placeholder-white/70 border-white/60" 
                 placeholder="Search..." 
                 v-model="searchQuery"
                 @focus="isSearchFocused = true"
                 @blur="handleBlur"
               />
-              <button class="search-btn-circle" @click="handleSearch">
-                <i class="fas fa-search"></i>
+              <button class="search-btn-circle text-white" @click="handleSearch" aria-label="Search">
+                <i class="fas fa-search text-white"></i>
               </button>
-              
+
               <!-- Search Results Dropdown -->
               <div v-if="isSearchFocused && searchQuery" class="search-results-dropdown shadow-lg rounded">
                 <div v-if="searchResults.length > 0">
@@ -161,7 +193,6 @@ export default {
       searchQuery: '',
       isSearchFocused: false,
       searchIndex: searchIndexData,
-      isEventsOpen: false,
       isMobile: false,
       currentDate: '',
       currentTime: '',
@@ -169,11 +200,6 @@ export default {
     };
   },
   computed: {
-    eventsLabel() {
-      if (this.$route.path === '/events/gallery') return 'Gallery';
-      if (this.$route.path === '/events/field-visits') return 'Field Visits';
-      return 'Events';
-    },
     isHomePage() {
       return this.$route.path === '/';
     },
@@ -244,26 +270,6 @@ export default {
     },
     handleResize() {
       this.isMobile = window.innerWidth < 1200;
-      if (!this.isMobile) this.isEventsOpen = false;
-    },
-    toggleEvents() {
-      if (this.isMobile) {
-        this.isEventsOpen = !this.isEventsOpen;
-      }
-    },
-    openEvents() {
-      if (!this.isMobile) {
-        this.isEventsOpen = true;
-      }
-    },
-    closeEvents() {
-      if (!this.isMobile) {
-        this.isEventsOpen = false;
-      }
-    },
-    closeNavbarAndEvents() {
-      this.closeNavbar();
-      this.isEventsOpen = false;
     },
     handleSearch() {
       // Search logic placeholder
@@ -501,141 +507,71 @@ export default {
   filter: drop-shadow(0 0 15px rgba(0, 180, 197, 0.6));
 }
 
+.navbar-brand,
+.navbar-brand.router-link-active,
+.navbar-brand.router-link-exact-active {
+  border: none !important;
+  border-bottom: none !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
 .nav-link {
-  color: #0c2a38 !important;
-  font-weight: 600 !important;
-  font-size: 15px !important;
-  padding: 8px 15px !important;
-  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 500 !important;
+  font-size: 1rem !important; /* text-base: 16px */
+  padding: 8px 14px !important;
+  transition: color 200ms ease !important;
   display: inline-block;
   position: relative;
-  opacity: 0.8;
+  text-decoration: none !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 .navbar-scrolled .nav-link {
-  color: #ffffff !important;
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
-.nav-link:hover { 
-  opacity: 1 !important;
+.nav-link:hover,
+.navbar-scrolled .nav-link:hover { 
+  color: #00c5d6 !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
 }
-
 .nav-link.active,
-.router-link-active,
-.router-link-exact-active,
-.router-link-active .nav-link,
-.router-link-exact-active .nav-link { 
-  color: #007c91 !important;
-  opacity: 1 !important;
+.nav-link.router-link-active,
+.nav-link.router-link-exact-active,
+.router-link-active.nav-link,
+.router-link-exact-active.nav-link { 
+  color: #00c5d6 !important;
+  font-weight: 700 !important;
+  border-bottom: none !important;
+  text-decoration: none !important;
 }
 
 .navbar-scrolled .nav-link.active,
-.navbar-scrolled .router-link-active,
-.navbar-scrolled .router-link-exact-active,
-.navbar-scrolled .router-link-active .nav-link,
-.navbar-scrolled .router-link-exact-active .nav-link { 
-  color: #00e5ff !important;
+.navbar-scrolled .nav-link.router-link-active,
+.navbar-scrolled .nav-link.router-link-exact-active,
+.navbar-scrolled .router-link-active.nav-link,
+.navbar-scrolled .router-link-exact-active.nav-link { 
+  color: #00c5d6 !important;
+  font-weight: 700 !important;
+  border-bottom: none !important;
 }
 
-/* Active Highlight Indicator */
+.nav-link::after,
 .nav-link.active::after,
 .nav-link.router-link-active::after,
-.nav-link.router-link-exact-active::after {
-  content: '';
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #007c91;
-  transition: background-color 0.3s ease;
+.nav-link.router-link-exact-active::after,
+.navbar-brand::after {
+  display: none !important;
+  content: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  border: none !important;
 }
-
-.navbar-scrolled .nav-link.active::after,
-.navbar-scrolled .nav-link.router-link-active::after,
-.navbar-scrolled .nav-link.router-link-exact-active::after {
-  background-color: #00e5ff;
-}
-
-/* Events Dropdown Styles */
-.dropdown-events {
-  position: relative;
-}
-
-.chevron-icon {
-  font-size: 0.8rem;
-  transition: transform 0.3s ease;
-}
-
-.chevron-icon.rotated {
-  transform: rotate(180deg);
-}
-
-.events-dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: white;
-  border-radius: 10px;
-  min-width: 200px;
-  padding: 8px 0;
-  margin-top: 5px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  z-index: 1050;
-  display: flex;
-  flex-direction: column;
-}
-
-@media (max-width: 1199px) {
-  .events-dropdown-menu {
-    position: static;
-    box-shadow: none !important;
-    background: transparent;
-    padding-left: 15px;
-    margin-top: 0;
-  }
-  .events-dropdown-item {
-    color: rgba(255, 255, 255, 0.9);
-  }
-  .events-dropdown-item:hover, .events-dropdown-item.router-link-active {
-    background: rgba(255, 255, 255, 0.1);
-    color: #A5F3FC;
-  }
-  .icon-box {
-    color: rgba(255, 255, 255, 0.9);
-  }
-}
-
-.events-dropdown-item {
-  color: #0c2a38;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 12px 20px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  transition: all 0.3s ease;
-}
-
-.events-dropdown-item:hover, .events-dropdown-item.router-link-active {
-  background: #f0fbfc;
-  color: #008795;
-}
-
-.icon-box {
-  width: 24px;
-  text-align: center;
-  color: #008795;
-}
-
-.dropdown-fade-enter-active, .dropdown-fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.dropdown-fade-enter-from, .dropdown-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
 /* Old Dropdown Styles */
 .dropdown-hover .dropdown-menu {
   background: rgba(3, 43, 95, 0.95);
@@ -696,7 +632,7 @@ export default {
 .is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
-  .nav-link { padding: 8px 6px !important; font-size: 0.7rem; }
+  .nav-link { padding: 8px 8px !important; font-size: 0.95rem !important; }
   .dept-name { font-size: 1.1rem; white-space: normal; max-width: 280px; }
   .contact-btn { padding: 8px 10px; font-size: 0.7rem; }
   .search-input { width: 110px; font-size: 0.8rem; }
@@ -729,53 +665,71 @@ export default {
   .translate-box { min-width: auto; }
 }
 
-/* Search Bar Styles */
+/* Search Bar Styles & Smooth Hover Transitions */
 .search-container-wrapper {
   display: flex;
   align-items: center;
 }
 
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .custom-search-pill {
-  background: transparent;
-  border: 1.7px solid #0c2a38;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.6) !important;
   border-radius: 30px;
-  color: #0c2a38;
+  color: #ffffff !important;
   width: 180px;
   padding: 6px 45px 6px 15px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease !important;
   font-size: 14px;
 }
 
-.custom-search-pill:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 135, 149, 0.08);
-  border-color: #008795;
+/* Mouse hover transitions: border to #00c5d6, brighten bg to bg-white/20, subtle teal glow */
+.custom-search-pill:hover,
+.search-container:hover .custom-search-pill {
+  border-color: #00c5d6 !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 0 12px rgba(0, 197, 214, 0.45) !important;
 }
 
 .navbar-scrolled .custom-search-pill {
-  border-color: rgba(255, 255, 255, 0.75);
-  color: white;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  color: #ffffff !important;
+}
+
+.navbar-scrolled .custom-search-pill:hover,
+.navbar-scrolled .search-container:hover .custom-search-pill {
+  border-color: #00c5d6 !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 0 12px rgba(0, 197, 214, 0.45) !important;
 }
 
 .custom-search-pill:focus {
-  background: rgba(12, 42, 56, 0.05);
-  border-color: #0c2a38;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: #00c5d6 !important;
+  box-shadow: 0 0 15px rgba(0, 197, 214, 0.5) !important;
   outline: none;
   width: 220px;
+  color: #ffffff !important;
 }
 
 .navbar-scrolled .custom-search-pill:focus {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: #00c5d6 !important;
+  box-shadow: 0 0 15px rgba(0, 197, 214, 0.5) !important;
 }
 
 .custom-search-pill::placeholder {
-  color: rgba(12, 42, 56, 0.7);
+  color: rgba(255, 255, 255, 0.7) !important;
   transition: color 0.3s ease;
 }
 
 .navbar-scrolled .custom-search-pill::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .search-btn-circle {
@@ -791,19 +745,86 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000000;
+  color: #ffffff !important;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease !important;
+}
+
+.search-btn-circle i {
+  color: #ffffff !important;
+  transition: color 0.3s ease !important;
+}
+
+/* Change search icon color to #00c5d6 on hover */
+.search-btn-circle:hover i,
+.search-container:hover .search-btn-circle i,
+.custom-search-pill:hover ~ .search-btn-circle i {
+  color: #00c5d6 !important;
 }
 
 .navbar-scrolled .search-btn-circle {
-  color: #ffffff;
+  color: #ffffff !important;
+}
+
+.navbar-scrolled .search-btn-circle i {
+  color: #ffffff !important;
+}
+
+.navbar-scrolled .search-btn-circle:hover i,
+.navbar-scrolled .search-container:hover .search-btn-circle i {
+  color: #00c5d6 !important;
 }
 
 .search-btn-circle:hover {
-  background-color: #00a896;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
+/* Tailwind utility classes helper */
+.text-base {
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+}
+.font-medium {
+  font-weight: 500 !important;
+}
+.text-white\/80 {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.hover\:text-\[\#00c5d6\]:hover {
+  color: #00c5d6 !important;
+}
+.\!text-\[\#00c5d6\] {
+  color: #00c5d6 !important;
+}
+.\!font-bold {
+  font-weight: 700 !important;
+}
+.duration-200 {
+  transition-duration: 200ms !important;
+}
+.duration-300 {
+  transition-duration: 300ms !important;
+}
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.transition-all {
+  transition-property: all !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.placeholder-white\/70::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.border-white\/60 {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+.hover\:border-\[\#00c5d6\]:hover {
+  border-color: #00c5d6 !important;
+}
+.hover\:bg-white\/20:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
 .search-results-dropdown {
   position: absolute;
   top: 120%;
