@@ -22,7 +22,7 @@
               <p class="hero-tagline text-amber-400">{{ slides[currentSlide].tagline }}</p>
               <div class="hero-title">
                 <div class="title-line-1">To Strengthen</div> 
-                <div class="title-line-1">The Economy though</div>
+                <div class="title-line-1">The Economy through</div>
                 <div class="title-line-2">Financial Assistance</div>
               </div>
               <router-link :to="slides[currentSlide].link" class="hero-btn">
@@ -288,16 +288,24 @@ import sdbLogo from '@/assets/banks/sdb.png';
 import seylanLogo from '@/assets/banks/seylan.png';
 
 
-import hero1 from "@/assets/hero-banners-2.jpg";
-//import hero2 from "@/assets/hero-banners-1.jpg";
-import hero3 from "@/assets/hero-banners-3.jpg";
-import hero4 from "@/assets/hero-banners-4.jpg";
-import hero5 from "@/assets/hero-banners-5.jpg";
+import hero1 from "@/assets/hero-1.jpg";
+import hero2 from "@/assets/hero-2.jpg";
+import hero3 from "@/assets/hero-3.jpg";
+import hero4 from "@/assets/hero-4.jpg";
+import hero5 from "@/assets/hero-5.jpg";
+import hero6 from "@/assets/hero-6.jpg";
 
 // Hero slider state
 const slides = ref([
   {
     image: hero1,
+    tagline: "EMPOWERING PEOPLE",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    link: "/about"
+  },
+
+  {
+    image: hero2,
     tagline: "EMPOWERING PEOPLE",
     title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
     link: "/about"
@@ -317,6 +325,13 @@ const slides = ref([
   },
   {
     image: hero5,
+    tagline: "EMPOWERING PEOPLE",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    link: "/about"
+  },
+
+  {
+    image: hero6,
     tagline: "EMPOWERING PEOPLE",
     title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
     link: "/about"
