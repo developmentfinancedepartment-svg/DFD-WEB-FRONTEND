@@ -22,8 +22,8 @@
               <p class="hero-tagline text-amber-400">{{ slides[currentSlide].tagline }}</p>
               <div class="hero-title">
                 <div class="title-line-1">To Strengthen</div> 
-                <div class="title-line-1">The Economy through</div>
-                <div class="title-line-2">Financial Assistance</div>
+                <div class="title-line-1">The Economy Through</div>
+                <div class="title-line-2">Development Finance</div>
               </div>
               <router-link :to="slides[currentSlide].link" class="hero-btn">
                 <i class="fas fa-file-invoice-dollar"></i> READ MORE &rarr;
@@ -276,16 +276,22 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import axios from "axios";
 import BaseUrl from "../../services/baseURL";
 
+import amanaLogo from '@/assets/banks/amana.png';
 import bocLogo from '@/assets/banks/boc.png';
 import commercialLogo from '@/assets/banks/commercial.png';
+import cargillsLogo from '@/assets/banks/cargillsbank.png';
 import dfccLogo from '@/assets/banks/dfcc.png';
 import hnbLogo from '@/assets/banks/hnb.png';
 import ndbLogo from '@/assets/banks/ndb.png';
 import ntbLogo from '@/assets/banks/ntb.png';
 import peoplesLogo from '@/assets/banks/peoples.png';
+import panasiaLogo from '@/assets/banks/panasia.jpg';
+import rdbLogo from '@/assets/banks/rdb.png';
 import sampathLogo from '@/assets/banks/sampath.png';
 import sdbLogo from '@/assets/banks/sdb.png';
+import smibLogo from '@/assets/banks/smib.jpg';
 import seylanLogo from '@/assets/banks/seylan.png';
+import unionLogo from '@/assets/banks/union.png';
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
@@ -297,41 +303,41 @@ import hero6 from "@/assets/hero-6.jpg";
 const slides = ref([
   {
     image: hero1,
-    tagline: "EMPOWERING PEOPLE",
-    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    tagline: "EMPOWERING ENTREPRENEURS",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Development Finance</span>",
     link: "/about"
   },
 
   {
     image: hero2,
-    tagline: "EMPOWERING PEOPLE",
-    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    tagline: "EMPOWERING ENTREPRENEURS",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Development Finance</span>",
     link: "/about"
   },
   
   {
     image: hero3,
-    tagline: "EMPOWERING PEOPLE",
-    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    tagline: "EMPOWERING ENTREPRENEURS",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Development Finance</span>",
     link: "/about"
   },
   {
     image: hero4,
-    tagline: "EMPOWERING PEOPLE",
-    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    tagline: "EMPOWERING ENTREPRENEURS",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Development Finance</span>",
     link: "/about"
   },
   {
     image: hero5,
-    tagline: "EMPOWERING PEOPLE",
-    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    tagline: "EMPOWERING ENTREPRENEURS",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Development Finance</span>",
     link: "/about"
   },
 
   {
     image: hero6,
-    tagline: "EMPOWERING PEOPLE",
-    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Financial Assistance</span>",
+    tagline: "EMPOWERING ENTREPRENEURS",
+    title: "To Strengthen the Economy true <span style='color:#00e5ff; font-family: serif; font-style: italic;'>Development Finance</span>",
     link: "/about"
   }
 ]);
@@ -474,7 +480,7 @@ const partnerBanks = ref([
   {
     name: 'Amana Bank',
     shortCode: 'AMANA',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Amana_Bank_Logo.png/640px-Amana_Bank_Logo.png',
+    logo: amanaLogo,
     hasError: false
   },
   {
@@ -486,7 +492,7 @@ const partnerBanks = ref([
   {
     name: 'Cargills Bank',
     shortCode: 'CBNK',
-    logo: 'https://upload.wikimedia.org/wikipedia/en/1/11/Cargills-bank-logo.png',
+    logo: cargillsLogo,
     hasError: false
   },
   {
@@ -522,7 +528,7 @@ const partnerBanks = ref([
   {
     name: 'Pan Asia Banking Corporation',
     shortCode: 'PABC',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/PAN_ASIA_BANK_LOGO_-_The_Truly_Sri_Lankan_ank.jpg/640px-PAN_ASIA_BANK_LOGO_-_The_Truly_Sri_Lankan_ank.jpg',
+    logo: panasiaLogo,
     hasError: false
   },
   {
@@ -534,7 +540,7 @@ const partnerBanks = ref([
   {
     name: 'Regional Development Bank',
     shortCode: 'RDB',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/86/Regional_Development_Bank_Logo.png',
+    logo: rdbLogo,
     hasError: false
   },
   {
@@ -558,13 +564,13 @@ const partnerBanks = ref([
   {
     name: 'State Mortgage & Investment Bank',
     shortCode: 'SMIB',
-    logo: 'https://www.smib.lk/website/assets/images/logo.png',
+    logo: smibLogo,
     hasError: false
   },
   {
     name: 'Union Bank of Colombo',
     shortCode: 'UBC',
-    logo: 'https://upload.wikimedia.org/wikipedia/en/7/73/Union_Bank_of_Colombo_logo.png',
+    logo: unionLogo,
     hasError: false
   }
 ]);
@@ -843,6 +849,7 @@ onBeforeUnmount(() => {
 }
 
 .title-line-1 {
+  font-style: italic !important;
   font-size: 38px;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -851,7 +858,7 @@ onBeforeUnmount(() => {
 
 .title-line-2 {
   /* font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; */
-  /* font-style: italic !important; */
+  font-style: italic !important;
   font-weight: 800;
   font-size: 2.5rem;
   color: #00e5ff !important;
