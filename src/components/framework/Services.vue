@@ -142,41 +142,59 @@
           v-else-if="filteredServices.length > 0"
         >
           <div
-            class="service-card"
+            class="service-card flex flex-col h-full"
             v-for="service in filteredServices"
             :key="service.id || service.title"
           >
-            <div class="card-glass d-flex flex-column h-100">
+            <div class="card-glass group flex flex-col justify-between h-full rounded-2xl border border-slate-200 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-teal-400/60">
+              <!-- Top-Center Circular Icon (Preserved & Centered) -->
               <div class="service-icon-box mx-auto mb-3">
                 <i :class="service.icon || 'fas fa-hand-holding-usd'"></i>
               </div>
-              <div class="card-content d-flex flex-column flex-grow-1">
-                <h3 class="text-center">{{ service.title }}</h3>
 
-                <!-- Highlights Pills -->
-                <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
-                  <span
-                    class="badge bg-teal-light text-teal rounded-pill py-1 px-2"
-                  >
-                    <i class="fas fa-money-bill-wave me-1"></i>
-                    {{ service.maxAmount }}
-                  </span>
-                  <span
-                    class="badge bg-teal-light text-teal rounded-pill py-1 px-2"
-                  >
-                    <i class="fas fa-percent me-1"></i>
-                    {{ service.interestRate }}
-                  </span>
+              <div class="card-content flex flex-col flex-grow text-center w-full">
+                <!-- 2. Fixed Title Height -->
+                <div class="card-title-wrap min-h-[56px] flex items-center justify-center text-center mb-1">
+                  <h3 class="card-title text-center mb-0">{{ service.title }}</h3>
                 </div>
 
-                <p class="text-center flex-grow-1">{{ service.description }}</p>
+                <!-- 3. Fixed Height & Equal Sizing for Highlights Box -->
+                <div class="metrics-box bg-slate-50/80 rounded-xl px-3 my-4 border border-slate-100/80 h-[72px] w-full flex items-center justify-between">
+                  <div class="metric-item metric-item-left flex flex-col justify-center h-full flex-1">
+                    <span class="metric-label text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
+                      MAX FACILITY
+                    </span>
+                    <span class="metric-value metric-value-limit text-base font-bold text-slate-900 truncate" :title="formatMaxFacility(service)">
+                      {{ formatMaxFacility(service) }}
+                    </span>
+                  </div>
+                  <div class="metric-item metric-item-right flex flex-col justify-center h-full flex-1">
+                    <span class="metric-label text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
+                      INTEREST RATE
+                    </span>
+                    <span class="metric-value metric-value-rate text-base font-bold text-teal-600 truncate" :title="service.interestRate || '5% p.a.'">
+                      {{ service.interestRate || '5% p.a.' }}
+                    </span>
+                  </div>
+                </div>
 
-                <router-link
-                  :to="getSchemeLink(service)"
-                  class="btn btn-outline-teal rounded-pill mt-auto fw-bold w-100"
-                >
-                  View Scheme Details &rarr;
-                </router-link>
+                <!-- 4. Uniform Description Area -->
+                <div class="card-desc-wrap min-h-[64px] flex items-center justify-center text-center mb-4">
+                  <p class="card-description text-center text-sm text-slate-600 line-clamp-3 mb-0">
+                    {{ service.description }}
+                  </p>
+                </div>
+
+                <!-- 5. Button Alignment at Bottom -->
+                <div class="card-button-wrap mt-auto pt-2 w-full flex justify-center">
+                  <router-link
+                    :to="getSchemeLink(service)"
+                    class="scheme-action-btn bg-teal-50 text-teal-700 hover:bg-teal-600 hover:text-white rounded-xl py-2.5 px-4 font-medium text-sm transition-all flex items-center justify-center gap-2 mx-auto w-full max-w-[200px] group/btn"
+                  >
+                    <span>View Scheme Details</span>
+                    <span class="btn-arrow transition-transform duration-200 group-hover/btn:translate-x-1.5 group-hover:translate-x-1.5">&rarr;</span>
+                  </router-link>
+                </div>
               </div>
             </div>
           </div>
@@ -268,6 +286,11 @@ const handleClickOutside = (event) => {
 
 const getSchemeLink = (service) => {
   return `/services/${service.id}`;
+};
+
+const formatMaxFacility = (service) => {
+  const val = service.maxAmount || service.maxLoan || 'Rs. 25M';
+  return String(val).replace(/\s*Million/i, 'M');
 };
 
 const fetchActiveSchemes = async () => {
@@ -572,21 +595,184 @@ onUnmounted(() => {
 
 .service-card {
   perspective: 1000px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card-glass {
   background: #ffffff;
-  border: 1px solid rgba(0, 124, 145, 0.1);
-  border-radius: 16px;
-  padding: 30px 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 28px 20px 24px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .service-card:hover .card-glass {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 124, 145, 0.12);
-  border-color: rgba(0, 124, 145, 0.3);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border-color: rgba(45, 212, 191, 0.6);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+}
+
+/* 2. Fixed Title Height */
+.card-title-wrap {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0c2a38;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* 3. Fixed Height & Equal Sizing for Highlights Box */
+.metrics-box {
+  background-color: rgba(248, 250, 252, 0.85);
+  border-radius: 0.75rem;
+  padding: 0 0.75rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  height: 72px;
+  min-height: 72px;
+  max-height: 72px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.metric-item-left {
+  border-right: 1px solid rgba(226, 232, 240, 0.75);
+  padding-right: 0.25rem;
+}
+
+.metric-item-right {
+  padding-left: 0.25rem;
+}
+
+.metric-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.metric-value {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metric-value-limit {
+  color: #0f172a;
+}
+
+.metric-value-rate {
+  color: #0d9488;
+}
+
+/* 4. Uniform Description Area */
+.card-desc-wrap {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.card-description {
+  color: #64748b;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 5. Button Alignment at Bottom */
+.card-button-wrap {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Modern Soft-Teal Action Button */
+.scheme-action-btn {
+  background-color: #f0fdfa;
+  color: #0f766e;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: auto auto 0 auto;
+  width: 100%;
+  max-width: 200px;
+  border: 1px solid rgba(45, 212, 191, 0.3);
+}
+
+.scheme-action-btn:hover {
+  background-color: #0d9488;
+  color: #ffffff;
+  border-color: #0d9488;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+}
+
+.scheme-action-btn .btn-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.scheme-action-btn:hover .btn-arrow,
+.card-glass:hover .scheme-action-btn .btn-arrow {
+  transform: translateX(4px);
 }
 
 .service-icon-box {
@@ -614,21 +800,6 @@ onUnmounted(() => {
 
 .service-card:hover .service-icon-box i {
   transform: scale(1.15);
-}
-
-.card-content h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #0c2a38;
-  margin-bottom: 12px;
-  line-height: 1.3;
-}
-
-.card-content p {
-  color: #6c757d;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  margin-bottom: 20px;
 }
 
 .badge {

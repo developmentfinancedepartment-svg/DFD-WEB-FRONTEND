@@ -251,16 +251,15 @@
         <!-- ------------------------------------------------------------- -->
         <div class="lg:col-span-6 flex flex-col">
           <div
-            class="bg-[#e2e8f0]/60 rounded-2xl p-7 md:p-8 border border-slate-200/80 shadow-sm flex flex-col justify-between h-full max-w-lg mx-auto w-full"
+            class="inquiry-card bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-100 flex flex-col justify-between h-full max-w-xl mx-auto w-full"
           >
             <!-- Centered Header -->
             <div class="text-center mb-6">
-              <h2 class="text-2xl font-bold text-slate-800 tracking-tight">
-                Send us an Inquiry
+              <h2 class="inquiry-heading text-2xl font-bold text-slate-900 tracking-tight">
+                Submit an Official Inquiry
               </h2>
-              <p class="text-xs text-slate-500 mt-1 mb-0">
-                Fill out the form below and our team will get back to you
-                promptly.
+              <p class="inquiry-subtitle text-sm text-slate-500 max-w-md mx-auto text-center mt-1.5 mb-0 leading-relaxed">
+                Have questions regarding credit schemes or policy frameworks? Reach out directly to our dedicated desk.
               </p>
             </div>
 
@@ -310,29 +309,29 @@
               <!-- First & Last Name -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1"
-                    >First Name</label
-                  >
+                  <label for="firstName" class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                    First Name
+                  </label>
                   <input
                     id="firstName"
                     v-model.trim="form.firstName"
                     type="text"
                     placeholder="First name"
                     required
-                    class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3.5 text-xs w-full text-slate-800 placeholder-slate-400 shadow-2xs transition-all duration-200"
+                    class="inquiry-input border border-slate-200 bg-white rounded-xl py-3 px-4 text-sm text-slate-800 placeholder-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 transition-all outline-none w-full"
                   />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1"
-                    >Last Name</label
-                  >
+                  <label for="lastName" class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                    Last Name
+                  </label>
                   <input
                     id="lastName"
                     v-model.trim="form.lastName"
                     type="text"
                     placeholder="Last name"
                     required
-                    class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3.5 text-xs w-full text-slate-800 placeholder-slate-400 shadow-2xs transition-all duration-200"
+                    class="inquiry-input border border-slate-200 bg-white rounded-xl py-3 px-4 text-sm text-slate-800 placeholder-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 transition-all outline-none w-full"
                   />
                 </div>
               </div>
@@ -340,30 +339,30 @@
               <!-- Phone & Email -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1"
-                    >Phone Number</label
-                  >
+                  <label for="phone" class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                    Phone Number
+                  </label>
                   <input
                     id="phone"
                     v-model="form.phone"
                     type="tel"
-                    placeholder="07XXXXXXXX"
+                    placeholder="+94 7X XXX XXXX"
                     required
                     @input="formatPhoneNumber"
-                    class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3.5 text-xs w-full text-slate-800 placeholder-slate-400 shadow-2xs transition-all duration-200"
+                    class="inquiry-input border border-slate-200 bg-white rounded-xl py-3 px-4 text-sm text-slate-800 placeholder-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 transition-all outline-none w-full"
                   />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1"
-                    >Email Address</label
-                  >
+                  <label for="email" class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                    Email Address
+                  </label>
                   <input
                     id="email"
                     v-model.trim="form.email"
                     type="email"
-                    placeholder="name@example.com"
+                    placeholder="kalana@example.com"
                     required
-                    class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3.5 text-xs w-full text-slate-800 placeholder-slate-400 shadow-2xs transition-all duration-200"
+                    class="inquiry-input border border-slate-200 bg-white rounded-xl py-3 px-4 text-sm text-slate-800 placeholder-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 transition-all outline-none w-full"
                   />
                 </div>
               </div>
@@ -375,15 +374,15 @@
                 @mouseenter="isCategoryOpen = true"
                 @mouseleave="isCategoryOpen = false"
               >
-                <label class="block text-xs font-bold text-slate-700 mb-1"
-                  >Scheme / Category</label
-                >
+                <label class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                  Scheme / Category
+                </label>
                 <button
                   type="button"
                   @click="toggleCategoryDropdown"
-                  class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3 text-xs flex justify-between items-center text-slate-800 shadow-2xs cursor-pointer w-full text-left transition-all duration-200"
+                  class="inquiry-input border border-slate-200 bg-white rounded-xl py-3 px-4 text-sm text-slate-800 focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 transition-all outline-none w-full flex justify-between items-center text-left cursor-pointer"
                   :class="{
-                    'border-[#008795] ring-2 ring-[#008795]/20': isCategoryOpen,
+                    'border-teal-600 ring-4 ring-teal-500/10': isCategoryOpen,
                   }"
                 >
                   <span
@@ -397,7 +396,7 @@
                       v-if="selectedCategoryIcon"
                       :class="[
                         selectedCategoryIcon,
-                        'text-[#008795] text-xs flex-shrink-0',
+                        'text-teal-600 text-xs flex-shrink-0',
                       ]"
                     ></i>
                     <span>{{
@@ -406,7 +405,7 @@
                   </span>
                   <i
                     class="fas fa-chevron-down text-slate-400 transition-transform duration-200 text-xs ml-2 flex-shrink-0"
-                    :class="{ 'rotate-180 text-[#008795]': isCategoryOpen }"
+                    :class="{ 'rotate-180 text-teal-600': isCategoryOpen }"
                   ></i>
                 </button>
 
@@ -414,7 +413,7 @@
                 <transition name="dropdown-fade">
                   <div
                     v-if="isCategoryOpen"
-                    class="absolute z-50 left-0 right-0 mt-1 bg-white rounded-2xl border border-slate-200/80 shadow-[0_10px_25px_rgba(0,0,0,0.08)] overflow-hidden"
+                    class="absolute z-50 left-0 right-0 mt-1.5 bg-white rounded-2xl border border-slate-200/90 shadow-xl overflow-hidden"
                   >
                     <!-- List Header Placeholder -->
                     <div
@@ -430,22 +429,22 @@
                         :key="cat.value"
                         type="button"
                         @click="selectCategory(cat.value)"
-                        class="w-full py-3 px-5 text-xs text-slate-700 flex items-center gap-3 border-b border-slate-100/70 transition-colors duration-150 group border-l-4 border-l-transparent hover:border-l-[#008795] hover:text-[#008795] hover:bg-[#f0f9fa] cursor-pointer text-left"
+                        class="w-full py-3 px-5 text-xs text-slate-700 flex items-center gap-3 border-b border-slate-100/70 transition-colors duration-150 group border-l-4 border-l-transparent hover:border-l-teal-600 hover:text-teal-700 hover:bg-teal-50/60 cursor-pointer text-left"
                         :class="{
-                          'bg-[#f0f9fa] text-[#008795] border-l-[#008795] font-semibold':
+                          'bg-teal-50/80 text-teal-700 border-l-teal-600 font-semibold':
                             form.category === cat.value,
                         }"
                       >
                         <i
                           :class="[
                             cat.icon,
-                            'text-slate-400 group-hover:text-[#008795] transition-colors w-4 text-center flex-shrink-0',
+                            'text-slate-400 group-hover:text-teal-600 transition-colors w-4 text-center flex-shrink-0',
                           ]"
                         ></i>
                         <span class="flex-1">{{ cat.label }}</span>
                         <i
                           v-if="form.category === cat.value"
-                          class="fas fa-check text-[#008795] text-xs ml-auto"
+                          class="fas fa-check text-teal-600 text-xs ml-auto"
                         ></i>
                       </button>
                     </div>
@@ -455,16 +454,16 @@
 
               <!-- Message Textarea -->
               <div class="flex-1 flex flex-col">
-                <label class="block text-xs font-semibold text-slate-700 mb-1"
-                  >Message</label
-                >
+                <label for="message" class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                  Message
+                </label>
                 <textarea
                   id="message"
                   v-model="form.message"
-                  rows="6"
-                  placeholder="How can we help you?"
+                  rows="5"
+                  placeholder="How can we help you? Describe your inquiry in detail..."
                   required
-                  class="bg-white rounded-2xl border border-slate-200 hover:border-[#008795] focus:border-[#008795] focus:ring-2 focus:ring-[#008795]/20 focus:outline-none px-4 py-3 text-xs w-full text-slate-800 placeholder-slate-400 shadow-2xs resize-y flex-1 min-h-[160px] transition-all duration-200"
+                  class="inquiry-input border border-slate-200 bg-white rounded-xl py-3 px-4 text-sm text-slate-800 placeholder-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 transition-all outline-none w-full resize-y flex-1 min-h-[140px]"
                 ></textarea>
               </div>
 
@@ -473,13 +472,13 @@
                 <button
                   type="submit"
                   :disabled="isSubmitting"
-                  class="bg-[#008795] hover:bg-[#007380] text-white rounded-2xl py-3.5 font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 w-full transition shadow-sm disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+                  class="inquiry-submit-btn bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-teal-700/20 hover:shadow-xl hover:shadow-teal-700/30 transition-all duration-200 flex items-center justify-center gap-2 w-full text-sm uppercase tracking-wider active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
                 >
                   <i
                     v-if="isSubmitting"
                     class="fas fa-spinner fa-spin text-sm"
                   ></i>
-                  <i v-else class="fas fa-paper-plane text-xs"></i>
+                  <i v-else class="fas fa-paper-plane text-sm"></i>
                   <span>{{
                     isSubmitting ? "Submitting Inquiry..." : "Submit Inquiry"
                   }}</span>
@@ -663,6 +662,84 @@ const handleSubmitInquiry = async () => {
   .contact-view-page {
     padding-top: 76px;
   }
+}
+
+/* ========================================================================= */
+/* INQUIRY FORM POLISH                                                       */
+/* ========================================================================= */
+.inquiry-card {
+  background-color: #ffffff !important;
+  border-radius: 1.5rem !important;
+  padding: 2rem !important;
+  box-shadow: 0 20px 25px -5px rgba(226, 232, 240, 0.5), 0 8px 10px -6px rgba(226, 232, 240, 0.5) !important;
+  border: 1px solid #f1f5f9 !important;
+}
+
+.inquiry-heading {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.02em !important;
+}
+
+.inquiry-subtitle {
+  font-size: 0.875rem !important;
+  color: #64748b !important;
+  line-height: 1.5 !important;
+}
+
+.inquiry-label {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #475569 !important;
+  margin-bottom: 0.375rem !important;
+}
+
+.inquiry-input {
+  border: 1px solid #e2e8f0 !important;
+  background-color: #ffffff !important;
+  border-radius: 0.75rem !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.875rem !important;
+  color: #1e293b !important;
+  transition: all 0.2s ease !important;
+  outline: none !important;
+}
+
+.inquiry-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+.inquiry-input:focus,
+.inquiry-input:focus-within {
+  border-color: #0d9488 !important;
+  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1) !important;
+}
+
+.inquiry-submit-btn {
+  background: linear-gradient(to right, #0d9488, #0f766e) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 0.75rem !important;
+  padding: 0.875rem 1.5rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  box-shadow: 0 10px 15px -3px rgba(15, 118, 110, 0.2) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.inquiry-submit-btn:hover:not(:disabled) {
+  background: linear-gradient(to right, #0f766e, #115e59) !important;
+  box-shadow: 0 20px 25px -5px rgba(15, 118, 110, 0.3) !important;
+  transform: translateY(-1px);
+}
+
+.inquiry-submit-btn:active:not(:disabled) {
+  transform: scale(0.99);
 }
 
 /* ========================================================================= */
