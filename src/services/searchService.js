@@ -495,8 +495,8 @@ const pagesIndex = [
   {
     id: 'page-team',
     category: 'pages',
-    title: 'Our Leadership & Key Officials (Staff Directory)',
-    subtitle: 'Executive Directorate & Divisional Officers',
+    title: 'Department Leadership & Directorate (Staff Directory)',
+    subtitle: 'Key Officials, Division Heads & Executive Directory',
     tag: 'Staff Directory',
     meta: 'Rooms, Extensions & Contact Details',
     description: 'Contact details of the Director General Mr. P.M.K. Hettiarachchi, Additional Director Generals, Directors, Deputy Directors, and Officers.',

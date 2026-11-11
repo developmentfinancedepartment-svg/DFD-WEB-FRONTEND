@@ -3,8 +3,8 @@
     <!-- Hero Header Banner -->
     <section class="hero-header">
       <div class="container text-center">
-        <h1 class="hero-title">Our Leadership &amp; Key Officials</h1>
-        <p class="hero-subtitle">Department of Development Finance — Ministry of Finance, Economic Stabilization and National Policies</p>
+        <h1 class="hero-title">Department Leadership &amp; Directorate</h1>
+        <p class="hero-subtitle">Key Officials, Division Heads &amp; Executive Directory — Department of Development Finance</p>
       </div>
     </section>
 
@@ -203,98 +203,95 @@
               </div>
             </div>
 
-            <!-- Subsections within Division -->
-            <div class="division-subsections-wrap">
-              <div
-                v-for="subsection in division.subsections"
-                :key="subsection.key"
-                class="subsection-block"
-              >
-                <!-- Clean Corporate Directory Table Layout -->
-                <div class="table-responsive-wrapper rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs bg-white">
-                  <table class="corporate-directory-table">
-                    <thead>
-                      <tr>
-                        <th class="th-name" scope="col">Name</th>
-                        <th class="th-designation" scope="col">Designation</th>
-                        <th class="th-room" scope="col">Room</th>
-                        <th class="th-contacts" scope="col">Contact Numbers</th>
-                        <th class="th-email" scope="col">Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        v-for="officer in subsection.officials"
-                        :key="officer.id || officer.name"
-                        class="directory-row hover:bg-slate-50/80 transition-colors"
-                      >
-                        <!-- Column 1: Name (Clean text only, no avatar box, no pill badges) -->
-                        <td class="td-name">
-                          <span class="table-official-name" :title="officer.name">
-                            {{ officer.name }}
-                          </span>
-                        </td>
+            <!-- Single Unified Corporate Directory Table per Division -->
+            <div class="table-responsive-wrapper rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs bg-white">
+              <table class="corporate-directory-table">
+                <thead>
+                  <tr>
+                    <th class="th-name" scope="col">Name</th>
+                    <th class="th-designation" scope="col">Designation</th>
+                    <th class="th-room" scope="col">Room</th>
+                    <th class="th-contacts" scope="col">Contact Numbers</th>
+                    <th class="th-email min-w-[280px]" scope="col">Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template
+                    v-for="subsection in division.subsections"
+                    :key="subsection.key"
+                  >
+                    <!-- Official Rows in this Subsection (Continuous list without category dividers) -->
+                    <tr
+                      v-for="officer in subsection.officials"
+                      :key="officer.id || officer.name"
+                      class="directory-row hover:bg-slate-50/80 transition-colors"
+                    >
+                      <!-- Column 1: Name -->
+                      <td class="td-name">
+                        <span class="table-official-name" :title="officer.name">
+                          {{ officer.name }}
+                        </span>
+                      </td>
 
-                        <!-- Column 2: Designation -->
-                        <td class="td-designation">
-                          <span class="table-designation-text" :title="officer.designation">
-                            {{ officer.designation }}
-                          </span>
-                        </td>
+                      <!-- Column 2: Designation -->
+                      <td class="td-designation">
+                        <span class="table-designation-text" :title="officer.designation">
+                          {{ officer.designation }}
+                        </span>
+                      </td>
 
-                        <!-- Column 3: Room -->
-                        <td class="td-room">
-                          <div class="table-room-cell" v-if="officer.room">
-                            <svg class="table-room-icon" viewBox="0 0 20 20" fill="currentColor">
-                              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
+                      <!-- Column 3: Room -->
+                      <td class="td-room">
+                        <div class="table-room-cell" v-if="officer.room">
+                          <svg class="table-room-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
+                          </svg>
+                          <span class="table-room-text">{{ officer.room }}</span>
+                        </div>
+                        <span v-else class="text-slate-300 text-xs">—</span>
+                      </td>
+
+                      <!-- Column 4: Contact Numbers (Rounded Pill Container Layout) -->
+                      <td class="td-contacts">
+                        <div class="table-contacts-wrap" v-if="getAvailableContacts(officer).length > 0">
+                          <a
+                            v-for="c in getAvailableContacts(officer)"
+                            :key="c.type"
+                            :href="c.link"
+                            class="table-contact-pill"
+                            :class="`pill-${c.type}`"
+                            :title="`Call ${c.label}: ${c.value}`"
+                          >
+                            <span class="pill-type-tag">{{ c.label.toUpperCase() }}</span>
+                            <span class="pill-value-text">{{ c.value }}</span>
+                          </a>
+                        </div>
+                        <span v-else class="text-slate-300 text-xs">—</span>
+                      </td>
+
+                      <!-- Column 5: Clickable Emails (Button-like Pill Badge Design) -->
+                      <td class="td-email min-w-[280px]">
+                        <div class="table-emails-wrap" v-if="getEmailList(officer).length > 0">
+                          <a
+                            v-for="email in getEmailList(officer)"
+                            :key="email"
+                            :href="'mailto:' + email"
+                            class="table-email-link w-fit max-w-none px-3 py-1.5 whitespace-nowrap"
+                            :title="`Send email to ${email}`"
+                          >
+                            <svg viewBox="0 0 20 20" fill="currentColor" class="table-email-svg">
+                              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                             </svg>
-                            <span class="table-room-text">{{ officer.room }}</span>
-                          </div>
-                          <span v-else class="text-slate-400 text-xs">—</span>
-                        </td>
-
-                        <!-- Column 4: Contact Numbers (badges for Office, Ext, Mobile, Fax) -->
-                        <td class="td-contacts">
-                          <div class="table-contacts-wrap" v-if="getAvailableContacts(officer).length > 0">
-                            <a
-                              v-for="c in getAvailableContacts(officer)"
-                              :key="c.type"
-                              :href="c.link"
-                              class="table-contact-pill"
-                              :class="`pill-${c.type}`"
-                              :title="`Call ${c.label}: ${c.value}`"
-                            >
-                              <span class="pill-type-tag">{{ c.label }}</span>
-                              <span class="pill-value-text">{{ c.value }}</span>
-                            </a>
-                          </div>
-                          <span v-else class="text-slate-400 text-xs">—</span>
-                        </td>
-
-                        <!-- Column 5: Clickable Email links -->
-                        <td class="td-email">
-                          <div class="table-emails-wrap" v-if="getEmailList(officer).length > 0">
-                            <a
-                              v-for="email in getEmailList(officer)"
-                              :key="email"
-                              :href="'mailto:' + email"
-                              class="table-email-link"
-                              :title="`Send email to ${email}`"
-                            >
-                              <svg viewBox="0 0 20 20" fill="currentColor" class="table-email-svg">
-                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                              </svg>
-                              <span class="table-email-text truncate">{{ email }}</span>
-                            </a>
-                          </div>
-                          <span v-else class="text-slate-400 text-xs">—</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+                            <span class="table-email-text whitespace-nowrap">{{ email }}</span>
+                          </a>
+                        </div>
+                        <span v-else class="text-slate-300 text-xs">—</span>
+                      </td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
             </div>
           </section>
         </div>
@@ -887,6 +884,12 @@ const mapOfficial = (item) => {
 const cleanPhone = (phone) => {
   if (!phone) return '';
   return phone.replace(/[^\d+]/g, '');
+};
+
+const hasAnyContact = (official) => {
+  if (!official || !official.contacts) return false;
+  const c = official.contacts;
+  return Boolean(c.office || c.ext || c.mobile || c.fax);
 };
 
 /**
@@ -1773,14 +1776,14 @@ onUnmounted(() => {
 }
 
 /* ==========================================================================
-   CLEAN CORPORATE DIRECTORY TABLE
+   CLEAN CORPORATE DIRECTORY TABLE & SUBTLE SECTION BREAKS
    ========================================================================== */
 .table-responsive-wrapper {
   background-color: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 18px;
   overflow-x: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
 }
 
 .corporate-directory-table {
@@ -1790,48 +1793,52 @@ onUnmounted(() => {
   font-size: 0.82rem;
 }
 
-/* Table Header */
+/* Table Header (Appears ONLY ONCE at the top) */
 .corporate-directory-table thead tr {
   background-color: #f8fafc;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1.5px solid #e2e8f0;
 }
 
 .corporate-directory-table th {
-  padding: 10px 14px;
-  font-size: 0.7rem;
+  padding: 14px 24px;
+  font-size: 0.72rem;
   font-weight: 800;
-  color: #475569;
+  color: #64748b;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   white-space: nowrap;
 }
 
 .th-name {
-  width: 24%;
-  min-width: 190px;
+  width: 23%;
+  min-width: 180px;
 }
 
 .th-designation {
-  width: 27%;
+  width: 25%;
   min-width: 210px;
 }
 
 .th-room {
-  width: 14%;
-  min-width: 120px;
+  width: 10%;
+  min-width: 90px;
 }
 
 .th-contacts {
-  width: 22%;
-  min-width: 210px;
+  width: 20%;
+  min-width: 190px;
 }
 
 .th-email {
-  width: 13%;
-  min-width: 160px;
+  width: 22%;
+  min-width: 280px;
 }
 
-/* Table Body Rows */
+.td-email {
+  min-width: 280px;
+}
+
+/* Table Body Rows & Spacing */
 .directory-row {
   border-bottom: 1px solid #f1f5f9;
   transition: background-color 0.15s ease;
@@ -1842,20 +1849,20 @@ onUnmounted(() => {
 }
 
 .directory-row:hover {
-  background-color: #f8fafc;
+  background-color: rgba(248, 250, 252, 0.85);
 }
 
 .corporate-directory-table td {
-  padding: 10px 14px;
+  padding: 13px 20px;
   vertical-align: middle;
 }
 
-/* Column 1: Name (Clean Text Only) */
+/* Column 1: Name */
 .table-official-name {
   font-size: 0.88rem;
   font-weight: 700;
   color: #0f172a;
-  line-height: 1.3;
+  line-height: 1.35;
   display: block;
 }
 
@@ -1866,15 +1873,18 @@ onUnmounted(() => {
   color: #008795;
   line-height: 1.35;
   display: block;
+  max-width: 280px;
 }
 
 /* Column 3: Room */
 .table-room-cell {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 5px;
   font-size: 0.74rem;
   color: #475569;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .table-room-icon {
@@ -1888,7 +1898,7 @@ onUnmounted(() => {
   white-space: nowrap;
 }
 
-/* Column 4: Contact Numbers */
+/* Column 4: Contact Numbers (Original Rounded Pill Layout) */
 .table-contacts-wrap {
   display: flex;
   align-items: center;
@@ -1900,10 +1910,10 @@ onUnmounted(() => {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 7px;
-  border-radius: 6px;
+  padding: 3px 8px;
+  border-radius: 8px;
   text-decoration: none;
-  background-color: #f8fafc;
+  background-color: #ffffff;
   border: 1px solid #e2e8f0;
   transition: all 0.15s ease;
   white-space: nowrap;
@@ -1912,7 +1922,7 @@ onUnmounted(() => {
 .table-contact-pill:hover {
   background-color: #ffffff;
   border-color: #008795;
-  box-shadow: 0 2px 5px rgba(0, 135, 149, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 135, 149, 0.12);
   transform: translateY(-1px);
 }
 
@@ -1920,67 +1930,97 @@ onUnmounted(() => {
   font-size: 0.58rem;
   font-weight: 800;
   text-transform: uppercase;
-  padding: 1px 4px;
-  border-radius: 3px;
+  letter-spacing: 0.04em;
+  padding: 2px 5px;
+  border-radius: 4px;
   line-height: 1.2;
 }
 
 .table-contact-pill .pill-value-text {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: #334155;
-  letter-spacing: 0.05px;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 .table-contact-pill:hover .pill-value-text {
   color: #008795;
 }
 
-.pill-office .pill-type-tag { background: #e0f2fe; color: #0284c7; }
-.pill-ext .pill-type-tag { background: #e6fffa; color: #008795; }
-.pill-mobile .pill-type-tag { background: #dcfce7; color: #15803d; }
-.pill-residence .pill-type-tag { background: #fef3c7; color: #b45309; }
-.pill-fax .pill-type-tag { background: #f1f5f9; color: #475569; }
+/* OFFICE: Soft-blue badge with label "OFFICE" inside */
+.pill-office .pill-type-tag {
+  background: #e0f2fe;
+  color: #0284c7;
+}
 
-/* Column 5: Clickable Emails */
+/* EXT: Soft-mint badge with label "EXT" inside */
+.pill-ext .pill-type-tag {
+  background: #e6fffa;
+  color: #008795;
+}
+
+/* MOBILE: Soft-green badge with label "MOBILE" inside */
+.pill-mobile .pill-type-tag {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* FAX: Soft-gray badge with label "FAX" inside */
+.pill-fax .pill-type-tag {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* Column 5: Clickable Emails (Original Button-like Pill Badge Design) */
 .table-emails-wrap {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  width: 100%;
 }
 
 .table-email-link {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.72rem;
+  gap: 7px;
+  font-size: 0.73rem;
   font-weight: 600;
   color: #008795;
   text-decoration: none;
-  padding: 2px 6px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
   background-color: #f0fdfa;
   border: 1px solid #ccfbf1;
   transition: all 0.15s ease;
-  max-width: 220px;
+  width: fit-content;
+  max-width: none;
+  white-space: nowrap;
 }
 
 .table-email-link:hover {
   background-color: #008795;
   color: #ffffff;
   border-color: #008795;
+  box-shadow: 0 2px 6px rgba(0, 135, 149, 0.15);
+  transform: translateY(-1px);
 }
 
 .table-email-svg {
-  width: 11px;
-  height: 11px;
+  width: 13px;
+  height: 13px;
   flex-shrink: 0;
+  color: #008795;
+  transition: color 0.15s ease;
+}
+
+.table-email-link:hover .table-email-svg {
+  color: #ffffff;
 }
 
 .table-email-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 1.25;
 }
 
 /* ==========================================================================
