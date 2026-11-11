@@ -14,10 +14,30 @@
     <!-- Filter Header -->
     <section class="filter-section py-3 bg-light shadow-sm mb-5">
       <div
-        class="container d-flex justify-content-center justify-content-md-end align-items-center"
+        class="container d-flex justify-content-between align-items-center flex-wrap gap-2"
       >
-        <!-- Category Filter Custom Dropdown -->
-        <div class="filter-dropdown-area">
+        <div class="results-meta-info text-muted small fw-semibold">
+          Showing <span class="text-teal fw-bold">{{ filteredServices.length }}</span> scheme{{ filteredServices.length === 1 ? '' : 's' }}
+          <span v-if="searchQuery" class="badge bg-teal-light text-teal ms-1">
+            matching "{{ searchQuery }}"
+          </span>
+          <span v-if="selectedCategory !== 'ALL'" class="badge bg-secondary-subtle text-dark ms-1">
+            in {{ selectedCategoryLabel }}
+          </span>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+          <button
+            v-if="searchQuery || selectedCategory !== 'ALL'"
+            type="button"
+            class="btn btn-sm btn-outline-secondary rounded-pill px-3"
+            @click="resetFilters"
+          >
+            Reset Filters
+          </button>
+
+          <!-- Category Filter Custom Dropdown -->
+          <div class="filter-dropdown-area">
           <div class="filter-label">
             <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
               <path
@@ -102,6 +122,7 @@
             </transition>
           </div>
         </div>
+        </div>
       </div>
     </section>
 
@@ -167,7 +188,13 @@
           <div class="mb-4">
             <i class="fas fa-folder-open fa-3x text-muted opacity-50"></i>
           </div>
-          <h4 class="text-muted">No schemes found for this category.</h4>
+          <h4 class="text-muted">No schemes found matching your search.</h4>
+          <p class="text-muted small" v-if="searchQuery">
+            We couldn't find any loan schemes matching "{{ searchQuery }}".
+          </p>
+          <button class="btn btn-teal text-white mt-2 px-4 rounded-pill" @click="resetFilters">
+            Clear Filters &amp; Show All
+          </button>
         </div>
       </div>
     </section>
@@ -176,8 +203,25 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useRoute } from "vue-router";
 import axios from "axios";
 import BaseUrl from "../../services/baseURL";
+import { servicesData } from "../../data/servicesData";
+import {
+  navbarSearchState,
+  clearNavbarSearch,
+  setNavbarSearchQuery
+} from "../../services/navbarSearchState";
+
+const route = useRoute();
+const searchQuery = computed({
+  get() {
+    return navbarSearchState.query;
+  },
+  set(val) {
+    setNavbarSearchQuery(val);
+  }
+});
 
 const selectedCategory = ref("ALL");
 const isCategoryDropdownOpen = ref(false);
@@ -208,6 +252,12 @@ const selectCategory = (val) => {
   isCategoryDropdownOpen.value = false;
 };
 
+const resetFilters = () => {
+  clearNavbarSearch();
+  selectedCategory.value = "ALL";
+  isCategoryDropdownOpen.value = false;
+};
+
 const handleClickOutside = (event) => {
   if (
     categoryDropdownRef.value &&
@@ -226,32 +276,72 @@ const fetchActiveSchemes = async () => {
   try {
     const apiBase = BaseUrl.baseUrl || "http://localhost:8096";
     const response = await axios.get(`${apiBase}/api/schemes/public`);
-    services.value = Array.isArray(response.data) ? response.data : [];
+    if (Array.isArray(response.data) && response.data.length > 0) {
+      services.value = response.data;
+    } else {
+      services.value = servicesData;
+    }
   } catch (error) {
-    console.error("Failed to fetch active schemes:", error);
+    console.warn("Failed to fetch active schemes, falling back to servicesData:", error);
+    services.value = servicesData;
   } finally {
     loading.value = false;
   }
 };
 
 const filteredServices = computed(() => {
-  if (
-    selectedCategory.value === "ALL" ||
-    selectedCategory.value === "All Schemes" ||
-    !selectedCategory.value
-  ) {
-    return services.value;
+  let list = services.value;
+  if (!list || list.length === 0) {
+    list = servicesData;
   }
-  return services.value.filter((s) => s.category === selectedCategory.value);
+
+  // Category filter
+  if (
+    selectedCategory.value &&
+    selectedCategory.value !== "ALL" &&
+    selectedCategory.value !== "All Schemes"
+  ) {
+    list = list.filter((s) => s.category === selectedCategory.value);
+  }
+
+  // Navbar search query filter
+  const query = (searchQuery.value || "").trim().toLowerCase();
+  if (!query) return list;
+
+  return list.filter((s) => {
+    const title = (s.title || "").toLowerCase();
+    const desc = (s.description || "").toLowerCase();
+    const cat = (s.category || "").toLowerCase();
+    const maxAmt = (s.maxAmount || s.maxLoan || "").toLowerCase();
+    const rate = (s.interestRate || "").toLowerCase();
+    const obj = (s.objective || "").toLowerCase();
+    const banks = Array.isArray(s.participatingBanks)
+      ? s.participatingBanks.join(" ").toLowerCase()
+      : "";
+
+    return (
+      title.includes(query) ||
+      desc.includes(query) ||
+      cat.includes(query) ||
+      maxAmt.includes(query) ||
+      rate.includes(query) ||
+      obj.includes(query) ||
+      banks.includes(query)
+    );
+  });
 });
 
 onMounted(() => {
+  if (route?.query?.q) {
+    setNavbarSearchQuery(String(route.query.q));
+  }
   fetchActiveSchemes();
   document.addEventListener("click", handleClickOutside);
 });
 
 onUnmounted(() => {
   document.removeEventListener("click", handleClickOutside);
+  clearNavbarSearch();
 });
 </script>
 

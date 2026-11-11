@@ -8,35 +8,10 @@
       </div>
     </section>
 
-    <!-- Sticky Filter & Search Bar -->
+    <!-- Sticky Filter Bar -->
     <section class="sticky-filter-bar">
-      <div class="container filter-bar-container">
-        <!-- Instant Search Input -->
-        <div class="team-search-wrap">
-          <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-          </svg>
-          <input
-            type="text"
-            v-model="searchQuery"
-            class="team-search-input"
-            placeholder="Search by name, designation, extension, phone, or email..."
-            aria-label="Search officials"
-          />
-          <button
-            v-if="searchQuery"
-            type="button"
-            class="clear-search-btn"
-            @click="searchQuery = ''"
-            title="Clear search"
-          >
-            <svg viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5">
-              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </button>
-        </div>
-
-        <!-- Right-Aligned Division Dropdown Filter (Hover Auto-Open) -->
+      <div class="container filter-bar-container filter-bar-end">
+        <!-- Division Dropdown Filter (Hover Auto-Open) -->
         <div class="filter-dropdown-area">
           <div class="filter-label">
             <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
@@ -167,7 +142,7 @@
               <!-- Right Column: lg:col-span-5 Compact Contact Channels Panel -->
               <div class="spotlight-col-right lg:col-span-5">
                 <div class="spotlight-contact-panel">
-                  <!-- Dynamic Contact Numbers List (Office, Ext, Mobile, Residence, Fax) - 2-Column Grid -->
+                  <!-- Dynamic Contact Numbers List (Office, Ext, Mobile, Fax) - 2-Column Grid -->
                   <div class="contact-numbers-grid grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <a
                       v-for="c in getAvailableContacts(directorGeneral)"
@@ -235,11 +210,6 @@
                 :key="subsection.key"
                 class="subsection-block"
               >
-                <!-- Clean Role Label Header (No SUBSECTION A pill, no subtitle) -->
-                <div class="subsection-header-block">
-                  <h3 class="subsection-title">{{ subsection.title }}</h3>
-                </div>
-
                 <!-- Clean Corporate Directory Table Layout -->
                 <div class="table-responsive-wrapper rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs bg-white">
                   <table class="corporate-directory-table">
@@ -283,7 +253,7 @@
                           <span v-else class="text-slate-400 text-xs">—</span>
                         </td>
 
-                        <!-- Column 4: Contact Numbers (badges for Office, Ext, Mobile, Fax, Residence) -->
+                        <!-- Column 4: Contact Numbers (badges for Office, Ext, Mobile, Fax) -->
                         <td class="td-contacts">
                           <div class="table-contacts-wrap" v-if="getAvailableContacts(officer).length > 0">
                             <a
@@ -350,12 +320,23 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
+import { useRoute } from 'vue-router';
 import axios from 'axios';
 import BaseUrl from '@/services/baseURL';
+import { navbarSearchState, clearNavbarSearch, setNavbarSearchQuery } from '@/services/navbarSearchState';
 
-// Search and Filter states
-const searchQuery = ref('');
+const route = useRoute();
+// Reactive search query bound to Navbar Search state
+const searchQuery = computed({
+  get() {
+    return navbarSearchState.query;
+  },
+  set(val) {
+    setNavbarSearchQuery(val);
+  }
+});
+
 const selectedDivision = ref('ALL');
 const isDropdownOpen = ref(false);
 const dropdownRef = ref(null);
@@ -387,7 +368,7 @@ const selectDivision = (val) => {
 };
 
 const resetFilters = () => {
-  searchQuery.value = '';
+  clearNavbarSearch();
   selectedDivision.value = 'ALL';
   isDropdownOpen.value = false;
 };
@@ -401,7 +382,27 @@ const handleClickOutside = (event) => {
 /**
  * LEVEL 0: Top Executive Spotlight for Director General
  */
-const directorGeneral = ref(null);
+const defaultDirectorGeneral = {
+  id: 'dg-hettiarachchi',
+  name: 'Mr. P.M.K. Hettiarachchi',
+  designation: 'Director General',
+  division: 'Executive Directorate',
+  hierarchyLevel: 'HEAD',
+  room: 'Room 140, 1st Floor, The Secretariat, Lotus Road, Colombo 01',
+  description: 'Leading the Department of Development Finance in coordinating national concessionary credit schemes, interest subsidy mechanisms, and financial inclusion frameworks across Sri Lanka.',
+  contacts: {
+    office: '+94 11 248 4511',
+    ext: '1400',
+    mobile: '+94 71 845 2100',
+    fax: '+94 11 248 4512'
+  },
+  emails: [
+    'dgdf@dfd.treasury.gov.lk',
+    'hettiarachchi.pmk@treasury.gov.lk'
+  ]
+};
+
+const directorGeneral = ref(defaultDirectorGeneral);
 
 /**
  * Strict Hierarchical Division & Plain Role Structure
@@ -485,7 +486,357 @@ const hierarchyStructure = [
   }
 ];
 
-const officials = ref([]);
+const defaultOfficials = [
+  // Division 1: Financial Solution
+  {
+    id: 2,
+    name: 'Mr. H.M.A.S. Herath',
+    designation: 'Additional Director General (Financial Solutions)',
+    division: 'Financial Solution',
+    hierarchyLevel: 'ADG',
+    subsectionKey: 'adg',
+    room: 'Room 145, 1st Floor',
+    description: 'Overseeing the strategic direction of credit solutions, SME concessionary loan facilities, and sovereign guarantee funds.',
+    contacts: {
+      office: '+94 11 248 4520',
+      ext: '1410',
+      mobile: '+94 71 234 5670',
+      fax: '+94 11 248 4521'
+    },
+    emails: ['adg.fs@dfd.treasury.gov.lk', 'herath.adg@treasury.gov.lk']
+  },
+  {
+    id: 3,
+    name: 'Mr. K.A.D.S. Nanayakkara',
+    designation: 'Director - Financial Solutions Division',
+    division: 'Financial Solution',
+    hierarchyLevel: 'DIRECTOR',
+    subsectionKey: 'directors',
+    room: 'Room 150, 1st Floor',
+    description: 'Heading program formulation, monitoring credit allocations to participatory financial institutions.',
+    contacts: {
+      office: '+94 11 248 4530',
+      ext: '1420',
+      mobile: '+94 77 345 6789',
+      fax: '+94 11 248 4531'
+    },
+    emails: ['director.fs@dfd.treasury.gov.lk', 'nanayakkara.kads@dfd.treasury.gov.lk']
+  },
+  {
+    id: 4,
+    name: 'Mrs. K.M.S.D. Jayasekara',
+    designation: 'Director - Concessionary Credit & Schemes',
+    division: 'Financial Solution',
+    hierarchyLevel: 'DIRECTOR',
+    subsectionKey: 'directors',
+    room: 'Room 152, 1st Floor',
+    description: 'Specializing in green finance mechanisms, revolving credit funds, and MSME refinance frameworks.',
+    contacts: {
+      office: '+94 11 248 4535',
+      ext: '1425',
+      mobile: '+94 71 456 7890'
+    },
+    emails: ['credit.schemes@dfd.treasury.gov.lk', 'jayasekara.kmsd@dfd.treasury.gov.lk']
+  },
+  {
+    id: 5,
+    name: 'Mr. R.M.A.P. Rathnayake',
+    designation: 'Deputy Director - Financial Solutions',
+    division: 'Financial Solution',
+    hierarchyLevel: 'DEPUTY_DIRECTOR',
+    subsectionKey: 'deputy_directors',
+    room: 'Room 154, 1st Floor',
+    description: 'Managing commercial bank interest subsidy reconciliations and claim verifications.',
+    contacts: {
+      office: '+94 11 248 4540',
+      ext: '1428',
+      mobile: '+94 76 567 8901'
+    },
+    emails: ['rathnayake.rmap@dfd.treasury.gov.lk', 'subsidy.monitoring@dfd.treasury.gov.lk']
+  },
+  {
+    id: 6,
+    name: 'Ms. W.A.S.M. Wickramasinghe',
+    designation: 'Deputy Director - Interest Subsidy & Monitoring',
+    division: 'Financial Solution',
+    hierarchyLevel: 'DEPUTY_DIRECTOR',
+    subsectionKey: 'deputy_directors',
+    room: 'Room 155, 1st Floor',
+    description: 'Conducting financial feasibility audits on regional partner banking branches.',
+    contacts: {
+      office: '+94 11 248 4542',
+      ext: '1429',
+      mobile: '+94 77 678 9012'
+    },
+    emails: ['wickramasinghe.wasm@dfd.treasury.gov.lk']
+  },
+  {
+    id: 7,
+    name: 'Mr. T.M.N.B. Thennakoon',
+    designation: 'Assistant Director',
+    division: 'Financial Solution',
+    hierarchyLevel: 'ASSISTANT_DIRECTOR',
+    subsectionKey: 'assistant_directors_officers',
+    room: 'Room 157, 1st Floor',
+    description: 'Field level coordination with district secretariats on enterprise loan uptake.',
+    contacts: {
+      office: '+94 11 248 4544',
+      ext: '1432',
+      mobile: '+94 71 789 0123'
+    },
+    emails: ['thennakoon.tmnb@dfd.treasury.gov.lk']
+  },
+  {
+    id: 8,
+    name: 'Ms. K.G.C.L. Gamage',
+    designation: 'Assistant Director',
+    division: 'Financial Solution',
+    hierarchyLevel: 'ASSISTANT_DIRECTOR',
+    subsectionKey: 'assistant_directors_officers',
+    room: 'Room 158, 1st Floor',
+    description: 'Analysis of quarterly disbursement reports and beneficiary database management.',
+    contacts: {
+      office: '+94 11 248 4546',
+      ext: '1434',
+      mobile: '+94 70 890 1234'
+    },
+    emails: ['gamage.kgcl@dfd.treasury.gov.lk']
+  },
+  {
+    id: 9,
+    name: 'Mr. W.M.K.R. Weerakoon',
+    designation: 'Development Officer - Schemes Execution',
+    division: 'Financial Solution',
+    hierarchyLevel: 'ASSISTANT_DIRECTOR',
+    subsectionKey: 'assistant_directors_officers',
+    room: 'Room 159, 1st Floor',
+    description: 'Verification of borrower documentation and regional cooperative compliance.',
+    contacts: {
+      office: '+94 11 248 4548',
+      ext: '1436',
+      mobile: '+94 77 901 2345'
+    },
+    emails: ['weerakoon.wmkr@dfd.treasury.gov.lk']
+  },
+  {
+    id: 10,
+    name: 'Ms. P.H.N. De Silva',
+    designation: 'Development Officer - Credit Appraisal',
+    division: 'Financial Solution',
+    hierarchyLevel: 'ASSISTANT_DIRECTOR',
+    subsectionKey: 'assistant_directors_officers',
+    room: 'Room 159, 1st Floor',
+    description: 'Appraisal of loan claims submitted by private commercial banks.',
+    contacts: {
+      office: '+94 11 248 4549',
+      ext: '1437',
+      mobile: '+94 78 012 3456'
+    },
+    emails: ['desilva.phn@dfd.treasury.gov.lk']
+  },
+  {
+    id: 11,
+    name: 'Mr. M.D.K. Perera',
+    designation: 'Development Officer - Data & Verification',
+    division: 'Financial Solution',
+    hierarchyLevel: 'ASSISTANT_DIRECTOR',
+    subsectionKey: 'assistant_directors_officers',
+    room: 'Room 159, 1st Floor',
+    description: 'National database entry and interest subsidy calculation validation.',
+    contacts: {
+      office: '+94 11 248 4552',
+      ext: '1438',
+      mobile: '+94 72 123 4567'
+    },
+    emails: ['perera.mdk@dfd.treasury.gov.lk']
+  },
+
+  // Division 2: Market Access & Development
+  {
+    id: 12,
+    name: 'Mrs. C.K. Wickramatunga',
+    designation: 'Additional Director General (Market Access & Development)',
+    division: 'Market Access & Development',
+    hierarchyLevel: 'ADG',
+    subsectionKey: 'adg',
+    room: 'Room 148, 1st Floor',
+    description: 'Guiding value-chain linkages, export credit promotion, and agricultural market development.',
+    contacts: {
+      office: '+94 11 248 4545',
+      ext: '1430',
+      mobile: '+94 71 345 6780',
+      fax: '+94 11 248 4546'
+    },
+    emails: ['adg.mad@dfd.treasury.gov.lk', 'wickramatunga.ck@treasury.gov.lk']
+  },
+  {
+    id: 13,
+    name: 'Mr. D.L.P. Bandara',
+    designation: 'Director - Market Access & Value Chain Development',
+    division: 'Market Access & Development',
+    hierarchyLevel: 'DIRECTOR',
+    subsectionKey: 'directors',
+    room: 'Room 160, 1st Floor',
+    description: 'Formulating forward linkage partnerships with export chambers and agri-commodity boards.',
+    contacts: {
+      office: '+94 11 248 4550',
+      ext: '1440',
+      mobile: '+94 77 123 4567',
+      fax: '+94 11 248 4551'
+    },
+    emails: ['director.mad@dfd.treasury.gov.lk', 'bandara.dlp@dfd.treasury.gov.lk']
+  },
+  {
+    id: 14,
+    name: 'Mrs. T.K. Wickramasinghe',
+    designation: 'Deputy Director - Commercial Agriculture Promotion & Markets',
+    division: 'Market Access & Development',
+    hierarchyLevel: 'DEPUTY_DIRECTOR',
+    subsectionKey: 'deputy_directors',
+    room: 'Room 162, 1st Floor',
+    description: 'Facilitating commercial farming modernization and cold-chain facility loans.',
+    contacts: {
+      office: '+94 11 248 4554',
+      ext: '1442',
+      mobile: '+94 71 567 8901'
+    },
+    emails: ['valuechains@dfd.treasury.gov.lk']
+  },
+  {
+    id: 15,
+    name: 'Mr. H.M.S.B. Herath',
+    designation: 'Deputy Director - Entrepreneurship Outreach & MSME Clusters',
+    division: 'Market Access & Development',
+    hierarchyLevel: 'DEPUTY_DIRECTOR',
+    subsectionKey: 'deputy_directors',
+    room: 'Room 163, 1st Floor',
+    description: 'Conducting capacity building workshops and MSME market-entry mentoring.',
+    contacts: {
+      office: '+94 11 248 4558',
+      ext: '1445',
+      mobile: '+94 76 678 9012'
+    },
+    emails: ['outreach.mad@dfd.treasury.gov.lk', 'herath.hmsb@dfd.treasury.gov.lk']
+  },
+  {
+    id: 16,
+    name: 'Ms. K.G.N. Fernando',
+    designation: 'Deputy Director - Progress Monitoring & Field Verification',
+    division: 'Market Access & Development',
+    hierarchyLevel: 'DEPUTY_DIRECTOR',
+    subsectionKey: 'deputy_directors',
+    room: 'Room 164, 1st Floor',
+    description: 'Leading on-site inspection missions to evaluate beneficiary enterprise performance.',
+    contacts: {
+      office: '+94 11 248 4562',
+      ext: '1448',
+      mobile: '+94 77 234 5678'
+    },
+    emails: ['monitoring@dfd.treasury.gov.lk']
+  },
+
+  // Division 3: Admin and Accounts
+  {
+    id: 17,
+    name: 'Mr. M.S.I. Peiris',
+    designation: 'Additional Director General (Admin & Accounts)',
+    division: 'Admin and Accounts',
+    hierarchyLevel: 'ADG',
+    subsectionKey: 'adg',
+    room: 'Room 149, 1st Floor',
+    description: 'Strategic stewardship over institutional budget, establishment matters, and parliamentary reporting.',
+    contacts: {
+      office: '+94 11 248 4565',
+      ext: '1450',
+      mobile: '+94 71 890 1234',
+      fax: '+94 11 248 4566'
+    },
+    emails: ['adg.admin@dfd.treasury.gov.lk', 'peiris.msi@treasury.gov.lk']
+  },
+  {
+    id: 18,
+    name: 'Mrs. A.H.M. Nizam',
+    designation: 'Director (Admin & Finance)',
+    division: 'Admin and Accounts',
+    hierarchyLevel: 'DIRECTOR',
+    subsectionKey: 'directors_admin_finance',
+    room: 'Room 172, 1st Floor',
+    description: 'Directing general administration, public finance circular compliance, and internal audit oversight.',
+    contacts: {
+      office: '+94 11 248 4574',
+      ext: '1462',
+      mobile: '+94 77 456 7890',
+      fax: '+94 11 248 4575'
+    },
+    emails: ['accounts@dfd.treasury.gov.lk', 'nizam.ahm@dfd.treasury.gov.lk']
+  },
+  {
+    id: 19,
+    name: 'Mr. P.G.D. Karunaratne',
+    designation: 'Deputy Director - Logistics, Fleet & Procurement',
+    division: 'Admin and Accounts',
+    hierarchyLevel: 'DEPUTY_DIRECTOR',
+    subsectionKey: 'deputy_directors',
+    room: 'Room 173, 1st Floor',
+    description: 'Managing department facilities, asset registry, and government procurement processes.',
+    contacts: {
+      office: '+94 11 248 4578',
+      ext: '1465',
+      mobile: '+94 78 567 8901'
+    },
+    emails: ['procurement@dfd.treasury.gov.lk']
+  },
+  {
+    id: 20,
+    name: 'Mr. E.A.N. Senarath',
+    designation: 'Deputy Director - Scheme Disbursements & Financial Audits',
+    division: 'Admin and Accounts',
+    hierarchyLevel: 'DEPUTY_DIRECTOR',
+    subsectionKey: 'deputy_directors',
+    room: 'Room 175, 1st Floor',
+    description: 'Supervising treasury payment vouchers and annual parliamentary performance audit preparations.',
+    contacts: {
+      office: '+94 11 248 4584',
+      ext: '1469',
+      mobile: '+94 77 789 0123'
+    },
+    emails: ['disbursements@dfd.treasury.gov.lk']
+  },
+  {
+    id: 21,
+    name: 'Ms. I.U. Dissanayake',
+    designation: 'Chief Management Service Officer (CMSO) - Operations',
+    division: 'Admin and Accounts',
+    hierarchyLevel: 'ASSISTANT_DIRECTOR',
+    subsectionKey: 'cmso_development_officers',
+    room: 'Room 174, 1st Floor',
+    description: 'Supervising establishment affairs, official correspondence dispatch, and HR records.',
+    contacts: {
+      office: '+94 11 248 4582',
+      ext: '1468',
+      mobile: '+94 71 678 9012'
+    },
+    emails: ['admin.support@dfd.treasury.gov.lk']
+  },
+  {
+    id: 22,
+    name: 'Mr. B.M.C. Weerasinghe',
+    designation: 'Development Officer - General Administration & Records',
+    division: 'Admin and Accounts',
+    hierarchyLevel: 'ASSISTANT_DIRECTOR',
+    subsectionKey: 'cmso_development_officers',
+    room: 'Room 176, 1st Floor',
+    description: 'Managing institutional archiving, RTI request handling, and vehicle log maintenance.',
+    contacts: {
+      office: '+94 11 248 4586',
+      ext: '1470',
+      mobile: '+94 70 890 1234'
+    },
+    emails: ['records.admin@dfd.treasury.gov.lk']
+  }
+];
+
+const officials = ref(defaultOfficials);
 
 const mapHierarchyToSubsectionKey = (hierarchyLevel, division) => {
   const level = (hierarchyLevel || '').toUpperCase();
@@ -501,10 +852,19 @@ const mapHierarchyToSubsectionKey = (hierarchyLevel, division) => {
 };
 
 const mapOfficial = (item) => {
+  let designation = item.designation;
+  if (
+    item.name === 'Mr. P.M.K. Hettiarachchi' ||
+    item.hierarchyLevel === 'HEAD' ||
+    designation === 'Director General of Development Finance'
+  ) {
+    designation = 'Director General';
+  }
+
   return {
     id: item.id,
     name: item.name,
-    designation: item.designation,
+    designation: designation,
     division: item.division,
     hierarchyLevel: item.hierarchyLevel,
     subsectionKey: mapHierarchyToSubsectionKey(item.hierarchyLevel, item.division),
@@ -515,7 +875,6 @@ const mapOfficial = (item) => {
       office: item.officePhone,
       ext: item.extension,
       mobile: item.mobilePhone,
-      residence: item.resPhone,
       fax: item.fax
     },
     emails: [item.primaryEmail, item.secondaryEmail].filter(e => typeof e === 'string' && e.trim().length > 0)
@@ -532,7 +891,7 @@ const cleanPhone = (phone) => {
 
 /**
  * Extracts available contact numbers dynamically
- * Supports: Office, Ext, Mobile, Residence, Fax
+ * Supports: Office, Ext, Mobile, Fax
  */
 const getAvailableContacts = (official) => {
   if (!official || !official.contacts) return [];
@@ -569,17 +928,7 @@ const getAvailableContacts = (official) => {
     });
   }
 
-  // 4. Residence
-  if (c.residence) {
-    list.push({
-      type: 'residence',
-      label: 'Res.',
-      value: c.residence,
-      link: 'tel:' + cleanPhone(c.residence)
-    });
-  }
-
-  // 5. Fax
+  // 4. Fax
   if (c.fax) {
     list.push({
       type: 'fax',
@@ -632,12 +981,14 @@ const showSpotlight = computed(() => {
 
   const nameMatch = directorGeneral.value.name.toLowerCase().includes(query);
   const desigMatch = directorGeneral.value.designation.toLowerCase().includes(query);
+  const divMatch = directorGeneral.value.division && directorGeneral.value.division.toLowerCase().includes(query);
   const roomMatch = directorGeneral.value.room && directorGeneral.value.room.toLowerCase().includes(query);
   const extMatch = directorGeneral.value.contacts?.ext?.toLowerCase().includes(query);
-  const phoneMatch = Object.values(directorGeneral.value.contacts || {}).some(v => v.toLowerCase().includes(query));
-  const emailMatch = directorGeneral.value.emails?.some(e => e.toLowerCase().includes(query));
+  const phoneMatch = Object.values(directorGeneral.value.contacts || {}).some(v => typeof v === 'string' && v.toLowerCase().includes(query));
+  const emailMatch = directorGeneral.value.emails?.some(e => typeof e === 'string' && e.toLowerCase().includes(query));
+  const descMatch = directorGeneral.value.description && directorGeneral.value.description.toLowerCase().includes(query);
 
-  return nameMatch || desigMatch || roomMatch || extMatch || phoneMatch || emailMatch;
+  return nameMatch || desigMatch || divMatch || roomMatch || extMatch || phoneMatch || emailMatch || descMatch;
 });
 
 /**
@@ -667,12 +1018,14 @@ const filteredHierarchy = computed(() => {
 
             const nameMatch = officer.name && officer.name.toLowerCase().includes(query);
             const desigMatch = officer.designation && officer.designation.toLowerCase().includes(query);
+            const divMatch = officer.division && officer.division.toLowerCase().includes(query);
             const roomMatch = officer.room && officer.room.toLowerCase().includes(query);
             const extMatch = officer.contacts?.ext && officer.contacts.ext.toLowerCase().includes(query);
-            const phoneMatch = officer.contacts && Object.values(officer.contacts).some(v => v.toLowerCase().includes(query));
-            const emailMatch = officer.emails && officer.emails.some(e => e.toLowerCase().includes(query));
+            const phoneMatch = officer.contacts && Object.values(officer.contacts).some(v => typeof v === 'string' && v.toLowerCase().includes(query));
+            const emailMatch = officer.emails && officer.emails.some(e => typeof e === 'string' && e.toLowerCase().includes(query));
+            const descMatch = officer.description && officer.description.toLowerCase().includes(query);
 
-            return nameMatch || desigMatch || roomMatch || extMatch || phoneMatch || emailMatch;
+            return nameMatch || desigMatch || divMatch || roomMatch || extMatch || phoneMatch || emailMatch || descMatch;
           });
 
           return {
@@ -735,12 +1088,16 @@ const fetchOfficials = async () => {
 };
 
 onMounted(() => {
+  if (route?.query?.q) {
+    setNavbarSearchQuery(String(route.query.q));
+  }
   window.addEventListener('click', handleClickOutside);
   fetchOfficials();
 });
 
 onUnmounted(() => {
   window.removeEventListener('click', handleClickOutside);
+  clearNavbarSearch();
 });
 </script>
 
@@ -836,9 +1193,13 @@ onUnmounted(() => {
 .filter-bar-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 1.25rem;
   flex-wrap: wrap;
+}
+
+.filter-bar-end {
+  justify-content: flex-end;
 }
 
 .team-search-wrap {

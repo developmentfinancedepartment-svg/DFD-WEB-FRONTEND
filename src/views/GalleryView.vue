@@ -10,9 +10,29 @@
 
     <!-- Filter Header -->
     <section class="filter-section py-4 bg-white border-b border-slate-200/80 shadow-2xs">
-      <div class="container flex justify-end items-center d-flex justify-content-center justify-content-md-end align-items-center">
-        <!-- Category Filter Custom Dropdown -->
-        <div class="filter-dropdown-area">
+      <div class="container flex justify-between items-center d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div class="results-meta-info text-xs font-semibold text-slate-500">
+          Showing <span class="text-[#008795] font-bold">{{ filteredGallery.length }}</span> photograph{{ filteredGallery.length === 1 ? '' : 's' }}
+          <span v-if="searchQuery" class="meta-tag ml-1">
+            matching "{{ searchQuery }}"
+          </span>
+          <span v-if="activeCategory !== 'ALL'" class="meta-tag ml-1">
+            in {{ selectedCategoryLabel }}
+          </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button
+            v-if="searchQuery || activeCategory !== 'ALL'"
+            type="button"
+            class="reset-filters-btn text-xs font-semibold text-slate-500 hover:text-slate-800"
+            @click="resetFilters"
+          >
+            Reset Filters
+          </button>
+
+          <!-- Category Filter Custom Dropdown -->
+          <div class="filter-dropdown-area">
           <div class="filter-label">
             <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
@@ -82,6 +102,7 @@
             </transition>
           </div>
         </div>
+        </div>
       </div>
     </section>
 
@@ -101,8 +122,11 @@
           <div class="mb-3">
             <i class="fas fa-images fa-3x text-muted opacity-50"></i>
           </div>
-          <h4 class="text-muted">No photographs found for this category.</h4>
-          <button class="btn btn-teal text-white mt-3 px-4" @click="selectCategory('ALL')">Show All Photos</button>
+          <h4 class="text-muted">No photographs found matching your search.</h4>
+          <p class="text-muted small" v-if="searchQuery">
+            We couldn't find any photographs matching "{{ searchQuery }}".
+          </p>
+          <button class="btn btn-teal text-white mt-3 px-4" @click="resetFilters">Clear Filters &amp; Show All</button>
         </div>
 
         <!-- 3-Column Grid -->
@@ -189,8 +213,20 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useRoute } from 'vue-router';
 import axios from 'axios';
 import BaseUrl from '@/services/baseURL';
+import { navbarSearchState, clearNavbarSearch, setNavbarSearchQuery } from '@/services/navbarSearchState';
+
+const route = useRoute();
+const searchQuery = computed({
+  get() {
+    return navbarSearchState.query;
+  },
+  set(val) {
+    setNavbarSearchQuery(val);
+  }
+});
 
 const categoryOptions = [
   { label: 'All Photos', value: 'ALL' },
@@ -218,6 +254,11 @@ const toggleCategoryDropdown = () => {
 const selectCategory = (category) => {
   activeCategory.value = category;
   isCategoryDropdownOpen.value = false;
+};
+
+const resetFilters = () => {
+  clearNavbarSearch();
+  selectCategory('ALL');
 };
 
 const handleClickOutside = (event) => {
@@ -275,10 +316,19 @@ const fetchGallery = async () => {
 };
 
 const filteredGallery = computed(() => {
-  if (activeCategory.value === 'ALL' || activeCategory.value === 'All' || activeCategory.value === 'All Photos' || !activeCategory.value) {
-    return galleryItems.value;
+  let list = galleryItems.value;
+  if (activeCategory.value && activeCategory.value !== 'ALL' && activeCategory.value !== 'All' && activeCategory.value !== 'All Photos') {
+    list = list.filter(item => item.category === activeCategory.value);
   }
-  return galleryItems.value.filter(item => item.category === activeCategory.value);
+  const query = (searchQuery.value || '').trim().toLowerCase();
+  if (!query) return list;
+
+  return list.filter(item => {
+    const title = (item.title || '').toLowerCase();
+    const category = (item.category || '').toLowerCase();
+    const date = (item.eventDate || item.date || '').toLowerCase();
+    return title.includes(query) || category.includes(query) || date.includes(query);
+  });
 });
 
 const openLightbox = (item) => {
@@ -298,6 +348,9 @@ const handleKeyDown = (e) => {
 };
 
 onMounted(() => {
+  if (route?.query?.q) {
+    setNavbarSearchQuery(String(route.query.q));
+  }
   fetchGallery();
   window.addEventListener('keydown', handleKeyDown);
   document.addEventListener('click', handleClickOutside);
@@ -307,6 +360,7 @@ onUnmounted(() => {
   window.removeEventListener('keydown', handleKeyDown);
   document.removeEventListener('click', handleClickOutside);
   document.body.style.overflow = '';
+  clearNavbarSearch();
 });
 </script>
 

@@ -18,6 +18,7 @@ import FieldVisitsView from "./views/FieldVisitsView.vue";
 import PublicationsView from "./views/PublicationsView.vue";
 import ContactView from "./views/ContactView.vue";
 import OurTeamView from "./views/OurTeamView.vue";
+import SearchView from "./views/SearchView.vue";
 import Officers from "./components/framework/Rti/Officers.vue";
 import Annualrep from "./components/framework/Rti/Annualrep.vue";
 // import Events from "./components/framework/Events.vue";
@@ -77,6 +78,10 @@ const routes = [
     component: Services,
   },
   {
+    path: "/services",
+    redirect: "/Services",
+  },
+  {
     path: "/services/:id",
     name: "ServiceDetail",
     component: ServiceDetailView,
@@ -108,6 +113,14 @@ const routes = [
     path: "/team",
     name: "OurTeam",
     component: OurTeamView,
+  },
+  {
+    path: "/our-team",
+    redirect: "/team",
+  },
+  {
+    path: "/Our-Team",
+    redirect: "/team",
   },
   {
     path: "/OurTeam",
@@ -142,6 +155,15 @@ const routes = [
     path: "/Teldirec",
     name: "Teldirec",
     component:Teldirec,
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: SearchView,
+  },
+  {
+    path: "/Search",
+    redirect: "/search",
   },
   {
     path: "/contact",

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="header-wrapper">
     <header class="main-header" :class="{ 'navbar-scrolled': isScrolled || !isHomePage }">
       <!-- Top Bar: Social, Translate, Disclaimer -->
@@ -142,37 +142,150 @@
             </li>
           </ul>
           
-          <div class="search-container-wrapper mt-3 mt-xl-0">
+          <div class="search-container-wrapper mt-3 mt-xl-0" ref="searchWrapperRef">
             <div class="search-container position-relative">
               <input 
+                ref="navbarSearchInput"
                 type="text" 
                 class="search-input custom-search-pill text-white placeholder-white/70 border-white/60" 
-                placeholder="Search..." 
+                :placeholder="searchPlaceholder" 
                 v-model="searchQuery"
                 @focus="isSearchFocused = true"
-                @blur="handleBlur"
+                @keydown.enter="handleSearch"
+                @keydown.esc="closeSearch"
               />
-              <button class="search-btn-circle text-white" @click="handleSearch" aria-label="Search">
+              <button
+                v-if="searchQuery"
+                type="button"
+                class="search-clear-btn"
+                @click.stop="clearSearch"
+                title="Clear search"
+                aria-label="Clear search"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+              <button class="search-btn-circle text-white" @click="handleSearch" :aria-label="searchButtonTitle" :title="searchButtonTitle">
                 <i class="fas fa-search text-white"></i>
               </button>
 
-              <!-- Search Results Dropdown -->
-              <div v-if="isSearchFocused && searchQuery" class="search-results-dropdown shadow-lg rounded">
-                <div v-if="searchResults.length > 0">
-                  <div 
-                    v-for="result in searchResults" 
-                    :key="result.path" 
-                    class="search-result-item" 
-                    @mousedown.prevent="goToPage(result.path)"
-                  >
-                    <div class="result-title">{{ result.title }}</div>
-                    <div class="result-desc text-muted small">{{ getSnippet(result.content, searchQuery) }}</div>
+              <!-- Global Search Results Dropdown Overlay (Only on non-context-aware / general pages) -->
+              <transition name="dropdown-fade">
+                <div 
+                  v-if="!isContextAwarePage && isSearchFocused && searchQuery && searchQuery.trim()" 
+                  class="search-results-dropdown shadow-2xl rounded-2xl"
+                >
+                  <!-- Header: Category Filter Tabs -->
+                  <div class="search-dropdown-header p-2.5 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+                    <div class="category-pills-row flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
+                      <button
+                        v-for="cat in searchCategoryTabs"
+                        :key="cat.key"
+                        type="button"
+                        class="search-pill-btn"
+                        :class="{ 'active-pill': activeCategoryTab === cat.key }"
+                        @mousedown.prevent="activeCategoryTab = cat.key"
+                      >
+                        <i :class="[cat.icon, 'pill-icon']"></i>
+                        <span>{{ cat.label }}</span>
+                        <span class="pill-count">({{ categoryCounts[cat.key] || 0 }})</span>
+                      </button>
+                    </div>
+
+                    <button 
+                      type="button" 
+                      class="close-search-btn text-slate-400 hover:text-slate-700 ml-2"
+                      @click="closeSearch"
+                      title="Close search"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+
+                  <!-- Scrollable Results Body -->
+                  <div class="search-results-scrollable max-h-[380px] overflow-y-auto p-2.5 text-left">
+                    <!-- Grouped Categorized Results -->
+                    <div v-if="filteredGroupedResults.length > 0" class="space-y-3">
+                      <div 
+                        v-for="group in filteredGroupedResults" 
+                        :key="group.key"
+                        class="search-category-group"
+                      >
+                        <!-- Category Header -->
+                        <div class="category-header-title px-2 py-1 text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100/70 mb-1">
+                          <i :class="[group.icon, 'text-[#008795] text-xs']"></i>
+                          <span>{{ group.label }}</span>
+                          <span class="text-[10px] text-slate-400 font-normal">({{ group.items.length }})</span>
+                        </div>
+
+                        <!-- Category Items -->
+                        <div class="category-items-list space-y-1">
+                          <div 
+                            v-for="item in group.items" 
+                            :key="item.id"
+                            class="search-result-card p-2.5 rounded-xl hover:bg-slate-50 transition cursor-pointer flex items-start gap-3 border border-transparent hover:border-slate-200/60"
+                            @mousedown.prevent="goToResult(item)"
+                          >
+                            <div class="result-icon-box w-7 h-7 rounded-lg bg-teal-50 text-[#008795] flex items-center justify-center text-xs shrink-0 mt-0.5">
+                              <i :class="group.icon"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                              <div class="flex items-center justify-between gap-2 mb-0.5">
+                                <span class="text-xs font-bold text-slate-800 truncate">{{ item.title }}</span>
+                                <span class="result-mini-tag">{{ item.tag }}</span>
+                              </div>
+                              <div class="text-[11px] text-[#008795] font-medium truncate" v-if="item.subtitle">
+                                {{ item.subtitle }}
+                              </div>
+                              <div class="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                                {{ item.description }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- No Results State -->
+                    <div v-else class="empty-dropdown-state text-center py-7 px-4">
+                      <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-2 text-sm">
+                        <i class="fas fa-search-minus"></i>
+                      </div>
+                      <div class="text-xs font-bold text-slate-700 mb-0.5">
+                        No results found for "{{ searchQuery }}"
+                      </div>
+                      <div class="text-[11px] text-slate-400 mb-3">
+                        Try searching for MSME, Director General, Action Plan, or Dairy.
+                      </div>
+                      <div class="flex flex-wrap gap-1.5 justify-center">
+                        <button
+                          v-for="kw in ['MSME', 'Director General', 'Action Plan', 'Dairy', 'Contact']"
+                          :key="kw"
+                          type="button"
+                          class="text-[11px] bg-slate-100 hover:bg-[#008795] hover:text-white px-2 py-0.5 rounded-full text-slate-600 transition cursor-pointer"
+                          @mousedown.prevent="searchQuery = kw"
+                        >
+                          {{ kw }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Dropdown Footer -->
+                  <div class="search-dropdown-footer p-2.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <span class="text-slate-400 text-[11px]">
+                      Press <kbd class="px-1.5 py-0.5 bg-white border border-slate-200 rounded text-[10px] font-mono">Enter</kbd> to search
+                    </span>
+                    <button
+                      type="button"
+                      class="text-xs font-bold text-[#008795] hover:underline flex items-center gap-1 cursor-pointer"
+                      @mousedown.prevent="handleSearch"
+                    >
+                      <span>View All ({{ searchResults.length }})</span>
+                      <i class="fas fa-arrow-right text-[10px]"></i>
+                    </button>
                   </div>
                 </div>
-                <div v-else class="p-3 text-muted small text-center">
-                  No results found for "{{ searchQuery }}".
-                </div>
-              </div>
+              </transition>
             </div>
           </div>
         </div>
@@ -183,16 +296,25 @@
 </template>
 
 <script>
-import searchIndexData from '../../assets/search-content.json';
+import {
+  performGlobalSearch,
+  groupResultsByCategory,
+  getCategoryCounts,
+  SEARCH_CATEGORIES
+} from '@/services/searchService';
+import {
+  navbarSearchState,
+  clearNavbarSearch,
+  setNavbarSearchQuery
+} from '@/services/navbarSearchState';
 
 export default {
   data() {
     return {
       isCollapsed: true,
       isScrolled: false,
-      searchQuery: '',
       isSearchFocused: false,
-      searchIndex: searchIndexData,
+      activeCategoryTab: 'all',
       isMobile: false,
       currentDate: '',
       currentTime: '',
@@ -201,24 +323,94 @@ export default {
   },
   computed: {
     isHomePage() {
-      return this.$route.path === '/';
+      return this.$route && this.$route.path === '/';
+    },
+    currentRoutePath() {
+      return this.$route ? (this.$route.path || '').toLowerCase() : '';
+    },
+    currentRouteName() {
+      return this.$route ? (this.$route.name || '') : '';
+    },
+    isTeamPage() {
+      const p = this.currentRoutePath;
+      return p === '/team' || p === '/ourteam' || p === '/our-team' || this.currentRouteName === 'OurTeam';
+    },
+    isServicesPage() {
+      const p = this.currentRoutePath;
+      return p === '/services' || this.currentRouteName === 'Services';
+    },
+    isPublicationsPage() {
+      const p = this.currentRoutePath;
+      return p === '/publications' || this.currentRouteName === 'publications';
+    },
+    isGalleryPage() {
+      const p = this.currentRoutePath;
+      return p === '/gallery' || p === '/events/gallery' || this.currentRouteName === 'gallery';
+    },
+    isContextAwarePage() {
+      return this.isTeamPage || this.isServicesPage || this.isPublicationsPage || this.isGalleryPage;
+    },
+    searchPlaceholder() {
+      if (this.isTeamPage) return "Search officials by name, role, extension...";
+      if (this.isServicesPage) return "Search loan schemes & services...";
+      if (this.isPublicationsPage) return "Search publications & reports...";
+      if (this.isGalleryPage) return "Search gallery...";
+      return "Search DFD website...";
+    },
+    searchButtonTitle() {
+      if (this.isTeamPage) return "Filter officials";
+      if (this.isServicesPage) return "Filter loan schemes";
+      if (this.isPublicationsPage) return "Filter publications";
+      if (this.isGalleryPage) return "Filter gallery";
+      return "Search website";
+    },
+    searchQuery: {
+      get() {
+        return navbarSearchState.query;
+      },
+      set(val) {
+        navbarSearchState.query = val;
+      }
     },
     searchResults() {
-      if (!this.searchQuery) return [];
-      const query = this.searchQuery.toLowerCase();
-      return this.searchIndex.filter(item => 
-        item.title.toLowerCase().includes(query) || 
-        (item.content && item.content.toLowerCase().includes(query))
-      );
+      if (this.isContextAwarePage || !this.searchQuery || !this.searchQuery.trim()) return [];
+      return performGlobalSearch(this.searchQuery, 'all');
+    },
+    categoryCounts() {
+      return getCategoryCounts(this.searchResults);
+    },
+    filteredSearchResults() {
+      if (this.activeCategoryTab === 'all') return this.searchResults;
+      return this.searchResults.filter(item => item.category === this.activeCategoryTab);
+    },
+    filteredGroupedResults() {
+      return groupResultsByCategory(this.filteredSearchResults);
+    },
+    searchCategoryTabs() {
+      return Object.values(SEARCH_CATEGORIES);
+    }
+  },
+  watch: {
+    '$route.path'(newPath, oldPath) {
+      if (newPath !== oldPath) {
+        const q = this.$route && this.$route.query && this.$route.query.q ? String(this.$route.query.q) : '';
+        setNavbarSearchQuery(q);
+        this.isSearchFocused = false;
+        this.activeCategoryTab = 'all';
+      }
     }
   },
   mounted() {
+    if (this.$route && this.$route.query && this.$route.query.q) {
+      setNavbarSearchQuery(String(this.$route.query.q));
+    }
     this.updateDateTime();
     this.timer = setInterval(this.updateDateTime, 1000);
 
     this.handleResize();
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('resize', this.handleResize);
+    document.addEventListener('click', this.handleClickOutside);
 
     // Dynamic Google Translate Injection for Vue SPA
     window.VueGoogleTranslateInit = () => {
@@ -248,6 +440,7 @@ export default {
     }
     window.removeEventListener('scroll', this.handleScroll);
     window.removeEventListener('resize', this.handleResize);
+    document.removeEventListener('click', this.handleClickOutside);
   },
   methods: {
     updateDateTime() {
@@ -272,7 +465,44 @@ export default {
       this.isMobile = window.innerWidth < 1200;
     },
     handleSearch() {
-      // Search logic placeholder
+      const q = (this.searchQuery || '').trim();
+      // On context-aware pages, stay on current page as data cards/tables are already filtered in real time
+      if (this.isContextAwarePage) {
+        this.isSearchFocused = false;
+        this.$refs.navbarSearchInput?.blur();
+        return;
+      }
+      if (q) {
+        this.$router.push({ path: '/search', query: { q } });
+      } else {
+        this.$router.push('/search');
+      }
+      this.isSearchFocused = false;
+      this.closeNavbar();
+    },
+    closeSearch() {
+      this.isSearchFocused = false;
+    },
+    clearSearch() {
+      clearNavbarSearch();
+      this.activeCategoryTab = 'all';
+      this.$nextTick(() => {
+        this.$refs.navbarSearchInput?.focus();
+      });
+    },
+    goToResult(item) {
+      if (item.fileUrl) {
+        window.open(item.fileUrl, '_blank');
+      } else if (item.path) {
+        this.$router.push(item.path);
+      }
+      this.isSearchFocused = false;
+      this.closeNavbar();
+    },
+    handleClickOutside(event) {
+      if (this.$refs.searchWrapperRef && !this.$refs.searchWrapperRef.contains(event.target)) {
+        this.isSearchFocused = false;
+      }
     },
     handleScroll() {
       this.isScrolled = window.scrollY > 40;
@@ -825,44 +1055,104 @@ export default {
 .hover\:bg-white\/20:hover {
   background-color: rgba(255, 255, 255, 0.2) !important;
 }
+.search-clear-btn {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s ease;
+  z-index: 5;
+}
+
 .search-results-dropdown {
   position: absolute;
-  top: 120%;
+  top: calc(100% + 10px);
   right: 0;
-  width: 320px;
-  background: white;
-  border-radius: 8px;
+  width: 520px;
+  max-width: 92vw;
+  background: #ffffff;
+  border-radius: 18px;
   overflow: hidden;
-  z-index: 1060;
-  max-height: 400px;
-  overflow-y: auto;
-  border: 1px solid rgba(0,0,0,0.1);
+  z-index: 1080;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18), 0 4px 14px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  animation: dropdownAnim 0.2s ease-out;
 }
 
-.search-result-item {
-  padding: 12px 15px;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
-  transition: background 0.2s;
+@keyframes dropdownAnim {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.search-result-item:last-child {
-  border-bottom: none;
-}
-
-.search-result-item:hover {
-  background: #f8f9fa;
-}
-
-.result-title {
-  color: #008E9B;
+.search-pill-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  padding: 3px 9px;
+  font-size: 0.72rem;
   font-weight: 600;
-  font-size: 0.95rem;
-  margin-bottom: 3px;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
 }
 
-.result-desc {
-  line-height: 1.3;
+.search-pill-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.search-pill-btn.active-pill {
+  background: #008795 !important;
+  color: #ffffff !important;
+  border-color: #008795 !important;
+}
+
+.pill-icon {
+  font-size: 9px;
+}
+
+.pill-count {
+  font-size: 9px;
+  opacity: 0.8;
+}
+
+.close-search-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.search-result-card:hover {
+  background: #f8fafc;
+}
+
+.result-mini-tag {
+  background: #f0f9fa;
+  color: #008795;
+  border: 1px solid rgba(0, 135, 149, 0.2);
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 @media (max-width: 1199px) {
