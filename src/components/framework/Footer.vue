@@ -11,10 +11,11 @@
                 <li>
                   <i class="fas fa-map-marker-alt"></i>
                   <span>
-                    Room No. 140, 1st Floor,<br />
+                    Room No. 129,<br /> 
+                    1<sup>st</sup> Floor,<br />
                     Department of Development Finance,<br />
-                    Ministry of Finance & Planning,<br />
-                    The Secretariat<br />
+                    Ministry of Finance,Planning and Economic Development,<br />
+                    The Secretariat,<br />
                     Colombo 01,<br />
                     Sri Lanka
                   </span>
@@ -91,7 +92,7 @@
               </ul>
               <div class="footer-helpline-wrapper mt-3 rounded-2xl overflow-hidden shadow-md border border-teal-500/30">
                 <img
-                  src="../../assets/footerimg.jpeg"
+                  src="../../assets/footerimg.jpg"
                   alt="1904 Government Information Center Helpline"
                   class="footer-helpline-img w-full max-w-[220px] h-auto object-contain hover:scale-105 transition-transform duration-300"
                 />

@@ -87,7 +87,7 @@
     <!-- ================================================================= -->
     <!-- IMPACT STATISTICS COUNTER BAR SECTION                             -->
     <!-- ================================================================= -->
-    <section ref="statsSectionRef" class="max-w-6xl mx-auto px-4 py-8">
+    <section id="stats-section" ref="statsSectionRef" class="max-w-6xl mx-auto px-4 py-8">
       <div class="bg-ash rounded-3xl p-8 border border-slate-200/80 shadow-sm grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
         <div
           v-for="(stat, index) in impactMetrics"
@@ -204,12 +204,12 @@
       <div class="max-w-6xl mx-auto">
         <!-- Section Header -->
         <div class="text-center mb-8">
-          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-[#008795] text-xs font-semibold uppercase tracking-wider mb-2">
+          <!-- <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-[#008795] text-xs font-semibold uppercase tracking-wider mb-2">
             <i class="fas fa-landmark text-xs"></i>
             <span>Banking Network</span>
-          </span>
+          </span> -->
           <h2 class="section-title">
-            Working Banks
+            Participating Partner Financial Institutions (PFIs)
           </h2>
           <div class="title-underline"></div>
           <!-- <p class="text-slate-500 text-xs md:text-sm max-w-2xl mx-auto text-center mt-2 font-normal leading-relaxed">
@@ -255,9 +255,9 @@
 
         <!-- Footer Note & Call-to-Action -->
         <div class="text-center mt-8 pt-4">
-          <p class="text-xs text-slate-500">
+          <!-- <p class="text-xs text-slate-500">
             Registered applicants can submit required documentation directly to any accredited branch.
-          </p>
+          </p> -->
           <!-- <router-link
             to="/contact"
             class="text-xs font-semibold text-[#008795] hover:underline cursor-pointer mt-2 inline-block transition-colors"
@@ -294,9 +294,9 @@ import seylanLogo from '@/assets/banks/seylan.png';
 import unionLogo from '@/assets/banks/union.png';
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
+import hero3 from "@/assets/hero-5.jpg";
 import hero4 from "@/assets/hero-4.jpg";
-import hero5 from "@/assets/hero-5.jpg";
+import hero5 from "@/assets/hero-3.jpg";
 import hero6 from "@/assets/hero-6.jpg";
 
 // Hero slider state
@@ -344,8 +344,13 @@ const slides = ref([
 
 const currentSlide = ref(0);
 let slideInterval = null;
+const hasAutoScrolled = ref(false);
+let isAutoScrolling = false;
+let hasScrolledDown = false;
+let autoScrollTimeout = null;
 
 const startSlider = () => {
+  if (slideInterval) return;
   slideInterval = setInterval(() => {
     nextSlide();
   }, 7500);
@@ -359,6 +364,26 @@ const stopSlider = () => {
 };
 
 const nextSlide = () => {
+  // When the carousel reaches and completes the 6th slide
+  if (currentSlide.value === slides.value.length - 1) {
+    if (!hasAutoScrolled.value) {
+      hasAutoScrolled.value = true;
+      isAutoScrolling = true;
+      hasScrolledDown = (window.scrollY || window.pageYOffset || 0) >= 80;
+
+      const statsSection = document.getElementById('stats-section');
+      if (statsSection) {
+        statsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      if (autoScrollTimeout) clearTimeout(autoScrollTimeout);
+      autoScrollTimeout = setTimeout(() => {
+        isAutoScrolling = false;
+      }, 1200);
+    }
+    stopSlider();
+    return;
+  }
   currentSlide.value = (currentSlide.value + 1) % slides.value.length;
 };
 
@@ -366,6 +391,21 @@ const goToSlide = (index) => {
   currentSlide.value = index;
   stopSlider();
   startSlider();
+};
+
+const handleScroll = () => {
+  const scrollY = window.scrollY || window.pageYOffset || 0;
+  if (hasAutoScrolled.value) {
+    if (scrollY >= 80) {
+      hasScrolledDown = true;
+    } else if (!isAutoScrolling && hasScrolledDown && scrollY < 80) {
+      hasScrolledDown = false;
+      hasAutoScrolled.value = false;
+      currentSlide.value = 0;
+      stopSlider();
+      startSlider();
+    }
+  }
 };
 
 // Services dynamic state & API fetch
@@ -584,7 +624,7 @@ const statsSectionRef = ref(null);
 const impactMetrics = ref([
   {
     id: "farmers",
-    label: "Registered Farmers",
+    label: "Registered Entrepreneurs",
     icon: "fas fa-users",
     target: 25400,
     current: 1,
@@ -665,6 +705,7 @@ const startCountUpAnimation = () => {
 
 onMounted(() => {
   startSlider();
+  window.addEventListener("scroll", handleScroll, { passive: true });
   fetchServices();
   fetchLatestNews();
 
@@ -693,6 +734,11 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   stopSlider();
+  window.removeEventListener("scroll", handleScroll);
+  if (autoScrollTimeout) {
+    clearTimeout(autoScrollTimeout);
+    autoScrollTimeout = null;
+  }
   if (statsObserver) {
     statsObserver.disconnect();
     statsObserver = null;
