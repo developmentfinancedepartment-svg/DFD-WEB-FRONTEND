@@ -473,24 +473,24 @@ const pagesIndex = [
   {
     id: 'page-about',
     category: 'pages',
-    title: 'About Us — Vision, Mission & Responsibilities',
-    subtitle: 'Institutional Profile & Objectives',
+    title: 'About the Department',
+    subtitle: 'Formulating strategic frameworks, policies, and credit mechanisms to empower national economic development.',
     tag: 'About DFD',
     meta: 'Department Overview',
     description: 'Digitalized treasury development finance management, policy implementation, stakeholder coordination, and economic stabilization support.',
     path: '/About',
-    keywords: ['about us', 'vision', 'mission', 'responsibilities', 'mandate', 'structure', 'about']
+    keywords: ['about us', 'about the department', 'vision', 'mission', 'responsibilities', 'mandate', 'structure', 'about']
   },
   {
     id: 'page-services',
     category: 'pages',
-    title: 'All Loan Schemes & Concessionary Services',
-    subtitle: 'Browse All 8 Concessionary Credit Lines',
+    title: 'Development Financing Schemes',
+    subtitle: 'Empowering enterprises and priority sectors through concessionary credit lines and interest subsidy schemes.',
     tag: 'Loan Schemes',
     meta: 'Credit Facilities Catalog',
     description: 'Explore Re-MSME Plus, NPA Relief, Food Security FSLRP, Working Capital, SMELoC ADB, Agribusiness AVC, Dairy SDP, and NCRCS schemes.',
     path: '/Services',
-    keywords: ['services', 'loan schemes', 'credit lines', 'concessionary loans', 'subsidies', 'schemes']
+    keywords: ['services', 'development financing schemes', 'loan schemes', 'credit lines', 'concessionary loans', 'subsidies', 'schemes']
   },
   {
     id: 'page-team',
@@ -506,24 +506,24 @@ const pagesIndex = [
   {
     id: 'page-publications',
     category: 'pages',
-    title: 'Action Plans & Publications',
-    subtitle: 'Annual Reports, Strategic Documents & Downloads',
+    title: 'Publications & Reports',
+    subtitle: 'Access official reports, policy frameworks, circulars, and departmental publications.',
     tag: 'Publications Hub',
     meta: 'PDF Downloads & Reports',
-    description: 'Download official action plans (2024, 2023, 2022, 2021), citizens charter, circulars, and annual progress performance reports.',
+    description: 'Download official annual reports, citizens charter, circulars, and departmental publications.',
     path: '/publications',
-    keywords: ['publications', 'action plans', 'reports', 'citizens charter', 'downloads', 'documents']
+    keywords: ['publications', 'reports', 'citizens charter', 'downloads', 'documents', 'circulars']
   },
   {
     id: 'page-gallery',
     category: 'pages',
-    title: 'Photo Gallery & Events',
-    subtitle: 'Workshops, Field Inspections & Institutional Photos',
+    title: 'Media Gallery',
+    subtitle: 'A visual archive of departmental programs, institutional workshops, and regional stakeholder engagements.',
     tag: 'Photo Gallery',
     meta: 'Media Archive',
     description: 'Explore visual photographic highlights from enterprise field inspections, regional seminars, and official Ministry briefings.',
     path: '/gallery',
-    keywords: ['gallery', 'photos', 'albums', 'media', 'pictures', 'events']
+    keywords: ['gallery', 'media gallery', 'photos', 'albums', 'media', 'pictures', 'events']
   },
   {
     id: 'page-field-visits',
@@ -539,8 +539,8 @@ const pagesIndex = [
   {
     id: 'page-contact',
     category: 'pages',
-    title: 'Contact Us & Send Inquiry',
-    subtitle: 'Room 140, The Secretariat, Colombo 01',
+    title: 'Contact Us',
+    subtitle: 'Connect with the Department of Development Finance for official inquiries, scheme details, and institutional support.',
     tag: 'Contact & Help',
     meta: 'Hotline 1819 • Phone: +94 112 484 862',
     description: 'Official postal address, email dgdf@dfd.treasury.gov.lk, government hotline 1819, Google Map directions, and online public inquiry submission form.',

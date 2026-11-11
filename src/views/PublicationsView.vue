@@ -3,9 +3,9 @@
     <!-- Hero Header -->
     <header class="hero-header">
       <div class="pub-container text-center">
-        <h1 class="hero-title">Action Plans & Publications</h1>
+        <h1 class="hero-title">Publications &amp; Reports</h1>
         <p class="hero-subtitle">
-          Official strategic frameworks, institutional reports, and annual action plans of the Department of Development Finance.
+          Access official reports, policy frameworks, circulars, and departmental publications.
         </p>
       </div>
     </header>
@@ -107,7 +107,7 @@
         <!-- Loading -->
         <div v-if="isLoading" class="state-container">
           <div class="loader-spinner"></div>
-          <p class="state-text">Loading publications & action plans...</p>
+          <p class="state-text">Loading publications &amp; reports...</p>
         </div>
 
         <!-- Error -->

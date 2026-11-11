@@ -86,8 +86,8 @@
     </section>
 
     <!-- Main Directory Content -->
-    <main class="team-content">
-      <div class="container">
+    <main class="team-content pb-20 mb-8">
+      <div class="container pb-12">
         <!-- Results Counter & Reset Filter Option -->
         <div class="results-meta-bar">
           <div class="results-count">
@@ -185,7 +185,7 @@
         <!-- ================================================================= -->
         <!-- CLEAN HIERARCHICAL DIRECTORY (CORPORATE DIRECTORY TABLES)         -->
         <!-- ================================================================= -->
-        <div v-if="filteredHierarchy.length > 0" class="hierarchy-container">
+        <div v-if="filteredHierarchy.length > 0" class="hierarchy-container mb-12">
           <section
             v-for="division in filteredHierarchy"
             :key="division.id"
@@ -1409,6 +1409,7 @@ onUnmounted(() => {
    ========================================================================== */
 .team-content {
   padding-top: 2rem;
+  padding-bottom: 5.5rem;
 }
 
 .results-meta-bar {
@@ -1713,7 +1714,8 @@ onUnmounted(() => {
 .hierarchy-container {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 3.5rem;
+  margin-bottom: 3.5rem;
 }
 
 .division-section {

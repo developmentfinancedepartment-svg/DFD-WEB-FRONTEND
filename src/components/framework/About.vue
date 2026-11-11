@@ -6,10 +6,10 @@
     <header class="hero-header text-center px-4">
       <div class="hero-container">
         <h1 class="hero-title">
-          About Us
+          About the Department
         </h1>
         <p class="hero-subtitle">
-          Facilitating appropriate policies, strategies, and financial resources for the sustainable development of MSMEs and primary sectors.
+          Formulating strategic frameworks, policies, and credit mechanisms to empower national economic development.
         </p>
       </div>
     </header>

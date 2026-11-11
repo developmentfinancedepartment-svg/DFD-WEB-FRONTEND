@@ -7,8 +7,7 @@
       <div class="hero-container">
         <h1 class="hero-title">Contact Us</h1>
         <p class="hero-subtitle">
-          Get in touch with the Department of Development Finance for inquiries,
-          support, and institutional guidance.
+          Connect with the Department of Development Finance for official inquiries, scheme details, and institutional support.
         </p>
       </div>
     </header>

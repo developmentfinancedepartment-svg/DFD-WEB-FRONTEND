@@ -5,8 +5,7 @@
       <div class="container text-center">
         <h1 class="hero-title">Development Financing Schemes</h1>
         <p class="hero-subtitle">
-          Empowering growth through specialized ministry credit lines and
-          concessionary financial support.
+          Empowering enterprises and priority sectors through concessionary credit lines and interest subsidy schemes.
         </p>
       </div>
     </section>

@@ -3,8 +3,10 @@
     <!-- Top Hero Header -->
     <header class="hero-header text-center px-4">
       <div class="container text-center">
-        <h1 class="hero-title">Gallery</h1>
-        <p class="hero-subtitle mb-3 leading-relaxed">Explore highlights from our institutional programs, field visits, and capacity-building workshops.</p>
+        <h1 class="hero-title">Media Gallery</h1>
+        <p class="hero-subtitle mb-3 leading-relaxed">
+          A visual archive of departmental programs, institutional workshops, and regional stakeholder engagements.
+        </p>
       </div>
     </header>
 
