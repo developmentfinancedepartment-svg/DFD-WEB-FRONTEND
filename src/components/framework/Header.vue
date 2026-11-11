@@ -148,14 +148,16 @@
                 ref="navbarSearchInput"
                 type="text" 
                 class="search-input custom-search-pill text-white placeholder-white/70 border-white/60" 
+                :class="{ 'home-search-inactive cursor-default select-none': isHomePage }"
                 :placeholder="searchPlaceholder" 
                 v-model="searchQuery"
-                @focus="isSearchFocused = true"
+                :readonly="isHomePage"
+                @focus="handleFocus"
                 @keydown.enter="handleSearch"
                 @keydown.esc="closeSearch"
               />
               <button
-                v-if="searchQuery"
+                v-if="!isHomePage && searchQuery"
                 type="button"
                 class="search-clear-btn"
                 @click.stop="clearSearch"
@@ -164,14 +166,21 @@
               >
                 <i class="fas fa-times"></i>
               </button>
-              <button class="search-btn-circle text-white" @click="handleSearch" :aria-label="searchButtonTitle" :title="searchButtonTitle">
+              <button 
+                class="search-btn-circle text-white" 
+                :class="{ 'opacity-60 cursor-default pointer-events-none': isHomePage }"
+                @click="handleSearch" 
+                :aria-label="searchButtonTitle" 
+                :title="searchButtonTitle"
+                :disabled="isHomePage"
+              >
                 <i class="fas fa-search text-white"></i>
               </button>
 
-              <!-- Global Search Results Dropdown Overlay (Only on non-context-aware / general pages) -->
+              <!-- Global Search Results Dropdown Overlay (Completely disabled on Home and Context-Aware pages) -->
               <transition name="dropdown-fade">
                 <div 
-                  v-if="!isContextAwarePage && isSearchFocused && searchQuery && searchQuery.trim()" 
+                  v-if="!isHomePage && !isContextAwarePage && isSearchFocused && searchQuery && searchQuery.trim()" 
                   class="search-results-dropdown shadow-2xl rounded-2xl"
                 >
                   <!-- Header: Category Filter Tabs -->
@@ -323,7 +332,8 @@ export default {
   },
   computed: {
     isHomePage() {
-      return this.$route && this.$route.path === '/';
+      const p = this.currentRoutePath;
+      return p === '/' || p === '/home' || this.currentRouteName === 'home';
     },
     currentRoutePath() {
       return this.$route ? (this.$route.path || '').toLowerCase() : '';
@@ -351,6 +361,7 @@ export default {
       return this.isTeamPage || this.isServicesPage || this.isPublicationsPage || this.isGalleryPage;
     },
     searchPlaceholder() {
+      if (this.isHomePage) return "Select a page to search content...";
       if (this.isTeamPage) return "Search officials by name, role, extension...";
       if (this.isServicesPage) return "Search loan schemes & services...";
       if (this.isPublicationsPage) return "Search publications & reports...";
@@ -358,6 +369,7 @@ export default {
       return "Search DFD website...";
     },
     searchButtonTitle() {
+      if (this.isHomePage) return "Select a page to search content";
       if (this.isTeamPage) return "Filter officials";
       if (this.isServicesPage) return "Filter loan schemes";
       if (this.isPublicationsPage) return "Filter publications";
@@ -373,7 +385,7 @@ export default {
       }
     },
     searchResults() {
-      if (this.isContextAwarePage || !this.searchQuery || !this.searchQuery.trim()) return [];
+      if (this.isHomePage || this.isContextAwarePage || !this.searchQuery || !this.searchQuery.trim()) return [];
       return performGlobalSearch(this.searchQuery, 'all');
     },
     categoryCounts() {
@@ -464,7 +476,15 @@ export default {
     handleResize() {
       this.isMobile = window.innerWidth < 1200;
     },
+    handleFocus() {
+      if (this.isHomePage) {
+        this.isSearchFocused = false;
+        return;
+      }
+      this.isSearchFocused = true;
+    },
     handleSearch() {
+      if (this.isHomePage) return;
       const q = (this.searchQuery || '').trim();
       // On context-aware pages, stay on current page as data cards/tables are already filtered in real time
       if (this.isContextAwarePage) {
@@ -484,6 +504,7 @@ export default {
       this.isSearchFocused = false;
     },
     clearSearch() {
+      if (this.isHomePage) return;
       clearNavbarSearch();
       this.activeCategoryTab = 'all';
       this.$nextTick(() => {
@@ -1054,6 +1075,15 @@ export default {
 }
 .hover\:bg-white\/20:hover {
   background-color: rgba(255, 255, 255, 0.2) !important;
+}
+.home-search-inactive {
+  cursor: default !important;
+  opacity: 0.85;
+}
+.home-search-inactive:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
 }
 .search-clear-btn {
   position: absolute;
