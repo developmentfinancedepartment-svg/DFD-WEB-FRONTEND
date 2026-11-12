@@ -204,15 +204,15 @@
             </div>
 
             <!-- Single Unified Corporate Directory Table per Division -->
-            <div class="table-responsive-wrapper rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs bg-white">
+            <div class="table-responsive-wrapper rounded-2xl border border-slate-200/80 overflow-x-auto shadow-xs bg-white">
               <table class="corporate-directory-table">
                 <thead>
                   <tr>
-                    <th class="th-name" scope="col">Name</th>
+                    <th class="th-name min-w-[200px] whitespace-nowrap" scope="col">Name</th>
                     <th class="th-designation" scope="col">Designation</th>
-                    <th class="th-room" scope="col">Room</th>
+                    <th class="th-room max-w-[220px]" scope="col">Room</th>
                     <th class="th-contacts" scope="col">Contact Numbers</th>
-                    <th class="th-email min-w-[280px]" scope="col">Email</th>
+                    <th class="th-email min-w-[260px]" scope="col">Email</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -227,8 +227,8 @@
                       class="directory-row hover:bg-slate-50/80 transition-colors"
                     >
                       <!-- Column 1: Name -->
-                      <td class="td-name">
-                        <span class="table-official-name" :title="officer.name">
+                      <td class="td-name min-w-[200px] whitespace-nowrap">
+                        <span class="table-official-name whitespace-nowrap" :title="officer.name">
                           {{ officer.name }}
                         </span>
                       </td>
@@ -241,12 +241,12 @@
                       </td>
 
                       <!-- Column 3: Room -->
-                      <td class="td-room">
-                        <div class="table-room-cell" v-if="officer.room">
-                          <svg class="table-room-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <td class="td-room max-w-[220px] whitespace-normal break-words">
+                        <div class="table-room-cell max-w-[220px] whitespace-normal break-words leading-snug" v-if="officer.room">
+                          <svg class="table-room-icon shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
                           </svg>
-                          <span class="table-room-text">{{ officer.room }}</span>
+                          <span class="table-room-text whitespace-normal break-words leading-snug">{{ officer.room }}</span>
                         </div>
                         <span v-else class="text-slate-300 text-xs">—</span>
                       </td>
@@ -270,7 +270,7 @@
                       </td>
 
                       <!-- Column 5: Clickable Emails (Button-like Pill Badge Design) -->
-                      <td class="td-email min-w-[280px]">
+                      <td class="td-email min-w-[260px]">
                         <div class="table-emails-wrap" v-if="getEmailList(officer).length > 0">
                           <a
                             v-for="email in getEmailList(officer)"
@@ -835,17 +835,23 @@ const defaultOfficials = [
 
 const officials = ref(defaultOfficials);
 
-const mapHierarchyToSubsectionKey = (hierarchyLevel, division) => {
+const mapHierarchyToSubsectionKey = (hierarchyLevel, division, designation = '') => {
   const level = (hierarchyLevel || '').toUpperCase();
-  if (level === 'ADG') return 'adg';
-  if (level === 'DIRECTOR') {
+  const des = (designation || '').toLowerCase();
+
+  if (level === 'ADG' || des.includes('additional director general') || des.includes('adg')) {
+    return 'adg';
+  }
+  if (level === 'DIRECTOR' || des.startsWith('director')) {
     return division === 'Admin and Accounts' ? 'directors_admin_finance' : 'directors';
   }
-  if (level === 'DEPUTY_DIRECTOR') return 'deputy_directors';
-  if (level === 'ASSISTANT_DIRECTOR') {
+  if (level === 'DEPUTY_DIRECTOR' || des.includes('deputy director')) {
+    return 'deputy_directors';
+  }
+  if (level === 'ASSISTANT_DIRECTOR' || des.includes('assistant director') || des.includes('officer')) {
     return division === 'Admin and Accounts' ? 'cmso_development_officers' : 'assistant_directors_officers';
   }
-  return 'assistant_directors_officers';
+  return division === 'Admin and Accounts' ? 'cmso_development_officers' : 'assistant_directors_officers';
 };
 
 const mapOfficial = (item) => {
@@ -853,7 +859,7 @@ const mapOfficial = (item) => {
   if (
     item.name === 'Mr. P.M.K. Hettiarachchi' ||
     item.hierarchyLevel === 'HEAD' ||
-    designation === 'Director General of Development Finance'
+    (designation && designation.toLowerCase().includes('director general'))
   ) {
     designation = 'Director General';
   }
@@ -864,7 +870,7 @@ const mapOfficial = (item) => {
     designation: designation,
     division: item.division,
     hierarchyLevel: item.hierarchyLevel,
-    subsectionKey: mapHierarchyToSubsectionKey(item.hierarchyLevel, item.division),
+    subsectionKey: mapHierarchyToSubsectionKey(item.hierarchyLevel, item.division, designation),
     room: item.room,
     description: item.description,
     displayOrder: item.displayOrder,
@@ -1074,7 +1080,8 @@ const fetchOfficials = async () => {
     if (allMembers.length > 0) {
       // Find Head of Department
       const head = allMembers.find(m => m.hierarchyLevel === 'HEAD') ||
-                   allMembers.find(m => m.division === 'Executive Directorate');
+                   allMembers.find(m => m.division === 'Executive Directorate') ||
+                   allMembers.find(m => (m.designation || '').toLowerCase().includes('director general'));
       if (head) {
         directorGeneral.value = mapOfficial(head);
       }
@@ -1802,7 +1809,7 @@ onUnmounted(() => {
 }
 
 .corporate-directory-table th {
-  padding: 14px 24px;
+  padding: 13px 16px;
   font-size: 0.72rem;
   font-weight: 800;
   color: #64748b;
@@ -1812,32 +1819,45 @@ onUnmounted(() => {
 }
 
 .th-name {
+  width: 20%;
+  min-width: 200px;
+  white-space: nowrap;
+}
+
+.th-designation {
   width: 23%;
   min-width: 180px;
 }
 
-.th-designation {
-  width: 25%;
-  min-width: 210px;
-}
-
 .th-room {
-  width: 10%;
-  min-width: 90px;
+  width: 14%;
+  max-width: 220px;
+  min-width: 110px;
 }
 
 .th-contacts {
-  width: 20%;
-  min-width: 190px;
+  width: 18%;
+  min-width: 160px;
 }
 
 .th-email {
-  width: 22%;
-  min-width: 280px;
+  width: 25%;
+  min-width: 260px;
+}
+
+.td-name {
+  min-width: 200px;
+  white-space: nowrap;
+}
+
+.td-room {
+  max-width: 220px;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .td-email {
-  min-width: 280px;
+  min-width: 260px;
 }
 
 /* Table Body Rows & Spacing */
@@ -1855,7 +1875,7 @@ onUnmounted(() => {
 }
 
 .corporate-directory-table td {
-  padding: 13px 20px;
+  padding: 12px 16px;
   vertical-align: middle;
 }
 
@@ -1866,6 +1886,7 @@ onUnmounted(() => {
   color: #0f172a;
   line-height: 1.35;
   display: block;
+  white-space: nowrap;
 }
 
 /* Column 2: Designation */
@@ -1875,18 +1896,21 @@ onUnmounted(() => {
   color: #008795;
   line-height: 1.35;
   display: block;
-  max-width: 280px;
+  max-width: 260px;
 }
 
 /* Column 3: Room */
 .table-room-cell {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
   font-size: 0.74rem;
   color: #475569;
   font-weight: 500;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.35;
+  max-width: 220px;
 }
 
 .table-room-icon {
@@ -1894,10 +1918,13 @@ onUnmounted(() => {
   height: 13px;
   color: #94a3b8;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .table-room-text {
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.35;
 }
 
 /* Column 4: Contact Numbers (Original Rounded Pill Layout) */
