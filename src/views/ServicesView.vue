@@ -139,22 +139,42 @@
 
                 <!-- 3. Fixed Height & Equal Sizing for Highlights Box -->
                 <div class="metrics-box bg-slate-50/80 rounded-xl px-3 my-4 border border-slate-100/80 h-[72px] w-full flex items-center justify-between">
-                  <div class="metric-item metric-item-left flex flex-col justify-center h-full flex-1">
-                    <span class="metric-label text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
-                      MAX FACILITY
-                    </span>
-                    <span class="metric-value metric-value-limit text-base font-bold text-slate-900 truncate" :title="formatMaxFacility(service)">
-                      {{ formatMaxFacility(service) }}
-                    </span>
-                  </div>
-                  <div class="metric-item metric-item-right flex flex-col justify-center h-full flex-1">
-                    <span class="metric-label text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
-                      INTEREST RATE
-                    </span>
-                    <span class="metric-value metric-value-rate text-base font-bold text-teal-600 truncate" :title="service.interestRate || '5% p.a.'">
-                      {{ service.interestRate || '5% p.a.' }}
-                    </span>
-                  </div>
+                  <template v-if="service.schemeType === 'SERVICE'">
+                    <div class="metric-item metric-item-left flex flex-col justify-center h-full flex-1 text-left pl-1 min-w-0">
+                      <span class="metric-label text-[11px] uppercase tracking-wider text-slate-400 font-semibold truncate">
+                        COVERAGE
+                      </span>
+                      <span class="metric-value metric-value-limit text-base font-bold text-slate-900 truncate" :title="getCoverageText(service)">
+                        {{ getCoverageText(service) }}
+                      </span>
+                    </div>
+                    <div class="metric-item metric-item-right flex flex-col justify-center h-full flex-1 text-right pr-1 min-w-0">
+                      <span class="metric-label text-[11px] uppercase tracking-wider text-slate-400 font-semibold truncate">
+                        MANAGING PARTNER
+                      </span>
+                      <span class="metric-value metric-value-rate text-base font-bold text-teal-600 truncate" :title="getManagingPartnerText(service)">
+                        {{ getManagingPartnerText(service) }}
+                      </span>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <div class="metric-item metric-item-left flex flex-col justify-center h-full flex-1 text-left pl-1 min-w-0">
+                      <span class="metric-label text-[11px] uppercase tracking-wider text-slate-400 font-semibold truncate">
+                        MAX FACILITY
+                      </span>
+                      <span class="metric-value metric-value-limit text-base font-bold text-slate-900 truncate" :title="formatMaxFacility(service)">
+                        {{ formatMaxFacility(service) }}
+                      </span>
+                    </div>
+                    <div class="metric-item metric-item-right flex flex-col justify-center h-full flex-1 text-right pr-1 min-w-0">
+                      <span class="metric-label text-[11px] uppercase tracking-wider text-slate-400 font-semibold truncate">
+                        INTEREST RATE
+                      </span>
+                      <span class="metric-value metric-value-rate text-base font-bold text-teal-600 truncate" :title="service.interestRate || '5% p.a.'">
+                        {{ service.interestRate || '5% p.a.' }}
+                      </span>
+                    </div>
+                  </template>
                 </div>
 
                 <!-- 4. Uniform Description Area -->
@@ -168,9 +188,9 @@
                 <div class="card-button-wrap mt-auto pt-2 w-full flex justify-center">
                   <router-link
                     :to="getSchemeLink(service)"
-                    class="scheme-action-btn bg-teal-50 text-teal-700 hover:bg-teal-600 hover:text-white rounded-xl py-2.5 px-4 font-medium text-sm transition-all flex items-center justify-center gap-2 mx-auto w-full max-w-[200px] group/btn"
+                    class="scheme-action-btn bg-teal-50 text-teal-700 hover:bg-teal-600 hover:text-white rounded-xl py-2.5 px-4 font-medium text-sm transition-all flex items-center justify-center gap-2 mx-auto w-full max-w-[210px] group/btn"
                   >
-                    <span>View Scheme Details</span>
+                    <span>{{ service.schemeType === 'SERVICE' ? 'View Service Details' : 'View Scheme Details' }}</span>
                     <span class="btn-arrow transition-transform duration-200 group-hover/btn:translate-x-1.5 group-hover:translate-x-1.5">&rarr;</span>
                   </router-link>
                 </div>
@@ -202,15 +222,28 @@ const categoryDropdownRef = ref(null);
 const services = ref([]);
 const loading = ref(false);
 
-const categoryOptions = [
-  { label: "All Schemes", value: "ALL" },
-  { label: "MSME Revitalization", value: "MSME Revitalization" },
-  { label: "Agriculture & Livestock", value: "Agriculture & Livestock" },
-  { label: "Green Energy", value: "Green Energy" },
-];
+const categoryOptions = computed(() => {
+  const standard = [
+    { label: "Interest Subsidy Loan Schemes", value: "Interest Subsidy Loan Schemes" },
+    { label: "MSME Revitalization", value: "MSME Revitalization" },
+    { label: "Agriculture & Livestock", value: "Agriculture & Livestock" },
+    { label: "Green Energy", value: "Green Energy" },
+    { label: "Preservation & Storage", value: "Preservation & Storage" },
+  ];
+  const dynamic = services.value
+    .map((s) => s.category)
+    .filter((c) => c && !standard.some((st) => st.value === c));
+  const uniqueDynamic = [...new Set(dynamic)].map((c) => ({ label: c, value: c }));
+
+  return [
+    { label: "All Schemes", value: "ALL" },
+    ...standard,
+    ...uniqueDynamic,
+  ];
+});
 
 const selectedCategoryLabel = computed(() => {
-  const match = categoryOptions.find(
+  const match = categoryOptions.value.find(
     (opt) => opt.value === selectedCategory.value,
   );
   return match ? match.label : "All Schemes";
@@ -242,6 +275,55 @@ const formatMaxFacility = (service) => {
   const val = service.maxAmount || service.maxLoan || 'Rs. 25M';
   return String(val).replace(/\s*Million/i, 'M');
 };
+
+const getCoverageText = (service) => {
+  if (service.locations) {
+    if (Array.isArray(service.locations) && service.locations.length > 0) {
+      return `${service.locations.length} Districts`;
+    }
+    if (typeof service.locations === 'string') {
+      try {
+        const parsed = JSON.parse(service.locations);
+        if (Array.isArray(parsed) && parsed.length > 0) return `${parsed.length} Districts`;
+      } catch (e) {
+        const parts = service.locations.split(/[,;\n]/).map(s => s.trim()).filter(Boolean);
+        if (parts.length > 1) return `${parts.length} Districts`;
+        if (parts.length === 1) return parts[0];
+      }
+    }
+  }
+  return "Island-wide";
+};
+
+const getManagingPartnerText = (service) => {
+  if (service.participatingBanks) {
+    if (Array.isArray(service.participatingBanks) && service.participatingBanks.length > 0) {
+      return service.participatingBanks[0];
+    }
+    if (typeof service.participatingBanks === 'string' && service.participatingBanks.trim()) {
+      const firstBank = service.participatingBanks.split(/[,;\n]/)[0].trim();
+      if (firstBank) return firstBank;
+    }
+  }
+  if (service.implementationArrangements) {
+    const text = service.implementationArrangements;
+    if (text.includes('Regional Development Bank') || text.includes('RDB')) {
+      return 'RDB Bank';
+    }
+    if (text.includes('Agrarian Development')) {
+      return 'Agrarian Dev.';
+    }
+    const match = text.match(/managed\s*(?:in coordination\s*)?with\s*([^,.]+)/i) ||
+                  text.match(/managed\s*by\s*([^,.]+)/i);
+    if (match && match[1]) {
+      const partner = match[1].trim();
+      return partner.length > 18 ? partner.slice(0, 16) + '...' : partner;
+    }
+  }
+  return 'RDB Bank';
+};
+
+const getLocationsSummary = getCoverageText;
 
 const fetchActiveSchemes = async () => {
   loading.value = true;

@@ -12,7 +12,7 @@
         <div class="content-panel animate-fade-up">
           <div class="media-wrapper">
              <div class="accent-border top-left"></div>
-             <img src="../../assets/img/img1.jpeg" alt="Special Announcement" class="feature-image" />
+             <img src="../../assets/hero-1.jpg" alt="Special Announcement" class="feature-image" />
              <div class="accent-border bottom-right"></div>
           </div>
           
