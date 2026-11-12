@@ -119,7 +119,15 @@
               <i class="fas fa-bullseye me-2 text-teal"></i>
               {{ isService ? 'Program Background & Objectives' : 'Scheme Purpose & Objective' }}
             </h3>
-            <p>{{ service.purpose || service.objective || service.description }}</p>
+            <div v-if="parsedPurposeList.length > 1" class="checklist-container">
+              <div v-for="(item, idx) in parsedPurposeList" :key="idx" class="checklist-item">
+                <div class="check-icon-circle"><i class="fas fa-check"></i></div>
+                <span class="checklist-text whitespace-normal break-words">{{ item }}</span>
+              </div>
+            </div>
+            <p v-else class="whitespace-normal break-words leading-relaxed text-slate-700">
+              {{ service.purpose || service.objective || service.description }}
+            </p>
           </div>
 
           <!-- 2. Nature of the Loan (Dedicated Section) -->
@@ -136,28 +144,28 @@
             </div>
           </div>
 
-          <!-- 2. Target Beneficiaries -->
+          <!-- 3. Target Beneficiaries -->
           <div class="detail-block" v-if="service.beneficiaries">
             <h3><i class="fas fa-users me-2 text-teal"></i> Target Beneficiaries</h3>
-            <div v-if="parsedBeneficiariesList.length > 1" class="checklist-container">
+            <div v-if="parsedBeneficiariesList.length > 0" class="checklist-container">
               <div v-for="(item, idx) in parsedBeneficiariesList" :key="idx" class="checklist-item">
                 <div class="check-icon-circle"><i class="fas fa-check"></i></div>
-                <span>{{ item }}</span>
+                <span class="checklist-text whitespace-normal break-words">{{ item }}</span>
               </div>
             </div>
-            <p v-else>{{ service.beneficiaries }}</p>
+            <p v-else class="whitespace-normal break-words leading-relaxed text-slate-700">{{ service.beneficiaries }}</p>
           </div>
 
-          <!-- 3. Eligibility & Document Requirements -->
+          <!-- 4. Eligibility & Document Requirements -->
           <div class="detail-block" v-if="service.requirements || service.eligibility">
             <h3><i class="fas fa-clipboard-check me-2 text-teal"></i> Eligibility &amp; Requirements</h3>
-            <div v-if="parsedRequirementsList.length > 1" class="checklist-container">
+            <div v-if="parsedRequirementsList.length > 0" class="checklist-container">
               <div v-for="(req, idx) in parsedRequirementsList" :key="idx" class="checklist-item">
                 <div class="check-icon-circle"><i class="fas fa-check"></i></div>
-                <span>{{ req }}</span>
+                <span class="checklist-text whitespace-normal break-words">{{ req }}</span>
               </div>
             </div>
-            <p v-else>{{ service.requirements || service.eligibility }}</p>
+            <p v-else class="whitespace-normal break-words leading-relaxed text-slate-700">{{ service.requirements || service.eligibility }}</p>
           </div>
 
           <!-- 4. Center Locations (Pin Badges) -->
@@ -360,12 +368,71 @@ const parseArrayOrDelimited = (rawVal) => {
   return [];
 };
 
+// Smart parser for vertical bullet lists (Purpose, Beneficiaries, Requirements)
+const parseSmartPointsList = (rawVal) => {
+  if (!rawVal) return [];
+  if (Array.isArray(rawVal)) {
+    return rawVal.map(item => String(item).trim()).filter(Boolean);
+  }
+  if (typeof rawVal === 'string') {
+    const trimmed = rawVal.trim();
+    if (!trimmed) return [];
+
+    // 1. JSON Array string
+    if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (Array.isArray(parsed)) {
+          return parsed.map(item => String(item).trim()).filter(Boolean);
+        }
+      } catch {}
+    }
+
+    // 2. Multi-line strings (split by \r?\n)
+    if (trimmed.includes('\n') || trimmed.includes('\r')) {
+      const lines = trimmed
+        .split(/\r?\n+/)
+        .map(line => line.trim().replace(/^[-•*?✓✔\u2022\u25E6\u25AA\u25CF]\s*/, '').replace(/^\d+[\.\)]\s*/, ''))
+        .filter(Boolean);
+      if (lines.length > 0) return lines;
+    }
+
+    // 3. Delimited by explicit bullet symbols within text (•, \u2022, etc.)
+    if (/[\u2022\u25CF\u25E6•]/.test(trimmed)) {
+      const points = trimmed
+        .split(/[\u2022\u25CF\u25E6•]/)
+        .map(p => p.trim().replace(/^[-*?✓✔]\s*/, ''))
+        .filter(Boolean);
+      if (points.length > 1) return points;
+    }
+
+    // 4. Semicolon-delimited items
+    if (trimmed.includes(';')) {
+      const parts = trimmed.split(';').map(p => p.trim()).filter(Boolean);
+      if (parts.length > 1) return parts;
+    }
+
+    // 5. Short comma-separated list fallback (only if not a long prose sentence with internal periods)
+    const strippedDot = trimmed.replace(/\.\s*$/, '');
+    if (strippedDot.includes(',') && !strippedDot.includes('.') && strippedDot.length < 240) {
+      const parts = strippedDot.split(',').map(p => p.trim().replace(/^and\s+/i, '')).filter(Boolean);
+      if (parts.length > 1) return parts;
+    }
+
+    // Single item fallback
+    const single = trimmed.replace(/^[-•*?✓✔\u2022\u25E6\u25AA\u25CF]\s*/, '');
+    return [single];
+  }
+  return [];
+};
+
 const parsedLocations = computed(() => parseArrayOrDelimited(service.value?.locations));
 const parsedServicesProvided = computed(() => parseArrayOrDelimited(service.value?.servicesProvided));
-const parsedBeneficiariesList = computed(() => parseArrayOrDelimited(service.value?.beneficiaries));
+const parsedPurposeList = computed(() => parseSmartPointsList(service.value?.purpose || service.value?.objective));
+const parsedBeneficiariesList = computed(() => parseSmartPointsList(service.value?.beneficiaries));
 const parsedRequirementsList = computed(() => {
   const reqs = service.value?.requirements || service.value?.eligibility;
-  return parseArrayOrDelimited(reqs);
+  return parseSmartPointsList(reqs);
 });
 
 const parsedBanks = computed(() => {
@@ -618,17 +685,27 @@ onMounted(() => {
   color: #e11d48;
 }
 
+.detail-block {
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
 .detail-block p {
   color: #495057;
   line-height: 1.75;
   font-size: 0.98rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* Checklist and bullet lists */
 .checklist-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  width: 100%;
 }
 
 .checklist-item {
@@ -638,20 +715,29 @@ onMounted(() => {
   font-size: 0.95rem;
   color: #334155;
   line-height: 1.6;
+  width: 100%;
 }
 
 .check-icon-circle {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: #ccfbf1;
   color: #0f766e;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   flex-shrink: 0;
-  margin-top: 3px;
+  margin-top: 2px;
+}
+
+.checklist-text {
+  flex: 1;
+  min-width: 0;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Location Pins */
