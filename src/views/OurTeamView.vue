@@ -305,32 +305,21 @@
           v-if="showRtiSection"
           style="margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid rgba(226, 232, 240, 0.9); margin-bottom: 4rem;"
         >
-          <!-- Clean Section Heading -->
-          <div class="rti-heading-block">
-            <!-- Small subtle pill badge in soft teal -->
-            <div class="rti-badge-wrapper" style="margin-bottom: 0.5rem;">
-              <span
-                class="rti-pill-badge"
-                style="display: inline-flex; align-items: center; gap: 6px; background-color: #f0fdfa; color: #0f766e; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; border: 1px solid rgba(153, 246, 228, 0.8);"
-              >
-                <i class="fas fa-shield-alt rti-shield-icon" style="font-size: 0.75rem; color: #0d9488;"></i>
-                <span>RIGHT TO INFORMATION (RTI ACT NO. 12 OF 2016)</span>
-              </span>
-            </div>
-
-            <!-- Clean Section Heading -->
+          <!-- Clean Centered Section Heading (Matching "Our Services" Style) -->
+          <div
+            class="rti-heading-block section-header text-center mb-10"
+            style="text-align: center; margin-bottom: 2.5rem;"
+          >
             <h2
-              class="rti-title"
-              style="font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-top: 0.5rem; margin-bottom: 0.25rem; line-height: 1.3;"
+              class="rti-title section-title text-3xl md:text-4xl font-bold text-[#008294]"
+              style="font-size: 2.2rem; font-weight: 800; color: #008294; letter-spacing: -0.5px; margin: 0;"
             >
               Right to Information (RTI) Officers
             </h2>
-            <p
-              class="rti-subtitle"
-              style="font-size: 0.875rem; color: #64748b; font-weight: 400; margin: 0; line-height: 1.5;"
-            >
-              Designated Officer and Information Officer contact details for public information requests
-            </p>
+            <div
+              class="rti-title-underline title-underline w-14 h-1 bg-[#008294] rounded-full mx-auto mt-3"
+              style="width: 56px; height: 4px; background-color: #008294; border-radius: 9999px; margin: 12px auto 0;"
+            ></div>
           </div>
 
           <!-- 2 Sleek Officer Cards Side-by-Side (2-Column Grid) -->
@@ -2438,45 +2427,31 @@ onUnmounted(() => {
   scroll-margin-top: 120px;
 }
 
-.rti-badge-wrapper {
-  margin-bottom: 0.5rem;
-}
-
-.rti-pill-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background-color: #f0fdfa;
-  color: #0f766e;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.025em;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  border: 1px solid rgba(153, 246, 228, 0.8);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-}
-
-.rti-shield-icon {
-  font-size: 0.75rem;
-  color: #0d9488;
+.rti-heading-block {
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
 
 .rti-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-top: 0.5rem;
-  margin-bottom: 0.25rem;
-  line-height: 1.3;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #008294;
+  letter-spacing: -0.5px;
+  margin: 0;
 }
 
-.rti-subtitle {
-  font-size: 0.875rem;
-  color: #64748b;
-  font-weight: 400;
-  margin: 0;
-  line-height: 1.5;
+@media (max-width: 768px) {
+  .rti-title {
+    font-size: 1.75rem;
+  }
+}
+
+.rti-title-underline {
+  width: 56px;
+  height: 4px;
+  background-color: #008294;
+  margin: 12px auto 0;
+  border-radius: 9999px;
 }
 
 .rti-cards-grid {
