@@ -322,46 +322,37 @@
             ></div>
           </div>
 
-          <!-- 2 Sleek Officer Cards Side-by-Side (2-Column Grid) -->
+          <!-- Dynamic RTI Officer Cards Grid (2-Column or 3-Column depending on officer count) -->
           <div
             class="rti-cards-grid"
-            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 1.5rem;"
+            :class="filteredRtiOfficers.length >= 3
+              ? 'rti-grid-3-col grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
+              : 'rti-grid-2-col grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto'"
+            style="margin-top: 1.5rem;"
           >
             <div
               v-for="officer in filteredRtiOfficers"
               :key="officer.id || officer.name"
-              class="rti-card"
+              class="rti-card h-full flex flex-col justify-between"
               style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; height: 100%;"
             >
               <!-- Card Top Content Area -->
-              <div class="card-content-top">
-                <!-- Role Badge: soft-indigo or soft-emerald pill -->
-                <div class="rti-role-badge-wrap" style="margin-bottom: 0.75rem;">
-                  <span
-                    class="rti-role-badge"
-                    :class="`role-${officer.roleType?.toLowerCase()}`"
-                    :style="getRtiBadgeInlineStyle(officer.roleType)"
-                  >
-                    <i :class="getRtiBadgeIcon(officer.roleType)" style="margin-right: 6px;"></i>
-                    <span>{{ officer.rtiRole }}</span>
-                  </span>
-                </div>
-
-                <!-- Name & Designation -->
+              <div class="card-content-top flex-1">
+                <!-- Name & Designation (Top Pill Tag Removed) -->
                 <h3
-                  class="rti-officer-name"
-                  style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-top: 0.5rem; margin-bottom: 0.2rem; line-height: 1.35;"
+                  class="rti-officer-name text-lg font-bold text-slate-900"
+                  style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 0.25rem; line-height: 1.35;"
                 >
                   {{ officer.name }}
                 </h3>
                 <p
-                  class="rti-officer-designation"
+                  class="rti-officer-designation text-sm font-medium text-teal-700"
                   style="font-size: 0.875rem; font-weight: 600; color: #0f766e; margin: 0; line-height: 1.4;"
                 >
                   {{ officer.designation }}
                 </p>
 
-                <!-- Location: Admin & Finance Division • Room 149, 1ˢᵗ Floor, The Secretariat -->
+                <!-- Location: Admin and Accounts • Room 149, 1ˢᵗ Floor, The Secretariat -->
                 <div
                   class="rti-location-box"
                   style="display: flex; align-items: flex-start; gap: 8px; font-size: 0.775rem; color: #475569; margin-top: 0.85rem; line-height: 1.5; background-color: #f8fafc; padding: 10px 12px; border-radius: 12px; border: 1px solid #f1f5f9;"
@@ -386,34 +377,54 @@
 
               <!-- Contact Details Footer (Pushed to bottom) -->
               <div
-                class="rti-card-footer"
+                class="rti-card-footer mt-auto"
                 style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #f1f5f9; display: flex; flex-direction: column; gap: 8px;"
               >
-                <!-- Contact Numbers (Office, Ext, Mobile) as clean compact rows -->
+                <!-- Office & Mobile Numbers on a Single Row (EXT Removed) -->
                 <div
-                  class="rti-contact-rows"
-                  v-if="getAvailableContacts(officer).length > 0"
-                  style="display: flex; flex-direction: column; gap: 6px;"
+                  v-if="officer.contacts && (officer.contacts.office || officer.contacts.mobile)"
+                  class="rti-contact-rows grid grid-cols-1 sm:grid-cols-2 gap-2.5"
+                  style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;"
                 >
                   <a
-                    v-for="c in getAvailableContacts(officer)"
-                    :key="c.type"
-                    :href="c.link"
+                    v-if="officer.contacts.office"
+                    :href="'tel:' + cleanPhone(officer.contacts.office)"
                     class="rti-contact-badge"
-                    style="display: flex; align-items: center; justify-content: space-between; padding: 6px 12px; border-radius: 10px; background-color: #f8fafc; border: 1px solid #e2e8f0; text-decoration: none; font-size: 0.775rem;"
-                    :title="`Call ${c.label}: ${c.value}`"
+                    style="display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 10px; background-color: #f8fafc; border: 1px solid #e2e8f0; text-decoration: none; font-size: 0.775rem;"
+                    :title="`Call Office: ${officer.contacts.office}`"
                   >
                     <span
                       class="rti-contact-tag"
-                      style="text-transform: uppercase; font-weight: 700; font-size: 0.65rem; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 4px; background-color: #e2e8f0; color: #334155;"
+                      style="text-transform: uppercase; font-weight: 700; font-size: 0.625rem; letter-spacing: 0.05em; padding: 2px 5px; border-radius: 4px; background-color: #e2e8f0; color: #334155;"
                     >
-                      {{ c.label }}
+                      OFFICE
                     </span>
                     <span
                       class="rti-contact-value"
-                      style="font-weight: 600; color: #1e293b;"
+                      style="font-weight: 600; color: #1e293b; font-size: 0.75rem;"
                     >
-                      {{ c.value }}
+                      {{ officer.contacts.office }}
+                    </span>
+                  </a>
+
+                  <a
+                    v-if="officer.contacts.mobile"
+                    :href="'tel:' + cleanPhone(officer.contacts.mobile)"
+                    class="rti-contact-badge"
+                    style="display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 10px; background-color: #f8fafc; border: 1px solid #e2e8f0; text-decoration: none; font-size: 0.775rem;"
+                    :title="`Call Mobile: ${officer.contacts.mobile}`"
+                  >
+                    <span
+                      class="rti-contact-tag"
+                      style="text-transform: uppercase; font-weight: 700; font-size: 0.625rem; letter-spacing: 0.05em; padding: 2px 5px; border-radius: 4px; background-color: #e2e8f0; color: #334155;"
+                    >
+                      MOBILE
+                    </span>
+                    <span
+                      class="rti-contact-value"
+                      style="font-weight: 600; color: #1e293b; font-size: 0.75rem;"
+                    >
+                      {{ officer.contacts.mobile }}
                     </span>
                   </a>
                 </div>
@@ -439,7 +450,7 @@
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
-                    <span class="rti-email-address" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ email }}</span>
+                    <span class="rti-email-address" style="word-break: break-all;">{{ email }}</span>
                   </a>
                 </div>
               </div>
@@ -1210,64 +1221,45 @@ const filteredHierarchy = computed(() => {
  * Right to Information (RTI) Statutory Officers (2 Officers: Designated Officer & Information Officer)
  */
 const defaultRtiOfficers = [
-  {
-    id: 'rti-designated',
-    name: 'Mr. J.H.S.P. Jayamaha',
-    rtiRole: 'Designated Officer',
-    roleType: 'DESIGNATED',
-    designation: 'Additional Director General - Administration & Finance',
-    division: 'Admin & Finance Division',
-    room: 'Room 149, 1st Floor, The Secretariat',
-    description: 'Statutory Appellate Authority under Section 31 of Right to Information Act, No. 12 of 2016.',
-    contacts: {
-      office: '+94 11 248 4791',
-      mobile: '+94 77 207 8023'
-    },
-    emails: ['jayamaha.jhsp@dfd.treasury.gov.lk']
-  },
-  {
-    id: 'rti-information',
-    name: 'Mr. S.M.P.U. Senarath',
-    rtiRole: 'Information Officer',
-    roleType: 'INFORMATION',
-    designation: 'Director - Administration',
-    division: 'Admin and Accounts Division',
-    room: 'Room 172, 1st Floor, The Secretariat',
-    description: 'Designated Information Officer under Section 23 of Right to Information Act, No. 12 of 2016.',
-    contacts: {
-      office: '+94 11 242 1219',
-      ext: '1460',
-      mobile: '+94 71 890 2345'
-    },
-    emails: ['senarath.smpu@dfd.treasury.gov.lk']
-  }
+  
 ];
 
 const rtiOfficers = ref(defaultRtiOfficers);
 
 const filteredRtiOfficers = computed(() => {
   const query = (searchQuery.value || '').trim().toLowerCase();
-  if (!query) return rtiOfficers.value;
-  return rtiOfficers.value.filter(officer => {
-    const name = (officer.name || '').toLowerCase();
-    const des = (officer.designation || '').toLowerCase();
-    const role = (officer.rtiRole || '').toLowerCase();
-    const div = (officer.division || '').toLowerCase();
-    const room = (officer.room || '').toLowerCase();
-    const emails = (officer.emails || []).join(' ').toLowerCase();
-    const phones = Object.values(officer.contacts || {}).join(' ').toLowerCase();
+  let list = rtiOfficers.value;
 
-    return (
-      name.includes(query) ||
-      des.includes(query) ||
-      role.includes(query) ||
-      div.includes(query) ||
-      room.includes(query) ||
-      emails.includes(query) ||
-      phones.includes(query) ||
-      'right to information'.includes(query) ||
-      'rti'.includes(query)
-    );
+  if (query) {
+    list = list.filter(officer => {
+      const name = (officer.name || '').toLowerCase();
+      const des = (officer.designation || '').toLowerCase();
+      const div = (officer.division || '').toLowerCase();
+      const room = (officer.room || '').toLowerCase();
+      const emails = (officer.emails || []).join(' ').toLowerCase();
+      const phones = Object.values(officer.contacts || {}).join(' ').toLowerCase();
+
+      return (
+        name.includes(query) ||
+        des.includes(query) ||
+        div.includes(query) ||
+        room.includes(query) ||
+        emails.includes(query) ||
+        phones.includes(query) ||
+        'right to information'.includes(query) ||
+        'rti'.includes(query)
+      );
+    });
+  }
+
+  // Sort RTI officers by displayOrder ascending (controlled from CMS)
+  return [...list].sort((a, b) => {
+    const orderA = a.displayOrder != null && !isNaN(a.displayOrder) ? Number(a.displayOrder) : 999;
+    const orderB = b.displayOrder != null && !isNaN(b.displayOrder) ? Number(b.displayOrder) : 999;
+    if (orderA !== orderB) return orderA - orderB;
+    const aDes = (a.designation || '').toLowerCase().includes('designated') ? 0 : 1;
+    const bDes = (b.designation || '').toLowerCase().includes('designated') ? 0 : 1;
+    return aDes - bDes;
   });
 });
 
@@ -1382,8 +1374,53 @@ const fetchOfficials = async () => {
         directorGeneral.value = mapOfficial(head);
       }
 
-      // Group directory members (all except the Head of Department)
-      const directoryMembers = allMembers.filter(m => m.id !== head?.id);
+      // Check for RTI Officers in API data (designation is RTI Designated Officer or RTI Information Officer or division is RTI)
+      const isRtiOfficial = (m) => {
+        const des = (m.designation || '').toLowerCase();
+        const div = (m.division || '').toLowerCase();
+        return (
+          des === 'rti designated officer' ||
+          des === 'rti information officer' ||
+          des.includes('rti designated') ||
+          des.includes('rti information') ||
+          div === 'rti'
+        );
+      };
+
+      const rtiMembers = allMembers.filter(isRtiOfficial);
+
+      if (rtiMembers.length > 0) {
+        // Sort: displayOrder ascending, fallback to Designated Officer first
+        rtiMembers.sort((a, b) => {
+          const orderA = a.displayOrder != null && !isNaN(a.displayOrder) ? Number(a.displayOrder) : 999;
+          const orderB = b.displayOrder != null && !isNaN(b.displayOrder) ? Number(b.displayOrder) : 999;
+          if (orderA !== orderB) return orderA - orderB;
+          const aDes = (a.designation || '').toLowerCase().includes('designated') ? 0 : 1;
+          const bDes = (b.designation || '').toLowerCase().includes('designated') ? 0 : 1;
+          return aDes - bDes;
+        });
+
+        rtiOfficers.value = rtiMembers.map(m => ({
+          id: m.id,
+          name: m.name,
+          designation: m.designation,
+          division: m.division || 'Admin and Accounts',
+          room: m.room,
+          description: m.description,
+          displayOrder: m.displayOrder != null && !isNaN(m.displayOrder) ? Number(m.displayOrder) : 999,
+          contacts: {
+            office: m.officePhone,
+            mobile: m.mobilePhone
+          },
+          emails: [m.primaryEmail, m.secondaryEmail].filter(e => typeof e === 'string' && e.trim().length > 0)
+        }));
+      } else {
+        rtiOfficers.value = defaultRtiOfficers;
+      }
+
+      // Group directory members (all except the Head of Department and RTI officers)
+      const rtiIds = new Set(rtiMembers.map(m => m.id));
+      const directoryMembers = allMembers.filter(m => m.id !== head?.id && !rtiIds.has(m.id));
       officials.value = directoryMembers.map(mapOfficial);
     }
   } catch (err) {
@@ -2456,14 +2493,36 @@ onUnmounted(() => {
 
 .rti-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
+  gap: 1.5rem;
   margin-top: 1.5rem;
 }
 
+.rti-grid-2-col {
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: 1fr;
+}
+
 @media (min-width: 768px) {
-  .rti-cards-grid {
+  .rti-grid-2-col {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.rti-grid-3-col {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .rti-grid-3-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .rti-grid-3-col {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
