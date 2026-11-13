@@ -555,7 +555,7 @@ const pagesIndex = [
     tag: 'RTI Division',
     meta: 'RTI Act No. 12 of 2016',
     description: 'Information Officer contact details, designated appellate authority, RTI application process, and official document downloads.',
-    path: '/rti',
+    path: '/team#rti',
     keywords: ['rti', 'right to information', 'information officer', 'designated officer', 'rti application']
   },
   {

@@ -19,7 +19,6 @@ import PublicationsView from "./views/PublicationsView.vue";
 import ContactView from "./views/ContactView.vue";
 import OurTeamView from "./views/OurTeamView.vue";
 import SearchView from "./views/SearchView.vue";
-import Officers from "./components/framework/Rti/Officers.vue";
 import Annualrep from "./components/framework/Rti/Annualrep.vue";
 // import Events from "./components/framework/Events.vue";
 
@@ -177,15 +176,15 @@ const routes = [
   {
     path: "/rti",
     name: "RTI",
-    component: Officers,
+    redirect: "/team#rti",
   },
   {
     path: "/RTI",
-    redirect: "/rti",
+    redirect: "/team#rti",
   },
   {
     path: "/Officers",
-    redirect: "/rti",
+    redirect: "/team#rti",
   },
   {
     path: "/Annualrep",

@@ -126,14 +126,6 @@
             </li>
             <li class="nav-item">
               <router-link
-                to="/rti"
-                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
-                active-class="!text-[#00c5d6] !font-bold"
-                @click="closeNavbar"
-              >RTI</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link
                 to="/Contact"
                 class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
                 active-class="!text-[#00c5d6] !font-bold"

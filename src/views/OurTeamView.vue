@@ -296,8 +296,170 @@
           </section>
         </div>
 
+        <!-- ================================================================= -->
+        <!-- RIGHT TO INFORMATION (RTI) SECTION                                -->
+        <!-- ================================================================= -->
+        <section
+          id="rti"
+          class="rti-section"
+          v-if="showRtiSection"
+          style="margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid rgba(226, 232, 240, 0.9); margin-bottom: 4rem;"
+        >
+          <!-- Clean Section Heading -->
+          <div class="rti-heading-block">
+            <!-- Small subtle pill badge in soft teal -->
+            <div class="rti-badge-wrapper" style="margin-bottom: 0.5rem;">
+              <span
+                class="rti-pill-badge"
+                style="display: inline-flex; align-items: center; gap: 6px; background-color: #f0fdfa; color: #0f766e; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; border: 1px solid rgba(153, 246, 228, 0.8);"
+              >
+                <i class="fas fa-shield-alt rti-shield-icon" style="font-size: 0.75rem; color: #0d9488;"></i>
+                <span>RIGHT TO INFORMATION (RTI ACT NO. 12 OF 2016)</span>
+              </span>
+            </div>
+
+            <!-- Clean Section Heading -->
+            <h2
+              class="rti-title"
+              style="font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-top: 0.5rem; margin-bottom: 0.25rem; line-height: 1.3;"
+            >
+              Right to Information (RTI) Officers
+            </h2>
+            <p
+              class="rti-subtitle"
+              style="font-size: 0.875rem; color: #64748b; font-weight: 400; margin: 0; line-height: 1.5;"
+            >
+              Designated Officer and Information Officer contact details for public information requests
+            </p>
+          </div>
+
+          <!-- 2 Sleek Officer Cards Side-by-Side (2-Column Grid) -->
+          <div
+            class="rti-cards-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 1.5rem;"
+          >
+            <div
+              v-for="officer in filteredRtiOfficers"
+              :key="officer.id || officer.name"
+              class="rti-card"
+              style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; height: 100%;"
+            >
+              <!-- Card Top Content Area -->
+              <div class="card-content-top">
+                <!-- Role Badge: soft-indigo or soft-emerald pill -->
+                <div class="rti-role-badge-wrap" style="margin-bottom: 0.75rem;">
+                  <span
+                    class="rti-role-badge"
+                    :class="`role-${officer.roleType?.toLowerCase()}`"
+                    :style="getRtiBadgeInlineStyle(officer.roleType)"
+                  >
+                    <i :class="getRtiBadgeIcon(officer.roleType)" style="margin-right: 6px;"></i>
+                    <span>{{ officer.rtiRole }}</span>
+                  </span>
+                </div>
+
+                <!-- Name & Designation -->
+                <h3
+                  class="rti-officer-name"
+                  style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-top: 0.5rem; margin-bottom: 0.2rem; line-height: 1.35;"
+                >
+                  {{ officer.name }}
+                </h3>
+                <p
+                  class="rti-officer-designation"
+                  style="font-size: 0.875rem; font-weight: 600; color: #0f766e; margin: 0; line-height: 1.4;"
+                >
+                  {{ officer.designation }}
+                </p>
+
+                <!-- Location: Admin & Finance Division • Room 149, 1ˢᵗ Floor, The Secretariat -->
+                <div
+                  class="rti-location-box"
+                  style="display: flex; align-items: flex-start; gap: 8px; font-size: 0.775rem; color: #475569; margin-top: 0.85rem; line-height: 1.5; background-color: #f8fafc; padding: 10px 12px; border-radius: 12px; border: 1px solid #f1f5f9;"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    class="rti-loc-svg"
+                    style="width: 16px; height: 16px; min-width: 16px; min-height: 16px; flex-shrink: 0; margin-top: 2px; color: #0d9488;"
+                  >
+                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
+                  </svg>
+                  <div class="rti-location-text" style="flex: 1;">
+                    <span class="rti-division-name" style="font-weight: 600; color: #1e293b;">{{ officer.division }}</span>
+                    <span class="rti-location-bullet" style="margin: 0 6px; color: #94a3b8;">&bull;</span>
+                    <span class="rti-room-text" v-html="formatRoom(officer.room)"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contact Details Footer (Pushed to bottom) -->
+              <div
+                class="rti-card-footer"
+                style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #f1f5f9; display: flex; flex-direction: column; gap: 8px;"
+              >
+                <!-- Contact Numbers (Office, Ext, Mobile) as clean compact rows -->
+                <div
+                  class="rti-contact-rows"
+                  v-if="getAvailableContacts(officer).length > 0"
+                  style="display: flex; flex-direction: column; gap: 6px;"
+                >
+                  <a
+                    v-for="c in getAvailableContacts(officer)"
+                    :key="c.type"
+                    :href="c.link"
+                    class="rti-contact-badge"
+                    style="display: flex; align-items: center; justify-content: space-between; padding: 6px 12px; border-radius: 10px; background-color: #f8fafc; border: 1px solid #e2e8f0; text-decoration: none; font-size: 0.775rem;"
+                    :title="`Call ${c.label}: ${c.value}`"
+                  >
+                    <span
+                      class="rti-contact-tag"
+                      style="text-transform: uppercase; font-weight: 700; font-size: 0.65rem; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 4px; background-color: #e2e8f0; color: #334155;"
+                    >
+                      {{ c.label }}
+                    </span>
+                    <span
+                      class="rti-contact-value"
+                      style="font-weight: 600; color: #1e293b;"
+                    >
+                      {{ c.value }}
+                    </span>
+                  </a>
+                </div>
+
+                <!-- Full-Width Clickable Soft-Teal Email Button -->
+                <div class="rti-email-btn-wrap" v-if="getEmailList(officer).length > 0" style="padding-top: 4px;">
+                  <a
+                    v-for="email in getEmailList(officer)"
+                    :key="email"
+                    :href="'mailto:' + email"
+                    class="rti-email-btn"
+                    style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #f0fdfa; color: #0f766e; border: 1px solid rgba(153, 246, 228, 0.8); border-radius: 10px; padding: 8px 14px; font-size: 0.775rem; font-weight: 600; text-decoration: none;"
+                    :title="`Send email to ${email}`"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="rti-email-svg"
+                      style="width: 16px; height: 16px; min-width: 16px; min-height: 16px; flex-shrink: 0;"
+                    >
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <span class="rti-email-address" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ email }}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Empty Search / Filter Results State -->
-        <div v-else-if="!showSpotlight" class="empty-state-box">
+        <div v-else-if="!showSpotlight && !showRtiSection" class="empty-state-box">
           <div class="empty-icon-wrap">
             <svg class="empty-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
@@ -1056,6 +1218,148 @@ const filteredHierarchy = computed(() => {
 });
 
 /**
+ * Right to Information (RTI) Statutory Officers (2 Officers: Designated Officer & Information Officer)
+ */
+const defaultRtiOfficers = [
+  {
+    id: 'rti-designated',
+    name: 'Mr. J.H.S.P. Jayamaha',
+    rtiRole: 'Designated Officer',
+    roleType: 'DESIGNATED',
+    designation: 'Additional Director General - Administration & Finance',
+    division: 'Admin & Finance Division',
+    room: 'Room 149, 1st Floor, The Secretariat',
+    description: 'Statutory Appellate Authority under Section 31 of Right to Information Act, No. 12 of 2016.',
+    contacts: {
+      office: '+94 11 248 4791',
+      mobile: '+94 77 207 8023'
+    },
+    emails: ['jayamaha.jhsp@dfd.treasury.gov.lk']
+  },
+  {
+    id: 'rti-information',
+    name: 'Mr. S.M.P.U. Senarath',
+    rtiRole: 'Information Officer',
+    roleType: 'INFORMATION',
+    designation: 'Director - Administration',
+    division: 'Admin and Accounts Division',
+    room: 'Room 172, 1st Floor, The Secretariat',
+    description: 'Designated Information Officer under Section 23 of Right to Information Act, No. 12 of 2016.',
+    contacts: {
+      office: '+94 11 242 1219',
+      ext: '1460',
+      mobile: '+94 71 890 2345'
+    },
+    emails: ['senarath.smpu@dfd.treasury.gov.lk']
+  }
+];
+
+const rtiOfficers = ref(defaultRtiOfficers);
+
+const filteredRtiOfficers = computed(() => {
+  const query = (searchQuery.value || '').trim().toLowerCase();
+  if (!query) return rtiOfficers.value;
+  return rtiOfficers.value.filter(officer => {
+    const name = (officer.name || '').toLowerCase();
+    const des = (officer.designation || '').toLowerCase();
+    const role = (officer.rtiRole || '').toLowerCase();
+    const div = (officer.division || '').toLowerCase();
+    const room = (officer.room || '').toLowerCase();
+    const emails = (officer.emails || []).join(' ').toLowerCase();
+    const phones = Object.values(officer.contacts || {}).join(' ').toLowerCase();
+
+    return (
+      name.includes(query) ||
+      des.includes(query) ||
+      role.includes(query) ||
+      div.includes(query) ||
+      room.includes(query) ||
+      emails.includes(query) ||
+      phones.includes(query) ||
+      'right to information'.includes(query) ||
+      'rti'.includes(query)
+    );
+  });
+});
+
+const showRtiSection = computed(() => {
+  if (searchQuery.value && searchQuery.value.trim()) {
+    return filteredRtiOfficers.value.length > 0;
+  }
+  return selectedDivision.value === 'ALL' || selectedDivision.value === 'Admin and Accounts';
+});
+
+/**
+ * Format room location string to include superscript ordinal suffixes (e.g., 1ˢᵗ Floor)
+ */
+const formatRoom = (room) => {
+  if (!room) return '';
+  return room.replace(/(\d+)(st|nd|rd|th)\b/gi, '$1<sup>$2</sup>');
+};
+
+/**
+ * RTI Role badge styling classes based on officer role type
+ */
+const getRtiBadgeClass = (roleType) => {
+  switch (roleType) {
+    case 'DESIGNATED':
+      return 'role-designated';
+    case 'INFORMATION':
+      return 'role-information';
+    default:
+      return 'role-default';
+  }
+};
+
+/**
+ * RTI Role icon classes
+ */
+const getRtiBadgeIcon = (roleType) => {
+  switch (roleType) {
+    case 'DESIGNATED':
+      return 'fas fa-user-shield';
+    case 'INFORMATION':
+      return 'fas fa-info-circle';
+    default:
+      return 'fas fa-shield-alt';
+  }
+};
+
+/**
+ * RTI Role badge inline styles guarantee
+ */
+const getRtiBadgeInlineStyle = (roleType) => {
+  if (roleType === 'DESIGNATED') {
+    return {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '6px',
+      padding: '4px 12px',
+      borderRadius: '9999px',
+      fontSize: '0.75rem',
+      fontWeight: '700',
+      lineHeight: '1.2',
+      backgroundColor: '#eef2ff',
+      color: '#4338ca',
+      border: '1px solid #c7d2fe'
+    };
+  }
+  return {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '6px',
+    padding: '4px 12px',
+    borderRadius: '9999px',
+    fontSize: '0.75rem',
+    fontWeight: '700',
+    lineHeight: '1.2',
+    backgroundColor: '#ecfdf5',
+    color: '#047857',
+    border: '1px solid #a7f3d0'
+  };
+};
+
+/**
  * Total matching officials counter
  */
 const totalResultsCount = computed(() => {
@@ -1064,6 +1368,9 @@ const totalResultsCount = computed(() => {
   filteredHierarchy.value.forEach(div => {
     count += div.totalOfficials;
   });
+  if (showRtiSection.value) {
+    count += filteredRtiOfficers.value.length;
+  }
   return count;
 });
 
@@ -1103,6 +1410,13 @@ onMounted(() => {
   }
   window.addEventListener('click', handleClickOutside);
   fetchOfficials();
+
+  if (route.hash === '#rti' || route.path.toLowerCase().includes('rti')) {
+    setTimeout(() => {
+      const el = document.getElementById('rti');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 400);
+  }
 });
 
 onUnmounted(() => {
@@ -2111,5 +2425,299 @@ onUnmounted(() => {
 
 .empty-action-btn:hover {
   background-color: #005a63;
+}
+
+/* ==========================================================================
+   RTI STATUTORY SECTION
+   ========================================================================== */
+.rti-section {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(226, 232, 240, 0.9);
+  margin-bottom: 4rem;
+  scroll-margin-top: 120px;
+}
+
+.rti-badge-wrapper {
+  margin-bottom: 0.5rem;
+}
+
+.rti-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f0fdfa;
+  color: #0f766e;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(153, 246, 228, 0.8);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.rti-shield-icon {
+  font-size: 0.75rem;
+  color: #0d9488;
+}
+
+.rti-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.rti-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.rti-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .rti-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.rti-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.rti-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  border-color: #5eead4;
+}
+
+.rti-role-badge-wrap {
+  margin-bottom: 0.75rem;
+}
+
+.rti-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.rti-role-badge.role-designated {
+  background-color: #eef2ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+}
+
+.rti-role-badge.role-designated i {
+  color: #4f46e5;
+}
+
+.rti-role-badge.role-information {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.rti-role-badge.role-information i {
+  color: #059669;
+}
+
+.rti-officer-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0.5rem;
+  margin-bottom: 0.2rem;
+  line-height: 1.35;
+  transition: color 0.2s ease;
+}
+
+.rti-card:hover .rti-officer-name {
+  color: #007c91;
+}
+
+.rti-officer-designation {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0f766e;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.rti-location-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.775rem;
+  color: #475569;
+  margin-top: 0.85rem;
+  line-height: 1.5;
+  background-color: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+}
+
+.rti-loc-svg {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  flex-shrink: 0 !important;
+  color: #0d9488;
+  margin-top: 2px;
+}
+
+.rti-location-text {
+  flex: 1;
+}
+
+.rti-division-name {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.rti-location-bullet {
+  margin: 0 6px;
+  color: #94a3b8;
+}
+
+.rti-room-text {
+  color: #475569;
+}
+
+.rti-room-text :deep(sup) {
+  font-size: 0.72em;
+  line-height: 0;
+  vertical-align: baseline;
+  position: relative;
+  top: -0.4em;
+  font-weight: 600;
+}
+
+.rti-card-footer {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rti-contact-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rti-contact-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  text-decoration: none;
+  font-size: 0.775rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.rti-contact-badge:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.rti-contact-tag {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: #e2e8f0;
+  color: #334155;
+}
+
+.rti-contact-value {
+  font-weight: 600;
+  color: #1e293b;
+  transition: color 0.2s ease;
+}
+
+.rti-contact-badge:hover .rti-contact-value {
+  color: #007c91;
+}
+
+.rti-email-btn-wrap {
+  padding-top: 4px;
+}
+
+.rti-email-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid rgba(153, 246, 228, 0.8);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 0.775rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.rti-email-btn:hover {
+  background-color: #008795;
+  color: #ffffff;
+  border-color: #008795;
+  box-shadow: 0 4px 6px -1px rgba(0, 135, 149, 0.2);
+}
+
+.rti-email-svg {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease;
+}
+
+.rti-email-btn:hover .rti-email-svg {
+  transform: scale(1.1);
+}
+
+.rti-email-address {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
