@@ -136,20 +136,27 @@
           <h5 class="text-muted">Loading financing schemes...</h5>
         </div>
 
-        <!-- Services Grid -->
+        <!-- Active Services Grid -->
         <div
           class="services-grid animate-fade-up"
-          v-else-if="filteredServices.length > 0"
+          v-if="activeSchemes.length > 0"
         >
           <div
             class="service-card flex flex-col h-full"
-            v-for="service in filteredServices"
+            v-for="service in activeSchemes"
             :key="service.id || service.title"
           >
-            <div class="card-glass group flex flex-col justify-between h-full p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:-translate-y-1.5 hover:shadow-xl hover:border-teal-400/60 transition-all duration-300">
+            <div class="card-glass group flex flex-col justify-between h-full p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:-translate-y-1.5 hover:shadow-xl hover:border-teal-400/60 transition-all duration-300 relative">
+              <!-- Non-Loan Facility OTHER Pill Badge (Clean - no Active badge on regular active cards) -->
+              <div v-if="isOtherFacility(service)" class="flex justify-center mb-3">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 border border-slate-200 shadow-2xs">
+                  OTHER
+                </span>
+              </div>
+
               <!-- 1. Top circular teal icon -->
-              <div class="service-icon-box w-14 h-14 mx-auto">
-                <i :class="service.icon || 'fas fa-hand-holding-usd'"></i>
+              <div class="service-icon-box w-14 h-14 mx-auto" :class="{ 'mt-2': !isOtherFacility(service) }">
+                <i :class="service.icon || (isOtherFacility(service) ? 'fas fa-warehouse' : 'fas fa-hand-holding-usd')"></i>
               </div>
 
               <!-- 2. Scheme / Service Title -->
@@ -162,20 +169,88 @@
                 {{ service.description }}
               </p>
 
-              <!-- 4. Bottom Action Button -->
+              <!-- 4. Bottom Action Button (Active & Clickable) -->
               <router-link
                 :to="getSchemeLink(service)"
                 class="scheme-action-btn mt-auto whitespace-nowrap bg-teal-50 text-teal-700 hover:bg-teal-600 hover:text-white rounded-xl py-2.5 px-4 font-medium text-sm transition-all flex items-center justify-center gap-2 mx-auto w-full max-w-[200px] group/btn"
               >
-                <span>{{ service.schemeType === 'SERVICE' ? 'View Service Details' : 'View Scheme Details' }}</span>
+                <span>{{ isOtherFacility(service) ? 'View Service Details' : 'View Scheme Details' }}</span>
                 <span class="btn-arrow transition-transform duration-200 group-hover/btn:translate-x-1.5 group-hover:translate-x-1.5">&rarr;</span>
               </router-link>
             </div>
           </div>
         </div>
 
+        <!-- Separate Section for Coming Soon Schemes -->
+        <div
+          v-if="comingSoonSchemes.length > 0"
+          class="upcoming-schemes-wrapper mt-16 pt-12 border-t border-slate-200 animate-fade-up"
+        >
+          <!-- Section Divider & Header -->
+          <div class="upcoming-header text-center mb-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold uppercase tracking-wider mb-2">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              Under Formulation &amp; Rollout
+            </div>
+            <h2 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Upcoming Schemes
+            </h2>
+            <p class="text-sm text-slate-500 max-w-xl mx-auto mt-2">
+              Specialized financing schemes and development facilities scheduled for upcoming launch.
+            </p>
+          </div>
+
+          <!-- Coming Soon Cards Grid -->
+          <div class="services-grid">
+            <div
+              class="service-card flex flex-col h-full"
+              v-for="service in comingSoonSchemes"
+              :key="service.id || service.title"
+            >
+              <div class="card-glass group flex flex-col justify-between h-full p-6 rounded-2xl bg-white border border-amber-200/70 shadow-sm relative transition-all duration-300">
+                <!-- Top Badges: Prominent soft-amber/teal COMING SOON pill badge (+ OTHER if applicable) -->
+                <div class="flex items-center justify-center gap-2 mb-3">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-gradient-to-r from-amber-50 to-teal-50 text-amber-800 border border-amber-300 shadow-2xs">
+                    COMING SOON
+                  </span>
+                  <span v-if="isOtherFacility(service)" class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 border border-slate-200">
+                    OTHER
+                  </span>
+                </div>
+
+                <!-- 1. Scheme Icon -->
+                <div class="service-icon-box w-14 h-14 mx-auto bg-gradient-to-br from-amber-500 to-teal-600 shadow-amber-500/20">
+                  <i :class="service.icon || (isOtherFacility(service) ? 'fas fa-warehouse' : 'fas fa-hand-holding-usd')"></i>
+                </div>
+
+                <!-- 2. Scheme / Service Title -->
+                <h3 class="card-title text-lg font-bold text-slate-900 text-center min-h-[52px] flex items-center justify-center mt-4">
+                  {{ service.title }}
+                </h3>
+
+                <!-- 3. Clean Short Description -->
+                <p class="card-description text-sm text-slate-500 text-center line-clamp-3 min-h-[60px] my-4 leading-relaxed">
+                  {{ service.description }}
+                </p>
+
+                <!-- 4. Disabled, Non-Clickable Button -->
+                <button
+                  type="button"
+                  disabled
+                  aria-disabled="true"
+                  class="scheme-action-btn-disabled mt-auto whitespace-nowrap bg-slate-100 text-slate-400 border border-slate-200 rounded-xl py-2.5 px-4 font-semibold text-sm cursor-not-allowed pointer-events-none flex items-center justify-center gap-2 mx-auto w-full max-w-[200px]"
+                  title="Scheme details will be available upon official launch"
+                >
+                  <span>{{ isOtherFacility(service) ? 'View Service Details' : 'View Scheme Details' }}</span>
+                  <span class="btn-arrow">&rarr;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- No Results -->
-        <div class="text-center py-5" v-else>
+        <div class="text-center py-5" v-else-if="activeSchemes.length === 0 && comingSoonSchemes.length === 0">
           <div class="mb-4">
             <i class="fas fa-folder-open fa-3x text-muted opacity-50"></i>
           </div>
@@ -220,15 +295,43 @@ const categoryDropdownRef = ref(null);
 const services = ref([]);
 const loading = ref(false);
 
-const categoryOptions = [
-  { label: "All Schemes", value: "ALL" },
-  { label: "MSME Revitalization", value: "MSME Revitalization" },
-  { label: "Agriculture & Livestock", value: "Agriculture & Livestock" },
-  { label: "Green Energy", value: "Green Energy" },
-];
+const getSchemeStatus = (service) => {
+  if (!service) return 'ACTIVE';
+  if (service.status && typeof service.status === 'string') {
+    const s = service.status.trim().toUpperCase();
+    if (['ACTIVE', 'COMING_SOON', 'DRAFT'].includes(s)) return s;
+  }
+  return service.active !== false ? 'ACTIVE' : 'DRAFT';
+};
+
+const isOtherFacility = (service) => {
+  if (!service) return false;
+  const type = (service.schemeType || '').toUpperCase();
+  if (type === 'SERVICE' || type === 'OTHER') return true;
+  if (service.category === 'Preservation & Storage') return true;
+  if (typeof service.title === 'string' && service.title.toLowerCase().includes('preservation & silo')) return true;
+  return false;
+};
+
+const categoryOptions = computed(() => {
+  const standard = [
+    { label: "All Schemes", value: "ALL" },
+    { label: "Interest Subsidy Loan Schemes", value: "Interest Subsidy Loan Schemes" },
+    { label: "MSME Revitalization", value: "MSME Revitalization" },
+    { label: "Agriculture & Livestock", value: "Agriculture & Livestock" },
+    { label: "Green Energy", value: "Green Energy" },
+    { label: "Preservation & Storage", value: "Preservation & Storage" },
+  ];
+  const dynamic = services.value
+    .map((s) => s.category)
+    .filter((c) => c && !standard.some((st) => st.value === c));
+  const uniqueDynamic = [...new Set(dynamic)].map((c) => ({ label: c, value: c }));
+
+  return [...standard, ...uniqueDynamic];
+});
 
 const selectedCategoryLabel = computed(() => {
-  const match = categoryOptions.find(
+  const match = categoryOptions.value.find(
     (opt) => opt.value === selectedCategory.value,
   );
   return match ? match.label : "All Schemes";
@@ -286,6 +389,9 @@ const filteredServices = computed(() => {
     list = servicesData;
   }
 
+  // Exclude DRAFT schemes from public view
+  list = list.filter((s) => getSchemeStatus(s) !== 'DRAFT');
+
   // Category filter
   if (
     selectedCategory.value &&
@@ -320,6 +426,14 @@ const filteredServices = computed(() => {
       banks.includes(query)
     );
   });
+});
+
+const activeSchemes = computed(() => {
+  return filteredServices.value.filter((s) => getSchemeStatus(s) === 'ACTIVE');
+});
+
+const comingSoonSchemes = computed(() => {
+  return filteredServices.value.filter((s) => getSchemeStatus(s) === 'COMING_SOON');
 });
 
 onMounted(() => {
@@ -689,6 +803,28 @@ onUnmounted(() => {
 .scheme-action-btn:hover .btn-arrow,
 .card-glass:hover .scheme-action-btn .btn-arrow {
   transform: translateX(4px);
+}
+
+.scheme-action-btn-disabled {
+  background-color: #f1f5f9 !important;
+  color: #94a3b8 !important;
+  border: 1px solid #e2e8f0 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+  width: 100%;
+  max-width: 200px;
 }
 
 .service-card:hover .service-icon-box {

@@ -146,14 +146,43 @@
             v-for="service in services"
             :key="service.id"
           >
-            <div class="card-glass">
+            <div class="card-glass relative">
+              <!-- Top Badges for Coming Soon or Non-Loan Facilities (No Active tag on regular active cards) -->
+              <div v-if="isComingSoon(service) || isOtherFacility(service)" class="card-top-badges">
+                <span
+                  v-if="isComingSoon(service)"
+                  class="badge-coming-soon"
+                >
+                  COMING SOON
+                </span>
+                <span
+                  v-if="isOtherFacility(service)"
+                  class="badge-other"
+                >
+                  OTHER
+                </span>
+              </div>
+
               <div class="icon-wrapper">
-                <i :class="service.icon || 'fas fa-hand-holding-usd'"></i>
+                <i :class="service.icon || (isOtherFacility(service) ? 'fas fa-warehouse' : 'fas fa-hand-holding-usd')"></i>
               </div>
               <div class="card-content">
                 <h3>{{ service.title }}</h3>
                 <p>{{ service.description || service.short_description || service.summary }}</p>
-                <router-link :to="getSchemeLink(service)" class="read-more-btn">
+
+                <!-- Non-clickable for COMING_SOON, active router-link for others -->
+                <span
+                  v-if="isComingSoon(service)"
+                  class="read-more-btn read-more-disabled cursor-not-allowed opacity-50 pointer-events-none"
+                  title="Coming Soon - Details will be available upon launch"
+                >
+                  Explore More <i class="fas fa-chevron-right"></i>
+                </span>
+                <router-link
+                  v-else
+                  :to="getSchemeLink(service)"
+                  class="read-more-btn"
+                >
                   Explore More <i class="fas fa-chevron-right"></i>
                 </router-link>
               </div>
@@ -275,6 +304,7 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import axios from "axios";
 import BaseUrl from "../../services/baseURL";
+import { servicesData } from "../../data/servicesData";
 
 import amanaLogo from '@/assets/banks/amana.png';
 import bocLogo from '@/assets/banks/boc.png';
@@ -413,6 +443,28 @@ const services = ref([]);
 const isServicesLoading = ref(true);
 const error = ref(null);
 
+const getSchemeStatus = (service) => {
+  if (!service) return 'ACTIVE';
+  if (service.status && typeof service.status === 'string') {
+    const s = service.status.trim().toUpperCase();
+    if (['ACTIVE', 'COMING_SOON', 'DRAFT'].includes(s)) return s;
+  }
+  return service.active !== false ? 'ACTIVE' : 'DRAFT';
+};
+
+const isComingSoon = (service) => {
+  return getSchemeStatus(service) === 'COMING_SOON';
+};
+
+const isOtherFacility = (service) => {
+  if (!service) return false;
+  const type = (service.schemeType || '').toUpperCase();
+  if (type === 'SERVICE' || type === 'OTHER') return true;
+  if (service.category === 'Preservation & Storage') return true;
+  if (typeof service.title === 'string' && service.title.toLowerCase().includes('preservation & silo')) return true;
+  return false;
+};
+
 const slugMap = {
   "Re-MSME Plus Loan Scheme": "/services/re-msme-plus",
   "NPA Borrower Relief Scheme": "/services/npl-relief",
@@ -438,10 +490,14 @@ const fetchServices = async () => {
   try {
     const apiBase = BaseUrl.baseUrl || 'http://localhost:8096';
     const response = await axios.get(`${apiBase}/api/schemes/public`);
-    services.value = Array.isArray(response.data) ? response.data : [];
+    if (Array.isArray(response.data) && response.data.length > 0) {
+      services.value = response.data.filter(s => getSchemeStatus(s) !== 'DRAFT');
+    } else {
+      services.value = servicesData.filter(s => getSchemeStatus(s) !== 'DRAFT');
+    }
   } catch (err) {
-    console.error('Failed to fetch active schemes:', err);
-    error.value = err.message || 'Failed to load loan schemes. Please try again.';
+    console.warn('Failed to fetch active schemes, falling back to servicesData:', err);
+    services.value = servicesData.filter(s => getSchemeStatus(s) !== 'DRAFT');
   } finally {
     isServicesLoading.value = false;
   }
@@ -1125,6 +1181,55 @@ onBeforeUnmount(() => {
 .read-more-btn:hover {
   gap: 12px;
   color: #008e9b;
+}
+
+.card-top-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.badge-coming-soon {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #fef3c7 0%, #ccfbf1 100%);
+  color: #92400e;
+  border: 1px solid #fcd34d;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.badge-other {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+.read-more-disabled {
+  color: #94a3b8 !important;
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  pointer-events: none !important;
+}
+
+.read-more-disabled:hover {
+  color: #94a3b8 !important;
+  gap: 8px !important;
 }
 
 /* About Section */

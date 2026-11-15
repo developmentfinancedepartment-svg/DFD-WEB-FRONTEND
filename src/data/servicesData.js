@@ -94,5 +94,29 @@ export const servicesData = [
     gracePeriod: "Up to 6 Months",
     participatingBanks: ["Sanasa Development Bank", "Regional Development Bank", "Bank of Ceylon"],
     objective: "A core government initiative aimed at providing accessible credit to rural cultivators for purchasing seeds, fertilizers, and minor agricultural tools to improve seasonal yields."
+  },
+  {
+    id: "grain-silos",
+    title: "Government Grain Preservation & Silo Centers",
+    description: "Island-wide temperature-controlled grain storage and preservation facilities supporting agricultural producers and millers.",
+    icon: "fas fa-warehouse",
+    schemeType: "OTHER",
+    status: "ACTIVE",
+    category: "Preservation & Storage",
+    maxLoan: "N/A",
+    interestRate: "Non-Financial Facility",
+    objective: "To minimize post-harvest paddy and grain losses through modern commercial drying, mechanical cleaning, and scientific warehouse storage."
+  },
+  {
+    id: "green-energy-transition",
+    title: "Green Energy Transition Credit Facility",
+    description: "Concessional refinancing mechanism for industrial solar rooftops, biomass power, and commercial energy efficiency conversions.",
+    icon: "fas fa-solar-panel",
+    schemeType: "LOAN",
+    status: "COMING_SOON",
+    category: "Green Energy",
+    maxLoan: "Up to Rs. 50 Million",
+    interestRate: "To be announced",
+    objective: "To support enterprise decarbonization and accelerate adoption of industrial renewable power generation."
   }
 ];
