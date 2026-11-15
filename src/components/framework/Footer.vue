@@ -55,13 +55,9 @@
               <h4 class="widget-title">Quick Links</h4>
               <ul class="footer-links">
                 <li><a href="https://www.presidentsoffice.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Presidential Secretariat</a></li>
-                <li><a href="https://www.pmoffice.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Prime Minister's Office</a></li>
                 <li><a href="https://www.treasury.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Ministry of Finance</a></li>
                 <li><a href="https://www.cbsl.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Central Bank of Sri Lanka</a></li>
-                <li><a href="https://cert.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>SL CERT</a></li>
-                <li><a href="https://www.parliament.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Parliament of Sri Lanka</a></li>
-                <li><a href="https://pubad.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Public Administration</a></li>
-                <li><a href="https://www.portcitycolombo.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Colombo Port City Economic Commission</a></li>
+                <li><a href="https://www.ncgil.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>National Credit Guarantee Institution</a></li>
                 <li><a href="https://investsrilanka.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Board of Investment of Sri Lanka</a></li>
               </ul>
             </div>

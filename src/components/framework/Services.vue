@@ -148,8 +148,8 @@
           >
             <div class="card-glass group flex flex-col justify-between h-full p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:-translate-y-1.5 hover:shadow-xl hover:border-teal-400/60 transition-all duration-300 relative">
               <!-- Non-Loan Facility OTHER Pill Badge (Clean - no Active badge on regular active cards) -->
-              <div v-if="isOtherFacility(service)" class="flex justify-center mb-3">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 border border-slate-200 shadow-2xs">
+              <div v-if="isOtherFacility(service)" class="other-badge-wrapper">
+                <span class="badge-other">
                   OTHER
                 </span>
               </div>
@@ -184,20 +184,14 @@
         <!-- Separate Section for Coming Soon Schemes -->
         <div
           v-if="comingSoonSchemes.length > 0"
-          class="upcoming-schemes-wrapper mt-16 pt-12 border-t border-slate-200 animate-fade-up"
+          class="upcoming-schemes-wrapper animate-fade-up"
         >
           <!-- Section Divider & Header -->
-          <div class="upcoming-header text-center mb-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold uppercase tracking-wider mb-2">
-              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-              Under Formulation &amp; Rollout
-            </div>
-            <h2 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+          <div class="upcoming-header">
+            <h2 class="upcoming-title">
               Upcoming Schemes
             </h2>
-            <p class="text-sm text-slate-500 max-w-xl mx-auto mt-2">
-              Specialized financing schemes and development facilities scheduled for upcoming launch.
-            </p>
+            <div class="upcoming-title-underline"></div>
           </div>
 
           <!-- Coming Soon Cards Grid -->
@@ -208,12 +202,12 @@
               :key="service.id || service.title"
             >
               <div class="card-glass group flex flex-col justify-between h-full p-6 rounded-2xl bg-white border border-amber-200/70 shadow-sm relative transition-all duration-300">
-                <!-- Top Badges: Prominent soft-amber/teal COMING SOON pill badge (+ OTHER if applicable) -->
-                <div class="flex items-center justify-center gap-2 mb-3">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-gradient-to-r from-amber-50 to-teal-50 text-amber-800 border border-amber-300 shadow-2xs">
+                <!-- Top Badges: Sleek soft-teal/amber rounded pill badge (+ OTHER if applicable) -->
+                <div class="upcoming-card-badges">
+                  <span class="badge-coming-soon">
                     COMING SOON
                   </span>
-                  <span v-if="isOtherFacility(service)" class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 border border-slate-200">
+                  <span v-if="isOtherFacility(service)" class="badge-other">
                     OTHER
                   </span>
                 </div>
@@ -825,6 +819,82 @@ onUnmounted(() => {
   margin-bottom: 0;
   width: 100%;
   max-width: 200px;
+}
+
+/* Upcoming Schemes Section Header */
+.upcoming-schemes-wrapper {
+  width: 100%;
+}
+
+.upcoming-header {
+  text-align: center;
+  margin-top: 3.5rem;
+  margin-bottom: 2rem;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 2.5rem;
+}
+
+.upcoming-title {
+  color: #008294;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.upcoming-title-underline {
+  width: 44px;
+  height: 3px;
+  background-color: #008294;
+  border-radius: 9999px;
+  margin: 10px auto 0;
+}
+
+/* Badges for Cards */
+.upcoming-card-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.badge-coming-soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background-color: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #99f6e4;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.other-badge-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.badge-other {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  line-height: 1.2;
 }
 
 .service-card:hover .service-icon-box {

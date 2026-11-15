@@ -94,14 +94,6 @@
             </li>
             <li class="nav-item">
               <router-link
-                to="/team"
-                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
-                active-class="!text-[#00c5d6] !font-bold"
-                @click="closeNavbar"
-              >Our Team</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link
                 to="/Services"
                 class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
                 active-class="!text-[#00c5d6] !font-bold"
@@ -123,6 +115,14 @@
                 active-class="!text-[#00c5d6] !font-bold"
                 @click="closeNavbar"
               >Gallery</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/team"
+                class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
+                active-class="!text-[#00c5d6] !font-bold"
+                @click="closeNavbar"
+              >Our Team</router-link>
             </li>
             <li class="nav-item">
               <router-link
