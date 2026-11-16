@@ -16,6 +16,7 @@
     <!-- 2. FOUR KEY CONTACT CARDS (-mt-16 NEGATIVE MARGIN OVERLAP)        -->
     <!-- ================================================================= -->
     <section
+      id="hotline"
       class="max-w-6xl mx-auto px-4 sm:px-8 lg:px-4 -mt-16 relative z-10"
     >
       <div
@@ -251,6 +252,7 @@
         <!-- ------------------------------------------------------------- -->
         <div class="lg:col-span-6 flex flex-col">
           <div
+            id="inquiries"
             class="inquiry-card bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-100 flex flex-col justify-between h-full max-w-xl mx-auto w-full"
           >
             <!-- Centered Header -->
@@ -493,9 +495,12 @@
 </template>
 
 <script setup>
-import { reactive, ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { reactive, ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
+import { useRoute } from "vue-router";
 import axios from "axios";
 import BaseUrl from "@/services/baseURL";
+
+const route = useRoute();
 
 const isSubmitting = ref(false);
 const isCategoryOpen = ref(false);
@@ -566,6 +571,21 @@ const handleClickOutside = (event) => {
 
 onMounted(() => {
   document.addEventListener("click", handleClickOutside);
+  if (route.hash) {
+    setTimeout(() => {
+      const el = document.querySelector(route.hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 400);
+  }
+});
+
+watch(() => route.hash, (newHash) => {
+  if (newHash) {
+    setTimeout(() => {
+      const el = document.querySelector(newHash);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 150);
+  }
 });
 
 onBeforeUnmount(() => {

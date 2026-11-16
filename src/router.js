@@ -67,6 +67,10 @@ const routes = [
     component: About,
   },
   {
+    path: "/about",
+    redirect: "/About",
+  },
+  {
     path: "/Footer",
     name: "Footer",
     component: Footer,
@@ -115,15 +119,15 @@ const routes = [
   },
   {
     path: "/our-team",
-    redirect: "/team",
+    redirect: to => ({ path: '/team', hash: to.hash, query: to.query }),
   },
   {
     path: "/Our-Team",
-    redirect: "/team",
+    redirect: to => ({ path: '/team', hash: to.hash, query: to.query }),
   },
   {
     path: "/OurTeam",
-    redirect: "/team",
+    redirect: to => ({ path: '/team', hash: to.hash, query: to.query }),
   },
   {
     path: "/Network",
@@ -216,6 +220,10 @@ const routes = [
     path: "/Disclaimer",
     name: "Disclaimer",
     component:Disclaimer,
+  },
+  {
+    path: "/disclaimer",
+    redirect: "/Disclaimer",
   },
    {
     path: "/Calendar",

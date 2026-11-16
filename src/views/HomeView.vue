@@ -168,7 +168,7 @@
             <div class="about-image-wrapper">
               <img
                 src="../../assets/team_image.png"
-                alt="About ITMD"
+                alt="About DFD"
                 class="about-image"
               />
               <div class="accent-border"></div>

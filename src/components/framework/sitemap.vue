@@ -13,52 +13,52 @@
         <div class="sitemap-directory animate-fade-up">
           <div class="row g-5">
             
-            <!-- Category 1: About & People -->
+            <!-- Category 1: About DFD -->
             <div class="col-lg-4 col-md-6">
               <div class="sitemap-block">
-                <h4 class="block-header"><i class="fas fa-university me-2"></i> About ITMD</h4>
+                <h4 class="block-header"><i class="fas fa-university me-2"></i> About DFD</h4>
                 <ul class="sitemap-ul">
                   <li><router-link to="/">Home Page</router-link></li>
-                  <li><router-link to="/About">About the Department</router-link></li>
-                  <li><router-link to="/OurTeam">Management Team</router-link></li>
+                  <li><router-link to="/about">About the Department</router-link></li>
+                  <li><router-link to="/our-team">Our Team &amp; Divisions</router-link></li>
+                  <li><router-link to="/our-team#rti">Right to Information (RTI)</router-link></li>
                 </ul>
               </div>
             </div>
 
-            <!-- Category 2: Services & Solutions -->
+            <!-- Category 2: Schemes & Services -->
             <div class="col-lg-4 col-md-6">
               <div class="sitemap-block">
-                <h4 class="block-header"><i class="fas fa-microchip me-2"></i> Services & IT</h4>
+                <h4 class="block-header"><i class="fas fa-hand-holding-usd me-2"></i> Schemes &amp; Services</h4>
                 <ul class="sitemap-ul">
                   <li>
-                    <router-link to="/Services">All Services</router-link>
+                    <router-link to="/Services">All Development Schemes</router-link>
                     <ul class="nested-ul">
-                      <li><router-link to="/Development">Software Development</router-link></li>
-                      <li><router-link to="/hardware">Hardware Troubleshooting</router-link></li>
-                      <li><router-link to="/Network">Network & Security</router-link></li>
+                      <li><router-link to="/Services">Concessionary Loan Schemes</router-link></li>
+                      <li><router-link to="/Services">Interest Subsidy Programs</router-link></li>
+                      <li><router-link to="/Services">Institutional Services &amp; Facilities</router-link></li>
                     </ul>
                   </li>
-                  <li><router-link to="/Systems">Managed Systems</router-link></li>
+                  <li><router-link to="/Services">Upcoming Schemes</router-link></li>
                 </ul>
               </div>
             </div>
 
-            <!-- Category 3: Information & Contact -->
+            <!-- Category 3: Publications & Support -->
             <div class="col-lg-4 col-md-6">
               <div class="sitemap-block">
-                <h4 class="block-header"><i class="fas fa-info-circle me-2"></i> Resources & Support</h4>
+                <h4 class="block-header"><i class="fas fa-file-alt me-2"></i> Publications &amp; Support</h4>
                 <ul class="sitemap-ul">
-                  <li><router-link to="/Actionplan">Action Plan & Publications</router-link></li>
-                  <li><router-link to="/Events">Latest Events</router-link></li>
-                  <li><router-link to="/Officers">RTI Information</router-link></li>
-                  <li><router-link to="/Disclaimer">Website Disclaimer</router-link></li>
+                  <li><router-link to="/publications">Publications &amp; Circulars</router-link></li>
+                  <li><router-link to="/gallery">Gallery &amp; Events</router-link></li>
                   <li>
-                    <router-link to="/Teldirec">Contact Directory</router-link>
+                    <router-link to="/contact">Contact Directory</router-link>
                     <ul class="nested-ul">
-                      <li><router-link to="/Teldirec#inqui">Submit Inquiries</router-link></li>
-                      <li><router-link to="/Teldirec#contactteam">Contact Our Team</router-link></li>
+                      <li><router-link to="/contact#inquiries">Submit Inquiries</router-link></li>
+                      <li><router-link to="/contact#hotline">Hotline &amp; Office Location</router-link></li>
                     </ul>
                   </li>
+                  <li><router-link to="/disclaimer">Website Disclaimer</router-link></li>
                 </ul>
               </div>
             </div>

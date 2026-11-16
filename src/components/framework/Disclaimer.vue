@@ -16,14 +16,10 @@
           </div>
           <div class="card-body">
             <p class="disclaimer-text">
-              To make our content accessible to a wider audience, this website has been translated from English 
-              using <strong>Google Translate</strong>. While we aim for accuracy, automated translations may 
-              not always capture the full meaning or nuances of the original text.
+              To make our content accessible to a wider audience, this website provides automated language translations using <strong>Google Translate</strong>. While we strive for accuracy, automated translations may not always capture the exact legal or financial nuances of the original English text.
             </p>
             <p class="disclaimer-text">
-              Please note that these translations are provided <strong>"as-is,"</strong> 
-              and the <strong>Department of Information Technology Management (ITMD)</strong> assumes no responsibility for any 
-              misunderstandings or misinterpretations arising from these translations.
+              Please note that these translations are provided <strong>"as-is,"</strong> and the <strong>Department of Development Finance (DFD)</strong> assumes no responsibility for any misunderstandings or misinterpretations arising from automated translations. For official loan scheme terms, interest rates, and eligibility criteria, please refer to the verified English circulars and guidelines published by the Department.
             </p>
           </div>
         </div>

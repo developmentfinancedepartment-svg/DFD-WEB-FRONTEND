@@ -1445,6 +1445,15 @@ onMounted(() => {
   }
 });
 
+watch(() => route.hash, (newHash) => {
+  if (newHash === '#rti') {
+    setTimeout(() => {
+      const el = document.getElementById('rti');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 150);
+  }
+});
+
 onUnmounted(() => {
   window.removeEventListener('click', handleClickOutside);
   clearNavbarSearch();
