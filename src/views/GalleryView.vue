@@ -132,11 +132,11 @@
         </div>
 
         <!-- 3-Column Grid -->
-        <div v-else class="gallery-grid animate-fade-up">
+        <div v-else class="gallery-grid flex flex-wrap justify-center gap-6 animate-fade-up">
           <div 
             v-for="item in filteredGallery" 
             :key="item.id" 
-            class="gallery-card"
+            class="gallery-card w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.35rem)] max-w-[380px]"
             @click="openLightbox(item)"
           >
             <div class="img-wrapper">
@@ -612,11 +612,12 @@ onUnmounted(() => {
   line-height: 1.6;
 }
 
-/* 3-Column Grid */
+/* Gallery Grid - Centered Flexbox Layout */
 .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 1.5rem !important; /* gap-6: 24px */
 }
 
 .gallery-card {
@@ -627,6 +628,22 @@ onUnmounted(() => {
   border: 1px solid #eef2f6;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  width: 100%;
+  max-width: 380px;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 640px) {
+  .gallery-card {
+    width: calc(50% - 1rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-card {
+    width: calc(33.333% - 1.35rem);
+    max-width: 380px;
+  }
 }
 
 .gallery-card:hover {
@@ -837,18 +854,9 @@ onUnmounted(() => {
 }
 
 /* Responsive */
-@media (max-width: 991px) {
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (max-width: 767px) {
   .hero-title {
     font-size: 2.2rem;
-  }
-  .gallery-grid {
-    grid-template-columns: 1fr;
   }
 }
 </style>

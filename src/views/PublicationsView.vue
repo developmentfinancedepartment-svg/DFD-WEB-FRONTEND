@@ -118,11 +118,11 @@
         </div>
 
         <!-- Publications Grid -->
-        <div v-else-if="filteredPublications.length > 0" class="cards-grid">
+        <div v-else-if="filteredPublications.length > 0" class="cards-grid flex flex-wrap justify-center gap-6">
           <div 
             v-for="doc in filteredPublications" 
             :key="doc.id" 
-            class="doc-card"
+            class="doc-card w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.35rem)] max-w-[380px]"
           >
             <!-- Top Glow Accent -->
             <div class="card-glow-bar"></div>
@@ -618,28 +618,16 @@ onBeforeUnmount(() => {
   transform: translateY(-4px) scale(0.97);
 }
 
-/* Content & Cards Grid */
+/* Content & Cards Grid - Centered Flexbox Layout */
 .pub-content-section {
   padding: 2.5rem 0 4rem 0;
 }
 
 .cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
-}
-
-@media (max-width: 1024px) {
-  .cards-grid {
-    grid-template-grid: repeat(2, minmax(0, 1fr));
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 640px) {
-  .cards-grid {
-    grid-template-columns: 1fr;
-  }
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 1.5rem !important; /* gap-6: 24px */
 }
 
 /* Card Styling */
@@ -657,6 +645,22 @@ onBeforeUnmount(() => {
   min-height: 330px;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 380px;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 768px) {
+  .doc-card {
+    width: calc(50% - 1rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .doc-card {
+    width: calc(33.333% - 1.35rem);
+    max-width: 380px;
+  }
 }
 
 .doc-card:hover {

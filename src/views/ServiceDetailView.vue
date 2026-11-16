@@ -18,35 +18,35 @@
 
       <div class="container content-section">
         <!-- 4-Card Metric Grid -->
-        <div class="metrics-grid">
+        <div class="metrics-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
           <!-- SERVICE METRICS -->
           <template v-if="isService">
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-map-marked-alt"></i></div>
               <div class="metric-info">
                 <span class="metric-label">Coverage / Locations</span>
-                <span class="metric-value">{{ serviceCoverageText }}</span>
+                <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">{{ serviceCoverageText }}</span>
               </div>
             </div>
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-landmark"></i></div>
               <div class="metric-info">
                 <span class="metric-label">Managing Partner</span>
-                <span class="metric-value">{{ serviceManagingPartnerText }}</span>
+                <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">{{ serviceManagingPartnerText }}</span>
               </div>
             </div>
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-user-shield"></i></div>
               <div class="metric-info">
                 <span class="metric-label">Supervision</span>
-                <span class="metric-value">{{ serviceSupervisionText }}</span>
+                <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">{{ serviceSupervisionText }}</span>
               </div>
             </div>
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-warehouse"></i></div>
               <div class="metric-info">
                 <span class="metric-label">Core Facilities</span>
-                <span class="metric-value">{{ serviceCoreFacilitiesText }}</span>
+                <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">{{ serviceCoreFacilitiesText }}</span>
               </div>
             </div>
           </template>
@@ -58,7 +58,17 @@
               <div class="metric-icon"><i class="fas fa-hand-holding-usd"></i></div>
               <div class="metric-info">
                 <span class="metric-label">Max Loan Amount</span>
-                <span class="metric-value">{{ service.maxAmount || service.maxLoan || 'N/A' }}</span>
+                <div class="metric-value-wrap">
+                  <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">
+                    {{ formatMetricValue(service.maxAmount || service.maxLoan).primary }}
+                  </span>
+                  <span
+                    v-if="formatMetricValue(service.maxAmount || service.maxLoan).subtitle"
+                    class="metric-subtitle text-xs font-medium text-slate-500 mt-1 leading-relaxed break-words"
+                  >
+                    {{ formatMetricValue(service.maxAmount || service.maxLoan).subtitle }}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -67,19 +77,29 @@
               <div class="metric-icon"><i class="fas fa-percentage"></i></div>
               <div class="metric-info">
                 <span class="metric-label">Interest Rate</span>
-                <span class="metric-value">{{ service.interestRate || 'N/A' }}</span>
-                <div v-if="rateBreakdown" class="subsidy-breakdown-row">
+                <div class="metric-value-wrap">
+                  <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">
+                    {{ formatMetricValue(service.interestRate).primary }}
+                  </span>
+                  <span
+                    v-if="formatMetricValue(service.interestRate).subtitle"
+                    class="metric-subtitle text-xs font-medium text-slate-500 mt-1 leading-relaxed break-words"
+                  >
+                    {{ formatMetricValue(service.interestRate).subtitle }}
+                  </span>
+                </div>
+                <div v-if="rateBreakdown" class="subsidy-breakdown-row mt-1.5 flex flex-wrap gap-1.5">
                   <template v-if="rateBreakdown.type === 'split'">
-                    <span class="badge-pill-customer">
+                    <span class="badge-pill-customer whitespace-normal text-left leading-snug">
                       Customer: {{ rateBreakdown.customer }}
                     </span>
-                    <span class="badge-pill-subsidy">
+                    <span class="badge-pill-subsidy whitespace-normal text-left leading-snug">
                       Govt. Subsidy: {{ rateBreakdown.subsidy }}
                     </span>
                   </template>
                   <template v-else>
-                    <span class="badge-pill-subsidy" :title="rateBreakdown.text">
-                      <i class="fas fa-gift me-1"></i> {{ rateBreakdown.text }}
+                    <span class="badge-pill-subsidy whitespace-normal text-left leading-snug" :title="rateBreakdown.text">
+                      <i class="fas fa-gift me-1 shrink-0"></i> <span>{{ rateBreakdown.text }}</span>
                     </span>
                   </template>
                 </div>
@@ -91,7 +111,17 @@
               <div class="metric-icon"><i class="fas fa-calendar-alt"></i></div>
               <div class="metric-info">
                 <span class="metric-label">Repayment Period</span>
-                <span class="metric-value">{{ service.repaymentPeriod || 'N/A' }}</span>
+                <div class="metric-value-wrap">
+                  <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">
+                    {{ formatMetricValue(service.repaymentPeriod).primary }}
+                  </span>
+                  <span
+                    v-if="formatMetricValue(service.repaymentPeriod).subtitle"
+                    class="metric-subtitle text-xs font-medium text-slate-500 mt-1 leading-relaxed break-words"
+                  >
+                    {{ formatMetricValue(service.repaymentPeriod).subtitle }}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -100,12 +130,20 @@
               <div class="metric-icon"><i class="fas fa-hourglass-half"></i></div>
               <div class="metric-info">
                 <span class="metric-label">Grace Period</span>
-                <span
-                  class="metric-value"
-                  :class="{ 'text-muted-grace': !hasGracePeriod }"
-                >
-                  {{ hasGracePeriod ? service.gracePeriod : 'No Grace Period' }}
-                </span>
+                <div class="metric-value-wrap">
+                  <span
+                    class="metric-value text-lg font-bold text-slate-900 break-words leading-snug"
+                    :class="{ 'text-muted-grace font-semibold text-slate-500': !hasGracePeriod }"
+                  >
+                    {{ hasGracePeriod ? formatMetricValue(service.gracePeriod).primary : 'No Grace Period' }}
+                  </span>
+                  <span
+                    v-if="hasGracePeriod && formatMetricValue(service.gracePeriod).subtitle"
+                    class="metric-subtitle text-xs font-medium text-slate-500 mt-1 leading-relaxed break-words"
+                  >
+                    {{ formatMetricValue(service.gracePeriod).subtitle }}
+                  </span>
+                </div>
               </div>
             </div>
           </template>
@@ -137,9 +175,9 @@
               Nature of the Loan
             </h3>
             <div class="nature-pill-box">
-              <span v-for="(item, idx) in parsedNatureOfLoanList" :key="idx" class="nature-loan-badge">
-                <i class="fas fa-briefcase text-teal me-2"></i>
-                {{ item }}
+              <span class="nature-loan-badge whitespace-normal leading-relaxed">
+                <i class="fas fa-briefcase text-teal me-2.5 mt-0.5 shrink-0"></i>
+                <span class="break-words">{{ service.natureOfLoan }}</span>
               </span>
             </div>
           </div>
@@ -295,14 +333,69 @@ const hasGracePeriod = computed(() => {
   return trimmed.length > 0 && trimmed !== 'n/a' && trimmed !== 'none' && trimmed !== 'null' && trimmed !== '-';
 });
 
-const parsedNatureOfLoanList = computed(() => {
-  const nol = service.value?.natureOfLoan;
-  if (!nol || typeof nol !== 'string') return [];
-  if (nol.includes(',')) {
-    return nol.split(',').map(s => s.trim()).filter(Boolean);
+/**
+ * Formats metric value by extracting primary figures and secondary/parenthetical details.
+ * Prevents awkward mid-word breaks and enables prominent typography.
+ */
+const formatMetricValue = (val) => {
+  if (!val || typeof val !== 'string') {
+    return { primary: val || 'N/A', subtitle: '' };
   }
-  return [nol.trim()];
-});
+  const trimmed = val.trim();
+  if (!trimmed || trimmed === '-' || trimmed.toLowerCase() === 'n/a') {
+    return { primary: 'N/A', subtitle: '' };
+  }
+
+  // If no parentheses, return full string as primary
+  if (!trimmed.includes('(') || !trimmed.includes(')')) {
+    return { primary: trimmed, subtitle: '' };
+  }
+
+  const parseSegment = (seg) => {
+    const s = seg.trim();
+    const match = s.match(/^(.*?)\((.*?)\)(.*)$/);
+    if (!match) return { primary: s, subtitle: '' };
+
+    let fig = (match[1] + ' ' + match[3]).trim().replace(/\s+/g, ' ');
+    let note = match[2].trim();
+
+    // If the figure has no digits but the parenthetical note has digits, swap them
+    // e.g. "Investment Loans (120 months)" -> primary: "120 months", note: "Investment Loans"
+    if (!/\d/.test(fig) && /\d/.test(note)) {
+      const temp = fig;
+      fig = note;
+      note = temp;
+    }
+
+    return {
+      primary: fig || s,
+      subtitle: note ? `(${note})` : ''
+    };
+  };
+
+  // Handle multi-segment values separated by '/'
+  if (trimmed.includes('/')) {
+    const segments = trimmed.split('/');
+    const primaries = [];
+    const subtitles = [];
+
+    for (const segment of segments) {
+      const parsed = parseSegment(segment);
+      if (parsed.primary) primaries.push(parsed.primary);
+      if (parsed.subtitle) subtitles.push(parsed.subtitle);
+    }
+
+    if (primaries.length > 0) {
+      return {
+        primary: primaries.join(' / '),
+        subtitle: subtitles.join(' / ')
+      };
+    }
+  }
+
+  return parseSegment(trimmed);
+};
+
 
 const rateBreakdown = computed(() => {
   const details = service.value?.subsidyDetails;
@@ -560,11 +653,12 @@ onMounted(() => {
 }
 
 .metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 1.25rem !important;
   margin-bottom: 40px;
-  align-items: stretch;
+  align-items: stretch !important;
+  width: 100%;
 }
 
 .metric-card {
@@ -572,32 +666,43 @@ onMounted(() => {
   border-radius: 12px;
   padding: 20px 18px;
   display: flex;
-  align-items: center;
-  gap: 15px;
+  align-items: flex-start;
+  gap: 14px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   border-bottom: 3px solid #008E9B;
   height: 100%;
+  min-width: 0 !important;
+  overflow: hidden;
 }
 
 .metric-icon {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   background: #f0fbfc;
   color: #008795;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .metric-info {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  min-width: 0 !important;
+  flex: 1 1 0%;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.metric-value-wrap {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
-  flex: 1;
 }
 
 .rate-value-wrap {
@@ -612,34 +717,40 @@ onMounted(() => {
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
-  margin-top: 5px;
+  margin-top: 6px;
 }
 
 .badge-pill-customer {
   display: inline-flex;
   align-items: center;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 9999px;
+  padding: 3px 8px;
+  border-radius: 8px;
   background: #f0fdfa;
   color: #0f766e;
   border: 1px solid #ccfbf1;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.35;
 }
 
 .badge-pill-subsidy {
   display: inline-flex;
-  align-items: center;
-  font-size: 0.68rem;
+  align-items: flex-start;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 9999px;
+  padding: 3px 8px;
+  border-radius: 8px;
   background: #ecfdf5;
   color: #047857;
   border: 1px solid #a7f3d0;
-  white-space: nowrap;
+  white-space: normal !important;
+  text-align: left !important;
+  line-height: 1.35 !important;
   max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .nature-pill-box {
@@ -652,32 +763,46 @@ onMounted(() => {
 
 .nature-loan-badge {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   background: #f0fdfa;
   color: #0f766e;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.95rem;
-  padding: 8px 18px;
+  padding: 10px 18px;
   border-radius: 12px;
   border: 1px solid #ccfbf1;
   box-shadow: 0 2px 6px rgba(15, 118, 110, 0.06);
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.625;
 }
 
 .metric-label {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   color: #64748b;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.5px;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .metric-value {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #0c2a38;
-  word-break: break-word;
-  line-height: 1.3;
+  font-size: 1.125rem !important; /* text-lg */
+  font-weight: 700 !important; /* font-bold */
+  color: #0f172a !important; /* text-slate-900 */
+  line-height: 1.375 !important; /* leading-snug */
+  overflow-wrap: break-word !important;
+  word-break: normal !important; /* Prevents awkward breaks like Investme-nt */
+}
+
+.metric-subtitle {
+  font-size: 0.75rem !important; /* text-xs */
+  font-weight: 500 !important; /* font-medium */
+  color: #64748b !important; /* text-slate-500 */
+  margin-top: 0.25rem !important; /* mt-1 */
+  line-height: 1.625 !important; /* leading-relaxed */
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
 }
 
 .text-muted-grace {
@@ -946,9 +1071,9 @@ onMounted(() => {
   color: white;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1023px) {
   .metrics-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
   .facilities-grid {
     grid-template-columns: 1fr;
@@ -959,9 +1084,6 @@ onMounted(() => {
   .service-hero {
     padding: 110px 16px 65px 16px;
     margin-bottom: -35px;
-  }
-  .metrics-grid {
-    grid-template-columns: 1fr;
   }
   .service-title {
     font-size: 2rem;
@@ -976,6 +1098,12 @@ onMounted(() => {
   .btn-outline-back, .btn-guideline-download, .btn-primary-contact {
     width: 100%;
     justify-content: center;
+  }
+}
+
+@media (max-width: 639px) {
+  .metrics-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
   }
 }
 </style>

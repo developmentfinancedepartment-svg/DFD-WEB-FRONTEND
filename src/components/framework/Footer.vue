@@ -11,9 +11,9 @@
                 <li>
                   <i class="fas fa-map-marker-alt"></i>
                   <span>
+                    Department of Development Finance,<br />
                     Room No. 129,<br /> 
                     1<sup>st</sup> Floor,<br />
-                    Department of Development Finance,<br />
                     Ministry of Finance,Planning and Economic Development,<br />
                     The Secretariat,<br />
                     Colombo 01,<br />
@@ -22,11 +22,11 @@
                 </li>
                 <li>
                   <i class="fas fa-phone-alt"></i>
-                  <span><a href="tel:+94112484862" style="color: inherit; text-decoration: none;">+94 112 484 862</a></span>
+                  <span><a href="tel:+94112484862" style="color: inherit; text-decoration: none;">+94 11 248 4862</a></span>
                 </li>
                 <li>
                   <i class="fas fa-envelope"></i>
-                  <span><a href="mailto:dgdf@dfd.treasury.gov.lk" style="color: inherit; text-decoration: none;">dgdf@dfd.treasury.gov.lk</a></span>
+                  <span><a href="mailto:info@dfd.treasury.gov.lk" style="color: inherit; text-decoration: none;">info@dfd.treasury.gov.lk</a></span>
                 </li>
               </ul>
               <div class="footer-socials">

@@ -140,9 +140,9 @@
         </div>
 
         <!-- Services Grid -->
-        <div v-else-if="services.length > 0" class="services-grid animate-fade-up">
+        <div v-else-if="services.length > 0" class="services-grid flex flex-wrap justify-center gap-6 animate-fade-up">
           <div
-            class="service-card"
+            class="service-card w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] max-w-[300px]"
             v-for="service in services"
             :key="service.id"
           >
@@ -1152,24 +1152,42 @@ onBeforeUnmount(() => {
   border-radius: 2px;
 }
 
-/* Services Grid */
+/* Services Grid - Centered Flexbox Layout */
 .services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 1.5rem !important; /* gap-6: 24px */
   margin-bottom: 40px;
 }
 
 .secondary-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 1.5rem !important;
   max-width: 600px;
   margin: 0 auto 40px;
 }
 
 .service-card {
   display: flex;
+  width: 100%;
+  max-width: 300px;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 640px) {
+  .service-card {
+    width: calc(50% - 0.75rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .service-card {
+    width: calc(25% - 1.125rem);
+    max-width: 300px;
+  }
 }
 
 .card-glass {
@@ -1515,16 +1533,6 @@ onBeforeUnmount(() => {
 }
 
 /* Response Fixes */
-@media (max-width: 1199px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .secondary-grid {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: none;
-  }
-}
-
 @media (max-width: 991px) {
   .about-content {
     margin-top: 40px;
@@ -1550,12 +1558,6 @@ onBeforeUnmount(() => {
     font-size: 34px;
   
     font-style: italic;}
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-  .secondary-grid {
-    grid-template-columns: 1fr;
-  }
   .management-grid {
     grid-template-columns: 1fr;
   }
