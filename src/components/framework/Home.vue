@@ -204,7 +204,7 @@
           <div class="col-lg-6">
             <div class="about-image-wrapper">
               <img
-                src="../../assets/team_image.png"
+                src="../../assets/MOF.jpeg"
                 alt="About DFD"
                 class="about-image"
               />

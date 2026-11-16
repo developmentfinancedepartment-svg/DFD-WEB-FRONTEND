@@ -140,10 +140,10 @@
             @click="openLightbox(item)"
           >
             <div class="img-wrapper">
-              <!-- Actual Uploaded Image -->
+              <!-- Actual Uploaded Image (Cover) -->
               <img
-                v-if="item.imageUrl && !item.hasImageError"
-                :src="resolveImageUrl(item.imageUrl)"
+                v-if="(item.imageUrl || (getAlbumPhotos(item).length > 0)) && !item.hasImageError"
+                :src="resolveImageUrl(item.imageUrl || getAlbumPhotos(item)[0])"
                 :alt="item.title"
                 class="gallery-img"
                 @error="item.hasImageError = true"
@@ -151,6 +151,16 @@
               <!-- Fallback Placeholder -->
               <div v-else class="placeholder-img">
                 <i class="fas fa-image"></i>
+              </div>
+
+              <!-- Top-Right Photo Count Badge (for Multi-Photo Albums) -->
+              <div
+                v-if="getAlbumPhotos(item).length > 1"
+                class="album-count-badge"
+                title="Multi-photo event album"
+              >
+                <i class="fas fa-images me-1.5 text-teal"></i>
+                <span>{{ getAlbumPhotos(item).length }} Photos</span>
               </div>
 
               <!-- Hover Overlay -->
@@ -175,38 +185,91 @@
       </div>
     </section>
 
-    <!-- LIGHTBOX MODAL -->
+    <!-- LIGHTBOX ALBUM VIEWER MODAL -->
     <div
       v-if="activeItem"
       class="lightbox-modal"
       @click.self="closeLightbox"
     >
       <div class="lightbox-card">
-        <button class="lightbox-close" @click="closeLightbox" title="Close Preview">
+        <!-- Close Button -->
+        <button class="lightbox-close" @click="closeLightbox" title="Close Preview (Esc)">
           <i class="fas fa-times"></i>
         </button>
 
+        <!-- Main Photo Box with Prev / Next Navigation -->
         <div class="lightbox-img-box">
+          <!-- Previous Button -->
+          <button
+            v-if="currentAlbumPhotos.length > 1"
+            class="lightbox-nav-btn prev-btn"
+            @click.stop="prevPhoto"
+            title="Previous Photo (←)"
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+
+          <!-- Current Photo -->
           <img
-            v-if="activeItem.imageUrl && !activeItem.hasImageError"
-            :src="resolveImageUrl(activeItem.imageUrl)"
-            :alt="activeItem.title"
+            v-if="currentPhotoUrl"
+            :src="resolveImageUrl(currentPhotoUrl)"
+            :alt="`${activeItem.title} - Photo ${currentPhotoIndex + 1}`"
             class="lightbox-img"
           />
           <div v-else class="lightbox-placeholder">
             <i class="fas fa-image fa-4x text-muted"></i>
           </div>
+
+          <!-- Next Button -->
+          <button
+            v-if="currentAlbumPhotos.length > 1"
+            class="lightbox-nav-btn next-btn"
+            @click.stop="nextPhoto"
+            title="Next Photo (→)"
+          >
+            <i class="fas fa-chevron-right"></i>
+          </button>
+
+          <!-- Floating Photo Counter Badge -->
+          <div v-if="currentAlbumPhotos.length > 1" class="lightbox-photo-counter">
+            <i class="fas fa-camera me-1"></i>
+            {{ currentPhotoIndex + 1 }} / {{ currentAlbumPhotos.length }}
+          </div>
         </div>
 
+        <!-- Clickable Bottom Thumbnail Strip -->
+        <div v-if="currentAlbumPhotos.length > 1" class="lightbox-thumb-strip">
+          <div
+            v-for="(photo, idx) in currentAlbumPhotos"
+            :key="idx"
+            class="thumb-item"
+            :class="{ active: idx === currentPhotoIndex }"
+            @click.stop="selectPhotoIndex(idx)"
+            :title="`Jump to photo ${idx + 1}`"
+          >
+            <img :src="resolveImageUrl(photo)" :alt="`Thumb ${idx + 1}`" />
+            <span class="thumb-number">{{ idx + 1 }}</span>
+          </div>
+        </div>
+
+        <!-- Details Bar -->
         <div class="lightbox-details">
-          <span class="category-tag mb-2" :class="getCategoryTagClass(activeItem.category)">
-            {{ activeItem.category }}
-          </span>
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <span class="category-tag" :class="getCategoryTagClass(activeItem.category)">
+                {{ activeItem.category }}
+              </span>
+              <span class="album-badge-inline" v-if="currentAlbumPhotos.length > 1">
+                <i class="fas fa-images me-1.5 text-teal"></i>
+                {{ currentAlbumPhotos.length }} Photos Album
+              </span>
+            </div>
+            <span class="text-muted small">
+              <i class="far fa-calendar-alt me-1 text-teal"></i>
+              {{ activeItem.eventDate || activeItem.date || 'Official Event' }}
+            </span>
+          </div>
           <h3>{{ activeItem.title }}</h3>
-          <p class="text-muted mb-0">
-            <i class="far fa-calendar-alt me-1 text-teal"></i>
-            {{ activeItem.eventDate || activeItem.date || 'Official Event' }}
-          </p>
         </div>
       </div>
     </div>
@@ -333,19 +396,72 @@ const filteredGallery = computed(() => {
   });
 });
 
-const openLightbox = (item) => {
+const openLightbox = (item, initialIndex = 0) => {
   activeItem.value = item;
+  currentPhotoIndex.value = initialIndex;
   document.body.style.overflow = 'hidden';
 };
 
 const closeLightbox = () => {
   activeItem.value = null;
+  currentPhotoIndex.value = 0;
   document.body.style.overflow = '';
 };
 
+// Robust helper to extract full list of photos for an album
+const getAlbumPhotos = (item) => {
+  if (!item) return [];
+  if (Array.isArray(item.images) && item.images.length > 0) {
+    return item.images;
+  }
+  if (typeof item.images === 'string' && item.images.trim()) {
+    try {
+      const parsed = JSON.parse(item.images);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch (e) {}
+    const split = item.images.split(',').map(s => s.trim()).filter(Boolean);
+    if (split.length > 0) return split;
+  }
+  return item.imageUrl ? [item.imageUrl] : [];
+};
+
+const currentPhotoIndex = ref(0);
+
+const currentAlbumPhotos = computed(() => {
+  return getAlbumPhotos(activeItem.value);
+});
+
+const currentPhotoUrl = computed(() => {
+  const photos = currentAlbumPhotos.value;
+  if (photos.length === 0) return activeItem.value?.imageUrl || '';
+  const idx = Math.min(Math.max(0, currentPhotoIndex.value), photos.length - 1);
+  return photos[idx] || '';
+});
+
+const nextPhoto = () => {
+  const len = currentAlbumPhotos.value.length;
+  if (len <= 1) return;
+  currentPhotoIndex.value = (currentPhotoIndex.value + 1) % len;
+};
+
+const prevPhoto = () => {
+  const len = currentAlbumPhotos.value.length;
+  if (len <= 1) return;
+  currentPhotoIndex.value = (currentPhotoIndex.value - 1 + len) % len;
+};
+
+const selectPhotoIndex = (index) => {
+  currentPhotoIndex.value = index;
+};
+
 const handleKeyDown = (e) => {
-  if (e.key === 'Escape' && activeItem.value) {
+  if (!activeItem.value) return;
+  if (e.key === 'Escape') {
     closeLightbox();
+  } else if (e.key === 'ArrowRight' || e.key === 'Right') {
+    nextPhoto();
+  } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
+    prevPhoto();
   }
 };
 
@@ -667,6 +783,26 @@ onUnmounted(() => {
   transition: transform 0.5s ease;
 }
 
+.album-count-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(15, 23, 42, 0.8);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 11px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 2;
+  letter-spacing: 0.3px;
+  pointer-events: none;
+}
+
 .gallery-card:hover .gallery-img {
   transform: scale(1.08);
 }
@@ -762,7 +898,7 @@ onUnmounted(() => {
 .lightbox-modal {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.88);
   backdrop-filter: blur(8px);
   z-index: 9999;
   display: flex;
@@ -776,19 +912,19 @@ onUnmounted(() => {
   background: white;
   border-radius: 20px;
   overflow: hidden;
-  max-width: 800px;
+  max-width: 960px;
   width: 100%;
-  max-height: 90vh;
+  max-height: 92vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
   animation: zoomIn 0.25s ease-out;
 }
 
 @keyframes zoomIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.96);
   }
   to {
     opacity: 1;
@@ -798,41 +934,47 @@ onUnmounted(() => {
 
 .lightbox-close {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 38px;
-  height: 38px;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(15, 23, 42, 0.7);
   color: white;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
-  z-index: 10;
-  transition: background-color 0.2s ease;
+  font-size: 1.15rem;
+  z-index: 20;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
 }
 
 .lightbox-close:hover {
   background: #ef4444;
+  border-color: #ef4444;
+  transform: rotate(90deg) scale(1.05);
 }
 
 .lightbox-img-box {
+  position: relative;
   width: 100%;
-  max-height: 60vh;
-  background: #0f172a;
+  height: 56vh;
+  min-height: 320px;
+  background: #090e17;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  user-select: none;
 }
 
 .lightbox-img {
   width: 100%;
   height: 100%;
-  max-height: 60vh;
+  max-height: 56vh;
   object-fit: contain;
 }
 
@@ -841,22 +983,173 @@ onUnmounted(() => {
   text-align: center;
 }
 
+/* Lightbox Prev / Next Navigation */
+.lightbox-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.lightbox-nav-btn:hover {
+  background: #008795;
+  border-color: #008795;
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 18px rgba(0, 135, 149, 0.45);
+}
+
+.prev-btn {
+  left: 16px;
+}
+
+.next-btn {
+  right: 16px;
+}
+
+/* Floating Photo Counter Badge */
+.lightbox-photo-counter {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  background: rgba(15, 23, 42, 0.8);
+  color: #f1f5f9;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 10;
+  letter-spacing: 0.4px;
+}
+
+/* Clickable Bottom Thumbnail Strip */
+.lightbox-thumb-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: #0f172a;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #008795 #1e293b;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lightbox-thumb-strip::-webkit-scrollbar {
+  height: 6px;
+}
+
+.lightbox-thumb-strip::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.lightbox-thumb-strip::-webkit-scrollbar-thumb {
+  background: #008795;
+  border-radius: 3px;
+}
+
+.thumb-item {
+  position: relative;
+  flex: 0 0 68px;
+  height: 50px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+  background: #1e293b;
+}
+
+.thumb-item:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+  border-color: rgba(0, 135, 149, 0.6);
+}
+
+.thumb-item.active {
+  opacity: 1;
+  border-color: #008795;
+  box-shadow: 0 0 0 2px rgba(0, 135, 149, 0.45);
+  transform: scale(1.05);
+}
+
+.thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb-number {
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
 .lightbox-details {
-  padding: 24px;
+  padding: 20px 24px;
   background: white;
 }
 
 .lightbox-details h3 {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #0f172a;
-  margin-bottom: 8px;
+  margin-bottom: 0;
+  line-height: 1.4;
+}
+
+.album-badge-inline {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #008795;
+  background: #e6f9fa;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.3px;
 }
 
 /* Responsive */
 @media (max-width: 767px) {
   .hero-title {
     font-size: 2.2rem;
+  }
+  .lightbox-img-box {
+    height: 42vh;
+    min-height: 240px;
+  }
+  .lightbox-nav-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+  .thumb-item {
+    flex: 0 0 54px;
+    height: 40px;
   }
 }
 </style>
