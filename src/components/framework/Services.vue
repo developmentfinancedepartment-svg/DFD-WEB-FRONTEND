@@ -138,11 +138,11 @@
 
         <!-- Active Services Grid -->
         <div
-          class="services-grid animate-fade-up"
+          class="services-grid flex flex-wrap justify-center gap-6 animate-fade-up"
           v-if="activeSchemes.length > 0"
         >
           <div
-            class="service-card flex flex-col h-full"
+            class="service-card flex flex-col h-full w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] max-w-[300px]"
             v-for="service in activeSchemes"
             :key="service.id || service.title"
           >
@@ -195,9 +195,9 @@
           </div>
 
           <!-- Coming Soon Cards Grid -->
-          <div class="services-grid">
+          <div class="services-grid flex flex-wrap justify-center gap-6">
             <div
-              class="service-card flex flex-col h-full"
+              class="service-card flex flex-col h-full w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] max-w-[300px]"
               v-for="service in comingSoonSchemes"
               :key="service.id || service.title"
             >
@@ -663,11 +663,12 @@ onUnmounted(() => {
   margin: 0 auto;
 }
 
-/* Services Grid */
+/* Services Grid - Centered Flexbox Layout */
 .services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 1.5rem !important; /* gap-6: 24px */
 }
 
 .service-card {
@@ -675,6 +676,22 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+  max-width: 300px;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 640px) {
+  .service-card {
+    width: calc(50% - 1rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .service-card {
+    width: calc(25% - 1.5rem);
+    max-width: 300px;
+  }
 }
 
 .card-glass {
@@ -912,35 +929,13 @@ onUnmounted(() => {
 }
 
 /* Responsive Design */
-@media (max-width: 1199px) {
-  .services-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 991px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (max-width: 768px) {
   .services-page {
     padding-top: 80px;
   }
-
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
 }
 
 @media (max-width: 576px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
   .card-glass {
     padding: 25px 20px;
   }
