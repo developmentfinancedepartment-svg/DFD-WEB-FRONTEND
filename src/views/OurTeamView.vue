@@ -210,7 +210,7 @@
                   <tr>
                     <th class="th-name min-w-[200px] whitespace-nowrap" scope="col">Name</th>
                     <th class="th-designation" scope="col">Designation</th>
-                    <th class="th-room max-w-[220px]" scope="col">Room</th>
+                    <th class="th-room min-w-[160px]" scope="col">Responsibility Subject</th>
                     <th class="th-contacts" scope="col">Contact Numbers</th>
                     <th class="th-email min-w-[260px]" scope="col">Email</th>
                   </tr>
@@ -240,13 +240,10 @@
                         </span>
                       </td>
 
-                      <!-- Column 3: Room -->
-                      <td class="td-room max-w-[220px] whitespace-normal break-words">
-                        <div class="table-room-cell max-w-[220px] whitespace-normal break-words leading-snug" v-if="officer.room">
-                          <svg class="table-room-icon shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
-                          </svg>
-                          <span class="table-room-text whitespace-normal break-words leading-snug">{{ officer.room }}</span>
+                      <!-- Column 3: Responsibility Subject -->
+                      <td class="td-room whitespace-normal break-words">
+                        <div class="table-room-cell whitespace-normal break-words leading-snug" v-if="officer.room || officer.responsibilitySubject || officer.roomLocation">
+                          <span class="table-room-text whitespace-normal break-words leading-snug">{{ officer.responsibilitySubject || officer.roomLocation || officer.room }}</span>
                         </div>
                         <span v-else class="text-slate-300 text-xs">—</span>
                       </td>
@@ -1017,14 +1014,7 @@ const mapHierarchyToSubsectionKey = (hierarchyLevel, division, designation = '')
 };
 
 const mapOfficial = (item) => {
-  let designation = item.designation;
-  if (
-    item.name === 'Mr. P.M.K. Hettiarachchi' ||
-    item.hierarchyLevel === 'HEAD' ||
-    (designation && designation.toLowerCase().includes('director general'))
-  ) {
-    designation = 'Director General';
-  }
+  const designation = item.designation || (item.hierarchyLevel === 'HEAD' ? 'Director General' : '');
 
   return {
     id: item.id,
@@ -1033,7 +1023,7 @@ const mapOfficial = (item) => {
     division: item.division,
     hierarchyLevel: item.hierarchyLevel,
     subsectionKey: mapHierarchyToSubsectionKey(item.hierarchyLevel, item.division, designation),
-    room: item.room,
+    room: item.responsibilitySubject || item.roomLocation || item.room,
     description: item.description,
     displayOrder: item.displayOrder,
     contacts: {
@@ -1369,7 +1359,10 @@ const fetchOfficials = async () => {
       // Find Head of Department
       const head = allMembers.find(m => m.hierarchyLevel === 'HEAD') ||
                    allMembers.find(m => m.division === 'Executive Directorate') ||
-                   allMembers.find(m => (m.designation || '').toLowerCase().includes('director general'));
+                   allMembers.find(m => {
+                     const des = (m.designation || '').toLowerCase();
+                     return des === 'director general' || (des.includes('director general') && !des.includes('additional') && !des.includes('deputy') && !des.includes('assistant'));
+                   });
       if (head) {
         directorGeneral.value = mapOfficial(head);
       }
@@ -2179,9 +2172,8 @@ onUnmounted(() => {
 }
 
 .th-room {
-  width: 14%;
-  max-width: 220px;
-  min-width: 110px;
+  width: 18%;
+  min-width: 160px;
 }
 
 .th-contacts {
@@ -2190,8 +2182,8 @@ onUnmounted(() => {
 }
 
 .th-email {
-  width: 25%;
-  min-width: 260px;
+  width: 23%;
+  min-width: 240px;
 }
 
 .td-name {
@@ -2200,13 +2192,12 @@ onUnmounted(() => {
 }
 
 .td-room {
-  max-width: 220px;
   white-space: normal;
   word-break: break-word;
 }
 
 .td-email {
-  min-width: 260px;
+  min-width: 240px;
 }
 
 /* Table Body Rows & Spacing */
@@ -2248,18 +2239,15 @@ onUnmounted(() => {
   max-width: 260px;
 }
 
-/* Column 3: Room */
+/* Column 3: Responsibility Subject */
 .table-room-cell {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  font-size: 0.74rem;
-  color: #475569;
+  display: block;
+  font-size: 0.78rem;
+  color: #334155;
   font-weight: 500;
   white-space: normal;
   word-break: break-word;
-  line-height: 1.35;
-  max-width: 220px;
+  line-height: 1.4;
 }
 
 .table-room-icon {

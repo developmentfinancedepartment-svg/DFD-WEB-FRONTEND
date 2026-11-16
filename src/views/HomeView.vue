@@ -135,12 +135,12 @@
     <!-- IMPACT STATISTICS COUNTER BAR SECTION                             -->
     <!-- ================================================================= -->
     <section ref="statsSectionRef" class="max-w-6xl mx-auto px-4 py-8">
-      <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
+      <div class="stats-counter-card bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 text-center">
         <div
           v-for="(stat, index) in impactMetrics"
           :key="stat.id"
-          class="flex flex-col items-center justify-center pt-4 md:pt-0 first:pt-0"
-          :class="index === 4 ? 'col-span-2 md:col-span-1' : ''"
+          class="stats-metric-col flex flex-col items-center justify-center pt-4 lg:pt-0 first:pt-0"
+          :class="index === 4 ? 'col-span-1 sm:col-span-2 lg:col-span-1' : ''"
         >
           <!-- Circular Top Badge -->
           <div class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-2 shadow-2xs mx-auto">
@@ -153,7 +153,7 @@
           </div>
 
           <!-- Label Typography -->
-          <div class="text-[11px] font-bold tracking-wider text-slate-400 uppercase mt-1">
+          <div class="text-xs font-semibold uppercase tracking-wider text-slate-500 text-center mt-2 leading-snug min-h-[32px] flex items-center justify-center">
             {{ stat.label }}
           </div>
         </div>
@@ -399,8 +399,8 @@ const statsSectionRef = ref(null);
 
 const impactMetrics = ref([
   {
-    id: "farmers",
-    label: "Registered Farmers",
+    id: "beneficiaries",
+    label: "Number of Refinance Beneficiaries",
     icon: "fas fa-users",
     target: 25400,
     current: 1,
@@ -408,9 +408,9 @@ const impactMetrics = ref([
     suffix: "+"
   },
   {
-    id: "loans",
-    label: "Loans Granted / Taken",
-    icon: "fas fa-hand-holding-usd",
+    id: "subsidies",
+    label: "Number of Interest Subsidies",
+    icon: "fas fa-percentage",
     target: 18250,
     current: 1,
     prefix: "",
@@ -1609,9 +1609,23 @@ onBeforeUnmount(() => {
   grid-column: span 2 / span 2 !important;
 }
 
+.stats-metric-col {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+@media (min-width: 1024px) {
+  .stats-metric-col {
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+  .stats-metric-col:not(:last-child) {
+    border-right: 1px solid rgba(203, 213, 225, 0.7) !important;
+  }
+}
+
 .divide-y > :not([hidden]) ~ :not([hidden]) {
-  border-top-width: 1px !important;
-  border-top-style: solid !important;
+  border-top-width: 0 !important;
 }
 
 .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
@@ -1644,6 +1658,13 @@ onBeforeUnmount(() => {
   .lg\:text-3xl {
     font-size: 1.875rem !important;
     line-height: 2.25rem !important;
+  }
+  .lg\:divide-y-0 > :not([hidden]) ~ :not([hidden]) {
+    border-top-width: 0 !important;
+    border-top: none !important;
+  }
+  .lg\:divide-x > :not([hidden]) ~ :not([hidden]) {
+    border-left: 1px solid rgba(203, 213, 225, 0.7) !important;
   }
 }
 

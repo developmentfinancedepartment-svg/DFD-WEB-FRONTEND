@@ -58,6 +58,7 @@
                 <li><a href="https://www.treasury.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Ministry of Finance</a></li>
                 <li><a href="https://www.cbsl.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Central Bank of Sri Lanka</a></li>
                 <li><a href="https://www.ncgil.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>National Credit Guarantee Institution</a></li>
+                <li><a href="https://agrimin.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Ministry of Agriculture, LiveStock, Lands and Irrigation</a></li>
                 <li><a href="https://investsrilanka.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Board of Investment of Sri Lanka</a></li>
               </ul>
             </div>

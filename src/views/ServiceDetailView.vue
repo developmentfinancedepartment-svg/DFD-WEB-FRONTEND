@@ -232,7 +232,34 @@
           <router-link to="/Services" class="btn-outline-back">
             <i class="fas fa-arrow-left"></i> Back to Services
           </router-link>
-          <router-link to="/Teldirec" class="btn-primary-contact">
+
+          <!-- Download Operational Guidelines (Conditional on operationalGuidelineUrl presence) -->
+          <a
+            v-if="service.operationalGuidelineUrl || service.guidelineFileUrl"
+            :href="getGuidelinePdfUrl(service.operationalGuidelineUrl || service.guidelineFileUrl)"
+            target="_blank"
+            download
+            class="btn-guideline-download"
+            title="Download Operational Guidelines (PDF)"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="width: 16px; height: 16px; flex-shrink: 0;"
+              class="guideline-svg-icon"
+            >
+              <path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>Download Operational Guidelines</span>
+          </a>
+
+          <router-link to="/contact" class="btn-primary-contact">
             Contact for Inquiries <i class="fas fa-paper-plane"></i>
           </router-link>
         </div>
@@ -480,6 +507,13 @@ const fetchSchemeDetails = async () => {
   }
 
   loading.value = false;
+};
+
+const getGuidelinePdfUrl = (url) => {
+  if (!url) return '#';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  const apiBase = BaseUrl.baseUrl || 'http://localhost:8096';
+  return `${apiBase.replace(/\/$/, '')}/${url.replace(/^\//, '')}`;
 };
 
 onMounted(() => {
@@ -831,8 +865,45 @@ onMounted(() => {
 
 .action-buttons {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.btn-guideline-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 9999px;
+  background-color: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #99f6e4;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.btn-guideline-download:hover {
+  background-color: #ccfbf1;
+  border-color: #5eead4;
+  color: #0f766e;
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.guideline-svg-icon {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px;
+  min-height: 16px;
+  flex-shrink: 0;
+  stroke: #0f766e;
 }
 
 .btn-outline-back {
@@ -902,7 +973,7 @@ onMounted(() => {
     flex-direction: column;
     gap: 15px;
   }
-  .btn-outline-back, .btn-primary-contact {
+  .btn-outline-back, .btn-guideline-download, .btn-primary-contact {
     width: 100%;
     justify-content: center;
   }
