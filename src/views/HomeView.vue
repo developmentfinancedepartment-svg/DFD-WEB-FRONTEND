@@ -479,9 +479,99 @@ const startCountUpAnimation = () => {
   animationFrameId = requestAnimationFrame(animate);
 };
 
+const parseMetricString = (val, defaultTarget, defaultPrefix, defaultSuffix) => {
+  if (!val || typeof val !== 'string') {
+    return { target: defaultTarget, prefix: defaultPrefix, suffix: defaultSuffix };
+  }
+  const trimmed = val.trim();
+  const numMatch = trimmed.match(/\d[\d,.]*/);
+  if (!numMatch) {
+    return { target: defaultTarget, prefix: defaultPrefix, suffix: defaultSuffix };
+  }
+  const numClean = numMatch[0].replace(/,/g, '');
+  const parsedTarget = parseFloat(numClean);
+  if (isNaN(parsedTarget)) {
+    return { target: defaultTarget, prefix: defaultPrefix, suffix: defaultSuffix };
+  }
+
+  const numIndex = trimmed.indexOf(numMatch[0]);
+  const prefix = trimmed.slice(0, numIndex);
+  const suffix = trimmed.slice(numIndex + numMatch[0].length);
+
+  return {
+    target: Math.round(parsedTarget),
+    prefix: prefix !== undefined && prefix !== null && prefix !== '' ? prefix : defaultPrefix,
+    suffix: suffix !== undefined && suffix !== null && suffix !== '' ? suffix : defaultSuffix
+  };
+};
+
+const fetchHomeStats = async () => {
+  try {
+    const apiBase = BaseUrl.baseUrl || 'http://localhost:8096';
+    const res = await axios.get(`${apiBase}/api/public/home-stats`);
+    if (res?.data) {
+      const data = res.data;
+      if (data.refinanceBeneficiaries) {
+        const p = parseMetricString(data.refinanceBeneficiaries, 25400, "", "+");
+        const item = impactMetrics.value.find(s => s.id === 'beneficiaries');
+        if (item) {
+          item.target = p.target;
+          item.prefix = p.prefix;
+          item.suffix = p.suffix;
+          if (hasAnimatedStats) item.current = p.target;
+        }
+      }
+      if (data.interestSubsidies) {
+        const p = parseMetricString(data.interestSubsidies, 18250, "", "+");
+        const item = impactMetrics.value.find(s => s.id === 'subsidies');
+        if (item) {
+          item.target = p.target;
+          item.prefix = p.prefix;
+          item.suffix = p.suffix;
+          if (hasAnimatedStats) item.current = p.target;
+        }
+      }
+      if (data.partnerBanks) {
+        const p = parseMetricString(data.partnerBanks, 14, "", "+");
+        const item = impactMetrics.value.find(s => s.id === 'banks');
+        if (item) {
+          item.target = p.target;
+          item.prefix = p.prefix;
+          item.suffix = p.suffix;
+          if (hasAnimatedStats) item.current = p.target;
+        }
+      }
+      if (data.activeLoanSchemes) {
+        const p = parseMetricString(data.activeLoanSchemes, 8, "", "+");
+        const item = impactMetrics.value.find(s => s.id === 'schemes');
+        if (item) {
+          item.target = p.target;
+          item.prefix = p.prefix;
+          item.suffix = p.suffix;
+          if (hasAnimatedStats) item.current = p.target;
+        }
+      }
+      const fundsVal = data.totalFundsDisbursed || data.totalFundDisbursed;
+      if (fundsVal) {
+        const p = parseMetricString(fundsVal, 4850, "Rs. ", "M+");
+        const item = impactMetrics.value.find(s => s.id === 'funds');
+        if (item) {
+          item.target = p.target;
+          item.prefix = p.prefix;
+          item.suffix = p.suffix;
+          if (hasAnimatedStats) item.current = p.target;
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Could not load dynamic homepage statistics from API, falling back to defaults:', err);
+  }
+};
+
 onMounted(() => {
   startSlider();
   fetchServices();
+  fetchHomeStats();
 
   if (statsSectionRef.value && typeof IntersectionObserver !== "undefined") {
     statsObserver = new IntersectionObserver(
