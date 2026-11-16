@@ -216,77 +216,97 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <template
-                    v-for="subsection in division.subsections"
-                    :key="subsection.key"
+                  <!-- Official Rows (Sorted strictly by displayOrder ascending with hierarchical nesting) -->
+                  <tr
+                    v-for="officer in division.officials"
+                    :key="officer.id || officer.name"
+                    class="directory-row transition-colors"
+                    :class="{
+                      'bg-teal-50/40 font-semibold row-adg': isAdg(officer),
+                      'bg-white row-director': isDirector(officer),
+                      'bg-white row-subordinate': isSubordinate(officer)
+                    }"
                   >
-                    <!-- Official Rows in this Subsection (Continuous list without category dividers) -->
-                    <tr
-                      v-for="officer in subsection.officials"
-                      :key="officer.id || officer.name"
-                      class="directory-row hover:bg-slate-50/80 transition-colors"
+                    <!-- Column 1: Name (With tree indentation & connector for subordinate officers) -->
+                    <td
+                      class="td-name min-w-[200px] whitespace-nowrap"
+                      :class="{
+                        'pl-8 border-l-2 border-teal-200 cell-subordinate': isSubordinate(officer)
+                      }"
                     >
-                      <!-- Column 1: Name -->
-                      <td class="td-name min-w-[200px] whitespace-nowrap">
-                        <span class="table-official-name whitespace-nowrap" :title="officer.name">
+                      <div class="table-name-wrapper flex items-center gap-1.5">
+                        <span
+                          v-if="isSubordinate(officer)"
+                          class="tree-connector text-teal-500 font-bold select-none text-base leading-none shrink-0"
+                          aria-hidden="true"
+                        >↳</span>
+                        <span
+                          class="table-official-name whitespace-nowrap"
+                          :class="{ 'font-semibold text-slate-900': isAdg(officer) }"
+                          :title="officer.name"
+                        >
                           {{ officer.name }}
                         </span>
-                      </td>
+                      </div>
+                    </td>
 
-                      <!-- Column 2: Designation -->
-                      <td class="td-designation">
-                        <span class="table-designation-text" :title="officer.designation">
-                          {{ officer.designation }}
-                        </span>
-                      </td>
+                    <!-- Column 2: Designation -->
+                    <td class="td-designation">
+                      <span
+                        class="table-designation-text"
+                        :class="{ 'font-semibold text-teal-800': isAdg(officer) }"
+                        :title="officer.designation"
+                      >
+                        {{ officer.designation }}
+                      </span>
+                    </td>
 
-                      <!-- Column 3: Responsibility Subject -->
-                      <td class="td-room whitespace-normal break-words">
-                        <div class="table-room-cell whitespace-normal break-words leading-snug" v-if="officer.room || officer.responsibilitySubject || officer.roomLocation">
-                          <span class="table-room-text whitespace-normal break-words leading-snug">{{ officer.responsibilitySubject || officer.roomLocation || officer.room }}</span>
-                        </div>
-                        <span v-else class="text-slate-300 text-xs">—</span>
-                      </td>
+                    <!-- Column 3: Responsibility Subject -->
+                    <td class="td-room whitespace-normal break-words">
+                      <div class="table-room-cell whitespace-normal break-words leading-snug" v-if="officer.room || officer.responsibilitySubject || officer.roomLocation">
+                        <span class="table-room-text whitespace-normal break-words leading-snug">{{ officer.responsibilitySubject || officer.roomLocation || officer.room }}</span>
+                      </div>
+                      <span v-else class="text-slate-300 text-xs">—</span>
+                    </td>
 
-                      <!-- Column 4: Contact Numbers (Rounded Pill Container Layout) -->
-                      <td class="td-contacts">
-                        <div class="table-contacts-wrap" v-if="getAvailableContacts(officer).length > 0">
-                          <a
-                            v-for="c in getAvailableContacts(officer)"
-                            :key="c.type"
-                            :href="c.link"
-                            class="table-contact-pill"
-                            :class="`pill-${c.type}`"
-                            :title="`Call ${c.label}: ${c.value}`"
-                          >
-                            <span class="pill-type-tag">{{ c.label.toUpperCase() }}</span>
-                            <span class="pill-value-text">{{ c.value }}</span>
-                          </a>
-                        </div>
-                        <span v-else class="text-slate-300 text-xs">—</span>
-                      </td>
+                    <!-- Column 4: Contact Numbers (Rounded Pill Container Layout) -->
+                    <td class="td-contacts">
+                      <div class="table-contacts-wrap" v-if="getAvailableContacts(officer).length > 0">
+                        <a
+                          v-for="c in getAvailableContacts(officer)"
+                          :key="c.type"
+                          :href="c.link"
+                          class="table-contact-pill"
+                          :class="`pill-${c.type}`"
+                          :title="`Call ${c.label}: ${c.value}`"
+                        >
+                          <span class="pill-type-tag">{{ c.label.toUpperCase() }}</span>
+                          <span class="pill-value-text">{{ c.value }}</span>
+                        </a>
+                      </div>
+                      <span v-else class="text-slate-300 text-xs">—</span>
+                    </td>
 
-                      <!-- Column 5: Clickable Emails (Button-like Pill Badge Design) -->
-                      <td class="td-email min-w-[260px]">
-                        <div class="table-emails-wrap" v-if="getEmailList(officer).length > 0">
-                          <a
-                            v-for="email in getEmailList(officer)"
-                            :key="email"
-                            :href="'mailto:' + email"
-                            class="table-email-link w-fit max-w-none px-3 py-1.5 whitespace-nowrap"
-                            :title="`Send email to ${email}`"
-                          >
-                            <svg viewBox="0 0 20 20" fill="currentColor" class="table-email-svg">
-                              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                            </svg>
-                            <span class="table-email-text whitespace-nowrap">{{ email }}</span>
-                          </a>
-                        </div>
-                        <span v-else class="text-slate-300 text-xs">—</span>
-                      </td>
-                    </tr>
-                  </template>
+                    <!-- Column 5: Clickable Emails (Button-like Pill Badge Design) -->
+                    <td class="td-email min-w-[260px]">
+                      <div class="table-emails-wrap" v-if="getEmailList(officer).length > 0">
+                        <a
+                          v-for="email in getEmailList(officer)"
+                          :key="email"
+                          :href="'mailto:' + email"
+                          class="table-email-link w-fit max-w-none px-3 py-1.5 whitespace-nowrap"
+                          :title="`Send email to ${email}`"
+                        >
+                          <svg viewBox="0 0 20 20" fill="currentColor" class="table-email-svg">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                          </svg>
+                          <span class="table-email-text whitespace-nowrap">{{ email }}</span>
+                        </a>
+                      </div>
+                      <span v-else class="text-slate-300 text-xs">—</span>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -651,6 +671,7 @@ const defaultOfficials = [
     division: 'Financial Solution',
     hierarchyLevel: 'ADG',
     subsectionKey: 'adg',
+    displayOrder: 10,
     room: 'Room 145, 1st Floor',
     description: 'Overseeing the strategic direction of credit solutions, SME concessionary loan facilities, and sovereign guarantee funds.',
     contacts: {
@@ -668,6 +689,7 @@ const defaultOfficials = [
     division: 'Financial Solution',
     hierarchyLevel: 'DIRECTOR',
     subsectionKey: 'directors',
+    displayOrder: 20,
     room: 'Room 150, 1st Floor',
     description: 'Heading program formulation, monitoring credit allocations to participatory financial institutions.',
     contacts: {
@@ -679,28 +701,13 @@ const defaultOfficials = [
     emails: ['director.fs@dfd.treasury.gov.lk', 'nanayakkara.kads@dfd.treasury.gov.lk']
   },
   {
-    id: 4,
-    name: 'Mrs. K.M.S.D. Jayasekara',
-    designation: 'Director - Concessionary Credit & Schemes',
-    division: 'Financial Solution',
-    hierarchyLevel: 'DIRECTOR',
-    subsectionKey: 'directors',
-    room: 'Room 152, 1st Floor',
-    description: 'Specializing in green finance mechanisms, revolving credit funds, and MSME refinance frameworks.',
-    contacts: {
-      office: '+94 11 248 4535',
-      ext: '1425',
-      mobile: '+94 71 456 7890'
-    },
-    emails: ['credit.schemes@dfd.treasury.gov.lk', 'jayasekara.kmsd@dfd.treasury.gov.lk']
-  },
-  {
     id: 5,
     name: 'Mr. R.M.A.P. Rathnayake',
     designation: 'Deputy Director - Financial Solutions',
     division: 'Financial Solution',
     hierarchyLevel: 'DEPUTY_DIRECTOR',
     subsectionKey: 'deputy_directors',
+    displayOrder: 21,
     room: 'Room 154, 1st Floor',
     description: 'Managing commercial bank interest subsidy reconciliations and claim verifications.',
     contacts: {
@@ -717,6 +724,7 @@ const defaultOfficials = [
     division: 'Financial Solution',
     hierarchyLevel: 'DEPUTY_DIRECTOR',
     subsectionKey: 'deputy_directors',
+    displayOrder: 22,
     room: 'Room 155, 1st Floor',
     description: 'Conducting financial feasibility audits on regional partner banking branches.',
     contacts: {
@@ -733,6 +741,7 @@ const defaultOfficials = [
     division: 'Financial Solution',
     hierarchyLevel: 'ASSISTANT_DIRECTOR',
     subsectionKey: 'assistant_directors_officers',
+    displayOrder: 23,
     room: 'Room 157, 1st Floor',
     description: 'Field level coordination with district secretariats on enterprise loan uptake.',
     contacts: {
@@ -743,12 +752,30 @@ const defaultOfficials = [
     emails: ['thennakoon.tmnb@dfd.treasury.gov.lk']
   },
   {
+    id: 4,
+    name: 'Mrs. K.M.S.D. Jayasekara',
+    designation: 'Director - Concessionary Credit & Schemes',
+    division: 'Financial Solution',
+    hierarchyLevel: 'DIRECTOR',
+    subsectionKey: 'directors',
+    displayOrder: 30,
+    room: 'Room 152, 1st Floor',
+    description: 'Specializing in green finance mechanisms, revolving credit funds, and MSME refinance frameworks.',
+    contacts: {
+      office: '+94 11 248 4535',
+      ext: '1425',
+      mobile: '+94 71 456 7890'
+    },
+    emails: ['credit.schemes@dfd.treasury.gov.lk', 'jayasekara.kmsd@dfd.treasury.gov.lk']
+  },
+  {
     id: 8,
     name: 'Ms. K.G.C.L. Gamage',
     designation: 'Assistant Director',
     division: 'Financial Solution',
     hierarchyLevel: 'ASSISTANT_DIRECTOR',
     subsectionKey: 'assistant_directors_officers',
+    displayOrder: 31,
     room: 'Room 158, 1st Floor',
     description: 'Analysis of quarterly disbursement reports and beneficiary database management.',
     contacts: {
@@ -765,6 +792,7 @@ const defaultOfficials = [
     division: 'Financial Solution',
     hierarchyLevel: 'ASSISTANT_DIRECTOR',
     subsectionKey: 'assistant_directors_officers',
+    displayOrder: 32,
     room: 'Room 159, 1st Floor',
     description: 'Verification of borrower documentation and regional cooperative compliance.',
     contacts: {
@@ -781,6 +809,7 @@ const defaultOfficials = [
     division: 'Financial Solution',
     hierarchyLevel: 'ASSISTANT_DIRECTOR',
     subsectionKey: 'assistant_directors_officers',
+    displayOrder: 33,
     room: 'Room 159, 1st Floor',
     description: 'Appraisal of loan claims submitted by private commercial banks.',
     contacts: {
@@ -797,6 +826,7 @@ const defaultOfficials = [
     division: 'Financial Solution',
     hierarchyLevel: 'ASSISTANT_DIRECTOR',
     subsectionKey: 'assistant_directors_officers',
+    displayOrder: 34,
     room: 'Room 159, 1st Floor',
     description: 'National database entry and interest subsidy calculation validation.',
     contacts: {
@@ -815,6 +845,7 @@ const defaultOfficials = [
     division: 'Market Access & Development',
     hierarchyLevel: 'ADG',
     subsectionKey: 'adg',
+    displayOrder: 10,
     room: 'Room 148, 1st Floor',
     description: 'Guiding value-chain linkages, export credit promotion, and agricultural market development.',
     contacts: {
@@ -832,6 +863,7 @@ const defaultOfficials = [
     division: 'Market Access & Development',
     hierarchyLevel: 'DIRECTOR',
     subsectionKey: 'directors',
+    displayOrder: 20,
     room: 'Room 160, 1st Floor',
     description: 'Formulating forward linkage partnerships with export chambers and agri-commodity boards.',
     contacts: {
@@ -849,6 +881,7 @@ const defaultOfficials = [
     division: 'Market Access & Development',
     hierarchyLevel: 'DEPUTY_DIRECTOR',
     subsectionKey: 'deputy_directors',
+    displayOrder: 21,
     room: 'Room 162, 1st Floor',
     description: 'Facilitating commercial farming modernization and cold-chain facility loans.',
     contacts: {
@@ -865,6 +898,7 @@ const defaultOfficials = [
     division: 'Market Access & Development',
     hierarchyLevel: 'DEPUTY_DIRECTOR',
     subsectionKey: 'deputy_directors',
+    displayOrder: 22,
     room: 'Room 163, 1st Floor',
     description: 'Conducting capacity building workshops and MSME market-entry mentoring.',
     contacts: {
@@ -881,6 +915,7 @@ const defaultOfficials = [
     division: 'Market Access & Development',
     hierarchyLevel: 'DEPUTY_DIRECTOR',
     subsectionKey: 'deputy_directors',
+    displayOrder: 23,
     room: 'Room 164, 1st Floor',
     description: 'Leading on-site inspection missions to evaluate beneficiary enterprise performance.',
     contacts: {
@@ -899,6 +934,7 @@ const defaultOfficials = [
     division: 'Admin and Accounts',
     hierarchyLevel: 'ADG',
     subsectionKey: 'adg',
+    displayOrder: 10,
     room: 'Room 149, 1st Floor',
     description: 'Strategic stewardship over institutional budget, establishment matters, and parliamentary reporting.',
     contacts: {
@@ -916,6 +952,7 @@ const defaultOfficials = [
     division: 'Admin and Accounts',
     hierarchyLevel: 'DIRECTOR',
     subsectionKey: 'directors_admin_finance',
+    displayOrder: 20,
     room: 'Room 172, 1st Floor',
     description: 'Directing general administration, public finance circular compliance, and internal audit oversight.',
     contacts: {
@@ -933,6 +970,7 @@ const defaultOfficials = [
     division: 'Admin and Accounts',
     hierarchyLevel: 'DEPUTY_DIRECTOR',
     subsectionKey: 'deputy_directors',
+    displayOrder: 21,
     room: 'Room 173, 1st Floor',
     description: 'Managing department facilities, asset registry, and government procurement processes.',
     contacts: {
@@ -949,6 +987,7 @@ const defaultOfficials = [
     division: 'Admin and Accounts',
     hierarchyLevel: 'DEPUTY_DIRECTOR',
     subsectionKey: 'deputy_directors',
+    displayOrder: 22,
     room: 'Room 175, 1st Floor',
     description: 'Supervising treasury payment vouchers and annual parliamentary performance audit preparations.',
     contacts: {
@@ -965,6 +1004,7 @@ const defaultOfficials = [
     division: 'Admin and Accounts',
     hierarchyLevel: 'ASSISTANT_DIRECTOR',
     subsectionKey: 'cmso_development_officers',
+    displayOrder: 23,
     room: 'Room 174, 1st Floor',
     description: 'Supervising establishment affairs, official correspondence dispatch, and HR records.',
     contacts: {
@@ -981,6 +1021,7 @@ const defaultOfficials = [
     division: 'Admin and Accounts',
     hierarchyLevel: 'ASSISTANT_DIRECTOR',
     subsectionKey: 'cmso_development_officers',
+    displayOrder: 24,
     room: 'Room 176, 1st Floor',
     description: 'Managing institutional archiving, RTI request handling, and vehicle log maintenance.',
     contacts: {
@@ -993,6 +1034,32 @@ const defaultOfficials = [
 ];
 
 const officials = ref(defaultOfficials);
+
+/**
+ * Organizational Hierarchy Classification Helpers
+ * Visually distinguishes ADG -> Director -> Deputy Director / Assistant Director
+ */
+const isAdg = (officer) => {
+  if (!officer) return false;
+  const level = (officer.hierarchyLevel || '').toUpperCase();
+  const des = (officer.designation || '').toLowerCase();
+  return level === 'ADG' || des.includes('additional director general') || des.includes('adg');
+};
+
+const isDirector = (officer) => {
+  if (!officer || isAdg(officer)) return false;
+  const level = (officer.hierarchyLevel || '').toUpperCase();
+  const des = (officer.designation || '').toLowerCase();
+  if (level === 'DIRECTOR') return true;
+  const isDirWord = /\bdirector\b/i.test(des);
+  const isSubordinateWord = /deputy|assistant|additional/i.test(des);
+  return isDirWord && !isSubordinateWord;
+};
+
+const isSubordinate = (officer) => {
+  if (!officer) return false;
+  return !isAdg(officer) && !isDirector(officer);
+};
 
 const mapHierarchyToSubsectionKey = (hierarchyLevel, division, designation = '') => {
   const level = (hierarchyLevel || '').toUpperCase();
@@ -1015,6 +1082,9 @@ const mapHierarchyToSubsectionKey = (hierarchyLevel, division, designation = '')
 
 const mapOfficial = (item) => {
   const designation = item.designation || (item.hierarchyLevel === 'HEAD' ? 'Director General' : '');
+  const displayOrderVal = item.displayOrder != null && !isNaN(item.displayOrder) && item.displayOrder !== ''
+    ? Number(item.displayOrder)
+    : 999;
 
   return {
     id: item.id,
@@ -1025,7 +1095,7 @@ const mapOfficial = (item) => {
     subsectionKey: mapHierarchyToSubsectionKey(item.hierarchyLevel, item.division, designation),
     room: item.responsibilitySubject || item.roomLocation || item.room,
     description: item.description,
-    displayOrder: item.displayOrder,
+    displayOrder: displayOrderVal,
     contacts: {
       office: item.officePhone,
       ext: item.extension,
@@ -1154,7 +1224,7 @@ const showSpotlight = computed(() => {
 
 /**
  * Reactive hierarchical organizational breakdown
- * Groups filtered officials strictly by Division and Subsection
+ * Groups filtered officials strictly by Division, sorted strictly by displayOrder ascending
  */
 const filteredHierarchy = computed(() => {
   const query = searchQuery.value.trim().toLowerCase();
@@ -1167,44 +1237,40 @@ const filteredHierarchy = computed(() => {
       return division.divisionValue === selectedDiv;
     })
     .map(division => {
-      // Filter each subsection's officials
-      const filteredSubsections = division.subsections
-        .map(sub => {
-          const members = officials.value.filter(officer => {
-            const matchesDivision = officer.division === division.divisionValue;
-            const matchesSub = officer.subsectionKey === sub.key;
-            if (!matchesDivision || !matchesSub) return false;
+      // Find all matching officials for this division
+      const divisionOfficials = officials.value.filter(officer => {
+        const matchesDivision = officer.division === division.divisionValue;
+        if (!matchesDivision) return false;
 
-            if (!query) return true;
+        if (!query) return true;
 
-            const nameMatch = officer.name && officer.name.toLowerCase().includes(query);
-            const desigMatch = officer.designation && officer.designation.toLowerCase().includes(query);
-            const divMatch = officer.division && officer.division.toLowerCase().includes(query);
-            const roomMatch = officer.room && officer.room.toLowerCase().includes(query);
-            const extMatch = officer.contacts?.ext && officer.contacts.ext.toLowerCase().includes(query);
-            const phoneMatch = officer.contacts && Object.values(officer.contacts).some(v => typeof v === 'string' && v.toLowerCase().includes(query));
-            const emailMatch = officer.emails && officer.emails.some(e => typeof e === 'string' && e.toLowerCase().includes(query));
-            const descMatch = officer.description && officer.description.toLowerCase().includes(query);
+        const nameMatch = officer.name && officer.name.toLowerCase().includes(query);
+        const desigMatch = officer.designation && officer.designation.toLowerCase().includes(query);
+        const divMatch = officer.division && officer.division.toLowerCase().includes(query);
+        const roomMatch = officer.room && officer.room.toLowerCase().includes(query);
+        const extMatch = officer.contacts?.ext && officer.contacts.ext.toLowerCase().includes(query);
+        const phoneMatch = officer.contacts && Object.values(officer.contacts).some(v => typeof v === 'string' && v.toLowerCase().includes(query));
+        const emailMatch = officer.emails && officer.emails.some(e => typeof e === 'string' && e.toLowerCase().includes(query));
+        const descMatch = officer.description && officer.description.toLowerCase().includes(query);
 
-            return nameMatch || desigMatch || divMatch || roomMatch || extMatch || phoneMatch || emailMatch || descMatch;
-          });
+        return nameMatch || desigMatch || divMatch || roomMatch || extMatch || phoneMatch || emailMatch || descMatch;
+      });
 
-          return {
-            ...sub,
-            officials: members
-          };
-        })
-        .filter(sub => sub.officials.length > 0);
-
-      const totalOfficials = filteredSubsections.reduce((acc, sub) => acc + sub.officials.length, 0);
+      // Sort strictly by displayOrder ascending (e.g., ADG = 10, Director 1 = 20, Deputy under Director 1 = 21, 22, Director 2 = 30, etc.)
+      divisionOfficials.sort((a, b) => {
+        const orderA = a.displayOrder != null && !isNaN(a.displayOrder) && a.displayOrder !== '' ? Number(a.displayOrder) : 999;
+        const orderB = b.displayOrder != null && !isNaN(b.displayOrder) && b.displayOrder !== '' ? Number(b.displayOrder) : 999;
+        if (orderA !== orderB) return orderA - orderB;
+        return (Number(a.id) || 0) - (Number(b.id) || 0);
+      });
 
       return {
         ...division,
-        subsections: filteredSubsections,
-        totalOfficials
+        officials: divisionOfficials,
+        totalOfficials: divisionOfficials.length
       };
     })
-    .filter(division => division.subsections.length > 0);
+    .filter(division => division.officials.length > 0);
 });
 
 /**
@@ -1415,6 +1481,13 @@ const fetchOfficials = async () => {
       const rtiIds = new Set(rtiMembers.map(m => m.id));
       const directoryMembers = allMembers.filter(m => m.id !== head?.id && !rtiIds.has(m.id));
       officials.value = directoryMembers.map(mapOfficial);
+      // Sort strictly by displayOrder ascending
+      officials.value.sort((a, b) => {
+        const orderA = a.displayOrder != null && !isNaN(a.displayOrder) && a.displayOrder !== '' ? Number(a.displayOrder) : 999;
+        const orderB = b.displayOrder != null && !isNaN(b.displayOrder) && b.displayOrder !== '' ? Number(b.displayOrder) : 999;
+        if (orderA !== orderB) return orderA - orderB;
+        return (Number(a.id) || 0) - (Number(b.id) || 0);
+      });
     }
   } catch (err) {
     console.error('Failed to load team members from API:', err);
@@ -2212,6 +2285,53 @@ onUnmounted(() => {
 
 .directory-row:hover {
   background-color: rgba(248, 250, 252, 0.85);
+}
+
+/* ==========================================================================
+   HIERARCHICAL ROW STYLING (ADG -> Director -> Deputy Director / Assistant Director)
+   ========================================================================== */
+.row-adg,
+tr.row-adg,
+.bg-teal-50\/40 {
+  background-color: rgba(240, 253, 250, 0.45) !important;
+  font-weight: 600 !important;
+}
+
+.row-adg:hover,
+tr.row-adg:hover {
+  background-color: rgba(204, 251, 241, 0.55) !important;
+}
+
+.row-director,
+tr.row-director,
+.row-subordinate,
+tr.row-subordinate {
+  background-color: #ffffff;
+}
+
+.row-director:hover,
+tr.row-director:hover,
+.row-subordinate:hover,
+tr.row-subordinate:hover {
+  background-color: rgba(248, 250, 252, 0.85);
+}
+
+.cell-subordinate,
+td.cell-subordinate,
+td.pl-8 {
+  padding-left: 2rem !important; /* 32px: pl-8 visual indent */
+  border-left: 2px solid #99f6e4 !important; /* border-l-2 border-teal-200 */
+}
+
+.tree-connector,
+.text-teal-500 {
+  color: #14b8a6 !important; /* teal-500 tree connector icon */
+}
+
+.table-name-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
 }
 
 .corporate-directory-table td {
