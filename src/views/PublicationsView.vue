@@ -12,17 +12,7 @@
 
     <!-- Filter Section -->
     <section class="pub-filter-bar">
-      <div class="pub-container filter-flex-wrapper flex items-center justify-between flex-wrap gap-3">
-        <div class="results-meta-info text-xs font-semibold text-slate-500">
-          Showing <span class="text-[#008795] font-bold">{{ filteredPublications.length }}</span> publication{{ filteredPublications.length === 1 ? '' : 's' }}
-          <span v-if="searchQuery" class="meta-tag ml-1">
-            matching "{{ searchQuery }}"
-          </span>
-          <span v-if="selectedYear !== 'All'" class="meta-tag ml-1">
-            in {{ selectedYearLabel }}
-          </span>
-        </div>
-
+      <div class="pub-container filter-flex-wrapper flex items-center justify-end flex-wrap gap-3">
         <div class="flex items-center gap-3">
           <button
             v-if="searchQuery || selectedYear !== 'All'"
@@ -478,7 +468,7 @@ onBeforeUnmount(() => {
 .filter-flex-wrapper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .filter-dropdown-area {

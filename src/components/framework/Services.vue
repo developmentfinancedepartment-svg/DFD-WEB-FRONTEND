@@ -13,18 +13,8 @@
     <!-- Filter Header -->
     <section class="filter-section py-3 bg-light shadow-sm mb-5">
       <div
-        class="container d-flex justify-content-between align-items-center flex-wrap gap-2"
+        class="container d-flex justify-content-end justify-end align-items-center flex-wrap gap-3"
       >
-        <div class="results-meta-info text-muted small fw-semibold">
-          Showing <span class="text-teal fw-bold">{{ filteredServices.length }}</span> scheme{{ filteredServices.length === 1 ? '' : 's' }}
-          <span v-if="searchQuery" class="badge bg-teal-light text-teal ms-1">
-            matching "{{ searchQuery }}"
-          </span>
-          <span v-if="selectedCategory !== 'ALL'" class="badge bg-secondary-subtle text-dark ms-1">
-            in {{ selectedCategoryLabel }}
-          </span>
-        </div>
-
         <div class="d-flex align-items-center gap-3">
           <button
             v-if="searchQuery || selectedCategory !== 'ALL'"

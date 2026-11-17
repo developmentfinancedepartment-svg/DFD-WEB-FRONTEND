@@ -12,17 +12,7 @@
 
     <!-- Filter Header -->
     <section class="filter-section py-4 bg-white border-b border-slate-200/80 shadow-2xs">
-      <div class="container flex justify-between items-center d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <div class="results-meta-info text-xs font-semibold text-slate-500">
-          Showing <span class="text-[#008795] font-bold">{{ filteredGallery.length }}</span> photograph{{ filteredGallery.length === 1 ? '' : 's' }}
-          <span v-if="searchQuery" class="meta-tag ml-1">
-            matching "{{ searchQuery }}"
-          </span>
-          <span v-if="activeCategory !== 'ALL'" class="meta-tag ml-1">
-            in {{ selectedCategoryLabel }}
-          </span>
-        </div>
-
+      <div class="container flex justify-end items-center d-flex justify-content-end align-items-center flex-wrap gap-2">
         <div class="flex items-center gap-3">
           <button
             v-if="searchQuery || activeCategory !== 'ALL'"

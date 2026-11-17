@@ -17,7 +17,7 @@
     <!-- ================================================================= -->
     <!-- 2. VISION & MISSION FLOATING CARDS (-mt-16 OVERLAP)               -->
     <!-- ================================================================= -->
-    <section class="max-w-6xl mx-auto px-4 mt-8 mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+    <section class="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
       <!-- Vision Card -->
       <div class="bg-[#006d77] text-white p-8 rounded-3xl shadow-lg border border-teal-600/30 flex flex-col justify-between hover:shadow-xl transition duration-200">
         <div>
@@ -52,7 +52,7 @@
     <!-- ================================================================= -->
     <!-- 4. "OUR OBJECTIVES" SECTION                                       -->
     <!-- ================================================================= -->
-    <section class="max-w-6xl mx-auto px-4 mt-10">
+    <section class="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 mt-10">
       <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm">
         <!-- Section Title -->
         <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-6">
@@ -85,7 +85,7 @@
     <!-- ================================================================= -->
     <!-- 5. "CORE RESPONSIBILITIES" SECTION                                -->
     <!-- ================================================================= -->
-    <section class="max-w-6xl mx-auto px-4 mt-10 mb-12 pb-4">
+    <section class="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 mt-10 mb-12 pb-4">
       <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm">
         <!-- Section Title -->
         <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-6">
@@ -318,6 +318,10 @@ const responsibilities = [
   max-width: 72rem !important;
 }
 
+.max-w-\[1440px\] {
+  max-width: 1440px !important;
+}
+
 .w-full {
   width: 100% !important;
 }
@@ -492,6 +496,20 @@ const responsibilities = [
 .px-4 {
   padding-left: 1rem !important;
   padding-right: 1rem !important;
+}
+
+@media (min-width: 640px) {
+  .sm\:px-6 {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:px-8 {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
 }
 
 /* Typography */

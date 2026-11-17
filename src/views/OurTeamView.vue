@@ -10,7 +10,16 @@
 
     <!-- Sticky Filter Bar -->
     <section class="sticky-filter-bar">
-      <div class="container max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 filter-bar-container filter-bar-end">
+      <div class="container max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 filter-bar-container filter-bar-end gap-3">
+        <button
+          v-if="selectedDivision !== 'ALL' || searchQuery"
+          type="button"
+          class="reset-filters-btn"
+          @click="resetFilters"
+        >
+          Reset Filters
+        </button>
+
         <!-- Division Dropdown Filter (Hover Auto-Open) -->
         <div class="filter-dropdown-area">
           <div class="filter-label">
@@ -88,28 +97,6 @@
     <!-- Main Directory Content -->
     <main class="team-content pb-20 mb-8">
       <div class="container max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <!-- Results Counter & Reset Filter Option -->
-        <div class="results-meta-bar">
-          <div class="results-count">
-            Showing <strong>{{ totalResultsCount }}</strong> official{{ totalResultsCount === 1 ? '' : 's' }}
-            <span v-if="selectedDivision !== 'ALL'" class="meta-tag">
-              in {{ selectedDivisionLabel }}
-            </span>
-            <span v-if="searchQuery" class="meta-tag">
-              matching "{{ searchQuery }}"
-            </span>
-          </div>
-
-          <button
-            v-if="selectedDivision !== 'ALL' || searchQuery"
-            type="button"
-            class="reset-filters-btn"
-            @click="resetFilters"
-          >
-            Reset Filters
-          </button>
-        </div>
-
         <!-- ================================================================= -->
         <!-- LEVEL 0: EXECUTIVE SPOTLIGHT - DIRECTOR GENERAL                   -->
         <!-- ================================================================= -->

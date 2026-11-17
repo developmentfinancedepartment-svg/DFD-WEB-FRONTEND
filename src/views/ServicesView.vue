@@ -13,7 +13,7 @@
     <!-- Filter Header -->
     <section class="filter-section py-3 bg-light shadow-sm mb-5">
       <div
-        class="container d-flex justify-content-center justify-content-md-end align-items-center"
+        class="container d-flex justify-content-end justify-end align-items-center"
       >
         <!-- Category Filter Custom Dropdown -->
         <div class="filter-dropdown-area">
