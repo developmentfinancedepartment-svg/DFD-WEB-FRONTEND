@@ -5,7 +5,7 @@
         
         <!-- Section Header -->
         <div class="section-header animate-fade-down">
-          <h1 class="section-title">Website <span class="highlight">Disclaimer</span></h1>
+          <h1 class="section-title">{{ $t('disclaimer.title') }} <span class="highlight">{{ $t('disclaimer.titleHighlight') }}</span></h1>
           <div class="title-underline"></div>
         </div>
 
@@ -16,10 +16,10 @@
           </div>
           <div class="card-body">
             <p class="disclaimer-text">
-              To make our content accessible to a wider audience, this website provides automated language translations using <strong>Google Translate</strong>. While we strive for accuracy, automated translations may not always capture the exact legal or financial nuances of the original English text.
+              {{ $t('disclaimer.p1') }}
             </p>
             <p class="disclaimer-text">
-              Please note that these translations are provided <strong>"as-is,"</strong> and the <strong>Department of Development Finance (DFD)</strong> assumes no responsibility for any misunderstandings or misinterpretations arising from automated translations. For official loan scheme terms, interest rates, and eligibility criteria, please refer to the verified English circulars and guidelines published by the Department.
+              {{ $t('disclaimer.p2') }}
             </p>
           </div>
         </div>

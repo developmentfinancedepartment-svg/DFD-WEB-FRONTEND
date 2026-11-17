@@ -6,10 +6,10 @@
     <header class="hero-header text-center px-4">
       <div class="hero-container">
         <h1 class="hero-title">
-          About the Department
+          {{ $t('about.heroTitle') }}
         </h1>
         <p class="hero-subtitle">
-          Formulating strategic frameworks, policies, and credit mechanisms to empower national economic development.
+          {{ $t('about.heroSubtitle') }}
         </p>
       </div>
     </header>
@@ -25,10 +25,10 @@
             <i class="fas fa-eye"></i>
           </div>
           <h2 class="text-2xl font-bold tracking-tight text-white mb-3">
-            Vision
+            {{ $t('about.visionTitle') }}
           </h2>
           <p class="text-base md:text-[17px] text-teal-50/95 leading-relaxed font-normal">
-            To become the key Government agency as facilitator for development financing.
+            {{ $t('about.visionDesc') }}
           </p>
         </div>
       </div>
@@ -40,10 +40,10 @@
             <i class="fas fa-bullseye"></i>
           </div>
           <h2 class="text-2xl font-bold tracking-tight text-white mb-3">
-            Mission
+            {{ $t('about.missionTitle') }}
           </h2>
           <p class="text-base md:text-[17px] text-teal-50/95 leading-relaxed font-normal">
-            Facilitate to formulate appropriate policies and strategies and mobilize financial resources for the development of MSMEs, financing primary sectors through necessary intervention with the relevant stakeholders.
+            {{ $t('about.missionDesc') }}
           </p>
         </div>
       </div>
@@ -59,13 +59,13 @@
           <div class="w-10 h-10 rounded-xl bg-teal-50 text-[#008795] flex items-center justify-center text-lg flex-shrink-0">
             <i class="fas fa-flag"></i>
           </div>
-          <span>Our Objectives</span>
+          <span>{{ $t('about.objectivesTitle') }}</span>
         </h2>
 
         <!-- Objectives 3-Column Responsive Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           <div
-            v-for="(objective, index) in objectives"
+            v-for="(objective, index) in localizedObjectives"
             :key="index"
             class="bg-slate-50/80 rounded-2xl p-5 border border-slate-100 flex items-start gap-3.5 hover:bg-white hover:shadow-md hover:border-teal-200 transition duration-200"
           >
@@ -92,13 +92,13 @@
           <div class="w-10 h-10 rounded-xl bg-teal-50 text-[#008795] flex items-center justify-center text-lg flex-shrink-0">
             <i class="fas fa-check-circle"></i>
           </div>
-          <span>Core Responsibilities</span>
+          <span>{{ $t('about.responsibilitiesTitle') }}</span>
         </h2>
 
         <!-- Responsibilities 2-Column Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div
-            v-for="(responsibility, index) in responsibilities"
+            v-for="(responsibility, index) in localizedResponsibilities"
             :key="index"
             class="bg-slate-50/80 rounded-2xl p-5 border border-slate-100 flex items-start gap-4 hover:bg-white hover:shadow-md hover:border-teal-200 transition duration-200"
           >
@@ -116,26 +116,20 @@
 </template>
 
 <script setup>
-const objectives = [
-  "Mobilize the financial resources and removal of the market impediments for the development of MSMEs.",
-  "Strengthen institutional capacities for development of financial markets.",
-  "Enhance rural entrepreneurship especially for low income entrepreneurs.",
-  "Financing for primary sector in line with Government policy framework.",
-  "Implementation of relevant budget proposals of each year.",
-];
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-const responsibilities = [
-  "Facilitate to formulate appropriate polices, strategies and programs for the development of MSMEs of the economy.",
-  "Monitor and Review the market data to Identify key issues and provide solutions to the smooth growth of the MSMEs and micro finance sectors.",
-  "Review Government Subsidy Schemes to ensure economic development and facilitate to formulate appropriate polices.",
-  "Facilitate innovative policies, strategies and programs where ever necessary for micro finance sector.",
-  "Facilitate in enacting legislations for banking, insurance, MSMEs and financial sector if the market review illustrates the need.",
-  "Implement budget proposals and donor funded projects related to MSME sector, primary sector and other sectors coming under the purview of this department.",
-  "Compile all data on MSME’s of Industrial, Agriculture and Service sectors and analyze to identify the impediments and policy interventions.",
-  "Facilitate annual budget preparation process of the Government in respect of MSME sector, Banking sector and financial market and other sectors coming under the purview of this department.",
-  "Oversee implementation of Government sponsored financial assistance schemes.",
-  "Arranging local bank financing for development projects in MSME finance sectors in line with the Government policy.",
-];
+const { tm, rt } = useI18n();
+
+const localizedObjectives = computed(() => {
+  const list = tm('about.objectives');
+  return Array.isArray(list) ? list.map(item => rt(item)) : [];
+});
+
+const localizedResponsibilities = computed(() => {
+  const list = tm('about.responsibilities');
+  return Array.isArray(list) ? list.map(item => rt(item)) : [];
+});
 </script>
 
 <style scoped>

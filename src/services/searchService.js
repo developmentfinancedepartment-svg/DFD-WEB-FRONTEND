@@ -542,8 +542,8 @@ const pagesIndex = [
     title: 'Contact Us',
     subtitle: 'Connect with the Department of Development Finance for official inquiries, scheme details, and institutional support.',
     tag: 'Contact & Help',
-    meta: 'Hotline 1819 • Phone: +94 112 484 862',
-    description: 'Official postal address, email dgdf@dfd.treasury.gov.lk, government hotline 1819, Google Map directions, and online public inquiry submission form.',
+    meta: 'Hotline 1819 • Phone: +94 11 248 4862',
+    description: 'Official postal address, email info@dfd.treasury.gov.lk, government hotline 1819, Google Map directions, and online public inquiry submission form.',
     path: '/contact',
     keywords: ['contact', 'contact us', 'inquiries', 'help', 'hotline', '1819', 'secretariat', 'address', 'phone', 'email']
   },
@@ -576,7 +576,7 @@ const pagesIndex = [
     subtitle: 'Official Terms & Information Policy',
     tag: 'Legal Notice',
     meta: 'Terms of Use',
-    description: 'Information regarding website content accuracy, automated trilingual Google translation notice, and Ministry liability terms.',
+    description: 'Information regarding website content accuracy, official trilingual language policy, and Ministry liability terms.',
     path: '/Disclaimer',
     keywords: ['disclaimer', 'translation', 'privacy', 'terms', 'policy']
   }

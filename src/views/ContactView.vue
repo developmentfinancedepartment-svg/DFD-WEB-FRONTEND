@@ -5,9 +5,9 @@
     <!-- ================================================================= -->
     <header class="hero-header text-center px-4">
       <div class="hero-container">
-        <h1 class="hero-title">Contact Us</h1>
+        <h1 class="hero-title">{{ $t('contact.heroTitle') }}</h1>
         <p class="hero-subtitle">
-          Connect with the Department of Development Finance for official inquiries, scheme details, and institutional support.
+          {{ $t('contact.heroSubtitle') }}
         </p>
       </div>
     </header>
@@ -24,106 +24,115 @@
       >
         <!-- Card 1: Office Address -->
         <div
-          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition"
+          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center h-full hover:shadow-md transition"
         >
-          <div
-            class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3"
-          >
-            <i class="fas fa-map-marker-alt"></i>
-          </div>
-          <div class="flex flex-col items-center">
-            <span
-              class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1"
-              >Office Address</span
+          <div class="flex flex-col items-center mb-3">
+            <div
+              class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center"
             >
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span
+              class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-4"
+              >{{ $t('contact.cardAddress') }}</span
+            >
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center text-center">
             <p class="text-sm text-slate-700 font-bold leading-relaxed">
-              Room No. 140, Ministry of Finance, The Secretariat, Colombo 01
+              {{ $t('contact.addressValue') }}
             </p>
           </div>
         </div>
 
-        <!-- Card 2: National Hotline -->
+        <!-- Card 2: DFD Hotline -->
         <div
-          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition"
+          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center h-full hover:shadow-md transition"
         >
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center mb-3">
             <div
-              class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3"
+              class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center"
             >
               <i class="fas fa-headset"></i>
             </div>
-            <div class="flex flex-col items-center">
-              <span
-                class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1"
-                >National Hotline</span
-              >
-            </div>
-
-            <a
-              href="tel:1819"
-              class="text-4xl font-bold text-[#008795] hover:opacity-80 transition"
+            <span
+              class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-4"
+              >{{ $t('contact.cardHotline') }}</span
             >
-              1819
-            </a>
-            <span class="text-[11px] text-slate-400 mt-0.5"
-              >Toll-free Government Hotline</span
+          </div>
+
+          <div class="flex-1 flex flex-col items-center justify-center text-center">
+            <div class="min-h-[40px] flex items-center justify-center">
+              <a
+                href="tel:1819"
+                class="text-4xl sm:text-4xl font-extrabold text-[#008795] hover:opacity-80 transition leading-none"
+              >
+                1819
+              </a>
+            </div>
+            <span class="text-[11px] text-slate-400 mt-1"
+              >{{ $t('contact.hotlineNote') }}</span
             >
           </div>
         </div>
 
         <!-- Card 3: Telephone -->
         <div
-          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition"
+          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center h-full hover:shadow-md transition"
         >
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center mb-3">
             <div
-              class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3"
+              class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center"
             >
               <i class="fas fa-phone-alt"></i>
             </div>
-            <div class="flex flex-col items-center">
-              <span
-                class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1"
-                >Telephone</span
-              >
-            </div>
-
-            <a
-              href="tel:+94112484862"
-              class="text-md font-bold text-slate-800 hover:text-[#008795] transition"
+            <span
+              class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-4"
+              >{{ $t('contact.cardTelephone') }}</span
             >
-              +94 112 484 862
-            </a>
-            <span class="text-[11px] text-slate-400 mt-0.5"
-              >Secretariat General Line</span
+          </div>
+
+          <div class="flex-1 flex flex-col items-center justify-center text-center">
+            <div class="h-10 flex items-center justify-center">
+              <a
+                href="tel:+94112484862"
+                class="text-base font-bold text-slate-800 hover:text-[#008795] transition leading-none"
+              >
+                +94 11 248 4862
+              </a>
+            </div>
+            <span class="text-[11px] text-slate-400 mt-1"
+              >{{ $t('contact.telephoneNote') }}</span
             >
           </div>
         </div>
 
         <!-- Card 4: Official Email -->
         <div
-          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center justify-between hover:shadow-md transition"
+          class="bg-ash rounded-2xl p-6 border border-slate-200/80 shadow-sm min-h-[170px] flex flex-col items-center text-center h-full hover:shadow-md transition"
         >
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center mb-3">
             <div
-              class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center mb-3"
+              class="w-12 h-12 rounded-full bg-teal-50 text-[#008795] text-xl flex items-center justify-center"
             >
               <i class="fas fa-envelope"></i>
             </div>
-            <div class="flex flex-col items-center">
-              <span
-                class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1"
-                >Official Email</span
-              >
-            </div>
-            <a
-              href="mailto:dgdf@dfd.treasury.gov.lk"
-              class="text-sm font-bold text-slate-800 hover:text-[#008795] transition break-all"
+            <span
+              class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-4"
+              >{{ $t('contact.cardEmail') }}</span
             >
-              dgdf@dfd.treasury.gov.lk
-            </a>
-            <span class="text-[11px] text-slate-400 mt-0.5"
-              >Director General's Office</span
+          </div>
+
+          <div class="flex-1 flex flex-col items-center justify-center text-center">
+            <div class="h-10 flex items-center justify-center">
+              <a
+                href="mailto:info@dfd.treasury.gov.lk"
+                class="text-sm font-bold text-slate-800 hover:text-[#008795] transition break-all leading-none"
+              >
+                info@dfd.treasury.gov.lk
+              </a>
+            </div>
+            <span class="text-[11px] text-slate-400 mt-1"
+              >{{ $t('contact.emailNote') }}</span
             >
           </div>
         </div>
@@ -148,9 +157,9 @@
             <div class="flex items-center justify-between mb-3">
               <span
                 class="text-xs font-bold uppercase tracking-wider text-slate-700"
-                >Location Map</span
+                >{{ $t('contact.mapTitle') }}</span
               >
-              <span class="text-xs text-slate-400">Colombo 01</span>
+              <span class="text-xs text-slate-400">{{ $t('contact.mapCity') }}</span>
             </div>
             <div
               class="h-72 w-full rounded-xl border border-slate-100 overflow-hidden"
@@ -179,13 +188,13 @@
               <h4
                 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-0.5"
               >
-                Operating Hours
+                {{ $t('contact.operatingHours') }}
               </h4>
               <p class="text-xs text-slate-700 font-semibold mb-0">
-                Monday - Friday: 8:30 AM - 4:15 PM
+                {{ $t('contact.operatingHoursTime') }}
               </p>
               <p class="text-[11px] text-slate-500 mb-0 mt-0.5">
-                Closed on Weekends, Poya &amp; Public Holidays
+                {{ $t('contact.operatingHoursClosed') }}
               </p>
             </div>
           </div>
@@ -196,7 +205,7 @@
           >
             <span
               class="text-xs font-bold uppercase tracking-wider text-slate-700"
-              >Follow Us</span
+              >{{ $t('contact.followUs') }}</span
             >
             <div class="flex items-center gap-3">
               <!-- Facebook -->
@@ -232,17 +241,6 @@
               >
                 <i class="fab fa-youtube"></i>
               </a>
-              <!-- WhatsApp -->
-              <!-- <a
-                href="https://whatsapp.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="w-9 h-9 rounded-full bg-[#25d366] text-white flex items-center justify-center hover:opacity-90 transition text-sm"
-                aria-label="WhatsApp"
-                title="WhatsApp"
-              >
-                <i class="fab fa-whatsapp"></i>
-              </a> -->
             </div>
           </div>
         </div>
@@ -258,10 +256,10 @@
             <!-- Centered Header -->
             <div class="text-center mb-6">
               <h2 class="inquiry-heading text-2xl font-bold text-slate-900 tracking-tight">
-                Submit an Official Inquiry
+                {{ $t('contact.inquiryTitle') }}
               </h2>
               <p class="inquiry-subtitle text-sm text-slate-500 max-w-md mx-auto text-center mt-1.5 mb-0 leading-relaxed">
-                Have questions regarding credit schemes or policy frameworks? Reach out directly to our dedicated desk.
+                {{ $t('contact.inquirySubtitle') }}
               </p>
             </div>
 
@@ -288,8 +286,8 @@
                 <span class="font-bold block mb-0.5">
                   {{
                     submissionStatus.isError
-                      ? "Submission Issue"
-                      : "Inquiry Submitted"
+                      ? $t('contact.issueTitle')
+                      : $t('contact.successTitle')
                   }}
                 </span>
                 {{ submissionStatus.message }}
@@ -312,26 +310,26 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label for="firstName" class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                    First Name
+                    {{ $t('contact.firstName') }}
                   </label>
                   <input
                     id="firstName"
                     v-model.trim="form.firstName"
                     type="text"
-                    placeholder="First name"
+                    :placeholder="$t('contact.firstName')"
                     required
                     class="inquiry-input border border-slate-200 bg-white rounded-xl py-3 px-4 text-sm text-slate-800 placeholder-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 transition-all outline-none w-full"
                   />
                 </div>
                 <div>
                   <label for="lastName" class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                    Last Name
+                    {{ $t('contact.lastName') }}
                   </label>
                   <input
                     id="lastName"
                     v-model.trim="form.lastName"
                     type="text"
-                    placeholder="Last name"
+                    :placeholder="$t('contact.lastName')"
                     required
                     class="inquiry-input border border-slate-200 bg-white rounded-xl py-3 px-4 text-sm text-slate-800 placeholder-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 transition-all outline-none w-full"
                   />
@@ -342,7 +340,7 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label for="phone" class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                    Phone Number
+                    {{ $t('contact.phone') }}
                   </label>
                   <input
                     id="phone"
@@ -356,7 +354,7 @@
                 </div>
                 <div>
                   <label for="email" class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                    Email Address
+                    {{ $t('contact.email') }}
                   </label>
                   <input
                     id="email"
@@ -377,7 +375,7 @@
                 @mouseleave="isCategoryOpen = false"
               >
                 <label class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                  Scheme / Category
+                  {{ $t('contact.category') }}
                 </label>
                 <button
                   type="button"
@@ -402,7 +400,7 @@
                       ]"
                     ></i>
                     <span>{{
-                      form.category || "Select Scheme / Category"
+                      form.category || $t('contact.selectCategory')
                     }}</span>
                   </span>
                   <i
@@ -421,7 +419,7 @@
                     <div
                       class="py-3 px-5 text-xs text-slate-400 font-semibold bg-slate-50/50 border-b border-slate-100 select-none"
                     >
-                      Select Inquiry Category
+                      {{ $t('contact.selectCategory') }}
                     </div>
 
                     <!-- Scrollable Option List -->
@@ -457,13 +455,13 @@
               <!-- Message Textarea -->
               <div class="flex-1 flex flex-col">
                 <label for="message" class="inquiry-label block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                  Message
+                  {{ $t('contact.message') }}
                 </label>
                 <textarea
                   id="message"
                   v-model="form.message"
                   rows="5"
-                  placeholder="How can we help you? Describe your inquiry in detail..."
+                  :placeholder="$t('contact.messagePlaceholder')"
                   required
                   class="inquiry-input border border-slate-200 bg-white rounded-xl py-3 px-4 text-sm text-slate-800 placeholder-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 transition-all outline-none w-full resize-y flex-1 min-h-[140px]"
                 ></textarea>
@@ -482,7 +480,7 @@
                   ></i>
                   <i v-else class="fas fa-paper-plane text-sm"></i>
                   <span>{{
-                    isSubmitting ? "Submitting Inquiry..." : "Submit Inquiry"
+                    isSubmitting ? $t('contact.submittingBtn') : $t('contact.submitBtn')
                   }}</span>
                 </button>
               </div>

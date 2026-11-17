@@ -15,7 +15,7 @@
             <div class="card-wrapper">
               <div class="system-image">
                 <a href="" target="_blank">
-                  <img src="../../assets/lettr1.png" alt="Your System Name" />
+                  <img src="../../assets/service.png" alt="Your System Name" />
                 </a>
               </div>
               <div class="system-content">
@@ -38,7 +38,7 @@
             <div class="card-wrapper">
               <div class="system-image">
                 <a href="" target="_blank">
-                  <img src="../../assets/lettr1.png" alt="Your System Name" />
+                  <img src="../../assets/service.png" alt="Your System Name" />
                 </a>
               </div>
               <div class="system-content">

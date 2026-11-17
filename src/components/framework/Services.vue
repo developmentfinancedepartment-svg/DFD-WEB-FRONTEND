@@ -3,9 +3,9 @@
     <!-- Hero Header -->
     <section class="hero-header">
       <div class="container text-center">
-        <h1 class="hero-title">Development Financing Schemes</h1>
+        <h1 class="hero-title">{{ $t('services.heroTitle') }}</h1>
         <p class="hero-subtitle">
-          Empowering enterprises and priority sectors through concessionary credit lines and interest subsidy schemes.
+          {{ $t('services.heroSubtitle') }}
         </p>
       </div>
     </section>
@@ -22,7 +22,7 @@
             class="btn btn-sm btn-outline-secondary rounded-pill px-3"
             @click="resetFilters"
           >
-            Reset Filters
+            {{ $t('common.resetFilters') }}
           </button>
 
           <!-- Category Filter Custom Dropdown -->
@@ -35,7 +35,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <span>Category:</span>
+            <span>{{ $t('services.categoryLabel') }}</span>
           </div>
 
           <div
@@ -123,7 +123,7 @@
           <div class="spinner-border text-teal mb-3" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
-          <h5 class="text-muted">Loading financing schemes...</h5>
+          <h5 class="text-muted">{{ $t('services.loading') }}</h5>
         </div>
 
         <!-- Active Services Grid -->
@@ -164,7 +164,7 @@
                 :to="getSchemeLink(service)"
                 class="scheme-action-btn mt-auto whitespace-nowrap bg-teal-50 text-teal-700 hover:bg-teal-600 hover:text-white rounded-xl py-2.5 px-4 font-medium text-sm transition-all flex items-center justify-center gap-2 mx-auto w-full max-w-[200px] group/btn"
               >
-                <span>{{ isOtherFacility(service) ? 'View Service Details' : 'View Scheme Details' }}</span>
+                <span>{{ $t('services.viewDetailsBtn') }}</span>
                 <span class="btn-arrow transition-transform duration-200 group-hover/btn:translate-x-1.5 group-hover:translate-x-1.5">&rarr;</span>
               </router-link>
             </div>
@@ -225,7 +225,7 @@
                   class="scheme-action-btn-disabled mt-auto whitespace-nowrap bg-slate-100 text-slate-400 border border-slate-200 rounded-xl py-2.5 px-4 font-semibold text-sm cursor-not-allowed pointer-events-none flex items-center justify-center gap-2 mx-auto w-full max-w-[200px]"
                   title="Scheme details will be available upon official launch"
                 >
-                  <span>{{ isOtherFacility(service) ? 'View Service Details' : 'View Scheme Details' }}</span>
+                  <span>{{ $t('services.viewDetailsBtn') }}</span>
                   <span class="btn-arrow">&rarr;</span>
                 </button>
               </div>
@@ -238,12 +238,12 @@
           <div class="mb-4">
             <i class="fas fa-folder-open fa-3x text-muted opacity-50"></i>
           </div>
-          <h4 class="text-muted">No schemes found matching your search.</h4>
-          <p class="text-muted small" v-if="searchQuery">
-            We couldn't find any loan schemes matching "{{ searchQuery }}".
+          <h4 class="text-muted">{{ $t('services.noSchemesTitle') }}</h4>
+          <p class="text-muted small">
+            {{ $t('services.noSchemesDesc') }}
           </p>
           <button class="btn btn-teal text-white mt-2 px-4 rounded-pill" @click="resetFilters">
-            Clear Filters &amp; Show All
+            {{ $t('common.resetFilters') }}
           </button>
         </div>
       </div>
@@ -253,6 +253,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import BaseUrl from "../../services/baseURL";
@@ -264,6 +265,7 @@ import {
 } from "../../services/navbarSearchState";
 
 const route = useRoute();
+const { t } = useI18n();
 const searchQuery = computed({
   get() {
     return navbarSearchState.query;
@@ -299,7 +301,7 @@ const isOtherFacility = (service) => {
 
 const categoryOptions = computed(() => {
   const standard = [
-    { label: "All Schemes", value: "ALL" },
+    { label: t("services.allSchemes"), value: "ALL" },
     { label: "Interest Subsidy Loan Schemes", value: "Interest Subsidy Loan Schemes" },
     { label: "MSME Revitalization", value: "MSME Revitalization" },
     { label: "Agriculture & Livestock", value: "Agriculture & Livestock" },

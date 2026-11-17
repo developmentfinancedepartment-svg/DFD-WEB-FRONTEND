@@ -167,7 +167,7 @@
           <div class="col-lg-6">
             <div class="about-image-wrapper">
               <img
-                src="../../assets/team_image.png"
+                src="../../assets/MOF.jpeg"
                 alt="About DFD"
                 class="about-image"
               />
@@ -256,11 +256,11 @@ import { servicesData } from "@/data/servicesData";
 import Newsline from "./Newsline.vue";
 
 
-import hero1 from "@/assets/hero-banners-2.jpg";
-import hero2 from "@/assets/hero-banners-1.jpg";
-import hero3 from "@/assets/hero-banners-3.jpg";
-import hero4 from "@/assets/hero-banners-4.jpg";
-import hero5 from "@/assets/hero-banners-5.jpg";
+import hero1 from "@/assets/hero-1.jpg";
+import hero2 from "@/assets/hero-2.jpg";
+import hero3 from "@/assets/hero-3.jpg";
+import hero4 from "@/assets/hero-4.jpg";
+import hero5 from "@/assets/hero-5.jpg";
 
 
 // Hero slider state

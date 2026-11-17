@@ -13,7 +13,7 @@
 
           <div class="management-card">
             <div class="profile-frame">
-              <img src="../../assets/profile.png" alt="Your Name" class="profile-img" />
+              <img src="../../assets/national-emblem.svg" alt="Your Name" class="profile-img" />
               <div class="profile-overlay">
                 <div class="social-links">
                   <span>Your Position</span>
@@ -28,7 +28,7 @@
 
           <div class="management-card">
             <div class="profile-frame">
-              <img src="../../assets/profile.png" alt="Your Name" class="profile-img" />
+              <img src="../../assets/national-emblem.svg" alt="Your Name" class="profile-img" />
               <div class="profile-overlay">
                 <div class="social-links">
                   <a href="#" target="_blank">
@@ -49,7 +49,7 @@
 
         <!-- Team Image Section -->
         <div class="team-image-section animate-fade-up">
-          <img src="../../assets/team_image.png" alt="Our Team" class="team-image" />
+          <img src="../../assets/national-emblem.svg" alt="Our Team" class="team-image" />
         </div>
 
         <!-- CTA -->

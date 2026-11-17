@@ -6,18 +6,15 @@
           <!-- Contact Info -->
           <div class="col-lg-4 col-md-6">
             <div class="footer-widget contact-widget">
-              <h4 class="widget-title">Contact Us</h4>
+              <h4 class="widget-title">{{ $t('footer.contactUs') }}</h4>
               <ul class="contact-info-list">
                 <li>
                   <i class="fas fa-map-marker-alt"></i>
                   <span>
-                    Department of Development Finance,<br />
-                    Room No. 129,<br /> 
-                    1<sup>st</sup> Floor,<br />
-                    Ministry of Finance,Planning and Economic Development,<br />
-                    The Secretariat,<br />
-                    Colombo 01,<br />
-                    Sri Lanka
+                    {{ $t('footer.addressLine1') }}<br />
+                    {{ $t('footer.addressLine2') }}<br /> 
+                    {{ $t('footer.addressLine3') }}<br />
+                    {{ $t('footer.addressLine4') }}
                   </span>
                 </li>
                 <li>
@@ -30,7 +27,7 @@
                 </li>
               </ul>
               <div class="footer-socials">
-                <h5 class="social-title">Follow Us</h5>
+                <h5 class="social-title">{{ $t('footer.followUs') }}</h5>
                 <div class="social-icons">
                   <a href="https://www.youtube.com" target="_blank" class="social-link" title="YouTube">
                     <i class="fab fa-youtube"></i>
@@ -52,14 +49,14 @@
           <!-- Quick Links -->
           <div class="col-lg-3 col-md-6">
             <div class="footer-widget">
-              <h4 class="widget-title">Quick Links</h4>
+              <h4 class="widget-title">{{ $t('footer.quickLinks') }}</h4>
               <ul class="footer-links">
-                <li><a href="https://www.presidentsoffice.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>Presidential Secretariat</a></li>
-                <li><a href="https://www.treasury.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>Ministry of Finance</a></li>
-                <li><a href="https://www.cbsl.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>Central Bank of Sri Lanka</a></li>
-                <li><a href="https://www.ncgil.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>National Credit Guarantee Institution</a></li>
-                <li><a href="https://agrimin.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>Ministry of Agriculture, Livestock, Lands and Irrigation</a></li>
-                <li><a href="https://investsrilanka.com/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>Board of Investment of Sri Lanka</a></li>
+                <li><a href="https://www.presidentsoffice.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>{{ $t('footer.linkPresidency') }}</a></li>
+                <li><a href="https://www.treasury.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>{{ $t('footer.linkFinance') }}</a></li>
+                <li><a href="https://www.cbsl.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>{{ $t('footer.linkCbsl') }}</a></li>
+                <li><a href="https://www.ncgil.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>{{ $t('footer.linkNcgi') }}</a></li>
+                <li><a href="https://agrimin.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>{{ $t('footer.linkAgri') }}</a></li>
+                <li><a href="https://investsrilanka.com/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>{{ $t('footer.linkBoi') }}</a></li>
               </ul>
             </div>
           </div>
@@ -67,7 +64,7 @@
           <!-- Map / Location -->
           <div class="col-lg-3 col-md-6">
             <div class="footer-widget map-widget">
-              <h4 class="widget-title">Our Location</h4>
+              <h4 class="widget-title">{{ $t('footer.ourLocation') }}</h4>
               <div class="map-container">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d63372.90360784863!2d79.8405393!3d6.9137275!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25924de870667%3A0xa0d952b7f92c711d!2sMinistry%20of%20Finance!5e0!3m2!1sen!2slk!4v1730696640970!5m2!1sen!2slk"
@@ -82,10 +79,9 @@
           <!-- Help & Info -->
           <div class="col-lg-2 col-md-6">
             <div class="footer-widget">
-              <h4 class="widget-title">Help</h4>
+              <h4 class="widget-title">{{ $t('footer.help') }}</h4>
               <ul class="footer-links">
-                <li><router-link to="/sitemap"><i class="fas fa-chevron-right fa-xs me-2"></i>Sitemap</router-link></li>
-                <li><router-link to="/Disclaimer"><i class="fas fa-chevron-right fa-xs me-2"></i>Disclaimer</router-link></li>
+                <li><router-link to="/sitemap"><i class="fas fa-chevron-right fa-xs me-2"></i>{{ $t('nav.sitemap') }}</router-link></li>
               </ul>
               <div class="footer-helpline-wrapper mt-3 rounded-2xl overflow-hidden shadow-md border border-teal-500/30">
                 <img
@@ -106,22 +102,22 @@
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
           <div class="text-md-start text-center mb-3 mb-md-0">
             <p class="copyright-text">
-              V4.0.0 © {{ currentYear }} - Development Finance Department. All Rights Reserved.
+              {{ $t('footer.copyright', { year: currentYear }) }}
             </p>
             <p class="last-updated-text">
-              Last updated : {{ lastUpdated }}
+              {{ $t('footer.lastUpdated', { date: lastUpdated }) }}
             </p>
           </div>
           <div class="text-md-end text-center">
             <p class="developer-text">
-              Template by
+              {{ $t('footer.templateBy') }}
               <a
                 href="https://itmd.treasury.gov.lk/#/"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="itmd-link"
               >
-                Department of Information Technology Management
+                {{ $t('footer.itmd') }}
               </a>
             </p>
           </div>

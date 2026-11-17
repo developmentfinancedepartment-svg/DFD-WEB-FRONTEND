@@ -21,12 +21,12 @@
             <div class="hero-overlay">
               <p class="hero-tagline text-amber-400">{{ slides[currentSlide].tagline }}</p>
               <div class="hero-title">
-                <div class="title-line-1">To Strengthen</div> 
-                <div class="title-line-1">The Economy Through</div>
-                <div class="title-line-2">Development Finance</div>
+                <div class="title-line-1">{{ $t('home.heroTitleLine1') }}</div> 
+                <div class="title-line-1">{{ $t('home.heroTitleLine2') }}</div>
+                <div class="title-line-2">{{ $t('home.heroTitleLine3') }}</div>
               </div>
               <router-link :to="slides[currentSlide].link" class="hero-btn">
-                <i class="fas fa-file-invoice-dollar"></i> READ MORE &rarr;
+                <i class="fas fa-file-invoice-dollar"></i> {{ $t('common.readMore') }} &rarr;
               </router-link>
             </div>
           </div>
@@ -46,9 +46,9 @@
       <div class="news-ticker-container animate-fade-down">
         <div class="news-ticker-bar">
           <!-- Teal "LATEST NEWS" Badge -->
-          <div class="ticker-label">
+          <div class="ticker-label border-r-0">
             <i class="fas fa-bullhorn text-xs"></i>
-            <span>LATEST NEWS</span>
+            <span>{{ $t('home.latestNews') }}</span>
           </div>
 
           <!-- Ticker Track Container -->
@@ -56,12 +56,12 @@
             <!-- Loading Indicator -->
             <div v-if="isLoading" class="ticker-fallback">
               <span class="spinner-border spinner-border-sm me-2 text-teal" style="width: 14px; height: 14px; color: #00e5ff;" role="status"></span>
-              <span>Loading latest updates...</span>
+              <span>{{ $t('home.loadingNews') }}</span>
             </div>
 
             <!-- Fallback when no records are found -->
             <div v-else-if="!newsList || newsList.length === 0" class="ticker-fallback">
-              <span>No recent news announcements available at this time.</span>
+              <span>{{ $t('home.noNews') }}</span>
             </div>
 
             <!-- Marquee Ticker Track -->
@@ -76,7 +76,7 @@
                 <span class="ticker-text">
                   {{ item.headlineTitle || item.title || item.headline }}
                 </span>
-                <span class="news-separator">|</span>
+                <span v-if="index < newsList.length - 1" class="news-separator">|</span>
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@
       <div class="container">
         <div class="section-header animate-fade-down">
           <h2 class="section-title">
-            Our <span class="highlight">Services</span>
+            {{ $t('home.servicesTitle') }} <span class="highlight">{{ $t('home.servicesTitleHighlight') }}</span>
           </h2>
           <div class="title-underline"></div>
         </div>
@@ -183,7 +183,7 @@
                   :to="getSchemeLink(service)"
                   class="read-more-btn"
                 >
-                  Explore More <i class="fas fa-chevron-right"></i>
+                  {{ $t('common.viewDetails') }} <i class="fas fa-chevron-right"></i>
                 </router-link>
               </div>
             </div>
@@ -192,7 +192,7 @@
 
         <!-- Empty State -->
         <div v-else class="text-center py-4">
-          <p class="text-muted">No financing schemes available at the moment.</p>
+          <p class="text-muted">{{ $t('services.noSchemesTitle') }}</p>
         </div>
       </div>
     </section>
@@ -213,12 +213,12 @@
           </div>
           <div class="col-lg-6">
             <div class="about-content">
-              <h2 class="about-title">We are DFD</h2>
+              <h2 class="about-title">{{ $t('home.aboutMainTitle') }}</h2>
               <p class="about-text">
-                Empowering rural communities and driving sustainable economic development through accessible financial solutions, supporting small enterprises, and fostering inclusive growth across Sri Lanka.
+                {{ $t('home.aboutDesc') }}
               </p>
               <router-link to="/About" class="primary-btn">
-                Learn More About Us
+                {{ $t('common.readMore') }}
               </router-link>
             </div>
           </div>
@@ -233,12 +233,8 @@
       <div class="max-w-6xl mx-auto">
         <!-- Section Header -->
         <div class="text-center mb-8">
-          <!-- <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-[#008795] text-xs font-semibold uppercase tracking-wider mb-2">
-            <i class="fas fa-landmark text-xs"></i>
-            <span>Banking Network</span>
-          </span> -->
           <h2 class="section-title">
-            Participating Financial Institutions (PFIs)
+            {{ $t('home.pfiTitle') }}
           </h2>
           <div class="title-underline"></div>
           <!-- <p class="text-slate-500 text-xs md:text-sm max-w-2xl mx-auto text-center mt-2 font-normal leading-relaxed">
@@ -2043,16 +2039,26 @@ onBeforeUnmount(() => {
   white-space: nowrap;
   position: relative;
   z-index: 2;
-  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+  border: none;
+  border-right: none !important;
+  box-shadow: none;
+  filter: drop-shadow(4px 0 8px rgba(0, 0, 0, 0.2));
 }
 
 .ticker-label::after {
   content: '';
   position: absolute;
-  right: -15px;
   top: 0;
+  left: 100%;
+  margin-left: -1px;
+  right: auto;
+  width: 0;
+  height: 0;
   border-top: 45px solid #008795;
   border-right: 15px solid transparent;
+  border-bottom: none;
+  border-left: none;
+  pointer-events: none;
 }
 
 .ticker-content {
@@ -2109,6 +2115,10 @@ onBeforeUnmount(() => {
   margin-left: 16px;
   color: rgba(255, 255, 255, 0.3);
   font-weight: 300;
+}
+
+.ticker-item:last-child .news-separator {
+  display: none;
 }
 
 @keyframes ticker-scroll {

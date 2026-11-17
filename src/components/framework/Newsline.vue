@@ -1,6 +1,6 @@
 <template>
   <div class="news-ticker-bar">
-    <div class="ticker-label">
+    <div class="ticker-label border-r-0">
       <i class="fas fa-bullhorn"></i>
       <span>LATEST NEWS</span>
     </div>
@@ -16,7 +16,7 @@
           <div class="news-text">
             <span class="news-content" :class="{ 'has-link': news.newsLink }">{{ news.content }}</span>
           </div>
-          <span class="news-separator">|</span>
+          <span v-if="index < newsList.length - 1" class="news-separator">|</span>
         </div>
       </div>
     </div>
@@ -94,7 +94,7 @@ export default {
 }
 
 .ticker-label {
-  background: #008E9B;
+  background: #008795;
   color: #fff;
   padding: 0 20px;
   height: 100%;
@@ -107,16 +107,26 @@ export default {
   white-space: nowrap;
   position: relative;
   z-index: 2;
-  box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+  border: none;
+  border-right: none !important;
+  box-shadow: none;
+  filter: drop-shadow(4px 0 8px rgba(0, 0, 0, 0.2));
 }
 
 .ticker-label::after {
   content: '';
   position: absolute;
-  right: -15px;
   top: 0;
-  border-top: 45px solid #008E9B;
+  left: 100%;
+  margin-left: -1px;
+  right: auto;
+  width: 0;
+  height: 0;
+  border-top: 45px solid #008795;
   border-right: 15px solid transparent;
+  border-bottom: none;
+  border-left: none;
+  pointer-events: none;
 }
 
 .ticker-content {
@@ -176,6 +186,10 @@ export default {
   margin-left: 20px;
   color: rgba(255, 255, 255, 0.3);
   font-weight: 300;
+}
+
+.ticker-item:last-child .news-separator {
+  display: none;
 }
 
 @keyframes scroll-ticker {

@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="header-wrapper">
     <header class="main-header" :class="{ 'navbar-scrolled': isScrolled || !isHomePage }">
-      <!-- Top Bar: Social, Translate, Disclaimer -->
+      <!-- Top Bar: Social, Language Switcher -->
       <div class="top-bar d-none d-lg-flex">
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <!-- Date & Time (Far Left) -->
@@ -30,11 +30,35 @@
             </div>
           </div>
           <div class="top-left d-flex align-items-center">
-            <div id="google_translate_element" class="translate-box me-3"></div>
-            <span class="separator d-none d-md-inline">|</span>
-            <router-link to="/Disclaimer" class="top-link ms-2">Disclaimer</router-link>
-            <span class="separator">|</span>
-            <!-- <a href="mailto:info@itmd.gov.lk" class="top-link"><i class="fas fa-envelope me-1"></i> info@itmd.gov.lk</a> -->
+            <!-- Trilingual Language Switcher -->
+            <div class="lang-switcher d-flex align-items-center">
+              <button
+                type="button"
+                class="lang-btn"
+                :class="{ active: currentLocale === 'en' }"
+                @click="switchLanguage('en')"
+              >
+                English
+              </button>
+              <span class="lang-separator">|</span>
+              <button
+                type="button"
+                class="lang-btn"
+                :class="{ active: currentLocale === 'si' }"
+                @click="switchLanguage('si')"
+              >
+                සිංහල
+              </button>
+              <span class="lang-separator">|</span>
+              <button
+                type="button"
+                class="lang-btn"
+                :class="{ active: currentLocale === 'ta' }"
+                @click="switchLanguage('ta')"
+              >
+                தமிழ்
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -51,8 +75,8 @@
             <!-- <img src="../../assets/dfd-logo.png" class="dfd-logo" alt="DFD Logo" /> -->
             <div class="brand-text d-none d-md-block">
               <div class="dept-name">
-                <span class="dept-small">DEPARTMENT OF</span>
-                <span class="dept-main">Development Finance</span>
+                <span class="dept-small">{{ $t('nav.deptSmall') }}</span>
+                <span class="dept-main">{{ $t('nav.deptMain') }}</span>
               </div>
             </div>
           </div>
@@ -74,6 +98,36 @@
 
                 <!-- Nav Links -->
         <div class="collapse navbar-collapse d-xl-flex justify-content-between" :class="{ show: !isCollapsed }">
+          <!-- Mobile Trilingual Switcher (Visible only in collapsed mobile menu) -->
+          <div class="mobile-lang-bar d-xl-none my-2.5 py-2 px-3 rounded-xl bg-white/10 d-flex justify-content-center align-items-center gap-2">
+            <button
+              type="button"
+              class="lang-btn"
+              :class="{ active: currentLocale === 'en' }"
+              @click="switchLanguage('en')"
+            >
+              English
+            </button>
+            <span class="lang-separator">|</span>
+            <button
+              type="button"
+              class="lang-btn"
+              :class="{ active: currentLocale === 'si' }"
+              @click="switchLanguage('si')"
+            >
+              සිංහල
+            </button>
+            <span class="lang-separator">|</span>
+            <button
+              type="button"
+              class="lang-btn"
+              :class="{ active: currentLocale === 'ta' }"
+              @click="switchLanguage('ta')"
+            >
+              தமிழ்
+            </button>
+          </div>
+
           <ul class="navbar-nav mx-auto align-items-xl-center">
             <li class="nav-item">
               <router-link
@@ -82,7 +136,7 @@
                 exact-active-class="!text-[#00c5d6] !font-bold"
                 active-class="!text-[#00c5d6] !font-bold"
                 @click="closeNavbar"
-              >Home</router-link>
+              >{{ $t('nav.home') }}</router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -90,7 +144,7 @@
                 class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
                 active-class="!text-[#00c5d6] !font-bold"
                 @click="closeNavbar"
-              >About Us</router-link>
+              >{{ $t('nav.about') }}</router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -98,7 +152,7 @@
                 class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
                 active-class="!text-[#00c5d6] !font-bold"
                 @click="closeNavbar"
-              >Services</router-link>
+              >{{ $t('nav.services') }}</router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -106,7 +160,7 @@
                 class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
                 active-class="!text-[#00c5d6] !font-bold"
                 @click="closeNavbar"
-              >Publications</router-link>
+              >{{ $t('nav.publications') }}</router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -114,7 +168,7 @@
                 class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
                 active-class="!text-[#00c5d6] !font-bold"
                 @click="closeNavbar"
-              >Gallery</router-link>
+              >{{ $t('nav.gallery') }}</router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -122,7 +176,7 @@
                 class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
                 active-class="!text-[#00c5d6] !font-bold"
                 @click="closeNavbar"
-              >Our Team</router-link>
+              >{{ $t('nav.team') }}</router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -130,7 +184,7 @@
                 class="nav-link text-base font-medium text-white/80 transition-colors duration-200 hover:text-[#00c5d6]"
                 active-class="!text-[#00c5d6] !font-bold"
                 @click="closeNavbar"
-              >Contact</router-link>
+              >{{ $t('nav.contact') }}</router-link>
             </li>
           </ul>
           
@@ -308,6 +362,7 @@ import {
   clearNavbarSearch,
   setNavbarSearchQuery
 } from '@/services/navbarSearchState';
+import { setLocale, getCurrentLocale } from '@/i18n';
 
 export default {
   data() {
@@ -323,6 +378,9 @@ export default {
     };
   },
   computed: {
+    currentLocale() {
+      return this.$i18n ? this.$i18n.locale : getCurrentLocale();
+    },
     isHomePage() {
       const p = this.currentRoutePath;
       return p === '/' || p === '/home' || this.currentRouteName === 'home';
@@ -353,20 +411,15 @@ export default {
       return this.isTeamPage || this.isServicesPage || this.isPublicationsPage || this.isGalleryPage;
     },
     searchPlaceholder() {
-      if (this.isHomePage) return "Select a page to search content...";
-      if (this.isTeamPage) return "Search officials by name, role, extension...";
-      if (this.isServicesPage) return "Search loan schemes & services...";
-      if (this.isPublicationsPage) return "Search publications & reports...";
-      if (this.isGalleryPage) return "Search gallery...";
-      return "Search DFD website...";
+      if (this.isHomePage) return this.$t('header.searchPlaceholder');
+      if (this.isTeamPage) return this.$t('header.searchTeam');
+      if (this.isServicesPage) return this.$t('header.searchSchemes');
+      if (this.isPublicationsPage) return this.$t('header.searchPublications');
+      if (this.isGalleryPage) return this.$t('header.searchGallery');
+      return this.$t('header.searchPlaceholder');
     },
     searchButtonTitle() {
-      if (this.isHomePage) return "Select a page to search content";
-      if (this.isTeamPage) return "Filter officials";
-      if (this.isServicesPage) return "Filter loan schemes";
-      if (this.isPublicationsPage) return "Filter publications";
-      if (this.isGalleryPage) return "Filter gallery";
-      return "Search website";
+      return this.$t('header.searchButton');
     },
     searchQuery: {
       get() {
@@ -415,28 +468,6 @@ export default {
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('resize', this.handleResize);
     document.addEventListener('click', this.handleClickOutside);
-
-    // Dynamic Google Translate Injection for Vue SPA
-    window.VueGoogleTranslateInit = () => {
-      new window.google.translate.TranslateElement({
-        pageLanguage: 'en',
-        includedLanguages: 'en,ta,si',
-        layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        autoDisplay: false
-      }, 'google_translate_element');
-    };
-
-    if (!document.getElementById('google-translate-script')) {
-      const script = document.createElement('script');
-      script.id = 'google-translate-script';
-      script.src = 'https://translate.google.com/translate_a/element.js?cb=VueGoogleTranslateInit';
-      document.head.appendChild(script);
-    } else if (window.google && window.google.translate) {
-      // For hot reloads, clear and re-initialize
-      const container = document.getElementById('google_translate_element');
-      if (container) container.innerHTML = '';
-      window.VueGoogleTranslateInit();
-    }
   },
   unmounted() {
     if (this.timer) {
@@ -447,6 +478,9 @@ export default {
     document.removeEventListener('click', this.handleClickOutside);
   },
   methods: {
+    switchLanguage(lang) {
+      setLocale(lang);
+    },
     updateDateTime() {
       const now = new Date();
       const dayName = now.toLocaleDateString('en-US', { weekday: 'short' });
@@ -617,10 +651,46 @@ export default {
   margin: 0 5px;
 }
 
-.translate-box {
-  min-width: 150px;
-  min-height: 28px;
-  display: inline-block;
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+}
+
+.lang-btn:hover {
+  color: #00e5ff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn.active {
+  color: #ffffff;
+  background: #008795;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.lang-separator {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+.mobile-lang-bar {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .social-links {
@@ -905,7 +975,6 @@ export default {
   .dfd-logo { height: 60px; }
   .primary-nav { padding: 4px 8px; }
   .brand-divider { height: 35px; }
-  .translate-box { min-width: auto; }
 }
 
 /* Search Bar Styles & Smooth Hover Transitions */

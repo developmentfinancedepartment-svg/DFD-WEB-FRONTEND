@@ -3,8 +3,8 @@
     <!-- Hero Header Banner -->
     <section class="hero-header">
       <div class="container max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="hero-title">Department Leadership &amp; Directorate</h1>
-        <p class="hero-subtitle">Key Officials, Division Heads &amp; Executive Directory — Department of Development Finance</p>
+        <h1 class="hero-title">{{ $t('team.heroTitle') }}</h1>
+        <p class="hero-subtitle">{{ $t('team.heroSubtitle') }}</p>
       </div>
     </section>
 
@@ -17,7 +17,7 @@
           class="reset-filters-btn"
           @click="resetFilters"
         >
-          Reset Filters
+          {{ $t('common.resetFilters') }}
         </button>
 
         <!-- Division Dropdown Filter (Hover Auto-Open) -->
@@ -26,7 +26,7 @@
             <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
             </svg>
-            <span>Division:</span>
+            <span>{{ $t('team.divisionLabel') }}</span>
           </div>
 
           <div
@@ -109,7 +109,7 @@
               <!-- Left Column: lg:col-span-7 -->
               <div class="spotlight-col-left lg:col-span-7">
                 <div class="spotlight-title-group">
-                  <span class="spotlight-eyebrow">HEAD OF DEPARTMENT</span>
+                  <span class="spotlight-eyebrow">{{ $t('team.headOfDept') }}</span>
                   <h2 class="spotlight-name">{{ directorGeneral.name }}</h2>
                   <p class="spotlight-designation">{{ directorGeneral.designation }}</p>
                 </div>
@@ -195,11 +195,11 @@
               <table class="corporate-directory-table">
                 <thead>
                   <tr>
-                    <th class="th-name min-w-[210px] whitespace-nowrap text-sm px-4 py-4" scope="col">Name</th>
-                    <th class="th-designation min-w-[180px] text-sm px-4 py-4" scope="col">Designation</th>
-                    <th class="th-room min-w-[190px] text-sm px-4 py-4" scope="col">Responsibility Subject</th>
-                    <th class="th-contacts min-w-[160px] text-sm px-4 py-4" scope="col">Contact Numbers</th>
-                    <th class="th-email min-w-[360px] text-sm px-4 py-4" scope="col">Email</th>
+                    <th class="th-name min-w-[210px] whitespace-nowrap text-sm px-4 py-4" scope="col">{{ $t('team.thName') }}</th>
+                    <th class="th-designation min-w-[180px] text-sm px-4 py-4" scope="col">{{ $t('team.thDesignation') }}</th>
+                    <th class="th-room min-w-[190px] text-sm px-4 py-4" scope="col">{{ $t('team.thResponsibility') }}</th>
+                    <th class="th-contacts min-w-[160px] text-sm px-4 py-4" scope="col">{{ $t('team.thContact') }}</th>
+                    <th class="th-email min-w-[360px] text-sm px-4 py-4" scope="col">{{ $t('team.thEmail') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -318,7 +318,7 @@
               class="rti-title section-title text-3xl md:text-4xl font-bold text-[#008294]"
               style="font-size: 2.2rem; font-weight: 800; color: #008294; letter-spacing: -0.5px; margin: 0;"
             >
-              Right to Information (RTI) Officers
+              {{ $t('team.rtiTitle') }}
             </h2>
             <div
               class="rti-title-underline title-underline w-14 h-1 bg-[#008294] rounded-full mx-auto mt-3"
@@ -466,12 +466,12 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
             </svg>
           </div>
-          <h3 class="empty-title">No Officials Found</h3>
+          <h3 class="empty-title">{{ $t('team.noOfficialsTitle') }}</h3>
           <p class="empty-desc">
-            We couldn't find any officials matching your criteria. Try adjusting your search query or reset the division filter.
+            {{ $t('team.noOfficialsDesc') }}
           </p>
           <button type="button" class="empty-action-btn" @click="resetFilters">
-            Clear Filters &amp; Show All
+            {{ $t('common.resetFilters') }}
           </button>
         </div>
       </div>
@@ -481,12 +481,14 @@
 
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import BaseUrl from '@/services/baseURL';
 import { navbarSearchState, clearNavbarSearch, setNavbarSearchQuery } from '@/services/navbarSearchState';
 
 const route = useRoute();
+const { t } = useI18n();
 // Reactive search query bound to Navbar Search state
 const searchQuery = computed({
   get() {
@@ -505,17 +507,17 @@ const loading = ref(false);
 /**
  * Division filter options organized under the official divisions
  */
-const divisionOptions = [
-  { label: 'All Divisions', value: 'ALL' },
+const divisionOptions = computed(() => [
+  { label: t('team.allDivisions'), value: 'ALL' },
   { label: 'Executive Directorate', value: 'Executive Directorate' },
   { label: 'Financial Solution', value: 'Financial Solution' },
   { label: 'Market Access & Development', value: 'Market Access & Development' },
   { label: 'Admin and Accounts', value: 'Admin and Accounts' }
-];
+]);
 
 const selectedDivisionLabel = computed(() => {
-  const match = divisionOptions.find(opt => opt.value === selectedDivision.value);
-  return match ? match.label : 'All Divisions';
+  const match = divisionOptions.value.find(opt => opt.value === selectedDivision.value);
+  return match ? match.label : t('team.allDivisions');
 });
 
 const toggleDropdown = () => {

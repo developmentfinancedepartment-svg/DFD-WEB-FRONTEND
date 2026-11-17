@@ -5,6 +5,7 @@ import App from "./App.vue";
 import "@fortawesome/fontawesome-free/css/all.css";
 import router from "./router";
 import store from "./store";
+import i18n from "./i18n";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../src/assets/css/style.css";
@@ -58,6 +59,7 @@ registerSW({
 app
   .use(router)
   .use(store)
+  .use(i18n)
   .use(VueAwesomePaginate)
   .component("font-awesome-icon", FontAwesomeIcon)
   .component("navigation", navigation)

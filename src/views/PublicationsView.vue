@@ -3,9 +3,9 @@
     <!-- Hero Header -->
     <header class="hero-header">
       <div class="pub-container text-center">
-        <h1 class="hero-title">Publications &amp; Reports</h1>
+        <h1 class="hero-title">{{ $t('publications.heroTitle') }}</h1>
         <p class="hero-subtitle">
-          Access official reports, policy frameworks, circulars, and departmental publications.
+          {{ $t('publications.heroSubtitle') }}
         </p>
       </div>
     </header>
@@ -20,7 +20,7 @@
             class="reset-filters-btn text-xs font-semibold text-slate-500 hover:text-slate-800"
             @click="resetFilters"
           >
-            Reset Filters
+            {{ $t('common.resetFilters') }}
           </button>
 
           <!-- Year Filter Custom Dropdown -->
@@ -29,7 +29,7 @@
             <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
             </svg>
-            <span>FILTER YEAR:</span>
+            <span>{{ $t('publications.filterYear') }}</span>
           </div>
 
           <div
@@ -155,7 +155,7 @@
                   class="btn-action btn-view"
                 >
                   <i class="fas fa-eye"></i>
-                  <span>View Online</span>
+                  <span>{{ $t('publications.viewDocument') }}</span>
                 </a>
                 <a 
                   :href="getDownloadUrl(doc)" 
@@ -163,7 +163,7 @@
                   class="btn-action btn-download"
                 >
                   <i class="fas fa-download"></i>
-                  <span>Download</span>
+                  <span>{{ $t('publications.downloadPdf') }}</span>
                 </a>
               </div>
             </div>
@@ -173,10 +173,9 @@
         <!-- Empty Results -->
         <div v-else class="state-container">
           <i class="fas fa-search state-icon-empty"></i>
-          <h4 class="state-text">No publications found matching your search.</h4>
-          <p class="state-subtext" v-if="searchQuery">No documents matching "{{ searchQuery }}". Try adjusting your search term.</p>
-          <p class="state-subtext" v-else>Try selecting a different year filter.</p>
-          <button class="btn-solid-teal" @click="resetFilters">Clear Filters &amp; Show All</button>
+          <h4 class="state-text">{{ $t('publications.noPubsTitle') }}</h4>
+          <p class="state-subtext">{{ $t('publications.noPubsDesc') }}</p>
+          <button class="btn-solid-teal" @click="resetFilters">{{ $t('common.resetFilters') }}</button>
         </div>
       </div>
     </main>
@@ -185,12 +184,14 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import BaseUrl from '@/services/baseURL';
 import { navbarSearchState, clearNavbarSearch, setNavbarSearchQuery } from '@/services/navbarSearchState';
 
 const route = useRoute();
+const { t } = useI18n();
 const publications = ref([]);
 const isLoading = ref(true);
 const error = ref(null);
@@ -270,7 +271,7 @@ const selectYear = (year) => {
 };
 
 const selectedYearLabel = computed(() => {
-  return selectedYear.value === 'All' ? 'All Years' : selectedYear.value;
+  return selectedYear.value === 'All' ? t('publications.allYears') : selectedYear.value;
 });
 
 const handleClickOutside = (event) => {
@@ -318,7 +319,7 @@ const availableYears = computed(() => {
 const yearOptions = computed(() => {
   return availableYears.value.map(y => ({
     value: y,
-    label: y === 'All' ? 'All Years' : y
+    label: y === 'All' ? t('publications.allYears') : y
   }));
 });
 

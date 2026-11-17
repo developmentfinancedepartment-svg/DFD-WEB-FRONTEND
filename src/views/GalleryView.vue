@@ -3,9 +3,9 @@
     <!-- Top Hero Header -->
     <header class="hero-header text-center px-4">
       <div class="container text-center">
-        <h1 class="hero-title">Media Gallery</h1>
+        <h1 class="hero-title">{{ $t('gallery.heroTitle') }}</h1>
         <p class="hero-subtitle mb-3 leading-relaxed">
-          A visual archive of departmental programs, institutional workshops, and regional stakeholder engagements.
+          {{ $t('gallery.heroSubtitle') }}
         </p>
       </div>
     </header>
@@ -20,7 +20,7 @@
             class="reset-filters-btn text-xs font-semibold text-slate-500 hover:text-slate-800"
             @click="resetFilters"
           >
-            Reset Filters
+            {{ $t('common.resetFilters') }}
           </button>
 
           <!-- Category Filter Custom Dropdown -->
@@ -29,7 +29,7 @@
             <svg class="filter-icon" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
             </svg>
-            <span>Category:</span>
+            <span>{{ $t('gallery.categoryLabel') }}</span>
           </div>
 
           <div
@@ -114,11 +114,11 @@
           <div class="mb-3">
             <i class="fas fa-images fa-3x text-muted opacity-50"></i>
           </div>
-          <h4 class="text-muted">No photographs found matching your search.</h4>
-          <p class="text-muted small" v-if="searchQuery">
-            We couldn't find any photographs matching "{{ searchQuery }}".
+          <h4 class="text-muted">{{ $t('gallery.noPhotosTitle') }}</h4>
+          <p class="text-muted small">
+            {{ $t('gallery.noPhotosDesc') }}
           </p>
-          <button class="btn btn-teal text-white mt-3 px-4" @click="resetFilters">Clear Filters &amp; Show All</button>
+          <button class="btn btn-teal text-white mt-3 px-4" @click="resetFilters">{{ $t('common.resetFilters') }}</button>
         </div>
 
         <!-- 3-Column Grid -->
@@ -268,12 +268,14 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import BaseUrl from '@/services/baseURL';
 import { navbarSearchState, clearNavbarSearch, setNavbarSearchQuery } from '@/services/navbarSearchState';
 
 const route = useRoute();
+const { t } = useI18n();
 const searchQuery = computed({
   get() {
     return navbarSearchState.query;
@@ -283,12 +285,12 @@ const searchQuery = computed({
   }
 });
 
-const categoryOptions = [
-  { label: 'All Photos', value: 'ALL' },
+const categoryOptions = computed(() => [
+  { label: t('gallery.allPhotos'), value: 'ALL' },
   { label: 'Workshops', value: 'Workshops' },
   { label: 'Field Visits', value: 'Field Visits' },
   { label: 'Institutional', value: 'Institutional' }
-];
+]);
 
 const activeCategory = ref('ALL');
 const isCategoryDropdownOpen = ref(false);
@@ -298,8 +300,8 @@ const loading = ref(false);
 const activeItem = ref(null);
 
 const selectedCategoryLabel = computed(() => {
-  const match = categoryOptions.find(opt => opt.value === activeCategory.value);
-  return match ? match.label : 'All Photos';
+  const match = categoryOptions.value.find(opt => opt.value === activeCategory.value);
+  return match ? match.label : t('gallery.allPhotos');
 });
 
 const toggleCategoryDropdown = () => {
