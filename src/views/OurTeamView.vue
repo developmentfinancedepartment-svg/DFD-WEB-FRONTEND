@@ -357,14 +357,14 @@
               <div class="card-content-top flex-1">
                 <!-- Name & Designation (Top Pill Tag Removed) -->
                 <h3
-                  class="rti-officer-name text-lg font-bold text-slate-900"
-                  style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 0.25rem; line-height: 1.35;"
+                  class="rti-officer-name text-lg font-bold text-slate-900 text-center"
+                  style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 0.25rem; line-height: 1.35; text-align: center;"
                 >
                   {{ officer.name }}
                 </h3>
                 <p
-                  class="rti-officer-designation text-sm font-medium text-teal-700"
-                  style="font-size: 0.875rem; font-weight: 600; color: #0f766e; margin: 0; line-height: 1.4;"
+                  class="rti-officer-designation text-sm font-medium text-teal-700 text-center"
+                  style="font-size: 0.875rem; font-weight: 600; color: #0f766e; margin: 0; line-height: 1.4; text-align: center;"
                 >
                   {{ officer.designation }}
                 </p>
@@ -2705,6 +2705,7 @@ td.pl-8 {
   margin-bottom: 0.2rem;
   line-height: 1.35;
   transition: color 0.2s ease;
+  text-align: center;
 }
 
 .rti-card:hover .rti-officer-name {
@@ -2717,6 +2718,7 @@ td.pl-8 {
   color: #0f766e;
   margin: 0;
   line-height: 1.4;
+  text-align: center;
 }
 
 .rti-location-box {

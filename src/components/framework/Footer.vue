@@ -54,12 +54,12 @@
             <div class="footer-widget">
               <h4 class="widget-title">Quick Links</h4>
               <ul class="footer-links">
-                <li><a href="https://www.presidentsoffice.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Presidential Secretariat</a></li>
-                <li><a href="https://www.treasury.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Ministry of Finance</a></li>
-                <li><a href="https://www.cbsl.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Central Bank of Sri Lanka</a></li>
-                <li><a href="https://www.ncgil.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>National Credit Guarantee Institution</a></li>
-                <li><a href="https://agrimin.gov.lk/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Ministry of Agriculture, LiveStock, Lands and Irrigation</a></li>
-                <li><a href="https://investsrilanka.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right fa-xs me-2"></i>Board of Investment of Sri Lanka</a></li>
+                <li><a href="https://www.presidentsoffice.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>Presidential Secretariat</a></li>
+                <li><a href="https://www.treasury.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>Ministry of Finance</a></li>
+                <li><a href="https://www.cbsl.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>Central Bank of Sri Lanka</a></li>
+                <li><a href="https://www.ncgil.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>National Credit Guarantee Institution</a></li>
+                <li><a href="https://agrimin.gov.lk/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>Ministry of Agriculture, Livestock, Lands and Irrigation</a></li>
+                <li><a href="https://investsrilanka.com/" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2"><i class="fas fa-chevron-right fa-xs shrink-0 mt-1"></i>Board of Investment of Sri Lanka</a></li>
               </ul>
             </div>
           </div>
@@ -204,6 +204,31 @@
   padding: 2px 0;
   line-height: 1.3;
   display: inline-block;
+}
+
+.footer-links li a.flex,
+.flex {
+  display: flex !important;
+}
+
+.items-start {
+  align-items: flex-start !important;
+}
+
+.gap-2 {
+  gap: 0.5rem !important;
+}
+
+.shrink-0 {
+  flex-shrink: 0 !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+.mt-1\.5 {
+  margin-top: 0.375rem !important;
 }
 
 .footer-links li a:hover {
