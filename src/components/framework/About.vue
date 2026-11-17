@@ -27,7 +27,7 @@
           <h2 class="text-2xl font-bold tracking-tight text-white mb-3">
             Vision
           </h2>
-          <p class="text-sm text-teal-50/90 leading-relaxed font-light">
+          <p class="text-base md:text-[17px] text-teal-50/95 leading-relaxed font-normal">
             To become the key Government agency as facilitator for development financing.
           </p>
         </div>
@@ -42,7 +42,7 @@
           <h2 class="text-2xl font-bold tracking-tight text-white mb-3">
             Mission
           </h2>
-          <p class="text-sm text-teal-50/90 leading-relaxed font-light">
+          <p class="text-base md:text-[17px] text-teal-50/95 leading-relaxed font-normal">
             Facilitate to formulate appropriate policies and strategies and mobilize financial resources for the development of MSMEs, financing primary sectors through necessary intervention with the relevant stakeholders.
           </p>
         </div>
@@ -50,76 +50,17 @@
     </section>
 
     <!-- ================================================================= -->
-    <!-- 3. KEY STATISTICS BAR                                             -->
-    <!-- ================================================================= -->
-   <!-- <section class="max-w-6xl mx-auto px-4 mt-10">
-      <div class="bg-[#e2e8f0]/60 rounded-3xl p-8 border border-slate-200/80 shadow-sm grid grid-cols-2 lg:grid-cols-4 gap-6 text-center divide-y lg:divide-y-0 lg:divide-x divide-slate-100">
-        
-        <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
-          <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
-            <i class="fas fa-hand-holding-usd"></i>
-          </div>
-          <div class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">
-            8+
-          </div>
-          <div class="text-[11px] font-bold tracking-wider text-slate-400 mt-1 uppercase">
-            Official Loan Schemes
-          </div>
-        </div>
-
-       
-        <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
-          <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
-            <i class="fas fa-landmark"></i>
-          </div>
-          <div class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">
-            14+
-          </div>
-          <div class="text-[11px] font-bold tracking-wider text-slate-400 mt-1 uppercase">
-            Participating Financial Institutions
-          </div>
-        </div>
-
-       
-        <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
-          <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
-            <i class="fas fa-shield-alt"></i>
-          </div>
-          <div class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">
-            100%
-          </div>
-          <div class="text-[11px] font-bold tracking-wider text-slate-400 mt-1 uppercase">
-            Treasury Supervised
-          </div>
-        </div>
-
-        
-        <div class="flex flex-col items-center justify-center p-3 pt-6 lg:pt-3">
-          <div class="w-10 h-10 rounded-full bg-teal-50 text-[#008795] flex items-center justify-center text-lg mb-3">
-            <i class="fas fa-seedling"></i>
-          </div>
-          <div class="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">
-            MSME &amp; Agri
-          </div>
-          <div class="text-[11px] font-bold tracking-wider text-slate-400 mt-1 uppercase">
-            Priority Focus Sectors
-          </div>
-        </div>
-      </div>
-     </section> -->
-
-    <!-- ================================================================= -->
     <!-- 4. "OUR OBJECTIVES" SECTION                                       -->
     <!-- ================================================================= -->
     <section class="max-w-6xl mx-auto px-4 mt-10">
       <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm">
         <!-- Section Title -->
-        <div class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-6">
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-6">
           <div class="w-10 h-10 rounded-xl bg-teal-50 text-[#008795] flex items-center justify-center text-lg flex-shrink-0">
             <i class="fas fa-flag"></i>
           </div>
           <span>Our Objectives</span>
-        </div>
+        </h2>
 
         <!-- Objectives 3-Column Responsive Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -133,7 +74,7 @@
               {{ index + 1 }}
             </div>
             <!-- Objective Description -->
-            <p class="text-sm text-slate-800 font-medium leading-relaxed mb-0">
+            <p class="text-base text-slate-800 font-medium leading-relaxed mb-0">
               {{ objective }}
             </p>
           </div>
@@ -147,12 +88,12 @@
     <section class="max-w-6xl mx-auto px-4 mt-10 mb-12 pb-4">
       <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm">
         <!-- Section Title -->
-        <div class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-6">
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3 mb-6">
           <div class="w-10 h-10 rounded-xl bg-teal-50 text-[#008795] flex items-center justify-center text-lg flex-shrink-0">
             <i class="fas fa-check-circle"></i>
           </div>
           <span>Core Responsibilities</span>
-        </div>
+        </h2>
 
         <!-- Responsibilities 2-Column Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -162,9 +103,9 @@
             class="bg-slate-50/80 rounded-2xl p-5 border border-slate-100 flex items-start gap-4 hover:bg-white hover:shadow-md hover:border-teal-200 transition duration-200"
           >
             <!-- Checkmark Icon -->
-            <i class="fas fa-check-double text-[#008795] text-sm mt-1 flex-shrink-0"></i>
+            <i class="fas fa-check-double text-[#008795] text-base mt-1 flex-shrink-0"></i>
             <!-- Responsibility Description -->
-            <p class="text-sm text-slate-800 font-medium leading-relaxed mb-0">
+            <p class="text-base text-slate-800 font-medium leading-relaxed mb-0">
               {{ responsibility }}
             </p>
           </div>
@@ -269,6 +210,10 @@ const responsibilities = [
 
 .text-teal-50\/90 {
   color: rgba(240, 253, 250, 0.9) !important;
+}
+
+.text-teal-50\/95 {
+  color: rgba(240, 253, 250, 0.95) !important;
 }
 
 .text-\[\#006d77\] {
@@ -568,6 +513,18 @@ const responsibilities = [
 .text-base {
   font-size: 1rem !important;
   line-height: 1.5rem !important;
+}
+
+.text-\[17px\] {
+  font-size: 1.0625rem !important;
+  line-height: 1.7rem !important;
+}
+
+@media (min-width: 768px) {
+  .md\:text-\[17px\] {
+    font-size: 1.0625rem !important;
+    line-height: 1.7rem !important;
+  }
 }
 
 .text-lg {

@@ -2,7 +2,7 @@
   <div class="team-page">
     <!-- Hero Header Banner -->
     <section class="hero-header">
-      <div class="container text-center">
+      <div class="container max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="hero-title">Department Leadership &amp; Directorate</h1>
         <p class="hero-subtitle">Key Officials, Division Heads &amp; Executive Directory — Department of Development Finance</p>
       </div>
@@ -10,7 +10,7 @@
 
     <!-- Sticky Filter Bar -->
     <section class="sticky-filter-bar">
-      <div class="container filter-bar-container filter-bar-end">
+      <div class="container max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 filter-bar-container filter-bar-end">
         <!-- Division Dropdown Filter (Hover Auto-Open) -->
         <div class="filter-dropdown-area">
           <div class="filter-label">
@@ -87,7 +87,7 @@
 
     <!-- Main Directory Content -->
     <main class="team-content pb-20 mb-8">
-      <div class="container pb-12">
+      <div class="container max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <!-- Results Counter & Reset Filter Option -->
         <div class="results-meta-bar">
           <div class="results-count">
@@ -127,11 +127,11 @@
                   <p class="spotlight-designation">{{ directorGeneral.designation }}</p>
                 </div>
 
-                <p class="spotlight-mandate">
+                <p class="spotlight-mandate text-base leading-relaxed">
                   {{ directorGeneral.description || 'Leading the Department of Development Finance in coordinating national concessionary credit schemes, interest subsidy mechanisms, and financial inclusion frameworks across Sri Lanka.' }}
                 </p>
 
-                <div class="spotlight-location" v-if="directorGeneral.room">
+                <div class="spotlight-location text-sm" v-if="directorGeneral.room">
                   <svg class="loc-icon" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                   </svg>
@@ -148,32 +148,32 @@
                       v-for="c in getAvailableContacts(directorGeneral)"
                       :key="c.type"
                       :href="c.link"
-                      class="spotlight-num-pill py-1.5 px-2.5"
+                      class="spotlight-num-pill py-2 px-3"
                       :class="`pill-${c.type}`"
                       :title="`Call ${c.label}: ${c.value}`"
                     >
-                      <span class="num-type-badge">{{ c.label }}</span>
-                      <span class="num-val-text">{{ c.value }}</span>
+                      <span class="num-type-badge text-xs">{{ c.label }}</span>
+                      <span class="num-val-text text-sm font-bold">{{ c.value }}</span>
                     </a>
                   </div>
 
-                  <!-- Multiple Emails Grid Arranged Side-by-Side (2-Column Grid) -->
-                  <div class="emails-panel-grid grid grid-cols-1 sm:grid-cols-2 gap-2" v-if="getEmailList(directorGeneral).length > 0">
+                  <!-- Multiple Emails Stacked (1-Column Stack so long addresses do not truncate) -->
+                  <div class="emails-panel-grid flex flex-col gap-2" v-if="getEmailList(directorGeneral).length > 0">
                     <a
                       v-for="email in getEmailList(directorGeneral)"
                       :key="email"
                       :href="'mailto:' + email"
-                      class="spotlight-email-row"
+                      class="spotlight-email-row py-2 px-3"
                       :title="`Send email to ${email}`"
                     >
-                      <!-- Compact email icon container: w-5 h-5 -->
-                      <div class="email-icon-box w-5 h-5 rounded-md bg-teal-50 flex items-center justify-center shrink-0">
-                        <svg viewBox="0 0 20 20" fill="currentColor" class="w-3 h-3 email-svg">
+                      <!-- Compact email icon container -->
+                      <div class="email-icon-box w-6 h-6 rounded-md bg-teal-50 flex items-center justify-center shrink-0">
+                        <svg viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5 email-svg">
                           <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                           <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                         </svg>
                       </div>
-                      <span class="email-row-text truncate">{{ email }}</span>
+                      <span class="email-row-text text-sm font-semibold truncate">{{ email }}</span>
                     </a>
                   </div>
                 </div>
@@ -208,11 +208,11 @@
               <table class="corporate-directory-table">
                 <thead>
                   <tr>
-                    <th class="th-name min-w-[200px] whitespace-nowrap" scope="col">Name</th>
-                    <th class="th-designation" scope="col">Designation</th>
-                    <th class="th-room min-w-[160px]" scope="col">Responsibility Subject</th>
-                    <th class="th-contacts" scope="col">Contact Numbers</th>
-                    <th class="th-email min-w-[260px]" scope="col">Email</th>
+                    <th class="th-name min-w-[210px] whitespace-nowrap text-sm px-4 py-4" scope="col">Name</th>
+                    <th class="th-designation min-w-[180px] text-sm px-4 py-4" scope="col">Designation</th>
+                    <th class="th-room min-w-[190px] text-sm px-4 py-4" scope="col">Responsibility Subject</th>
+                    <th class="th-contacts min-w-[160px] text-sm px-4 py-4" scope="col">Contact Numbers</th>
+                    <th class="th-email min-w-[360px] text-sm px-4 py-4" scope="col">Email</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -229,7 +229,7 @@
                   >
                     <!-- Column 1: Name (With tree indentation & connector for subordinate officers) -->
                     <td
-                      class="td-name min-w-[200px] whitespace-nowrap"
+                      class="td-name min-w-[210px] whitespace-nowrap px-4 py-4"
                       :class="{
                         'pl-8 border-l-2 border-teal-200 cell-subordinate': isSubordinate(officer)
                       }"
@@ -241,8 +241,8 @@
                           aria-hidden="true"
                         >↳</span>
                         <span
-                          class="table-official-name whitespace-nowrap"
-                          :class="{ 'font-semibold text-slate-900': isAdg(officer) }"
+                          class="table-official-name whitespace-nowrap text-base font-semibold"
+                          :class="{ 'font-bold text-slate-900': isAdg(officer) }"
                           :title="officer.name"
                         >
                           {{ officer.name }}
@@ -251,9 +251,9 @@
                     </td>
 
                     <!-- Column 2: Designation -->
-                    <td class="td-designation">
+                    <td class="td-designation min-w-[180px] px-4 py-4">
                       <span
-                        class="table-designation-text"
+                        class="table-designation-text text-sm md:text-[15px] leading-relaxed"
                         :class="{ 'font-semibold text-teal-800': isAdg(officer) }"
                         :title="officer.designation"
                       >
@@ -262,15 +262,15 @@
                     </td>
 
                     <!-- Column 3: Responsibility Subject -->
-                    <td class="td-room whitespace-normal break-words">
-                      <div class="table-room-cell whitespace-normal break-words leading-snug" v-if="officer.room || officer.responsibilitySubject || officer.roomLocation">
-                        <span class="table-room-text whitespace-normal break-words leading-snug">{{ officer.responsibilitySubject || officer.roomLocation || officer.room }}</span>
+                    <td class="td-room min-w-[190px] whitespace-normal break-words px-4 py-4">
+                      <div class="table-room-cell whitespace-normal break-words leading-relaxed text-sm md:text-[15px]" v-if="officer.room || officer.responsibilitySubject || officer.roomLocation">
+                        <span class="table-room-text whitespace-normal break-words leading-relaxed text-sm md:text-[15px]">{{ officer.responsibilitySubject || officer.roomLocation || officer.room }}</span>
                       </div>
-                      <span v-else class="text-slate-300 text-xs">—</span>
+                      <span v-else class="text-slate-300 text-sm">—</span>
                     </td>
 
                     <!-- Column 4: Contact Numbers (Rounded Pill Container Layout) -->
-                    <td class="td-contacts">
+                    <td class="td-contacts min-w-[160px] px-4 py-4">
                       <div class="table-contacts-wrap" v-if="getAvailableContacts(officer).length > 0">
                         <a
                           v-for="c in getAvailableContacts(officer)"
@@ -280,31 +280,31 @@
                           :class="`pill-${c.type}`"
                           :title="`Call ${c.label}: ${c.value}`"
                         >
-                          <span class="pill-type-tag">{{ c.label.toUpperCase() }}</span>
-                          <span class="pill-value-text">{{ c.value }}</span>
+                          <span class="pill-type-tag text-xs">{{ c.label.toUpperCase() }}</span>
+                          <span class="pill-value-text text-sm">{{ c.value }}</span>
                         </a>
                       </div>
-                      <span v-else class="text-slate-300 text-xs">—</span>
+                      <span v-else class="text-slate-300 text-sm">—</span>
                     </td>
 
                     <!-- Column 5: Clickable Emails (Button-like Pill Badge Design) -->
-                    <td class="td-email min-w-[260px]">
+                    <td class="td-email min-w-[360px] px-4 py-4">
                       <div class="table-emails-wrap" v-if="getEmailList(officer).length > 0">
                         <a
                           v-for="email in getEmailList(officer)"
                           :key="email"
                           :href="'mailto:' + email"
-                          class="table-email-link w-fit max-w-none px-3 py-1.5 whitespace-nowrap"
+                          class="table-email-link w-fit max-w-none px-3.5 py-1.5 whitespace-nowrap text-sm"
                           :title="`Send email to ${email}`"
                         >
                           <svg viewBox="0 0 20 20" fill="currentColor" class="table-email-svg">
                             <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                             <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                           </svg>
-                          <span class="table-email-text whitespace-nowrap">{{ email }}</span>
+                          <span class="table-email-text whitespace-nowrap text-sm">{{ email }}</span>
                         </a>
                       </div>
-                      <span v-else class="text-slate-300 text-xs">—</span>
+                      <span v-else class="text-slate-300 text-sm">—</span>
                     </td>
                   </tr>
                 </tbody>
@@ -339,19 +339,16 @@
             ></div>
           </div>
 
-          <!-- Dynamic RTI Officer Cards Grid (2-Column or 3-Column depending on officer count) -->
+          <!-- Dynamic RTI Officer Cards Container (Centered Flexbox Layout) -->
           <div
-            class="rti-cards-grid"
-            :class="filteredRtiOfficers.length >= 3
-              ? 'rti-grid-3-col grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
-              : 'rti-grid-2-col grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto'"
+            class="rti-cards-container flex flex-wrap justify-center gap-6 md:gap-8"
             style="margin-top: 1.5rem;"
           >
             <div
               v-for="officer in filteredRtiOfficers"
               :key="officer.id || officer.name"
-              class="rti-card h-full flex flex-col justify-between"
-              style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; height: 100%;"
+              class="rti-card w-full md:w-[calc(50%-1rem)] max-w-[540px] flex flex-col justify-between"
+              style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;"
             >
               <!-- Card Top Content Area -->
               <div class="card-content-top flex-1">
@@ -1539,8 +1536,9 @@ onUnmounted(() => {
 }
 
 .container { 
-  max-width: 1200px;
+  max-width: 1440px !important;
   margin: 0 auto;
+  width: 100%;
 }
 
 .hero-header {
@@ -1962,23 +1960,23 @@ onUnmounted(() => {
 }
 
 .spotlight-mandate {
-  font-size: 0.84rem;
+  font-size: 1rem;
   color: #64748b;
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 0 0 1rem;
 }
 
 .spotlight-location {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.78rem;
+  gap: 8px;
+  font-size: 0.875rem;
   color: #475569;
 }
 
 .loc-icon {
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
   color: #008795;
   flex-shrink: 0;
 }
@@ -2014,7 +2012,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 10px;
+  padding: 7px 11px;
   border-radius: 10px;
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
@@ -2031,18 +2029,18 @@ onUnmounted(() => {
 }
 
 .num-type-badge {
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   font-weight: 800;
   text-transform: uppercase;
-  padding: 2px 6px;
+  padding: 3px 6px;
   border-radius: 6px;
-  min-width: 48px;
+  min-width: 50px;
   text-align: center;
   flex-shrink: 0;
 }
 
 .num-val-text {
-  font-size: 0.74rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: #1e293b;
   letter-spacing: 0.1px;
@@ -2062,31 +2060,26 @@ onUnmounted(() => {
 .pill-fax .num-type-badge { background: #f1f5f9; color: #475569; }
 
 .emails-panel-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
   border-top: 1px dashed #e2e8f0;
   padding-top: 0.65rem;
   margin-top: 0.15rem;
 }
 
-@media (min-width: 640px) {
-  .emails-panel-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 .spotlight-email-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 8px;
+  gap: 8px;
+  padding: 7px 12px;
   border-radius: 10px;
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   text-decoration: none;
   transition: all 0.2s ease;
   min-width: 0;
+  width: 100%;
 }
 
 .spotlight-email-row:hover {
@@ -2096,12 +2089,12 @@ onUnmounted(() => {
 }
 
 .email-icon-box {
-  width: 20px !important;
-  height: 20px !important;
-  min-width: 20px !important;
-  min-height: 20px !important;
-  max-width: 20px !important;
-  max-height: 20px !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
   border-radius: 6px !important;
   background-color: #f0fdfa !important;
   display: flex !important;
@@ -2111,17 +2104,17 @@ onUnmounted(() => {
 }
 
 .email-svg {
-  width: 12px !important;
-  height: 12px !important;
-  min-width: 12px !important;
-  min-height: 12px !important;
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
   color: #008795 !important;
   flex-shrink: 0 !important;
   display: block !important;
 }
 
 .email-row-text {
-  font-size: 0.72rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #008795;
   flex: 1;
@@ -2214,7 +2207,7 @@ onUnmounted(() => {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.82rem;
+  font-size: 0.875rem;
 }
 
 /* Table Header (Appears ONLY ONCE at the top) */
@@ -2224,53 +2217,56 @@ onUnmounted(() => {
 }
 
 .corporate-directory-table th {
-  padding: 13px 16px;
-  font-size: 0.72rem;
+  padding: 1rem;
+  font-size: 0.875rem;
   font-weight: 800;
-  color: #64748b;
+  color: #475569;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.06em;
   white-space: nowrap;
 }
 
 .th-name {
   width: 20%;
-  min-width: 200px;
+  min-width: 210px;
   white-space: nowrap;
 }
 
 .th-designation {
-  width: 23%;
+  width: 19%;
   min-width: 180px;
 }
 
 .th-room {
-  width: 18%;
-  min-width: 160px;
+  width: 21%;
+  min-width: 190px;
 }
 
 .th-contacts {
-  width: 18%;
+  width: 14%;
   min-width: 160px;
 }
 
 .th-email {
-  width: 23%;
-  min-width: 240px;
+  width: 26%;
+  min-width: 360px;
+  white-space: nowrap;
 }
 
 .td-name {
-  min-width: 200px;
+  min-width: 210px;
   white-space: nowrap;
 }
 
 .td-room {
+  min-width: 190px;
   white-space: normal;
   word-break: break-word;
 }
 
 .td-email {
-  min-width: 240px;
+  min-width: 360px;
+  white-space: nowrap;
 }
 
 /* Table Body Rows & Spacing */
@@ -2335,44 +2331,44 @@ td.pl-8 {
 }
 
 .corporate-directory-table td {
-  padding: 12px 16px;
+  padding: 1rem;
   vertical-align: middle;
 }
 
 /* Column 1: Name */
 .table-official-name {
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   color: #0f172a;
-  line-height: 1.35;
+  line-height: 1.4;
   display: block;
   white-space: nowrap;
 }
 
 /* Column 2: Designation */
 .table-designation-text {
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 600;
   color: #008795;
-  line-height: 1.35;
+  line-height: 1.55;
   display: block;
-  max-width: 260px;
+  max-width: 320px;
 }
 
 /* Column 3: Responsibility Subject */
 .table-room-cell {
   display: block;
-  font-size: 0.78rem;
+  font-size: 0.925rem;
   color: #334155;
   font-weight: 500;
   white-space: normal;
   word-break: break-word;
-  line-height: 1.4;
+  line-height: 1.55;
 }
 
 .table-room-icon {
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   color: #94a3b8;
   flex-shrink: 0;
   margin-top: 2px;
@@ -2381,22 +2377,22 @@ td.pl-8 {
 .table-room-text {
   white-space: normal;
   word-break: break-word;
-  line-height: 1.35;
+  line-height: 1.55;
 }
 
 /* Column 4: Contact Numbers (Original Rounded Pill Layout) */
 .table-contacts-wrap {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .table-contact-pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 3px 8px;
+  gap: 6px;
+  padding: 4px 9px;
   border-radius: 8px;
   text-decoration: none;
   background-color: #ffffff;
@@ -2413,17 +2409,17 @@ td.pl-8 {
 }
 
 .table-contact-pill .pill-type-tag {
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  padding: 2px 5px;
+  padding: 2px 6px;
   border-radius: 4px;
   line-height: 1.2;
 }
 
 .table-contact-pill .pill-value-text {
-  font-size: 0.72rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: #334155;
   letter-spacing: 0.02em;
@@ -2469,8 +2465,8 @@ td.pl-8 {
 .table-email-link {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-size: 0.73rem;
+  gap: 8px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #008795;
   text-decoration: none;
@@ -2482,6 +2478,7 @@ td.pl-8 {
   width: fit-content;
   max-width: none;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .table-email-link:hover {
@@ -2493,8 +2490,8 @@ td.pl-8 {
 }
 
 .table-email-svg {
-  width: 13px;
-  height: 13px;
+  width: 15px;
+  height: 15px;
   flex-shrink: 0;
   color: #008795;
   transition: color 0.15s ease;
@@ -2506,7 +2503,8 @@ td.pl-8 {
 
 .table-email-text {
   white-space: nowrap;
-  line-height: 1.25;
+  line-height: 1.3;
+  font-size: 0.875rem;
 }
 
 /* ==========================================================================
@@ -2608,38 +2606,19 @@ td.pl-8 {
   border-radius: 9999px;
 }
 
+.rti-cards-container,
 .rti-cards-grid {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
   margin-top: 1.5rem;
 }
 
-.rti-grid-2-col {
-  max-width: 64rem;
-  margin-left: auto;
-  margin-right: auto;
-  grid-template-columns: 1fr;
-}
-
 @media (min-width: 768px) {
-  .rti-grid-2-col {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.rti-grid-3-col {
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 768px) {
-  .rti-grid-3-col {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .rti-grid-3-col {
-    grid-template-columns: repeat(3, 1fr);
+  .rti-cards-container,
+  .rti-cards-grid {
+    gap: 2rem;
   }
 }
 
@@ -2652,8 +2631,15 @@ td.pl-8 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  width: 100%;
+  max-width: 540px;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+@media (min-width: 768px) {
+  .rti-card {
+    width: calc(50% - 1rem);
+  }
 }
 
 .rti-card:hover {

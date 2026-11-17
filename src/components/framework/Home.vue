@@ -689,7 +689,7 @@ const impactMetrics = ref([
   },
   {
     id: "subsidies",
-    label: "Number of Interest Subsidies",
+    label: "Number of Interest Subsidies Beneficiaries",
     icon: "fas fa-percentage",
     target: 18250,
     current: 1,
@@ -733,7 +733,7 @@ const startCountUpAnimation = () => {
   if (hasAnimatedStats) return;
   hasAnimatedStats = true;
 
-  const duration = 2000;
+  const duration = 50000;
   let startTime = null;
 
   const animate = (currentTime) => {
