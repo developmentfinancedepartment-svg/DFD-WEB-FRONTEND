@@ -24,29 +24,29 @@
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-map-marked-alt"></i></div>
               <div class="metric-info">
-                <span class="metric-label">Coverage / Locations</span>
-                <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">{{ serviceCoverageText }}</span>
+                <span class="metric-label text-xs">Coverage / Locations</span>
+                <span class="metric-value text-lg sm:text-xl font-bold text-slate-900 break-words leading-snug">{{ serviceCoverageText }}</span>
               </div>
             </div>
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-landmark"></i></div>
               <div class="metric-info">
-                <span class="metric-label">Managing Partner</span>
-                <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">{{ serviceManagingPartnerText }}</span>
+                <span class="metric-label text-xs">Managing Partner</span>
+                <span class="metric-value text-lg sm:text-xl font-bold text-slate-900 break-words leading-snug">{{ serviceManagingPartnerText }}</span>
               </div>
             </div>
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-user-shield"></i></div>
               <div class="metric-info">
-                <span class="metric-label">Supervision</span>
-                <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">{{ serviceSupervisionText }}</span>
+                <span class="metric-label text-xs">Supervision</span>
+                <span class="metric-value text-lg sm:text-xl font-bold text-slate-900 break-words leading-snug">{{ serviceSupervisionText }}</span>
               </div>
             </div>
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-warehouse"></i></div>
               <div class="metric-info">
-                <span class="metric-label">Core Facilities</span>
-                <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">{{ serviceCoreFacilitiesText }}</span>
+                <span class="metric-label text-xs">Core Facilities</span>
+                <span class="metric-value text-lg sm:text-xl font-bold text-slate-900 break-words leading-snug">{{ serviceCoreFacilitiesText }}</span>
               </div>
             </div>
           </template>
@@ -57,9 +57,9 @@
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-hand-holding-usd"></i></div>
               <div class="metric-info">
-                <span class="metric-label">Max Loan Amount</span>
+                <span class="metric-label text-xs">Max Loan Amount</span>
                 <div class="metric-value-wrap">
-                  <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">
+                  <span class="metric-value text-lg sm:text-xl font-bold text-slate-900 break-words leading-snug">
                     {{ formatMetricValue(service.maxAmount || service.maxLoan).primary }}
                   </span>
                   <span
@@ -76,9 +76,9 @@
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-percentage"></i></div>
               <div class="metric-info">
-                <span class="metric-label">Interest Rate</span>
+                <span class="metric-label text-xs">Interest Rate</span>
                 <div class="metric-value-wrap">
-                  <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">
+                  <span class="metric-value text-lg sm:text-xl font-bold text-slate-900 break-words leading-snug">
                     {{ formatMetricValue(service.interestRate).primary }}
                   </span>
                   <span
@@ -110,9 +110,9 @@
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-calendar-alt"></i></div>
               <div class="metric-info">
-                <span class="metric-label">Repayment Period</span>
+                <span class="metric-label text-xs">Repayment Period</span>
                 <div class="metric-value-wrap">
-                  <span class="metric-value text-lg font-bold text-slate-900 break-words leading-snug">
+                  <span class="metric-value text-lg sm:text-xl font-bold text-slate-900 break-words leading-snug">
                     {{ formatMetricValue(service.repaymentPeriod).primary }}
                   </span>
                   <span
@@ -129,10 +129,10 @@
             <div class="metric-card">
               <div class="metric-icon"><i class="fas fa-hourglass-half"></i></div>
               <div class="metric-info">
-                <span class="metric-label">Grace Period</span>
+                <span class="metric-label text-xs">Grace Period</span>
                 <div class="metric-value-wrap">
                   <span
-                    class="metric-value text-lg font-bold text-slate-900 break-words leading-snug"
+                    class="metric-value text-lg sm:text-xl font-bold text-slate-900 break-words leading-snug"
                     :class="{ 'text-muted-grace font-semibold text-slate-500': !hasGracePeriod }"
                   >
                     {{ hasGracePeriod ? formatMetricValue(service.gracePeriod).primary : 'No Grace Period' }}
@@ -153,29 +153,29 @@
         <div class="details-section">
           <!-- 1. Background & Objectives -->
           <div class="detail-block" v-if="hasContent(service.purpose || service.objective || service.description)">
-            <h3>
+            <h3 class="text-lg sm:text-xl font-bold">
               <i class="fas fa-bullseye me-2 text-teal"></i>
               {{ isService ? 'Program Background & Objectives' : 'Scheme Purpose & Objective' }}
             </h3>
             <div v-if="parsedPurposeList.length > 1" class="checklist-container">
               <div v-for="(item, idx) in parsedPurposeList" :key="idx" class="checklist-item">
                 <div class="check-icon-circle"><i class="fas fa-check"></i></div>
-                <span class="checklist-text whitespace-normal break-words">{{ item }}</span>
+                <span class="checklist-text whitespace-normal break-words text-base leading-relaxed">{{ item }}</span>
               </div>
             </div>
-            <p v-else class="whitespace-normal break-words leading-relaxed text-slate-700">
+            <p v-else class="whitespace-normal break-words leading-relaxed text-slate-700 text-base">
               {{ service.purpose || service.objective || service.description }}
             </p>
           </div>
 
           <!-- 2. Nature of the Loan (Dedicated Section - Loans Only) -->
           <div class="detail-block" v-if="!isService && hasContent(service.natureOfLoan)">
-            <h3>
+            <h3 class="text-lg sm:text-xl font-bold">
               <i class="fas fa-layer-group me-2 text-teal"></i>
               Nature of the Loan
             </h3>
             <div class="nature-pill-box">
-              <span class="nature-loan-badge whitespace-normal leading-relaxed">
+              <span class="nature-loan-badge whitespace-normal leading-relaxed text-base">
                 <i class="fas fa-briefcase text-teal me-2.5 mt-0.5 shrink-0"></i>
                 <span class="break-words">{{ service.natureOfLoan }}</span>
               </span>
@@ -184,42 +184,42 @@
 
           <!-- 3. Target Beneficiaries -->
           <div class="detail-block" v-if="hasContent(service.beneficiaries) && parsedBeneficiariesList.length > 0">
-            <h3><i class="fas fa-users me-2 text-teal"></i> Target Beneficiaries</h3>
+            <h3 class="text-lg sm:text-xl font-bold"><i class="fas fa-users me-2 text-teal"></i> Target Beneficiaries</h3>
             <div v-if="parsedBeneficiariesList.length > 0" class="checklist-container">
               <div v-for="(item, idx) in parsedBeneficiariesList" :key="idx" class="checklist-item">
                 <div class="check-icon-circle"><i class="fas fa-check"></i></div>
-                <span class="checklist-text whitespace-normal break-words">{{ item }}</span>
+                <span class="checklist-text whitespace-normal break-words text-base leading-relaxed">{{ item }}</span>
               </div>
             </div>
-            <p v-else class="whitespace-normal break-words leading-relaxed text-slate-700">{{ service.beneficiaries }}</p>
+            <p v-else class="whitespace-normal break-words leading-relaxed text-slate-700 text-base">{{ service.beneficiaries }}</p>
           </div>
 
           <!-- 4. Eligibility & Document Requirements -->
           <div class="detail-block" v-if="hasContent(service.requirements || service.eligibility) && parsedRequirementsList.length > 0">
-            <h3><i class="fas fa-clipboard-check me-2 text-teal"></i> Eligibility &amp; Requirements</h3>
+            <h3 class="text-lg sm:text-xl font-bold"><i class="fas fa-clipboard-check me-2 text-teal"></i> Eligibility &amp; Requirements</h3>
             <div v-if="parsedRequirementsList.length > 0" class="checklist-container">
               <div v-for="(req, idx) in parsedRequirementsList" :key="idx" class="checklist-item">
                 <div class="check-icon-circle"><i class="fas fa-check"></i></div>
-                <span class="checklist-text whitespace-normal break-words">{{ req }}</span>
+                <span class="checklist-text whitespace-normal break-words text-base leading-relaxed">{{ req }}</span>
               </div>
             </div>
-            <p v-else class="whitespace-normal break-words leading-relaxed text-slate-700">{{ service.requirements || service.eligibility }}</p>
+            <p v-else class="whitespace-normal break-words leading-relaxed text-slate-700 text-base">{{ service.requirements || service.eligibility }}</p>
           </div>
 
           <!-- 5. Center Locations & Regional Presence (Pin Badges) -->
           <div class="detail-block" v-if="parsedLocations.length > 0">
-            <h3><i class="fas fa-map-marker-alt me-2 text-teal"></i> Center Locations &amp; Regional Presence</h3>
+            <h3 class="text-lg sm:text-xl font-bold"><i class="fas fa-map-marker-alt me-2 text-teal"></i> Center Locations &amp; Regional Presence</h3>
             <div class="locations-wrapper">
               <div v-for="(loc, idx) in parsedLocations" :key="idx" class="location-badge">
                 <i class="fas fa-map-pin text-rose me-1.5"></i>
-                <span>{{ loc }}</span>
+                <span class="text-base font-semibold">{{ loc }}</span>
               </div>
             </div>
           </div>
 
           <!-- 6. Structured Warehouse / Center Locations Table -->
           <div class="detail-block locations-table-block" v-if="structuredLocationRows.length > 0">
-            <h3>
+            <h3 class="text-lg sm:text-xl font-bold">
               <i class="fas fa-warehouse me-2 text-teal"></i>
               Locations and Contact Details
             </h3>
@@ -240,21 +240,21 @@
                 </thead>
                 <tbody>
                   <tr v-for="(row, idx) in structuredLocationRows" :key="idx">
-                    <td class="td-no">{{ idx + 1 }}</td>
-                    <td class="td-district">
+                    <td class="td-no text-base leading-relaxed">{{ idx + 1 }}</td>
+                    <td class="td-district text-base leading-relaxed">
                       <span class="district-pill">{{ row.district || '—' }}</span>
                     </td>
-                    <td class="td-name">
+                    <td class="td-name text-base leading-relaxed">
                       <span class="warehouse-name-text">{{ row.warehouseName || '—' }}</span>
                     </td>
-                    <td class="td-address">{{ row.address || '—' }}</td>
-                    <td class="td-capacity">
+                    <td class="td-address text-base leading-relaxed">{{ row.address || '—' }}</td>
+                    <td class="td-capacity text-base leading-relaxed">
                       <span v-if="row.storageCapacity" class="capacity-badge">
                         <strong>{{ row.storageCapacity }}</strong> <span class="capacity-unit">MT</span>
                       </span>
                       <span v-else class="text-muted">—</span>
                     </td>
-                    <td class="td-contact">
+                    <td class="td-contact text-base leading-relaxed">
                       <a
                         v-if="row.contactNumber"
                         :href="`tel:${cleanPhoneNumber(row.contactNumber)}`"
@@ -274,30 +274,30 @@
 
           <!-- 7. Services & Facilities Provided -->
           <div class="detail-block" v-if="parsedServicesProvided.length > 0">
-            <h3><i class="fas fa-tools me-2 text-teal"></i> Services &amp; Facilities Provided</h3>
+            <h3 class="text-lg sm:text-xl font-bold"><i class="fas fa-tools me-2 text-teal"></i> Services &amp; Facilities Provided</h3>
             <div class="facilities-grid">
               <div v-for="(facility, idx) in parsedServicesProvided" :key="idx" class="facility-card">
                 <div class="facility-icon"><i class="fas fa-check-double text-teal"></i></div>
-                <div class="facility-text">{{ facility }}</div>
+                <div class="facility-text text-base leading-relaxed">{{ facility }}</div>
               </div>
             </div>
           </div>
 
           <!-- 8. Implementation Arrangements -->
           <div class="detail-block" v-if="hasContent(service.implementationArrangements)">
-            <h3><i class="fas fa-sitemap me-2 text-teal"></i> Implementation Arrangements</h3>
-            <p class="whitespace-normal break-words leading-relaxed text-slate-700">{{ service.implementationArrangements }}</p>
+            <h3 class="text-lg sm:text-xl font-bold"><i class="fas fa-sitemap me-2 text-teal"></i> Implementation Arrangements</h3>
+            <p class="whitespace-normal break-words leading-relaxed text-slate-700 text-base">{{ service.implementationArrangements }}</p>
           </div>
 
           <!-- 9. Operational Costs & Revenue Arrangements (Clean Info Card) -->
           <div class="detail-block" v-if="hasContent(service.operationalArrangements || service.operational_arrangements)">
-            <h3><i class="fas fa-coins me-2 text-teal"></i> Operational Costs &amp; Revenue Arrangements</h3>
+            <h3 class="text-lg sm:text-xl font-bold"><i class="fas fa-coins me-2 text-teal"></i> Operational Costs &amp; Revenue Arrangements</h3>
             <div class="op-arrangements-card">
               <div class="op-arrangements-icon">
                 <i class="fas fa-receipt text-teal text-xl"></i>
               </div>
               <div class="op-arrangements-body">
-                <p class="whitespace-normal break-words leading-relaxed text-slate-700">
+                <p class="whitespace-normal break-words leading-relaxed text-slate-700 text-base">
                   {{ service.operationalArrangements || service.operational_arrangements }}
                 </p>
               </div>
@@ -306,12 +306,12 @@
 
           <!-- 10. Participating Financial Institutions (PFIs - Loan Schemes Only) -->
           <div class="detail-block" v-if="!isService && parsedBanks.length > 0">
-            <h3><i class="fas fa-university me-2 text-teal"></i> Participating Financial Institutions (PFIs)</h3>
+            <h3 class="text-lg sm:text-xl font-bold"><i class="fas fa-university me-2 text-teal"></i> Participating Financial Institutions (PFIs)</h3>
             <div class="banks-wrapper">
               <span 
                 v-for="(bank, index) in parsedBanks" 
                 :key="index" 
-                class="bank-pill"
+                class="bank-pill text-base"
               >
                 <i class="fas fa-building-columns me-1.5 opacity-70"></i>
                 {{ bank }}
@@ -321,16 +321,16 @@
 
           <!-- 11. Other Related Initiatives -->
           <div class="detail-block" v-if="hasContent(service.otherInitiatives)">
-            <h3><i class="fas fa-project-diagram me-2 text-teal"></i> Other Related Initiatives</h3>
-            <p class="whitespace-normal break-words leading-relaxed text-slate-700">{{ service.otherInitiatives }}</p>
+            <h3 class="text-lg sm:text-xl font-bold"><i class="fas fa-project-diagram me-2 text-teal"></i> Other Related Initiatives</h3>
+            <p class="whitespace-normal break-words leading-relaxed text-slate-700 text-base">{{ service.otherInitiatives }}</p>
           </div>
 
           <!-- 12. Designated Contact Details & Inquiries -->
           <div class="detail-block" v-if="hasContent(service.contactInfo)">
-            <h3><i class="fas fa-headset me-2 text-teal"></i> Designated Contact Information &amp; Inquiries</h3>
+            <h3 class="text-lg sm:text-xl font-bold"><i class="fas fa-headset me-2 text-teal"></i> Designated Contact Information &amp; Inquiries</h3>
             <div class="contact-box-callout">
               <i class="fas fa-info-circle text-teal text-xl shrink-0 mt-0.5"></i>
-              <div class="contact-text">{{ service.contactInfo }}</div>
+              <div class="contact-text text-base leading-relaxed">{{ service.contactInfo }}</div>
             </div>
           </div>
         </div>
@@ -896,7 +896,7 @@ onMounted(() => {
   background: #f0fdfa;
   color: #0f766e;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1rem;
   padding: 10px 18px;
   border-radius: 12px;
   border: 1px solid #ccfbf1;
@@ -907,7 +907,7 @@ onMounted(() => {
 }
 
 .metric-label {
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   color: #64748b;
   text-transform: uppercase;
   font-weight: 700;
@@ -916,12 +916,18 @@ onMounted(() => {
 }
 
 .metric-value {
-  font-size: 1.125rem !important; /* text-lg */
-  font-weight: 700 !important; /* font-bold */
-  color: #0f172a !important; /* text-slate-900 */
-  line-height: 1.375 !important; /* leading-snug */
-  overflow-wrap: break-word !important;
-  word-break: normal !important; /* Prevents awkward breaks like Investme-nt */
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 700; /* font-bold */
+  color: #0f172a; /* text-slate-900 */
+  line-height: 1.375; /* leading-snug */
+  overflow-wrap: break-word;
+  word-break: normal; /* Prevents awkward breaks like Investme-nt */
+}
+
+@media (min-width: 640px) {
+  .metric-value {
+    font-size: 1.25rem !important; /* sm:text-xl */
+  }
 }
 
 .metric-subtitle {
@@ -957,12 +963,18 @@ onMounted(() => {
 }
 
 .detail-block h3 {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 700;
   color: #0c2a38;
   margin-bottom: 16px;
   border-bottom: 1px solid #eef2f6;
   padding-bottom: 10px;
+}
+
+@media (min-width: 640px) {
+  .detail-block h3 {
+    font-size: 1.25rem;
+  }
 }
 
 .text-teal {
@@ -981,9 +993,9 @@ onMounted(() => {
 }
 
 .detail-block p {
-  color: #495057;
+  color: #334155;
   line-height: 1.75;
-  font-size: 0.98rem;
+  font-size: 1rem;
   overflow-wrap: break-word;
   word-break: break-word;
 }
@@ -1000,9 +1012,9 @@ onMounted(() => {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #334155;
-  line-height: 1.6;
+  line-height: 1.625;
   width: 100%;
 }
 
@@ -1026,6 +1038,8 @@ onMounted(() => {
   white-space: normal;
   word-break: break-word;
   overflow-wrap: break-word;
+  font-size: 1rem;
+  line-height: 1.625;
 }
 
 /* Location Pins */
@@ -1071,7 +1085,7 @@ onMounted(() => {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.9rem;
+  font-size: 1rem;
   min-width: 650px;
 }
 
@@ -1122,7 +1136,8 @@ onMounted(() => {
   padding: 14px 16px;
   vertical-align: middle;
   color: #334155;
-  line-height: 1.5;
+  line-height: 1.625;
+  font-size: 1rem;
 }
 
 .gov-locations-table td.td-no {
@@ -1237,8 +1252,8 @@ onMounted(() => {
 .op-arrangements-body p {
   color: #713f12 !important;
   margin-bottom: 0 !important;
-  line-height: 1.65;
-  font-size: 0.95rem;
+  line-height: 1.75 !important;
+  font-size: 1rem !important;
 }
 
 /* Facilities Grid */
@@ -1256,7 +1271,7 @@ onMounted(() => {
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 14px 18px;
-  font-size: 0.92rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #1e293b;
 }
@@ -1289,7 +1304,7 @@ onMounted(() => {
   color: #007c91;
   padding: 8px 16px;
   border-radius: 50px;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 600;
   border: 1px solid #bcecf1;
   display: inline-flex;
@@ -1305,9 +1320,9 @@ onMounted(() => {
   border: 1px solid #99f6e4;
   border-radius: 14px;
   padding: 18px 22px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #0f766e;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .action-buttons {

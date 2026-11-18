@@ -814,16 +814,17 @@ onUnmounted(() => {
 .badge-other {
   display: inline-flex;
   align-items: center;
-  padding: 3px 9px;
+  gap: 6px;
+  padding: 4px 12px;
   border-radius: 9999px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  background-color: #f1f5f9;
-  color: #475569;
-  border: 1px solid #cbd5e1;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background-color: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #99f6e4;
   line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .service-card:hover .service-icon-box {
