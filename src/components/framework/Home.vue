@@ -1319,9 +1319,10 @@ onBeforeUnmount(() => {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: #f1f5f9;
-  color: #475569;
-  border: 1px solid #cbd5e1;
+  background: linear-gradient(135deg, #eec7fe 0%, #ccfbf1 100%);
+  color: #920e81;
+  border: 1px solid #ca4dfc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .read-more-disabled {

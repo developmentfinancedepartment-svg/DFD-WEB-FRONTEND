@@ -152,7 +152,7 @@
         <!-- Breakdown Sections -->
         <div class="details-section">
           <!-- 1. Background & Objectives -->
-          <div class="detail-block" v-if="service.purpose || service.objective || service.description">
+          <div class="detail-block" v-if="hasContent(service.purpose || service.objective || service.description)">
             <h3>
               <i class="fas fa-bullseye me-2 text-teal"></i>
               {{ isService ? 'Program Background & Objectives' : 'Scheme Purpose & Objective' }}
@@ -168,8 +168,8 @@
             </p>
           </div>
 
-          <!-- 2. Nature of the Loan (Dedicated Section) -->
-          <div class="detail-block" v-if="service.natureOfLoan && !isService">
+          <!-- 2. Nature of the Loan (Dedicated Section - Loans Only) -->
+          <div class="detail-block" v-if="!isService && hasContent(service.natureOfLoan)">
             <h3>
               <i class="fas fa-layer-group me-2 text-teal"></i>
               Nature of the Loan
@@ -183,7 +183,7 @@
           </div>
 
           <!-- 3. Target Beneficiaries -->
-          <div class="detail-block" v-if="service.beneficiaries">
+          <div class="detail-block" v-if="hasContent(service.beneficiaries) && parsedBeneficiariesList.length > 0">
             <h3><i class="fas fa-users me-2 text-teal"></i> Target Beneficiaries</h3>
             <div v-if="parsedBeneficiariesList.length > 0" class="checklist-container">
               <div v-for="(item, idx) in parsedBeneficiariesList" :key="idx" class="checklist-item">
@@ -195,7 +195,7 @@
           </div>
 
           <!-- 4. Eligibility & Document Requirements -->
-          <div class="detail-block" v-if="service.requirements || service.eligibility">
+          <div class="detail-block" v-if="hasContent(service.requirements || service.eligibility) && parsedRequirementsList.length > 0">
             <h3><i class="fas fa-clipboard-check me-2 text-teal"></i> Eligibility &amp; Requirements</h3>
             <div v-if="parsedRequirementsList.length > 0" class="checklist-container">
               <div v-for="(req, idx) in parsedRequirementsList" :key="idx" class="checklist-item">
@@ -206,7 +206,7 @@
             <p v-else class="whitespace-normal break-words leading-relaxed text-slate-700">{{ service.requirements || service.eligibility }}</p>
           </div>
 
-          <!-- 4. Center Locations (Pin Badges) -->
+          <!-- 5. Center Locations & Regional Presence (Pin Badges) -->
           <div class="detail-block" v-if="parsedLocations.length > 0">
             <h3><i class="fas fa-map-marker-alt me-2 text-teal"></i> Center Locations &amp; Regional Presence</h3>
             <div class="locations-wrapper">
@@ -217,7 +217,62 @@
             </div>
           </div>
 
-          <!-- 5. Services & Facilities Provided -->
+          <!-- 6. Structured Warehouse / Center Locations Table -->
+          <div class="detail-block locations-table-block" v-if="structuredLocationRows.length > 0">
+            <h3>
+              <i class="fas fa-warehouse me-2 text-teal"></i>
+              Locations and Contact Details
+            </h3>
+            <p class="section-subtext">
+              Official operational warehouses, storage capacities, and direct regional facility contact information.
+            </p>
+            <div class="gov-table-responsive">
+              <table class="gov-locations-table">
+                <thead>
+                  <tr>
+                    <th class="th-no">No.</th>
+                    <th class="th-district">District</th>
+                    <th class="th-name">Warehouse Name</th>
+                    <th class="th-address">Address</th>
+                    <th class="th-capacity">Storage Capacity (MT)</th>
+                    <th class="th-contact">Contact Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(row, idx) in structuredLocationRows" :key="idx">
+                    <td class="td-no">{{ idx + 1 }}</td>
+                    <td class="td-district">
+                      <span class="district-pill">{{ row.district || '—' }}</span>
+                    </td>
+                    <td class="td-name">
+                      <span class="warehouse-name-text">{{ row.warehouseName || '—' }}</span>
+                    </td>
+                    <td class="td-address">{{ row.address || '—' }}</td>
+                    <td class="td-capacity">
+                      <span v-if="row.storageCapacity" class="capacity-badge">
+                        <strong>{{ row.storageCapacity }}</strong> <span class="capacity-unit">MT</span>
+                      </span>
+                      <span v-else class="text-muted">—</span>
+                    </td>
+                    <td class="td-contact">
+                      <a
+                        v-if="row.contactNumber"
+                        :href="`tel:${cleanPhoneNumber(row.contactNumber)}`"
+                        class="tel-link"
+                        :title="`Call ${row.contactNumber}`"
+                      >
+                        <i class="fas fa-phone-alt me-1.5 text-teal"></i>
+                        <span>{{ row.contactNumber }}</span>
+                      </a>
+                      <span v-else class="text-muted">—</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 7. Services & Facilities Provided -->
           <div class="detail-block" v-if="parsedServicesProvided.length > 0">
             <h3><i class="fas fa-tools me-2 text-teal"></i> Services &amp; Facilities Provided</h3>
             <div class="facilities-grid">
@@ -228,14 +283,29 @@
             </div>
           </div>
 
-          <!-- 6. Implementation Arrangements -->
-          <div class="detail-block" v-if="service.implementationArrangements">
+          <!-- 8. Implementation Arrangements -->
+          <div class="detail-block" v-if="hasContent(service.implementationArrangements)">
             <h3><i class="fas fa-sitemap me-2 text-teal"></i> Implementation Arrangements</h3>
-            <p>{{ service.implementationArrangements }}</p>
+            <p class="whitespace-normal break-words leading-relaxed text-slate-700">{{ service.implementationArrangements }}</p>
           </div>
 
-          <!-- 7. Participating Financial Institutions (PFIs) -->
-          <div class="detail-block" v-if="parsedBanks.length > 0">
+          <!-- 9. Operational Costs & Revenue Arrangements (Clean Info Card) -->
+          <div class="detail-block" v-if="hasContent(service.operationalArrangements || service.operational_arrangements)">
+            <h3><i class="fas fa-coins me-2 text-teal"></i> Operational Costs &amp; Revenue Arrangements</h3>
+            <div class="op-arrangements-card">
+              <div class="op-arrangements-icon">
+                <i class="fas fa-receipt text-teal text-xl"></i>
+              </div>
+              <div class="op-arrangements-body">
+                <p class="whitespace-normal break-words leading-relaxed text-slate-700">
+                  {{ service.operationalArrangements || service.operational_arrangements }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 10. Participating Financial Institutions (PFIs - Loan Schemes Only) -->
+          <div class="detail-block" v-if="!isService && parsedBanks.length > 0">
             <h3><i class="fas fa-university me-2 text-teal"></i> Participating Financial Institutions (PFIs)</h3>
             <div class="banks-wrapper">
               <span 
@@ -249,14 +319,14 @@
             </div>
           </div>
 
-          <!-- 8. Other Initiatives & Related Programs -->
-          <div class="detail-block" v-if="service.otherInitiatives">
+          <!-- 11. Other Related Initiatives -->
+          <div class="detail-block" v-if="hasContent(service.otherInitiatives)">
             <h3><i class="fas fa-project-diagram me-2 text-teal"></i> Other Related Initiatives</h3>
-            <p>{{ service.otherInitiatives }}</p>
+            <p class="whitespace-normal break-words leading-relaxed text-slate-700">{{ service.otherInitiatives }}</p>
           </div>
 
-          <!-- 9. Designated Contact Details & Inquiries -->
-          <div class="detail-block" v-if="service.contactInfo">
+          <!-- 12. Designated Contact Details & Inquiries -->
+          <div class="detail-block" v-if="hasContent(service.contactInfo)">
             <h3><i class="fas fa-headset me-2 text-teal"></i> Designated Contact Information &amp; Inquiries</h3>
             <div class="contact-box-callout">
               <i class="fas fa-info-circle text-teal text-xl shrink-0 mt-0.5"></i>
@@ -323,8 +393,28 @@ const service = ref(null);
 const loading = ref(true);
 
 const isService = computed(() => {
-  return (service.value?.schemeType || '').toUpperCase() === 'SERVICE';
+  if (!service.value) return false;
+  const t = (service.value.schemeType || service.value.type || '').toUpperCase();
+  if (t === 'OTHER' || t === 'SERVICE') return true;
+  if (service.value.category === 'Preservation & Storage') return true;
+  if (typeof service.value.title === 'string' && service.value.title.toLowerCase().includes('preservation & silo')) return true;
+  return false;
 });
+
+const hasContent = (val) => {
+  if (!val) return false;
+  if (typeof val === 'string') {
+    const trimmed = val.trim();
+    return trimmed.length > 0 && trimmed.toLowerCase() !== 'n/a' && trimmed !== '-' && trimmed !== 'null';
+  }
+  if (Array.isArray(val)) return val.length > 0;
+  return true;
+};
+
+const cleanPhoneNumber = (phone) => {
+  if (!phone) return '';
+  return String(phone).replace(/[^\d+]/g, '');
+};
 
 const hasGracePeriod = computed(() => {
   const gp = service.value?.gracePeriod;
@@ -441,6 +531,13 @@ const rateBreakdown = computed(() => {
 
 // Dynamic summary helpers for SERVICE top 4 metric boxes
 const serviceCoverageText = computed(() => {
+  if (structuredLocationRows.value.length > 0) {
+    const districts = new Set(structuredLocationRows.value.map(r => r.district).filter(Boolean));
+    if (districts.size > 0) {
+      return `${districts.size} Districts (${structuredLocationRows.value.length} Centers)`;
+    }
+    return `${structuredLocationRows.value.length} Centers`;
+  }
   if (parsedLocations.value.length > 0) {
     return `${parsedLocations.value.length} Key Districts`;
   }
@@ -448,11 +545,11 @@ const serviceCoverageText = computed(() => {
 });
 
 const serviceManagingPartnerText = computed(() => {
-  if (parsedBanks.value.length > 0) {
-    return parsedBanks.value[0];
-  }
-  if (service.value?.implementationArrangements && service.value.implementationArrangements.includes('RDB')) {
-    return 'Regional Development Bank';
+  if (service.value?.managingPartner) return service.value.managingPartner;
+  if (service.value?.implementationArrangements) {
+    if (service.value.implementationArrangements.includes('Regional Development Bank') || service.value.implementationArrangements.includes('RDB')) {
+      return 'Regional Development Bank (RDB)';
+    }
   }
   return 'RDB & Agri Cooperatives';
 });
@@ -489,6 +586,7 @@ const parseArrayOrDelimited = (rawVal) => {
 };
 
 // Smart parser for vertical bullet lists (Purpose, Beneficiaries, Requirements)
+// Splits ONLY by newlines (\n) - NEVER splits on commas (,)
 const parseSmartPointsList = (rawVal) => {
   if (!rawVal) return [];
   if (Array.isArray(rawVal)) {
@@ -508,7 +606,7 @@ const parseSmartPointsList = (rawVal) => {
       } catch {}
     }
 
-    // 2. Multi-line strings (split by \r?\n)
+    // 2. Multi-line strings (split ONLY by newlines: \r?\n)
     if (trimmed.includes('\n') || trimmed.includes('\r')) {
       const lines = trimmed
         .split(/\r?\n+/)
@@ -532,21 +630,52 @@ const parseSmartPointsList = (rawVal) => {
       if (parts.length > 1) return parts;
     }
 
-    // 5. Short comma-separated list fallback (only if not a long prose sentence with internal periods)
-    const strippedDot = trimmed.replace(/\.\s*$/, '');
-    if (strippedDot.includes(',') && !strippedDot.includes('.') && strippedDot.length < 240) {
-      const parts = strippedDot.split(',').map(p => p.trim().replace(/^and\s+/i, '')).filter(Boolean);
-      if (parts.length > 1) return parts;
-    }
-
-    // Single item fallback
-    const single = trimmed.replace(/^[-•*?✓✔\u2022\u25E6\u25AA\u25CF]\s*/, '');
+    // Single item fallback - NEVER split on commas
+    const single = trimmed.replace(/^[-•*?✓✔\u2022\u25E6\u25AA\u25CF]\s*/, '').replace(/^\d+[\.\)]\s*/, '');
     return [single];
   }
   return [];
 };
 
 const parsedLocations = computed(() => parseArrayOrDelimited(service.value?.locations));
+
+const structuredLocationRows = computed(() => {
+  const raw = service.value?.center_locations_table || service.value?.centerLocationsTable;
+  if (!raw) return [];
+  let list = [];
+  if (Array.isArray(raw)) {
+    list = raw;
+  } else if (typeof raw === 'string') {
+    const trimmed = raw.trim();
+    if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (Array.isArray(parsed)) list = parsed;
+      } catch (e) {
+        console.warn('Failed to parse center_locations_table JSON:', e);
+      }
+    }
+  }
+  return list.map(item => {
+    if (typeof item === 'string') {
+      return {
+        district: '',
+        warehouseName: item,
+        address: '',
+        storageCapacity: '',
+        contactNumber: ''
+      };
+    }
+    return {
+      district: item.district || item.District || '',
+      warehouseName: item.warehouseName || item.warehouse_name || item['Warehouse Name'] || item.name || '',
+      address: item.address || item.Address || '',
+      storageCapacity: item.storageCapacity || item.storage_capacity || item['Storage Capacity (MT)'] || item.capacity || item.capacityMt || '',
+      contactNumber: item.contactNumber || item.contact_number || item['Contact Number'] || item.phone || item.contact || ''
+    };
+  }).filter(r => r.warehouseName || r.district || r.address || r.storageCapacity || r.contactNumber);
+});
+
 const parsedServicesProvided = computed(() => parseArrayOrDelimited(service.value?.servicesProvided));
 const parsedPurposeList = computed(() => parseSmartPointsList(service.value?.purpose || service.value?.objective));
 const parsedBeneficiariesList = computed(() => parseSmartPointsList(service.value?.beneficiaries));
@@ -556,7 +685,7 @@ const parsedRequirementsList = computed(() => {
 });
 
 const parsedBanks = computed(() => {
-  if (!service.value) return [];
+  if (!service.value || isService.value) return [];
   const banks = service.value.participatingBanks;
   if (!banks) return [];
   if (Array.isArray(banks)) return banks;
@@ -917,6 +1046,199 @@ onMounted(() => {
   color: #0f766e;
   font-size: 0.9rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+/* Structured Locations Table */
+.section-subtext {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-top: -6px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.gov-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  background: white;
+  margin-top: 10px;
+}
+
+.gov-locations-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+  min-width: 650px;
+}
+
+.gov-locations-table thead {
+  background: #f8fafc;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.gov-locations-table th {
+  padding: 14px 16px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.gov-locations-table th.th-no {
+  width: 50px;
+  text-align: center;
+}
+
+.gov-locations-table th.th-capacity {
+  text-align: right;
+  min-width: 160px;
+}
+
+.gov-locations-table th.th-contact {
+  text-align: center;
+  min-width: 150px;
+}
+
+.gov-locations-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.15s ease;
+}
+
+.gov-locations-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.gov-locations-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.gov-locations-table td {
+  padding: 14px 16px;
+  vertical-align: middle;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.gov-locations-table td.td-no {
+  text-align: center;
+  font-weight: 700;
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.district-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #ccfbf1;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.warehouse-name-text {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.td-capacity {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.capacity-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  background: #f1f5f9;
+  color: #1e293b;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+}
+
+.capacity-unit {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.td-contact {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tel-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #008795;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #f0fbfc;
+  border: 1px solid #d0f0f4;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+
+.tel-link:hover {
+  background: #008795;
+  color: white;
+  border-color: #008795;
+  text-decoration: none;
+}
+
+.tel-link:hover .text-teal {
+  color: white !important;
+}
+
+/* Operational Costs & Revenue Arrangements Card */
+.op-arrangements-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #fefce8;
+  border: 1px solid #fef08a;
+  border-left: 4px solid #eab308;
+  border-radius: 12px;
+  padding: 18px 22px;
+}
+
+.op-arrangements-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fef9c3;
+  color: #854d0e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.op-arrangements-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.op-arrangements-body p {
+  color: #713f12 !important;
+  margin-bottom: 0 !important;
+  line-height: 1.65;
+  font-size: 0.95rem;
 }
 
 /* Facilities Grid */
